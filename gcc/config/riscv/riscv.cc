@@ -56,6 +56,7 @@ along with GCC; see the file COPYING3.  If not see
 #include "builtins.h"
 #include "predict.h"
 #include "tree-pass.h"
+#include "context.h"
 #include "opts.h"
 
 /* True if X is an UNSPEC wrapper around a SYMBOL_REF or LABEL_REF.  */
@@ -5120,6 +5121,15 @@ riscv_option_override (void)
       riscv_stack_protector_guard_offset = offs;
     }
 
+  if (1)
+    {
+      opt_pass *crc = make_pass_crc (g);
+      struct register_pass_info pass_crc_info
+	/* ??? This used to go after "inline_param", which was discontinued
+	   in 2017; does this still work in the changed context?  */
+	= { crc, "local-fnsummary", 1, PASS_POS_INSERT_AFTER };
+      register_pass (&pass_crc_info);
+    }
 }
 
 /* Implement TARGET_CONDITIONAL_REGISTER_USAGE.  */

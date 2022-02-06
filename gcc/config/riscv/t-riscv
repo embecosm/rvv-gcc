@@ -23,6 +23,10 @@ riscv-shorten-memrefs.o: $(srcdir)/config/riscv/riscv-shorten-memrefs.cc
 	$(COMPILE) $<
 	$(POSTCOMPILE)
 
+tree-crc.o: $(srcdir)/config/riscv/tree-crc.cc $(TM_P_H) \
+   $(CONFIG_H) $(SYSTEM_H) coretypes.h $(TM_H) $(TREE_PASS_H) $(FUNCTION_H)
+	$(COMPILER) -c $(ALL_COMPILERFLAGS) $(ALL_CPPFLAGS) $(INCLUDES) $<
+
 PASSES_EXTRA += $(srcdir)/config/riscv/riscv-passes.def
 
 $(common_out_file): $(srcdir)/config/riscv/riscv-cores.def \

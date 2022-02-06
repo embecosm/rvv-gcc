@@ -105,4 +105,9 @@ struct riscv_cpu_info {
 
 extern const riscv_cpu_info *riscv_find_cpu (const char *);
 
+#ifndef IN_LIBGCC2
+class gimple_opt_pass;
+extern gimple_opt_pass *make_pass_crc (gcc::context *ctxt);
+#endif
+
 #endif /* ! GCC_RISCV_PROTOS_H */
