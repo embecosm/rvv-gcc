@@ -225,3 +225,7 @@ Enum(isa_spec_class) String(20191213) Value(ISA_SPEC_CLASS_20191213)
 misa-spec=
 Target RejectNegative Joined Enum(isa_spec_class) Var(riscv_isa_spec) Init(TARGET_DEFAULT_ISA_SPEC)
 Set the version of RISC-V ISA spec.
+
+mcrc
+Target Bool Var(TARGET_CRC_OPT) Init(1)
+Recognize some crc calculations to make them into built-in functions.

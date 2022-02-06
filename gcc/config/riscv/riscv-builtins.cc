@@ -40,6 +40,7 @@ along with GCC; see the file COPYING3.  If not see
 /* Macros to create an enumeration identifier for a function prototype.  */
 #define RISCV_FTYPE_NAME0(A) RISCV_##A##_FTYPE
 #define RISCV_FTYPE_NAME1(A, B) RISCV_##A##_FTYPE_##B
+#define RISCV_FTYPE_NAME3(A, B, C, D) RISCV_##A##_FTYPE_##B##C##D
 
 /* Classifies the prototype of a built-in function.  */
 enum riscv_function_type {
@@ -86,6 +87,7 @@ struct riscv_builtin_description {
 };
 
 AVAIL (hard_float, TARGET_HARD_FLOAT)
+AVAIL (always, 1)
 
 /* Construct a riscv_builtin_description from the given arguments.
 
@@ -119,6 +121,8 @@ AVAIL (hard_float, TARGET_HARD_FLOAT)
 /* Argument types.  */
 #define RISCV_ATYPE_VOID void_type_node
 #define RISCV_ATYPE_USI unsigned_intSI_type_node
+#define RISCV_ATYPE_UHI unsigned_intHI_type_node
+#define RISCV_ATYPE_UQI unsigned_intQI_type_node
 
 /* RISCV_FTYPE_ATYPESN takes N RISCV_FTYPES-like type codes and lists
    their associated RISCV_ATYPEs.  */
@@ -126,10 +130,14 @@ AVAIL (hard_float, TARGET_HARD_FLOAT)
   RISCV_ATYPE_##A
 #define RISCV_FTYPE_ATYPES1(A, B) \
   RISCV_ATYPE_##A, RISCV_ATYPE_##B
+#define RISCV_FTYPE_ATYPES3(A, B, C, D) \
+  RISCV_ATYPE_##A, RISCV_ATYPE_##B, RISCV_ATYPE_##C, RISCV_ATYPE_##D
 
 static const struct riscv_builtin_description riscv_builtins[] = {
   DIRECT_BUILTIN (frflags, RISCV_USI_FTYPE, hard_float),
-  DIRECT_NO_TARGET_BUILTIN (fsflags, RISCV_VOID_FTYPE_USI, hard_float)
+  DIRECT_NO_TARGET_BUILTIN (fsflags, RISCV_VOID_FTYPE_USI, hard_float),
+  DIRECT_BUILTIN (crc16b, RISCV_UHI_FTYPE_UHIUQIUHI, always),
+  DIRECT_BUILTIN (crc16h, RISCV_UHI_FTYPE_UHIUHIUHI, always)
 };
 
 /* Index I is the function declaration for riscv_builtins[I], or null if the
@@ -290,4 +298,48 @@ riscv_atomic_assign_expand_fenv (tree *hold, tree *clear, tree *update)
 		  build_call_expr (frflags, 0), NULL_TREE, NULL_TREE);
   *clear = build_call_expr (fsflags, 1, old_flags);
   *update = NULL_TREE;
+}
+
+/* Return the enumberation number of the matching builtin crc function
+   for data input width BITS and POLYNOM.  BIG_ENDIAN is set when the CRC
+   is computed starting with the most significant bit.  */
+tree
+riscv_builtin_crc_fn (int bits, unsigned HOST_WIDE_INT polynom,
+		      bool big_endian)
+{
+  int code = -1;
+  if (big_endian)
+    {
+#if 0
+      if ((polynom & ~0xffff) == 0)
+	{
+	  if (bits == 8)
+	    code = CODE_FOR_riscv_crceb_16b;
+	  else if (bits == 16)
+	    code = CODE_FOR_riscv_crceb_16h;
+	}
+#endif
+    }
+  else
+    {
+      if ((polynom & ~0xffff) == 0)
+	{
+	  if (bits == 8)
+	    code = CODE_FOR_riscv_crc16b;
+	  else if (bits == 16)
+	    code = CODE_FOR_riscv_crc16h;
+	}
+#if 0
+      else if ((polynom & ~0xffffffff) == 0)
+	{
+	  if (bits == 8)
+	    code = CODE_FOR_riscv_crc32b;
+	  else if (bits == 16)
+	    code = CODE_FOR_riscv_crc32h;
+	}
+#endif
+    }
+  if (code >= -1)
+    return GET_BUILTIN_DECL (code);
+  return NULL_TREE;
 }
