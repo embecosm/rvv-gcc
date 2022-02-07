@@ -111,5 +111,6 @@ extern gimple_opt_pass *make_pass_crc (gcc::context *ctxt);
 #endif
 
 extern tree riscv_builtin_crc_fn (int, unsigned HOST_WIDE_INT, bool);
+extern void expand_crc_lookup (rtx *operands, machine_mode);
 
 #endif /* ! GCC_RISCV_PROTOS_H */

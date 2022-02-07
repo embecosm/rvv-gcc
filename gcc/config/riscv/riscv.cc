@@ -5615,6 +5615,118 @@ riscv_asan_shadow_offset (void)
   return TARGET_64BIT ? (HOST_WIDE_INT_1 << 29) : 0;
 }
 
+static unsigned HOST_WIDE_INT
+compute_crc (unsigned HOST_WIDE_INT crc, int bits,
+	     unsigned HOST_WIDE_INT polynom)
+{
+  for (int j = 0; j < bits; j++)
+    {
+      int tmp = crc & 1;
+      crc >>= 1;
+      if (tmp)
+	crc ^= polynom;
+    }
+  return crc;
+}
+
+/* Make sure no crc table indentifiers get culled by garbage collection.  */
+static GTY(()) tree print_crc_table_id_list;
+
+rtx
+print_crc_table (int crc_bits, int data_bits, unsigned HOST_WIDE_INT polynom)
+{
+  gcc_assert (data_bits < 100);
+  gcc_assert (crc_bits < 100);
+  FILE *out = asm_out_file;
+  char buf[15+32+1];
+  static const char *mode_name[] = { "nil", "qi", "hi", "si", "di" };
+  sprintf (buf, "__gcc_crc%s%s4_" HOST_WIDE_INT_PRINT_HEX,
+	   mode_name[data_bits / BITS_PER_UNIT],
+	   mode_name[crc_bits / BITS_PER_UNIT], polynom);
+  tree ident = maybe_get_identifier (buf);
+  if (ident)
+    return gen_rtx_SYMBOL_REF (Pmode, IDENTIFIER_POINTER (ident));
+  ident = get_identifier (buf);
+  print_crc_table_id_list = build_tree_list (ident, print_crc_table_id_list);
+  rtx lab = gen_rtx_SYMBOL_REF (Pmode, IDENTIFIER_POINTER (ident));
+  unsigned n_entries = 1 << data_bits;
+  const char *entry_directive;
+  if (crc_bits == 16)
+    entry_directive = ".half";
+  else
+    gcc_unreachable ();
+#if 0 /* The linkonce directive is not supported for elf; .gnu.linkonce makes the linker script try to put this into too small an area.  */
+  asm_fprintf (out, "\t.pushsection\t%s.%s, \"a\"\n", ".gnu.linkonce.r", buf);
+  asm_fprintf (out, "\t.linkonce same_contents\n");
+#else
+  asm_fprintf (out, "\t.pushsection\t%s.%s, \"a\"\n", ".rodata", buf);
+  asm_fprintf (out, "\t.weak %s\n", buf);
+#endif
+  asm_fprintf (out, "\t.type\t%s, @object\n", buf);
+  asm_fprintf (out, "\t.size\t%s, %d\n", buf,
+	       n_entries * (crc_bits / BITS_PER_UNIT));
+  asm_fprintf (out, "%s:\n", buf);
+  asm_fprintf (out, " %s ", entry_directive);
+  gcc_assert (crc_bits == 16);
+  for (unsigned i = 0; i < n_entries; i++)
+    {
+      unsigned HOST_WIDE_INT crc = compute_crc (i, data_bits, polynom);
+      if ((unsigned long) crc == crc)
+	fprintf (out, "0x%0*lx", crc_bits / 4, (unsigned long)crc);
+      else
+	fprintf (out, HOST_WIDE_INT_PRINT_HEX, crc);
+      if (i % 8 != 7)
+	asm_fprintf (out, ", ");
+      else if (i < n_entries - 1)
+	asm_fprintf (out, "\n %s ", entry_directive);
+    }
+  asm_fprintf (out, "\n\t.popsection\n");
+  return lab;
+}
+
+void
+expand_crc_lookup (rtx *operands, machine_mode data_mode)
+{
+  machine_mode crc_mode = GET_MODE (operands[0]);
+  gcc_assert (GET_MODE (operands[1]) == crc_mode || CONST_INT_P (operands[1]));
+  if (CONST_INT_P (operands[2]))
+    gcc_assert (INTVAL (operands[2])
+		== trunc_int_for_mode (INTVAL (operands[2]), data_mode));
+  else
+    gcc_assert (data_mode == GET_MODE (operands[2]));
+  gcc_assert (GET_MODE_SIZE (data_mode) <= GET_MODE_SIZE (crc_mode));
+  gcc_assert (CONST_INT_P (operands[3]));
+  gcc_assert (INTVAL (operands[3])
+	      == trunc_int_for_mode (INTVAL (operands[3]), crc_mode));
+  unsigned HOST_WIDE_INT polynom
+    = GET_MODE_MASK (crc_mode) & INTVAL (operands[3]);
+  if (CONST_INT_P (operands[1]) && CONST_INT_P (operands[2]))
+    {
+      unsigned HOST_WIDE_INT crc_i
+	= ((INTVAL (operands[1]) & GET_MODE_MASK (crc_mode))
+	   ^ (INTVAL (operands[2]) & GET_MODE_MASK (data_mode)));
+      crc_i = compute_crc (crc_i, GET_MODE_BITSIZE (data_mode), polynom);
+      emit_insn (gen_rtx_SET (operands[0], GEN_INT (crc_i)));
+      return;
+    }
+  if (!CONST_INT_P (operands[2]) && data_mode != crc_mode)
+    operands[2] = gen_rtx_ZERO_EXTEND (crc_mode, operands[2]);
+  rtx in = force_reg (crc_mode,
+		      gen_rtx_XOR (crc_mode, operands[1], operands[2]));
+  rtx ix = gen_rtx_AND (crc_mode, in, GEN_INT (GET_MODE_MASK (data_mode)));
+  ix = gen_rtx_ZERO_EXTEND (Pmode, ix);
+  ix = gen_rtx_ASHIFT (Pmode, ix,
+		       GEN_INT (exact_log2 (GET_MODE_SIZE (crc_mode))));
+  ix = force_reg (Pmode, ix);
+  rtx tab = print_crc_table (GET_MODE_BITSIZE (crc_mode),
+			     GET_MODE_BITSIZE (data_mode), polynom);
+  tab = gen_rtx_MEM (crc_mode, gen_rtx_PLUS (Pmode, ix, tab));
+  rtx high
+    = gen_rtx_LSHIFTRT (crc_mode, in, GEN_INT (GET_MODE_BITSIZE (data_mode)));
+  rtx crc = force_reg (crc_mode, gen_rtx_XOR (crc_mode, tab, high));
+  riscv_emit_move (operands[0], crc);
+}
+
 /* Initialize the GCC target structure.  */
 #undef TARGET_ASM_ALIGNED_HI_OP
 #define TARGET_ASM_ALIGNED_HI_OP "\t.half\t"
