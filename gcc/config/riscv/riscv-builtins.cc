@@ -84,6 +84,9 @@ struct riscv_builtin_description {
 
   /* Whether the function is available.  */
   unsigned int (*avail) (void);
+
+  /* Flags like ECF_PURE / ECF_CONST.  */
+  unsigned int ecf_flags;
 };
 
 AVAIL (hard_float, TARGET_HARD_FLOAT)
@@ -101,22 +104,30 @@ AVAIL (always, 1)
 
    AVAIL is the name of the availability predicate, without the leading
    riscv_builtin_avail_.  */
-#define RISCV_BUILTIN(INSN, NAME, BUILTIN_TYPE,	FUNCTION_TYPE, AVAIL)	\
+#define RISCV_BUILTIN(INSN, NAME, BUILTIN_TYPE,	FUNCTION_TYPE, AVAIL,	\
+		      ECF_FLAGS)					\
   { CODE_FOR_riscv_ ## INSN, "__builtin_riscv_" NAME,			\
-    BUILTIN_TYPE, FUNCTION_TYPE, riscv_builtin_avail_ ## AVAIL }
+    BUILTIN_TYPE, FUNCTION_TYPE, riscv_builtin_avail_ ## AVAIL, ECF_FLAGS }
 
 /* Define __builtin_riscv_<INSN>, which is a RISCV_BUILTIN_DIRECT function
    mapped to instruction CODE_FOR_riscv_<INSN>,  FUNCTION_TYPE and AVAIL
    are as for RISCV_BUILTIN.  */
 #define DIRECT_BUILTIN(INSN, FUNCTION_TYPE, AVAIL)			\
-  RISCV_BUILTIN (INSN, #INSN, RISCV_BUILTIN_DIRECT, FUNCTION_TYPE, AVAIL)
+  RISCV_BUILTIN (INSN, #INSN, RISCV_BUILTIN_DIRECT, FUNCTION_TYPE, AVAIL, 0)
+
+/* Define __builtin_riscv_<INSN>, which is a RISCV_BUILTIN_DIRECT function
+   mapped to instruction CODE_FOR_riscv_<INSN>,  FUNCTION_TYPE and AVAIL
+   are as for RISCV_BUILTIN.  */
+#define DIRECT_CONST_BUILTIN(INSN, FUNCTION_TYPE, AVAIL)		\
+  RISCV_BUILTIN (INSN, #INSN, RISCV_BUILTIN_DIRECT,			\
+		 FUNCTION_TYPE, AVAIL, ECF_CONST)
 
 /* Define __builtin_riscv_<INSN>, which is a RISCV_BUILTIN_DIRECT_NO_TARGET
    function mapped to instruction CODE_FOR_riscv_<INSN>,  FUNCTION_TYPE
    and AVAIL are as for RISCV_BUILTIN.  */
 #define DIRECT_NO_TARGET_BUILTIN(INSN, FUNCTION_TYPE, AVAIL)		\
   RISCV_BUILTIN (INSN, #INSN, RISCV_BUILTIN_DIRECT_NO_TARGET,		\
-		FUNCTION_TYPE, AVAIL)
+		 FUNCTION_TYPE, AVAIL, 0)
 
 /* Argument types.  */
 #define RISCV_ATYPE_VOID void_type_node
@@ -136,8 +147,8 @@ AVAIL (always, 1)
 static const struct riscv_builtin_description riscv_builtins[] = {
   DIRECT_BUILTIN (frflags, RISCV_USI_FTYPE, hard_float),
   DIRECT_NO_TARGET_BUILTIN (fsflags, RISCV_VOID_FTYPE_USI, hard_float),
-  DIRECT_BUILTIN (crcqihi4, RISCV_UHI_FTYPE_UHIUQIUHI, always),
-  DIRECT_BUILTIN (crchihi4, RISCV_UHI_FTYPE_UHIUHIUHI, always)
+  DIRECT_CONST_BUILTIN (crcqihi4, RISCV_UHI_FTYPE_UHIUQIUHI, always),
+  DIRECT_CONST_BUILTIN (crchihi4, RISCV_UHI_FTYPE_UHIUHIUHI, always)
 };
 
 /* Index I is the function declaration for riscv_builtins[I], or null if the
@@ -189,6 +200,7 @@ riscv_init_builtins (void)
 	  tree type = riscv_build_function_type (d->prototype);
 	  riscv_builtin_decls[i]
 	    = add_builtin_function (d->name, type, i, BUILT_IN_MD, NULL, NULL);
+	  set_call_expr_flags (riscv_builtin_decls[i], d->ecf_flags);
 	  riscv_builtin_decl_index[d->icode] = i;
 	}
     }
