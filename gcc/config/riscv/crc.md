@@ -73,11 +73,13 @@
 ;;  return crcu16_1 (data, crc, xor_val);
 ;;}
 
+;; First mode is for the data that is being processed, the second is for
+;; input crc, polynom and output crc.
 
-(define_expand "riscv_crc16b"
+(define_expand "riscv_crcqihi4"
   [(pc)]
 )
 
-(define_expand "riscv_crc16h"
+(define_expand "riscv_crchihi4"
   [(pc)]
 )

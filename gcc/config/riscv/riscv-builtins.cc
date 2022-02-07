@@ -136,8 +136,8 @@ AVAIL (always, 1)
 static const struct riscv_builtin_description riscv_builtins[] = {
   DIRECT_BUILTIN (frflags, RISCV_USI_FTYPE, hard_float),
   DIRECT_NO_TARGET_BUILTIN (fsflags, RISCV_VOID_FTYPE_USI, hard_float),
-  DIRECT_BUILTIN (crc16b, RISCV_UHI_FTYPE_UHIUQIUHI, always),
-  DIRECT_BUILTIN (crc16h, RISCV_UHI_FTYPE_UHIUHIUHI, always)
+  DIRECT_BUILTIN (crcqihi4, RISCV_UHI_FTYPE_UHIUQIUHI, always),
+  DIRECT_BUILTIN (crchihi4, RISCV_UHI_FTYPE_UHIUHIUHI, always)
 };
 
 /* Index I is the function declaration for riscv_builtins[I], or null if the
@@ -303,6 +303,10 @@ riscv_atomic_assign_expand_fenv (tree *hold, tree *clear, tree *update)
 /* Return the enumberation number of the matching builtin crc function
    for data input width BITS and POLYNOM.  BIG_ENDIAN is set when the CRC
    is computed starting with the most significant bit.  */
+/* ??? We are assuming the input / output crc is 16 bits if the polynom
+   fits in 16 bits, 32 bit otherwise.  Although it makes no sense to
+   have a wider polynom than the output, otherwise these should be
+   independent.  */
 tree
 riscv_builtin_crc_fn (int bits, unsigned HOST_WIDE_INT polynom,
 		      bool big_endian)
@@ -314,9 +318,9 @@ riscv_builtin_crc_fn (int bits, unsigned HOST_WIDE_INT polynom,
       if ((polynom & ~0xffff) == 0)
 	{
 	  if (bits == 8)
-	    code = CODE_FOR_riscv_crceb_16b;
+	    code = CODE_FOR_riscv_crceb_qihi4;
 	  else if (bits == 16)
-	    code = CODE_FOR_riscv_crceb_16h;
+	    code = CODE_FOR_riscv_crceb_hihi4;
 	}
 #endif
     }
@@ -325,17 +329,17 @@ riscv_builtin_crc_fn (int bits, unsigned HOST_WIDE_INT polynom,
       if ((polynom & ~0xffff) == 0)
 	{
 	  if (bits == 8)
-	    code = CODE_FOR_riscv_crc16b;
+	    code = CODE_FOR_riscv_crcqihi4;
 	  else if (bits == 16)
-	    code = CODE_FOR_riscv_crc16h;
+	    code = CODE_FOR_riscv_crchihi4;
 	}
 #if 0
       else if ((polynom & ~0xffffffff) == 0)
 	{
 	  if (bits == 8)
-	    code = CODE_FOR_riscv_crc32b;
+	    code = CODE_FOR_riscv_crcqisi4;
 	  else if (bits == 16)
-	    code = CODE_FOR_riscv_crc32h;
+	    code = CODE_FOR_riscv_crchisi4;
 	}
 #endif
     }
