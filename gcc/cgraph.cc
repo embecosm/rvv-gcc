@@ -3812,7 +3812,8 @@ cgraph_node::verify_node (void)
 			    }
 			  e->aux = (void *)1;
 			}
-		      else if (decl)
+		      else if (decl
+			       && !TREE_READONLY (decl) && !DECL_PURE_P (decl))
 			{
 			  error ("missing callgraph edge for call stmt:");
 			  cgraph_debug_gimple_stmt (this_cfun, stmt);
