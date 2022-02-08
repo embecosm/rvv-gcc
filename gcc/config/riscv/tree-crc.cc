@@ -122,6 +122,9 @@ public:
   tree crc_state;
   tree crc_data;
   unsigned HOST_WIDE_INT xor_mask;
+  tree iter_var;
+  HOST_WIDE_INT first_iter_num, last_iter_num;
+  gimple *match_start;
 
   bool tree_is_int_const (const_tree expr, int val)
     {
@@ -143,7 +146,7 @@ public:
 	      if ((gimple_code (t) == GIMPLE_ASSIGN) && (gimple_assign_rhs_code(t) == BIT_XOR_EXPR))
 		{
 		  tree op2 = gimple_assign_rhs2 (t);
-		  if (TREE_CODE (op2) != INTEGER_CST)
+		  if (!tree_fits_uhwi_p (op2))
 		    return false;
 		  xor_mask = TREE_INT_CST_LOW (op2);
 		  stmt_match++;
@@ -378,8 +381,12 @@ public:
 	    {
 	      if ((gimple_code (t) == GIMPLE_COND)
 		  && (gimple_cond_code(t) == LE_EXPR)
-		  && (tree_is_int_const (gimple_cond_rhs (t), 7)))
-		stmt_match++;
+		  && tree_fits_shwi_p (gimple_cond_rhs (t)))
+		{
+		  iter_var = gimple_cond_lhs (t);
+		  last_iter_num = tree_to_shwi (gimple_cond_rhs (t));
+		  stmt_match++;
+		}
 	      else
 		return false;
 	    }
@@ -422,11 +429,51 @@ public:
       edge false_edge;
       extract_true_false_edges_from_block (bb, &true_edge, &false_edge);
 
-	// Don't loop back to 3
-      if (/*match_bb3 (true_edge->dest) &&*/ match_bb11 (false_edge->dest))
+      if (match_bb3 (true_edge->dest, bb) && match_bb11 (false_edge->dest))
 	return true;
       else
 	return false;
+    }
+
+  bool match_bb3 (basic_block bb, basic_block latch_bb)
+    {
+      /* Verify that this block has two predecessors.  */
+      edge e;
+      edge_iterator ei;
+
+      basic_block prev_bb = NULL;
+      FOR_EACH_EDGE (e, ei, bb->preds)
+	if (e->src == latch_bb)
+	  continue;
+	else if (prev_bb == NULL)
+	  prev_bb = e->src;
+	else
+	  return false;
+
+      /* Verify match_start is in this block, and that iter_var is not
+	 changed between the block start and match_start.  */
+      gimple_stmt_iterator gsi;
+
+      for (gsi = gsi_start_nondebug_bb (bb); ; gsi_next_nondebug (&gsi))
+	{
+	  if (gsi_end_p (gsi))
+	    return false;
+	  gimple *t = gsi_stmt (gsi);
+	  if (t == match_start)
+	    break;
+	  /* FIXME:
+	     Verify t does not change iter_var or anything else important.  */
+	  if ((gimple_code (t) == GIMPLE_ASSIGN)
+	      && (gimple_assign_rhs_code(t) == NOP_EXPR))
+	    continue;
+	  return false;
+	}
+
+      /* FIXME: verify iter_var is set in PREV_BB, and find the actual
+	 value it is set to.  */
+      first_iter_num = 0;
+      /* FIXME: check that the type allows safe a safe loop test in bb10.  */
+      return true;
     }
 
   bool match_bb11 (basic_block bb)
@@ -559,7 +606,10 @@ pass_crc::execute (function *fun)
 	    {
 	      if ((gimple_code (t) == GIMPLE_ASSIGN)
 		  && (gimple_assign_rhs_code(t) == NOP_EXPR))
-		stmt_match++;
+		{
+		  match_start = t;
+		  stmt_match++;
+		}
 	      else
 		break;
 	    }
@@ -659,10 +709,9 @@ pass_crc::execute (function *fun)
 		    debug_tree(crc_state);
 		    */
 
-		    /* FIXME: find out number of bits from number of loop
-		       iterations, use instead of "8" below.  */
 		    if (crc_data && crc_state && crc_result_bb
-			&& insert_crc (8, xor_mask))
+			&& insert_crc (last_iter_num + 1 - first_iter_num,
+				       xor_mask))
 		      changed = true;
 		}
 	      else
@@ -673,7 +722,7 @@ pass_crc::execute (function *fun)
 
 	}
 
-      if (0 && changed)
+      if (changed)
 	{
 	  /* Cached scalar evolutions now may refer to wrong or non-existing
 	     loops.  */
