@@ -5716,10 +5716,15 @@ expand_crc_lookup (rtx *operands, machine_mode data_mode)
 
   if (!CONST_INT_P (operands[1]) && crc_mode != mode)
     operands[1] = gen_rtx_SUBREG (mode, operands[1], 0);
+#if 1
   if (!CONST_INT_P (operands[2]) && data_mode != crc_mode)
     operands[2] = gen_rtx_ZERO_EXTEND (mode, operands[2]);
-  else if (data_mode != mode)
-    operands[2] = gen_rtx_SUBREG (mode, operands[1], 0);
+  else if (!CONST_INT_P (operands[2]) && data_mode != mode)
+    operands[2] = gen_rtx_SUBREG (mode, operands[2], 0);
+#else
+  if (!CONST_INT_P (operands[2]) && data_mode != mode)
+    operands[2] = gen_rtx_SUBREG (mode, operands[2], 0);
+#endif
   rtx in = force_reg (mode, gen_rtx_XOR (mode, operands[1], operands[2]));
   rtx ix = gen_rtx_AND (mode, in, GEN_INT (GET_MODE_MASK (data_mode)));
   if (mode != Pmode)
