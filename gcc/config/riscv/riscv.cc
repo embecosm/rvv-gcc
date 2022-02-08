@@ -5716,15 +5716,8 @@ expand_crc_lookup (rtx *operands, machine_mode data_mode)
 
   if (!CONST_INT_P (operands[1]) && crc_mode != mode)
     operands[1] = gen_rtx_SUBREG (mode, operands[1], 0);
-#if 1
-  if (!CONST_INT_P (operands[2]) && data_mode != crc_mode)
-    operands[2] = gen_rtx_ZERO_EXTEND (mode, operands[2]);
-  else if (!CONST_INT_P (operands[2]) && data_mode != mode)
-    operands[2] = gen_rtx_SUBREG (mode, operands[2], 0);
-#else
   if (!CONST_INT_P (operands[2]) && data_mode != mode)
     operands[2] = gen_rtx_SUBREG (mode, operands[2], 0);
-#endif
   rtx in = force_reg (mode, gen_rtx_XOR (mode, operands[1], operands[2]));
   rtx ix = gen_rtx_AND (mode, in, GEN_INT (GET_MODE_MASK (data_mode)));
   if (mode != Pmode)
@@ -5737,8 +5730,9 @@ expand_crc_lookup (rtx *operands, machine_mode data_mode)
   tab = gen_rtx_MEM (crc_mode, gen_rtx_PLUS (Pmode, ix, tab));
   if (crc_mode != mode)
     tab = gen_rtx_ZERO_EXTEND (mode, tab);
-  rtx high
-    = gen_rtx_LSHIFTRT (mode, in, GEN_INT (GET_MODE_BITSIZE (data_mode)));
+  /* We assume operands[1] is passed in suitably zero-extended for its type.  */
+  rtx high = gen_rtx_LSHIFTRT (mode, operands[1],
+			       GEN_INT (GET_MODE_BITSIZE (data_mode)));
   rtx crc = force_reg (mode, gen_rtx_XOR (mode, tab, high));
   riscv_emit_move (operands[0], gen_rtx_SUBREG (crc_mode, crc, 0));
 }
