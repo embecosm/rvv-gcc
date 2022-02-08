@@ -5709,22 +5709,33 @@ expand_crc_lookup (rtx *operands, machine_mode data_mode)
       emit_insn (gen_rtx_SET (operands[0], GEN_INT (crc_i)));
       return;
     }
+  machine_mode mode = crc_mode;
+  if (GET_MODE_SIZE (mode) < GET_MODE_SIZE (word_mode))
+    mode = word_mode;
+  gcc_assert (GET_MODE_SIZE (mode) == GET_MODE_SIZE (Pmode));
+
+  if (!CONST_INT_P (operands[1]) && crc_mode != mode)
+    operands[1] = gen_rtx_SUBREG (mode, operands[1], 0);
   if (!CONST_INT_P (operands[2]) && data_mode != crc_mode)
-    operands[2] = gen_rtx_ZERO_EXTEND (crc_mode, operands[2]);
-  rtx in = force_reg (crc_mode,
-		      gen_rtx_XOR (crc_mode, operands[1], operands[2]));
-  rtx ix = gen_rtx_AND (crc_mode, in, GEN_INT (GET_MODE_MASK (data_mode)));
-  ix = gen_rtx_ZERO_EXTEND (Pmode, ix);
+    operands[2] = gen_rtx_ZERO_EXTEND (mode, operands[2]);
+  else if (data_mode != mode)
+    operands[2] = gen_rtx_SUBREG (mode, operands[1], 0);
+  rtx in = force_reg (mode, gen_rtx_XOR (mode, operands[1], operands[2]));
+  rtx ix = gen_rtx_AND (mode, in, GEN_INT (GET_MODE_MASK (data_mode)));
+  if (mode != Pmode)
+    ix = gen_rtx_SUBREG (Pmode, ix, 0);
   ix = gen_rtx_ASHIFT (Pmode, ix,
 		       GEN_INT (exact_log2 (GET_MODE_SIZE (crc_mode))));
   ix = force_reg (Pmode, ix);
   rtx tab = print_crc_table (GET_MODE_BITSIZE (crc_mode),
 			     GET_MODE_BITSIZE (data_mode), polynom);
   tab = gen_rtx_MEM (crc_mode, gen_rtx_PLUS (Pmode, ix, tab));
+  if (crc_mode != mode)
+    tab = gen_rtx_ZERO_EXTEND (mode, tab);
   rtx high
-    = gen_rtx_LSHIFTRT (crc_mode, in, GEN_INT (GET_MODE_BITSIZE (data_mode)));
-  rtx crc = force_reg (crc_mode, gen_rtx_XOR (crc_mode, tab, high));
-  riscv_emit_move (operands[0], crc);
+    = gen_rtx_LSHIFTRT (mode, in, GEN_INT (GET_MODE_BITSIZE (data_mode)));
+  rtx crc = force_reg (mode, gen_rtx_XOR (mode, tab, high));
+  riscv_emit_move (operands[0], gen_rtx_SUBREG (crc_mode, crc, 0));
 }
 
 /* Initialize the GCC target structure.  */
