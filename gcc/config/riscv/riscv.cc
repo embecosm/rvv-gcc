@@ -815,6 +815,55 @@ riscv_valid_offset_p (rtx x, machine_mode mode)
   return true;
 }
 
+/* A pass like split_after_reload, but sets its own completed flag.  */
+
+bool split_loads_completed;
+
+namespace {
+
+const pass_data pass_data_split_loads =
+{
+  RTL_PASS, /* type */
+  "split_loads", /* name */
+  OPTGROUP_NONE, /* optinfo_flags */
+  TV_NONE, /* tv_id */
+  0, /* properties_required */
+  0, /* properties_provided */
+  0, /* properties_destroyed */
+  0, /* todo_flags_start */
+  0, /* todo_flags_finish */
+};
+
+class pass_split_loads: public rtl_opt_pass
+{
+public:
+  pass_split_loads (gcc::context *ctxt)
+    : rtl_opt_pass (pass_data_split_loads, ctxt)
+  {}
+
+  /* opt_pass methods: */
+  virtual bool gate (function *)
+    {
+      return 1;
+    }
+
+  virtual unsigned int execute (function *)
+    {
+      split_loads_completed = true;
+      split_all_insns_noflow ();
+      return 0;
+    }
+
+}; // class pass_split_after_reload
+
+} // anon namespace
+
+rtl_opt_pass *
+make_pass_split_loads (gcc::context *ctxt)
+{
+  return new pass_split_loads (ctxt);
+}
+
 /* Should a symbol of type SYMBOL_TYPE should be split in two?  */
 
 bool
@@ -824,11 +873,7 @@ riscv_split_symbol_type (enum riscv_symbol_type symbol_type)
     return true;
 
   if (!TARGET_EXPLICIT_RELOCS
-#if 0 /* gives terrible code */
-      && (!(lra_in_progress || reload_completed)
-#else
-      && (!(reload_completed && strcmp (current_pass->name, "reload") != 0)
-#endif
+      && (!split_loads_completed
 	  || !TARGET_LATE_EXPLICIT_RELOCS))
     return false;
 
@@ -5137,9 +5182,23 @@ riscv_option_override (void)
       register_pass (&pass_crc_info);
     }
     {
-      opt_pass *split = make_pass_split_after_reload (g);
+      opt_pass *split = make_pass_split_loads (g);
       struct register_pass_info pass_split_info
-	= { split, "reload", 1, PASS_POS_INSERT_AFTER };
+#if 0
+	/* Most of the cse and loop optimization that the splits might hurt
+	   should have been done after cse2.  */
+	= { split, "cse2", 1, PASS_POS_INSERT_AFTER};
+#elif 1
+	/* Combine would be an opportunity to combine lowpart ADDIs
+	   into memory accesses.  If we actually kept the constant loads
+	   separate to enable (g)cse in the first place.  */
+	= { split, "combine", 1, PASS_POS_INSERT_BEFORE};
+#else
+	/* We get a small amout of cse from lra, so if we don't want to
+	   loose that, we should postpone the splitting until after
+	   "reload" (actually lra for us).  */
+	= { split, "reload", 1, PASS_POS_INSERT_AFTER};
+#endif
       register_pass (&pass_split_info);
     }
 }

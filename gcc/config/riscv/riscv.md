@@ -1578,12 +1578,11 @@
 		      MAX_MACHINE_MODE, &operands[3], TRUE);
 })
 
+; For when splitting is left to after reload / lra.
 (define_split
   [(set (match_operand:P 0 "register_operand")
 	(match_operand:P 1))]
-  "reload_completed
-   && riscv_split_symbol (operands[2], operands[1],
-			  MAX_MACHINE_MODE, NULL, TRUE)"
+  "riscv_split_symbol (operands[2], operands[1], MAX_MACHINE_MODE, NULL, TRUE)"
   [(set (match_dup 0) (match_dup 2))]
 {
   riscv_split_symbol (operands[0], operands[1],
