@@ -823,7 +823,13 @@ riscv_split_symbol_type (enum riscv_symbol_type symbol_type)
   if (symbol_type == SYMBOL_TLS_LE)
     return true;
 
-  if (!TARGET_EXPLICIT_RELOCS)
+  if (!TARGET_EXPLICIT_RELOCS
+#if 0 /* gives terrible code */
+      && (!(lra_in_progress || reload_completed)
+#else
+      && (!(reload_completed && strcmp (current_pass->name, "reload") != 0)
+#endif
+	  || !TARGET_LATE_EXPLICIT_RELOCS))
     return false;
 
   return symbol_type == SYMBOL_ABSOLUTE || symbol_type == SYMBOL_PCREL;
@@ -5129,6 +5135,12 @@ riscv_option_override (void)
 	   in 2017; does this still work in the changed context?  */
 	= { crc, "local-fnsummary", 1, PASS_POS_INSERT_AFTER };
       register_pass (&pass_crc_info);
+    }
+    {
+      opt_pass *split = make_pass_split_after_reload (g);
+      struct register_pass_info pass_split_info
+	= { split, "reload", 1, PASS_POS_INSERT_AFTER };
+      register_pass (&pass_split_info);
     }
 }
 

@@ -127,6 +127,10 @@ mexplicit-relocs
 Target Mask(EXPLICIT_RELOCS)
 Use %reloc() operators, rather than assembly macros, to load addresses.
 
+mlate-explicit-relocs
+Target Mask(LATE_EXPLICIT_RELOCS)
+Use %reloc() operators, rather than assembly macros, to load addresses, but do so with a late split to allow more code hoisting / loop optimizations than -mexplicit-relocs.
+
 mrelax
 Target Bool Var(riscv_mrelax) Init(1)
 Take advantage of linker relaxations to reduce the number of instructions
