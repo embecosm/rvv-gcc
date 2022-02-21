@@ -1,0 +1,124 @@
+We want to recognize the crc computation from a trademarked benchmark -
+which may and may not be named, the license is contradictory on this,
+although it is mostly including the Apache License 2.0.
+The code is - modified for context-free types:
+
+#include <stdint.h>
+
+uint16_t crcu8(uint8_t data, uint16_t crc)
+{
+  uint8_t i=0,x16=0,carry=0;
+
+  for (i = 0; i < 8; i++)
+    {
+      x16 = (uint8_t)((data & 1) ^ ((uint8_t)crc & 1));
+      data >>= 1;
+
+      if (x16 == 1)
+        {
+          crc ^= 0x4002;
+          carry = 1;
+        }
+      else
+        carry = 0;
+      crc >>= 1;
+      if (carry)
+        crc |= 0x8000;
+      else
+        crc &= 0x7fff;
+    }
+  return crc;
+}
+
+And this looks like this in the *.c.029t.local-fnsummary1 dump file:
+
+;; Function crcu8 (crcu8, funcdef_no=28, decl_uid=1892, cgraph_uid=29, symbol_order=37)
+
+
+Analyzing function body size: crcu8/37
+
+IPA function summary for crcu8/37 inlinable
+  global time:     16.000000
+  self size:       17
+  global size:     0
+  min size:       0
+  self stack:      0
+  global stack:    0
+    size:14.000000, time:14.000000
+    size:3.000000, time:2.000000,  executed if:(not inlined)
+  calls:
+
+ee_u16 crcu8 (ee_u8 data, ee_u16 crc)
+{
+  ee_u8 carry;
+  ee_u8 x16;
+  ee_u8 i;
+  signed char _1;
+  signed char data.63_2;
+  signed char _3;
+  unsigned char _4;
+  unsigned char i.64_5;
+  ee_u16 _18;
+
+  <bb 2> :
+  i_12 = 0;
+  x16_13 = 0;
+  carry_14 = 0;
+  i_15 = 0;
+  goto <bb 10>; [INV]
+
+  <bb 3> :
+  _1 = (signed char) crc_9;
+  data.63_2 = (signed char) data_6;
+  _3 = _1 ^ data.63_2;
+  _4 = (unsigned char) _3;
+  x16_20 = _4 & 1;
+  data_21 = data_6 >> 1;
+  if (x16_20 == 1)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  crc_23 = crc_9 ^ 16386;
+  carry_24 = 1;
+  goto <bb 6>; [INV]
+
+  <bb 5> :
+  carry_22 = 0;
+
+  <bb 6> :
+  # crc_7 = PHI <crc_23(4), crc_9(5)>
+  # carry_11 = PHI <carry_24(4), carry_22(5)>
+  crc_25 = crc_7 >> 1;
+  if (carry_11 != 0)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  crc_27 = crc_25 | 32768;
+  goto <bb 9>; [INV]
+
+  <bb 8> :
+  crc_26 = crc_25 & 32767;
+
+  <bb 9> :
+  # crc_8 = PHI <crc_27(7), crc_26(8)>
+  i.64_5 = i_10;
+  i_28 = i.64_5 + 1;
+
+  <bb 10> :
+  # data_6 = PHI <data_16(D)(2), data_21(9)>
+  # crc_9 = PHI <crc_17(D)(2), crc_8(9)>
+  # i_10 = PHI <i_15(2), i_28(9)>
+  if (i_10 <= 7)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 11> :
+  _18 = crc_9;
+  return _18;
+
+}

@@ -99,6 +99,16 @@ const pass_data pass_data_crc =
   TODO_update_ssa, /* todo_flags_finish */
 };
 
+/* The optimal way to implement CRC computations depends on the CPU, but
+   we need first recognize the computation as such before we can select a
+   suitable method.
+   For now, we just match the calculation of a 16 bit crc from 8-bit data
+   and a previous crc as performed by a trademarked benchmark that is
+   promoted as a replacement for Dhrystone.
+   You can add other recognizers as desired.
+   For new code you want to be optimized, you might also consider to use
+   the GCC built-in functions.  */
+
 class pass_crc : public gimple_opt_pass
 {
 public:
@@ -119,22 +129,21 @@ public:
 
   tree crc_result;
   basic_block crc_result_bb;
-  tree crc_state;
-  tree crc_data;
+  tree crc_state, crc_latch, crc_joined = NULL_TREE, crc_rejoined = NULL_TREE;
+  tree crc_data, data_top, data_latch;
+  tree bit_joined = NULL_TREE;
   unsigned HOST_WIDE_INT xor_mask;
-  tree iter_var;
   HOST_WIDE_INT first_iter_num, last_iter_num;
-  gimple *match_start;
-
-  bool tree_is_int_const (const_tree expr, int val)
-    {
-      return (TREE_CODE (expr) == INTEGER_CST) && wi::eq_p (wi::to_widest (expr), val);
-    }
+  basic_block bb3, bb6 = NULL, bb9 = NULL;
 
   bool match_bb4 (basic_block bb)
     {
       int stmt_match = 0;
       gimple_stmt_iterator gsi;
+      tree bit_out, crc_out;
+
+      if (!single_pred_p (bb))
+	return false;
 
       for (gsi = gsi_start_nondebug_bb (bb); !gsi_end_p (gsi);
 	   gsi_next_nondebug (&gsi))
@@ -143,11 +152,14 @@ public:
 
 	  if (stmt_match == 0)
 	    {
-	      if ((gimple_code (t) == GIMPLE_ASSIGN) && (gimple_assign_rhs_code(t) == BIT_XOR_EXPR))
+	      if (is_gimple_assign (t)
+		  && gimple_assign_rhs_code(t) == BIT_XOR_EXPR
+		  && gimple_assign_rhs1 (t) == crc_latch)
 		{
 		  tree op2 = gimple_assign_rhs2 (t);
 		  if (!tree_fits_uhwi_p (op2))
 		    return false;
+		  crc_out = gimple_assign_lhs (t);
 		  xor_mask = TREE_INT_CST_LOW (op2);
 		  stmt_match++;
 		}
@@ -156,30 +168,40 @@ public:
 	    }
 	  else if (stmt_match == 1)
 	    {
-	      if (gimple_code (t) == GIMPLE_ASSIGN)
-		stmt_match++;
-	      else
+	      if (!gimple_assign_single_p (t))
 		return false;
+
+	      bit_out = gimple_assign_lhs (t);
+	      tree rhs = gimple_assign_rhs1 (t);
+	      int prec = TYPE_PRECISION (TREE_TYPE (bit_out));
+
+	      if (!expr_not_equal_to (rhs, wi::zero (prec)))
+		return false;
+
+	      stmt_match++;
 	    }
 	  else
 	    return false;
 	}
+      if (stmt_match < 2)
+	return false;
 
-      edge e;
-      edge_iterator ei;
-      FOR_EACH_EDGE (e, ei, bb->succs)
-	{
-	  if (!match_bb6 (e->dest))
-	    return false;
-	}
+      edge e = single_succ_edge (bb);
 
-      return true;
+      if (!e)
+	return false;
+
+      return match_bb6 (e, bit_out, crc_out);
     }
 
   bool match_bb5 (basic_block bb)
     {
       int stmt_match = 0;
       gimple_stmt_iterator gsi;
+      tree bit_out;
+
+      if (!single_pred_p (bb))
+	return false;
 
       for (gsi = gsi_start_nondebug_bb (bb); !gsi_end_p (gsi);
 	   gsi_next_nondebug (&gsi))
@@ -188,51 +210,85 @@ public:
 
 	  if (stmt_match == 0)
 	    {
-	      if ((gimple_code (t) == GIMPLE_ASSIGN)
-		  && (gimple_assign_rhs_code(t) == BIT_XOR_EXPR))
-		stmt_match++;
-	      else
+	      if (!gimple_assign_single_p (t)
+		  || !integer_zerop (gimple_assign_rhs1 (t)))
 		return false;
+	      bit_out = gimple_assign_lhs (t);
+
+	      stmt_match++;
 	    }
 	  else
 	    return false;
 	}
+      if (stmt_match < 1)
+	return false;
 
-      edge e;
-      edge_iterator ei;
-      FOR_EACH_EDGE (e, ei, bb->succs)
-	{
-	  if (!match_bb6 (e->dest))
-	    return false;
-	}
+      edge e = single_succ_edge (bb);
 
-      return true;
+      if (!e)
+	return false;
+
+      return match_bb6 (e, bit_out, crc_latch);
     }
 
-  bool match_bb6 (basic_block bb)
+  bool match_bb6 (edge e, tree bit_in, tree crc_in)
     {
-      int stmt_match = 0;
-      gimple_stmt_iterator gsi;
+      basic_block bb = e->dest;
 
-      for (gsi = gsi_start_nondebug_bb (bb); !gsi_end_p (gsi);
-	   gsi_next_nondebug (&gsi))
+      if (EDGE_COUNT (bb->preds) != 2)
+	return false;
+
+      int phi_match = 0;
+
+      for (gphi_iterator gsi = gsi_start_phis (bb); !gsi_end_p (gsi);
+	   gsi_next (&gsi))
+	{
+	  gphi *phi = gsi.phi ();
+	  tree val = PHI_ARG_DEF_FROM_EDGE (phi, e);
+	  tree *joinp;
+
+	  if (val == bit_in)
+	    joinp = &bit_joined, phi_match++;
+	  else if (val == crc_in)
+	    joinp = &crc_joined, phi_match++;
+
+	  if (!*joinp)
+	    *joinp = PHI_RESULT (phi);
+	  else if (*joinp != PHI_RESULT (phi))
+	    return false;
+	}
+      if (phi_match < 2)
+	return false;
+
+      if (bb6 != NULL)
+	return bb == bb6;
+      bb6 = bb;
+
+      int stmt_match = 0;
+      tree crc_shifted;
+
+      for (gimple_stmt_iterator gsi = gsi_start_nondebug_bb (bb);
+	   !gsi_end_p (gsi); gsi_next_nondebug (&gsi))
 	{
 	  gimple *t = gsi_stmt (gsi);
 
 	  if (stmt_match == 0)
 	    {
-	      if ((gimple_code (t) == GIMPLE_ASSIGN)
-		  && (gimple_assign_rhs_code(t) == RSHIFT_EXPR)
-		  && integer_onep (gimple_op (t, 2)))
-		stmt_match++;
-	      else
+	      if (!is_gimple_assign (t)
+		  || gimple_assign_rhs_code(t) != RSHIFT_EXPR
+		  || gimple_assign_rhs1 (t) != crc_joined
+		  || !TYPE_UNSIGNED (TREE_TYPE (crc_joined))
+		  || !integer_onep (gimple_assign_rhs2 (t)))
 		return false;
+	      stmt_match++;
+	      crc_shifted = gimple_assign_lhs (t);
 	    }
 	  else if (stmt_match == 1)
 	    {
 	      if ((gimple_code (t) == GIMPLE_COND)
 		  && (gimple_cond_code(t) == NE_EXPR)
-		  && (tree_is_int_const (gimple_cond_rhs (t), 0)))
+		  && gimple_cond_lhs (t) == bit_joined
+		  && (integer_zerop (gimple_cond_rhs (t))))
 		stmt_match++;
 	      else
 		return false;
@@ -240,21 +296,28 @@ public:
 	  else
 	    return false;
 	}
+      if (stmt_match < 2)
+	return false;
 
       edge true_edge;
       edge false_edge;
       extract_true_false_edges_from_block (bb, &true_edge, &false_edge);
 
-      if (match_bb7 (true_edge->dest) && match_bb8 (false_edge->dest))
+      if (match_bb7 (true_edge->dest, crc_shifted)
+	  && match_bb8 (false_edge->dest, crc_shifted))
 	return true;
       else
 	return false;
     }
 
-  bool match_bb7 (basic_block bb)
+  bool match_bb7 (basic_block bb, tree crc_in)
     {
       int stmt_match = 0;
       gimple_stmt_iterator gsi;
+      tree crc_ored;
+
+      if (!single_pred_p (bb))
+	return false;
 
       for (gsi = gsi_start_nondebug_bb (bb); !gsi_end_p (gsi);
 	   gsi_next_nondebug (&gsi))
@@ -263,73 +326,44 @@ public:
 
 	  if (stmt_match == 0)
 	    {
-	      if ((gimple_code (t) == GIMPLE_ASSIGN) && (gimple_assign_rhs_code(t) == BIT_IOR_EXPR))
-		{
-		  tree op2 = gimple_assign_rhs2 (t);
-		  int prec
-		    = TYPE_PRECISION (TREE_TYPE (gimple_assign_rhs1 (t)));
-		  if (TREE_CODE (op2) != INTEGER_CST
-		      || (TREE_INT_CST_LOW (op2)
-			  & ((1 << (prec - 1)) - 1)))
-		    return false;
-		  xor_mask = TREE_INT_CST_LOW (op2) | (xor_mask >> 1);
-		  stmt_match++;
-		}
-	      else
+	      if (!is_gimple_assign(t)
+		  || gimple_assign_rhs_code(t) != BIT_IOR_EXPR
+		  || gimple_assign_rhs1 (t) != crc_in)
 		return false;
+
+	      tree op2 = gimple_assign_rhs2 (t);
+	      int prec = TYPE_PRECISION (TREE_TYPE (gimple_assign_rhs1 (t)));
+	      if (TREE_CODE (op2) != INTEGER_CST
+		  || prec > HOST_BITS_PER_INT
+		  || (TREE_INT_CST_LOW (op2)
+		      & ((HOST_WIDE_INT_C (1) << (prec - 1)) - 1)))
+		return false;
+	      xor_mask = TREE_INT_CST_LOW (op2) | (xor_mask >> 1);
+	      crc_ored = gimple_assign_lhs (t);
+	      stmt_match++;
 	    }
 	  else
 	    return false;
 	}
+      if (stmt_match < 1)
+	return false;
 
-      edge e;
-      edge_iterator ei;
-      FOR_EACH_EDGE (e, ei, bb->succs)
-	{
-	  if (!match_bb9 (e->dest))
-	    return false;
-	}
+      edge e = single_succ_edge (bb);
 
+      if (!e)
+	return false;
 
-      return true;
+      return match_bb9 (e, crc_ored);
     }
 
-  bool match_bb8 (basic_block bb)
+  bool match_bb8 (basic_block bb, tree crc_in)
     {
       int stmt_match = 0;
       gimple_stmt_iterator gsi;
+      tree crc_anded;
 
-      for (gsi = gsi_start_nondebug_bb (bb); !gsi_end_p (gsi); gsi_next_nondebug (&gsi))
-	{
-	  gimple *t = gsi_stmt (gsi);
-
-	  if (stmt_match == 0)
-	    {
-	      if ((gimple_code (t) == GIMPLE_ASSIGN) && (gimple_assign_rhs_code(t) == BIT_AND_EXPR))
-		stmt_match++;
-	      else
-		return false;
-	    }
-	  else
-	    return false;
-	}
-
-      edge e;
-      edge_iterator ei;
-      FOR_EACH_EDGE (e, ei, bb->succs)
-	{
-	  if (!match_bb9 (e->dest))
-	    return false;
-	}
-
-
-      return true;
-    }
-
-  bool match_bb9 (basic_block bb)
-    {
-      int stmt_match = 0;
-      gimple_stmt_iterator gsi;
+      if (!single_pred_p (bb))
+	return false;
 
       for (gsi = gsi_start_nondebug_bb (bb); !gsi_end_p (gsi);
 	   gsi_next_nondebug (&gsi))
@@ -338,37 +372,131 @@ public:
 
 	  if (stmt_match == 0)
 	    {
-	      if ((gimple_code (t) == GIMPLE_ASSIGN))
-		stmt_match++;
-	      else
+	      if (! is_gimple_assign (t)
+		  || gimple_assign_rhs_code(t) != BIT_AND_EXPR
+		  || gimple_assign_rhs1 (t) != crc_in)
 		return false;
+
+	      tree op1 = gimple_assign_rhs1 (t);
+	      tree op2 = gimple_assign_rhs2 (t);
+	      int prec = TYPE_PRECISION (TREE_TYPE (op1));
+
+	      if (op1 != crc_in
+		  || TREE_CODE (op2) != INTEGER_CST
+		  || prec > HOST_BITS_PER_INT
+		  || (~TREE_INT_CST_LOW (op2)
+		      & ((HOST_WIDE_INT_C (1) << (prec - 1)) - 1)))
+		return false;
+
+	      if (!TYPE_UNSIGNED (TREE_TYPE (op1))
+		  && (~TREE_INT_CST_LOW (op2)
+		      & (HOST_WIDE_INT_C (1) << (prec - 1))))
+		return false;
+
+	      crc_anded = gimple_assign_lhs (t);
+	      stmt_match++;
+	    }
+	  else
+	    return false;
+	}
+      if (stmt_match < 1)
+	return false;
+
+      edge e = single_succ_edge (bb);
+
+      if (!e)
+	return false;
+
+      return match_bb9 (e, crc_anded);
+    }
+
+  bool match_bb9 (edge e, tree crc_in)
+    {
+      basic_block bb = e->dest;
+
+      if (EDGE_COUNT (bb->preds) != 2)
+	return false;
+
+      int phi_match = 0;
+
+      for (gphi_iterator gsi = gsi_start_phis (bb); !gsi_end_p (gsi);
+	   gsi_next (&gsi))
+	{
+	  gphi *phi = gsi.phi ();
+	  tree val = PHI_ARG_DEF_FROM_EDGE (phi, e);
+
+	  if (val == crc_in)
+	    {
+	      if (!crc_rejoined)
+		crc_rejoined = PHI_RESULT (phi);
+	      else if (PHI_RESULT (phi) != crc_rejoined)
+		return false;
+	      phi_match++;
+	    }
+	}
+      if (phi_match < 1)
+	return false;
+
+      if (bb9 != NULL)
+	return bb == bb9;
+      bb9 = bb;
+
+      int stmt_match = 0;
+      tree iter_var, ix;
+
+      for (gimple_stmt_iterator gsi = gsi_start_nondebug_bb (bb);
+	   !gsi_end_p (gsi); gsi_next_nondebug (&gsi))
+	{
+	  gimple *t = gsi_stmt (gsi);
+
+	  if (stmt_match == 0)
+	    {
+	      if (!gimple_assign_single_p (t)
+		  || TREE_CODE (gimple_assign_rhs1 (t)) != SSA_NAME)
+		return false;
+	      iter_var = gimple_assign_rhs1 (t);
+	      ix = gimple_assign_lhs (t);
+	      stmt_match++;
 	    }
 	  else if (stmt_match == 1)
 	    {
-	      if ((gimple_code (t) == GIMPLE_ASSIGN)
-		  && (gimple_assign_rhs_code(t) == PLUS_EXPR))
-		stmt_match++;
-	      else
+	      if (!is_gimple_assign (t)
+		  || gimple_assign_rhs_code(t) != PLUS_EXPR
+		  || gimple_assign_rhs1 (t) != ix
+		  || !integer_onep (gimple_assign_rhs2 (t)))
 		return false;
+	      ix = gimple_assign_lhs (t);
+	      stmt_match++;
 	    }
 	  else
 	    return false;
 	}
+      if (stmt_match < 2)
+	return false;
 
-      edge e;
-      edge_iterator ei;
-      FOR_EACH_EDGE (e, ei, bb->succs)
-	{
-	  if (!match_bb10 (e->dest))
-	    return false;
-	}
+      e = single_succ_edge (bb);
 
-      return true;
+      if (!e)
+	return false;
+
+      return match_bb10 (e, iter_var, ix);
     }
 
 
-  bool match_bb10 (basic_block bb)
+  bool match_bb10 (edge e, tree iter_var, tree ix)
     {
+      basic_block bb = e->dest, inc_bb = e->src;
+
+      if (EDGE_COUNT (bb->preds) != 2)
+	return false;
+
+      edge preheader_edge;
+      edge_iterator ei;
+
+      FOR_EACH_EDGE (preheader_edge, ei, bb->preds)
+	if (preheader_edge->src != inc_bb)
+	  break;
+
       int stmt_match = 0;
       gimple_stmt_iterator gsi;
 
@@ -381,9 +509,9 @@ public:
 	    {
 	      if ((gimple_code (t) == GIMPLE_COND)
 		  && (gimple_cond_code(t) == LE_EXPR)
+		  && iter_var == gimple_cond_lhs (t)
 		  && tree_fits_shwi_p (gimple_cond_rhs (t)))
 		{
-		  iter_var = gimple_cond_lhs (t);
 		  last_iter_num = tree_to_shwi (gimple_cond_rhs (t));
 		  stmt_match++;
 		}
@@ -393,87 +521,63 @@ public:
 	  else
 	    return false;
 	}
+      if (stmt_match < 1)
+	return false;
+
+      tree iter_init;
 
       // Find tree's of incoming data and CRC
       // We choose the PHI arg who's src insn't the bb at the end of the loop
+      int phi_match = 0;
       gphi_iterator pi;
       for (pi = gsi_start_phis (bb); !gsi_end_p (pi); gsi_next (&pi))
 	{
 	  gphi *phi = pi.phi ();
-	  if (!virtual_operand_p (gimple_phi_result (phi)) && (gimple_phi_num_args (phi) == 2))
+	  if (virtual_operand_p (gimple_phi_result (phi)))
+	    ; /* Ignore.  */
+	  else if (PHI_RESULT (phi) == data_latch
+		   && PHI_ARG_DEF_FROM_EDGE (phi, e) == data_top)
 	    {
-	      unsigned i;
-	      for (i = 0; i < gimple_phi_num_args (phi); i++)
-		{
-		   tree pa = gimple_phi_arg_def (phi, i);
-#if 0
-		   edge pe = gimple_phi_arg_edge (phi, i);
-#endif
-		   if (TREE_CODE (pa) != SSA_NAME)
-		     break;
-		   else if (SSA_NAME_IS_DEFAULT_DEF (pa))
-		     {
-		       // These should be the names of the variables coming in to the loop
-		       if (GET_MODE_SIZE (TYPE_MODE (TREE_TYPE (pa))) == 1)
-			 crc_data = pa;
-		       else if (GET_MODE_SIZE (TYPE_MODE (TREE_TYPE (pa))) == 2)
-			 crc_state = pa;
-		       else
-			 gcc_unreachable();
-		     }
-		}
+	      crc_data = PHI_ARG_DEF_FROM_EDGE (phi, preheader_edge);
+	      phi_match++;
+	    }
+	  else if (PHI_RESULT (phi) == crc_latch
+		   && PHI_ARG_DEF_FROM_EDGE (phi, e) == crc_rejoined)
+	    {
+	      crc_state = PHI_ARG_DEF_FROM_EDGE (phi, preheader_edge);
+	      phi_match++;
+	    }
+	  else if (PHI_RESULT (phi) == iter_var
+		   && PHI_ARG_DEF_FROM_EDGE (phi, e) == ix)
+	    {
+	      iter_init = PHI_ARG_DEF_FROM_EDGE (phi, preheader_edge);
+	      phi_match++;
 	    }
 	}
+      if (phi_match < 3)
+	return false;
 
       edge true_edge;
       edge false_edge;
       extract_true_false_edges_from_block (bb, &true_edge, &false_edge);
 
-      if (match_bb3 (true_edge->dest, bb) && match_bb11 (false_edge->dest))
+      /* Find what iter_init is set to.
+	 (Presumably in preheader_edge->src, not that it really matters.)  */
+      if (TREE_CODE (iter_init) != SSA_NAME)
+	return false;
+      gimple *def = SSA_NAME_DEF_STMT (iter_init);
+      if (!gimple_assign_single_p (def)
+	  || !integer_zerop (gimple_assign_rhs1 (def)))
+	return false;
+      first_iter_num = 0;
+      /* Check that the type allows safe a safe loop test in bb10.  */
+      if (!INTEGRAL_TYPE_P (TREE_TYPE (iter_init)) || last_iter_num >= 127)
+	return false;
+
+      if (true_edge->dest == bb3 && match_bb11 (false_edge->dest))
 	return true;
       else
 	return false;
-    }
-
-  bool match_bb3 (basic_block bb, basic_block latch_bb)
-    {
-      /* Verify that this block has two predecessors.  */
-      edge e;
-      edge_iterator ei;
-
-      basic_block prev_bb = NULL;
-      FOR_EACH_EDGE (e, ei, bb->preds)
-	if (e->src == latch_bb)
-	  continue;
-	else if (prev_bb == NULL)
-	  prev_bb = e->src;
-	else
-	  return false;
-
-      /* Verify match_start is in this block, and that iter_var is not
-	 changed between the block start and match_start.  */
-      gimple_stmt_iterator gsi;
-
-      for (gsi = gsi_start_nondebug_bb (bb); ; gsi_next_nondebug (&gsi))
-	{
-	  if (gsi_end_p (gsi))
-	    return false;
-	  gimple *t = gsi_stmt (gsi);
-	  if (t == match_start)
-	    break;
-	  /* FIXME:
-	     Verify t does not change iter_var or anything else important.  */
-	  if ((gimple_code (t) == GIMPLE_ASSIGN)
-	      && (gimple_assign_rhs_code(t) == NOP_EXPR))
-	    continue;
-	  return false;
-	}
-
-      /* FIXME: verify iter_var is set in PREV_BB, and find the actual
-	 value it is set to.  */
-      first_iter_num = 0;
-      /* FIXME: check that the type allows safe a safe loop test in bb10.  */
-      return true;
     }
 
   bool match_bb11 (basic_block bb)
@@ -488,16 +592,17 @@ public:
 
 	  if (stmt_match == 0)
 	    {
-	      if (gimple_code (t) == GIMPLE_ASSIGN)
+	      if (gimple_assign_single_p (t)
+		  && gimple_assign_rhs1 (t) == crc_latch)
 		{
-		stmt_match++;
+		  stmt_match++;
 
-		// Save temp assigned to
-		crc_result = gimple_assign_lhs(t);
-		crc_result_bb = bb;
+		  // Save temp assigned to
+		  crc_result = gimple_assign_lhs(t);
+		  crc_result_bb = bb;
 
-		// Ignore rest
-		break;
+		  // Ignore rest
+		  return true;
 		}
 	      else
 		return false;
@@ -506,7 +611,7 @@ public:
 	    return false;
 	}
 
-      return true;
+      return false;
     }
 
   bool insert_crc (int bits, unsigned HOST_WIDE_INT polynom)
@@ -527,6 +632,7 @@ public:
 
       fn = build_fold_addr_expr (fn);
 
+#if 0
       tree crc_arg = make_ssa_name (unsigned_intHI_type_node);
       gimple *cast0 = gimple_build_assign (crc_arg, convert_to_integer(unsigned_type_node, crc_state));
 
@@ -534,6 +640,12 @@ public:
       gimple *cast1 = gimple_build_assign (data_arg, convert_to_integer(unsigned_type_node, crc_data));
 
       tree polynom_arg = build_int_cst (unsigned_intHI_type_node, polynom);
+#else
+      tree crc_arg = crc_state;
+      tree data_arg = crc_data;
+
+      tree polynom_arg = build_int_cst (TREE_TYPE (crc_state), polynom);
+#endif
 
       fn_call = gimple_build_call (fn, 3, crc_arg, data_arg, polynom_arg);
       fn_result = make_ssa_name (unsigned_intHI_type_node);
@@ -543,8 +655,10 @@ public:
       //update_stmt(fn_call);
 
       gsi_insert_after (&rsi, fn_call, GSI_SAME_STMT);
+#if 0
       gsi_insert_after (&rsi, cast0, GSI_SAME_STMT);
       gsi_insert_after (&rsi, cast1, GSI_SAME_STMT);
+#endif
 
       use_operand_p imm_use_p;
       imm_use_iterator iterator;
@@ -577,6 +691,7 @@ pass_crc::execute (function *fun)
   FOR_ALL_BB_FN (bb, fun)
     {
       gimple_stmt_iterator gsi;
+      tree tmp1, tmp2, tmp3, tmp4, tmp5;
 
       stmt_match = 0;
       crc_result = NULL_TREE;
@@ -584,7 +699,6 @@ pass_crc::execute (function *fun)
       crc_data = NULL_TREE;
       crc_result_bb = NULL;
 
-      /* FIXME: need to check that all the operands match.  */
       for (gsi = gsi_start_nondebug_bb (bb); !gsi_end_p (gsi);
 	   gsi_next_nondebug (&gsi))
 	{
@@ -596,18 +710,23 @@ pass_crc::execute (function *fun)
 
 	  if (stmt_match == 0)
 	    {
-	      if ((gimple_code (t) == GIMPLE_ASSIGN)
-		  && (gimple_assign_rhs_code(t) == NOP_EXPR))
-		stmt_match++;
+	      if (is_gimple_assign (t)
+		  && gimple_assign_rhs_code (t) == NOP_EXPR)
+		{
+		  crc_latch = gimple_assign_rhs1 (t);
+		  tmp1 = gimple_assign_lhs (t);
+		  stmt_match++;
+		}
 	      else
 		break;
 	    }
 	  else if (stmt_match == 1)
 	    {
-	      if ((gimple_code (t) == GIMPLE_ASSIGN)
-		  && (gimple_assign_rhs_code(t) == NOP_EXPR))
+	      if (is_gimple_assign (t)
+		  && gimple_assign_rhs_code (t) == NOP_EXPR)
 		{
-		  match_start = t;
+		  data_latch = gimple_assign_rhs1 (t);
+		  tmp2 = gimple_assign_lhs (t);
 		  stmt_match++;
 		}
 	      else
@@ -615,91 +734,77 @@ pass_crc::execute (function *fun)
 	    }
 	  else if (stmt_match == 2)
 	    {
-	      if ((gimple_code (t) == GIMPLE_ASSIGN)
-		  && (gimple_assign_rhs_code(t) == BIT_XOR_EXPR))
-		stmt_match++;
+	      if (is_gimple_assign (t)
+		  && gimple_assign_rhs_code (t) == BIT_XOR_EXPR
+		  && gimple_assign_rhs1 (t) == tmp1
+		  && gimple_assign_rhs2 (t) == tmp2)
+		{
+		  tmp3 = gimple_assign_lhs (t);
+		  stmt_match++;
+		}
 	      else
 		break;
 	    }
 	  else if (stmt_match == 3)
 	    {
-	      if ((gimple_code (t) == GIMPLE_ASSIGN)
-		  && (gimple_assign_rhs_code(t) == NOP_EXPR))
-		stmt_match++;
+	      if (is_gimple_assign (t)
+		  && gimple_assign_rhs_code(t) == NOP_EXPR
+		  && gimple_assign_rhs1 (t) == tmp3)
+		{
+		  tmp4 = gimple_assign_lhs (t);
+		  stmt_match++;
+		}
 	      else
 		break;
 	    }
 	  else if (stmt_match == 4)
 	    {
-	      if ((gimple_code (t) == GIMPLE_ASSIGN)
-		  && (gimple_assign_rhs_code(t) == BIT_AND_EXPR))
-		stmt_match++;
+	      if (is_gimple_assign (t)
+		  && gimple_assign_rhs_code(t) == BIT_AND_EXPR
+		  && gimple_assign_rhs1 (t) == tmp4
+		  && integer_onep (gimple_assign_rhs2 (t)))
+		{
+		  tmp5 = gimple_assign_lhs (t);
+		  stmt_match++;
+		}
 	      else
 		break;
 	    }
 	  else if (stmt_match == 5)
 	    {
-	      if ((gimple_code (t) == GIMPLE_ASSIGN)
-		  && (gimple_assign_rhs_code(t) == RSHIFT_EXPR))
-		stmt_match++;
+	      if (is_gimple_assign (t)
+		  && gimple_assign_rhs_code(t) == RSHIFT_EXPR
+		  && gimple_assign_rhs1 (t) == data_latch
+		  && TYPE_UNSIGNED (TREE_TYPE (data_latch))
+		  && integer_onep (gimple_assign_rhs2 (t)))
+		{
+		  data_top = gimple_assign_lhs (t);
+		  stmt_match++;
+		}
 	      else
 		break;
 	    }
 	  else if (stmt_match == 6)
 	    {
-	      if ((gimple_code (t) == GIMPLE_COND)
-		  && (gimple_cond_code(t) == EQ_EXPR)
-		  && (integer_onep (gimple_cond_rhs (t))))
+	      if (gimple_code (t) == GIMPLE_COND
+		  && gimple_cond_code(t) == EQ_EXPR
+		  && gimple_cond_lhs (t) == tmp5
+		  && integer_onep (gimple_cond_rhs (t))
+		  && single_pred_p (bb))
 		{
 		  stmt_match++;
 		  bb_match++;
 		  // Now compare basic-blocks that follow this, as they need to match as well
 		  edge true_edge;
 		  edge false_edge;
-		  extract_true_false_edges_from_block (bb, &true_edge, &false_edge);
+		  bb3 = bb;
+		  extract_true_false_edges_from_block (bb, &true_edge,
+						       &false_edge);
 		  if (match_bb4 (true_edge->dest)
 		      && match_bb5 (false_edge->dest))
 		    {
 		      //debug_tree(crc_result);
 
-			   /*
-		      // Find tree's of incoming data and CRC
-		      // We choose the PHI arg who's src insn't the bb at the end of the loop
-		      gphi_iterator pi;
-		      for (pi = gsi_start_phis (bb); !gsi_end_p (pi); gsi_next (&pi))
-			{
-			  gphi *phi = pi.phi ();
-			  if (!virtual_operand_p (gimple_phi_result (phi))
-			      && (gimple_phi_num_args (phi) == 2))
-			    {
-			      unsigned i;
-			      for (i = 0; i < gimple_phi_num_args (phi); i++)
-				{
-				   tree pa = gimple_phi_arg_def (phi, i);
-				   edge pe = gimple_phi_arg_edge (phi, i);
-				   if (TREE_CODE (pa) != SSA_NAME)
-				     {
-				       // loop index
-				       break;
-				     }
-				   else if (!pe->src
-					    || (pe->src->index == loop_end_idx))
-				     {
-				       // value of variable after loop
-				     }
-				   else
-				     {
-				       // These should be the names of the variables coming in to the loop
-				       if (GET_MODE_SIZE (TYPE_MODE (TREE_TYPE (pa))) == 1)
-					 crc_data = pa;
-				       else if (GET_MODE_SIZE (TYPE_MODE (TREE_TYPE (pa))) == 2)
-					 crc_state = pa;
-				       else
-					 gcc_unreachable();
-				     }
-				}
-			    }
-			}*/
 		    }
 
 		    /*
