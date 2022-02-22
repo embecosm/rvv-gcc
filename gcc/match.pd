@@ -1212,7 +1212,8 @@ DEFINE_INT_AND_FLOAT_ROUND_FN (RINT)
 
 (simplify
  (IFN_CRC (IFN_CRC:s @0 (convert@5 @1) @2) (convert (rshift @1 INTEGER_CST@4)) @2)
-  (if (wi::to_wide (@4) == TYPE_PRECISION (TREE_TYPE (@5)))
+  (if (wi::to_wide (@4) == TYPE_PRECISION (TREE_TYPE (@5))
+       && wi::to_wide (@4) == 8) /* FIXME: use optabs.  */
    (IFN_CRC @0 (convert:type @1) @2)))
 
 #if 0
