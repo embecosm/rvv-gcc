@@ -48,6 +48,37 @@
   DONE;
 })
 
+(define_expand "crchihi4<mode>"
+  [(set (match_dup 5) (and:P (match_dup 4) (const_int 255)))
+   (set (match_dup 5)
+	(plus:P (ashift:P (match_dup 5) (const_int 1)) (match_operand 3)))
+   (set (match_dup 6)
+	(zero_extend:P (mem:QI (plus:P (match_dup 5) (match_dup 8)))))
+   (set (match_dup 7) (lshiftrt:P (match_dup 4) (const_int 8)))
+   (set (match_dup 7) (and:P (match_dup 7) (const_int 255)));; ? needed???
+   (set (match_dup 5)
+	(zero_extend:P (mem:QI (plus:P (match_dup 5) (match_dup 9)))))
+   (set (match_dup 6) (xor:P (match_dup 6) (match_dup 7)))
+   (set (match_dup 6)
+	(plus:P (ashift:P (match_dup 6) (const_int 1)) (match_dup 3)))
+   (set (match_dup 6) (zero_extend:P (mem:HI (match_dup 6))))
+   (set (match_operand:HI 0) (xor:P (match_dup 5) (match_dup 6)))]
+  ""
+{
+  operands[3]
+    = force_reg (Pmode, print_crc_table (16, 8, INTVAL (operands[3]) & 65535));
+  operands[8] = GEN_INT (TARGET_BIG_ENDIAN != 0);
+  operands[9] = GEN_INT (TARGET_BIG_ENDIAN == 0);
+  operands[1] = simplify_gen_subreg (word_mode, operands[1], HImode, 0);
+  operands[2] = simplify_gen_subreg (word_mode, operands[2], HImode, 0);
+  operands[0] = simplify_gen_subreg (word_mode, operands[0], HImode, 0);
+  operands[4] = gen_rtx_XOR (Pmode, operands[1], operands[2]);
+  operands[4] = force_reg (Pmode, operands[4]);
+  operands[5] = gen_reg_rtx (Pmode);
+  operands[6] = gen_reg_rtx (Pmode);
+  operands[7] = gen_reg_rtx (Pmode);
+})
+
 (define_expand "crchihi4"
   [(set (match_operand:HI 0)
 	(umod:HI ;; Actually not umod, but crc.
@@ -56,6 +87,14 @@
   ""
 {
   /* Use speed optimized CRC computation for constant polynom.  */
-  expand_crc_lookup (operands, HImode);
+  if (!TARGET_SMALL_MEMORY
+      || (CONST_INT_P (operands[1]) && CONST_INT_P (operands[2])))
+    expand_crc_lookup (operands, HImode);
+  else if (word_mode == SImode)
+    emit_insn (gen_crchihi4si (operands[0],
+			       operands[1], operands[2], operands[3]));
+  else
+    emit_insn (gen_crchihi4di (operands[0],
+			       operands[1], operands[2], operands[3]));
   DONE;
 })
