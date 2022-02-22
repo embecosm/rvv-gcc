@@ -36,7 +36,7 @@
 ;; First mode is for the data that is being processed, the second is for
 ;; input crc, polynom and output crc.
 
-(define_expand "riscv_crcqihi4"
+(define_expand "crcqihi4"
   [(set (match_operand:HI 0)
 	(umod:HI ;; Actually not umod, but crc.
 	  (xor:HI (match_operand:HI 1) (zero_extend:HI (match_operand:QI 2)))
@@ -48,6 +48,14 @@
   DONE;
 })
 
-(define_expand "riscv_crchihi4"
-  [(pc)]
-)
+(define_expand "crchihi4"
+  [(set (match_operand:HI 0)
+	(umod:HI ;; Actually not umod, but crc.
+	  (xor:HI (match_operand:HI 1) (match_operand:HI 2))
+		  (match_operand:HI 3)))] ;; op3: polynom
+  ""
+{
+  /* Use speed optimized CRC computation for constant polynom.  */
+  expand_crc_lookup (operands, HImode);
+  DONE;
+})

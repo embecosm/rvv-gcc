@@ -90,7 +90,6 @@ struct riscv_builtin_description {
 };
 
 AVAIL (hard_float, TARGET_HARD_FLOAT)
-AVAIL (always, 1)
 
 /* Construct a riscv_builtin_description from the given arguments.
 
@@ -146,9 +145,7 @@ AVAIL (always, 1)
 
 static const struct riscv_builtin_description riscv_builtins[] = {
   DIRECT_BUILTIN (frflags, RISCV_USI_FTYPE, hard_float),
-  DIRECT_NO_TARGET_BUILTIN (fsflags, RISCV_VOID_FTYPE_USI, hard_float),
-  DIRECT_CONST_BUILTIN (crcqihi4, RISCV_UHI_FTYPE_UHIUQIUHI, always),
-  DIRECT_CONST_BUILTIN (crchihi4, RISCV_UHI_FTYPE_UHIUHIUHI, always)
+  DIRECT_NO_TARGET_BUILTIN (fsflags, RISCV_VOID_FTYPE_USI, hard_float)
 };
 
 /* Index I is the function declaration for riscv_builtins[I], or null if the
@@ -312,6 +309,7 @@ riscv_atomic_assign_expand_fenv (tree *hold, tree *clear, tree *update)
   *update = NULL_TREE;
 }
 
+#if 0
 /* Return the enumberation number of the matching builtin crc function
    for data input width BITS and POLYNOM.  BIG_ENDIAN is set when the CRC
    is computed starting with the most significant bit.  */
@@ -359,3 +357,4 @@ riscv_builtin_crc_fn (int bits, unsigned HOST_WIDE_INT polynom,
     return GET_BUILTIN_DECL (code);
   return NULL_TREE;
 }
+#endif

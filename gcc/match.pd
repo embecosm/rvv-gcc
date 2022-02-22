@@ -1210,6 +1210,19 @@ DEFINE_INT_AND_FLOAT_ROUND_FN (RINT)
  (bit_and @0 integer_all_onesp)
   (non_lvalue @0))
 
+(simplify
+ (IFN_CRC (IFN_CRC:s @0 (convert@5 @1) @2) (convert (rshift @1 INTEGER_CST@4)) @2)
+  (if (wi::to_wide (@4) == TYPE_PRECISION (TREE_TYPE (@5)))
+   (IFN_CRC @0 (convert:type @1) @2)))
+
+#if 0
+;; commuted pattern
+(simplify
+ (IFN_CRC (nop_convert @0) (IFN_CRC (rshift @0 INTEGER_CST@4) @1 @2) @2)
+  (if (wi::to_wide (@4) == 8)
+   (IFN_CRC @1 @0 @2)))
+#endif
+
 /* x & x -> x,  x | x -> x  */
 (for bitop (bit_and bit_ior)
  (simplify

@@ -618,19 +618,8 @@ public:
     {
       gimple_stmt_iterator rsi = gsi_start_bb(crc_result_bb);
 
-      tree fn = riscv_builtin_crc_fn (bits, polynom, false);
       gimple *fn_call;
       tree fn_result;
-      if (fn == NULL_TREE)
-	{
-	  if (dump_file)
-	    fprintf (dump_file, "No built-in function for crc polynom "
-		     HOST_WIDE_INT_PRINT_HEX "for %d bits data\n",
-		     polynom, bits);
-	  return false;
-	}
-
-      fn = build_fold_addr_expr (fn);
 
 #if 0
       tree crc_arg = make_ssa_name (unsigned_intHI_type_node);
@@ -647,8 +636,12 @@ public:
       tree polynom_arg = build_int_cst (TREE_TYPE (crc_state), polynom);
 #endif
 
-      fn_call = gimple_build_call (fn, 3, crc_arg, data_arg, polynom_arg);
-      fn_result = make_ssa_name (unsigned_intHI_type_node);
+      if (GET_MODE_BITSIZE (TYPE_MODE (TREE_TYPE (data_arg))) != bits)
+	return false;
+
+      fn_call = gimple_build_call_internal (IFN_CRC, 3,
+					    crc_arg, data_arg, polynom_arg);
+      fn_result = make_ssa_name (TREE_TYPE (crc_result));
       gimple_call_set_lhs (fn_call, fn_result);
 
       gimple_set_location(fn_call, gimple_location (gsi_stmt(rsi)));
