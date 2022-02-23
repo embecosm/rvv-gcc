@@ -98,3 +98,72 @@
 			       operands[1], operands[2], operands[3]));
   DONE;
 })
+
+(define_expand "index_hi"
+  [(set (match_dup 0) (match_operand 2))]
+  ""
+{
+  /* Preferrably use sh1add.  */
+  rtx doubled = gen_rtx_ASHIFT (Pmode, operands[2], const1_rtx);
+  if (!TARGET_ZBA)
+    force_reg (Pmode, doubled);
+  operands[2] = gen_rtx_PLUS (Pmode, doubled, operands[1]);
+})
+
+(define_expand "crcsihi4"
+  [(set (match_operand:HI 0)
+	(umod:HI ;; Actually not umod, but crc.
+	  (xor:SI (match_operand:HI 1) (match_operand:SI 2))
+		  (match_operand:HI 3)))] ;; op3: polynom
+  ""
+{
+  /* Use speed optimized CRC computation for constant polynom.  */
+  if (CONST_INT_P (operands[1]) && CONST_INT_P (operands[2]))
+    {
+      expand_crc_lookup (operands, HImode);
+      DONE;
+    }
+  rtx tab
+    = force_reg (Pmode, print_crc_table (16, 8, INTVAL (operands[3]) & 65535));
+  rtx addr = gen_reg_rtx (Pmode);
+  rtx lo_ad = plus_constant (Pmode, addr, TARGET_BIG_ENDIAN != 0);
+  rtx hi_ad = plus_constant (Pmode, addr, TARGET_BIG_ENDIAN == 0);
+  operands[1] = simplify_gen_subreg (word_mode, operands[1], HImode, 0);
+  operands[2] = simplify_gen_subreg (word_mode, operands[2], SImode, 0);
+  rtx crc_in = force_reg (Pmode, gen_rtx_XOR (Pmode, operands[1], operands[2]));
+  rtx ix = force_reg (Pmode, gen_rtx_AND (Pmode, crc_in, GEN_INT (255)));
+
+  rtx lo, hi;
+  rtx old_hi = NULL_RTX;
+  for (int i = 0; i < 3; i++)
+    {
+      emit_insn (gen_index_hi (addr, tab, ix));
+      lo = force_reg (Pmode, (gen_rtx_ZERO_EXTEND
+			       (Pmode, gen_rtx_MEM (QImode, lo_ad))));
+      hi = force_reg (Pmode, (gen_rtx_ZERO_EXTEND
+			       (Pmode, gen_rtx_MEM (QImode, hi_ad))));
+      switch (i)
+	{
+	case 0: case 2:
+	  crc_in = gen_rtx_LSHIFTRT (Pmode, crc_in, GEN_INT (8));
+	  break;
+	case 1:
+	  crc_in = gen_rtx_LSHIFTRT (Pmode, operands[2], GEN_INT (16));
+	  break;
+	default:
+	  gcc_unreachable ();
+	}
+      crc_in = force_reg (Pmode, crc_in);
+      ix = force_reg (Pmode, gen_rtx_AND (Pmode, crc_in, GEN_INT (255)));
+      if (old_hi)
+	ix = force_reg (Pmode, gen_rtx_XOR (Pmode, ix, old_hi));
+      ix = force_reg (Pmode, gen_rtx_XOR (Pmode, ix, lo));
+      old_hi = hi;
+    }
+  emit_insn (gen_index_hi (addr, tab, ix));
+  lo = force_reg (Pmode, (gen_rtx_ZERO_EXTEND
+			   (Pmode, gen_rtx_MEM (HImode, addr))));
+  operands[0] = simplify_gen_subreg (word_mode, operands[0], HImode, 0);
+  emit_move_insn (operands[0], gen_rtx_XOR (Pmode, lo, old_hi));
+  DONE;
+})
