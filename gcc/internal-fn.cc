@@ -3668,7 +3668,8 @@ expand_CRC (internal_fn ifn, gcall *stmt)
   /* rhs1 and rhs2 are commutative if the modes are the same, but if they
      aren't, we canonicalize for rhs to have the smaller mode.
      The optab lookup and the insn pattern mind.  */
-  if (TYPE_PRECISION (TREE_TYPE (rhs1)) < TYPE_PRECISION (TREE_TYPE (rhs2)))
+  if (TYPE_PRECISION (TREE_TYPE (rhs1)) != TYPE_PRECISION (TREE_TYPE (lhs))
+      && TYPE_PRECISION (TREE_TYPE (rhs1)) == TYPE_PRECISION (TREE_TYPE (lhs)))
     std::swap (rhs1, rhs2);
 
   tree crc_type = TREE_TYPE (lhs);
