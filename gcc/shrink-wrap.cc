@@ -586,6 +586,40 @@ handle_simple_exit (edge e)
 	     INSN_UID (ret), e->src->index);
 }
 
+/* Even if there is no prologue, we might have a number of argument
+   copy and initialization statements in the first basic block that
+   might be unnecessary if we return early.  */
+/* ??? This might be overly agressive for super-scalar processors without
+   speculative execution in that we migth want to keep enough instructions
+   in front of the branch to fill all issue slots.
+
+   If the branch depends on a register copied from another register
+   immediately before, later passes already take care of propagating the
+   copy into the branch.  */
+void
+try_early_return (edge *entry_edge)
+{
+  basic_block entry = (*entry_edge)->dest;
+  if (EDGE_COUNT (entry->succs) != 2)
+    return;
+  edge e;
+  edge_iterator ei;
+
+  FOR_EACH_EDGE (e, ei, entry->succs)
+    {
+      basic_block dst = e->dest;
+      rtx_insn *insn = BB_HEAD (dst);
+      while ((insn = next_active_insn (insn))
+	     && any_uncondjump_p (insn) && JUMP_LABEL (insn))
+	insn = JUMP_LABEL_AS_INSN (insn);
+      if (!insn || GET_CODE (PATTERN (insn)) == SIMPLE_RETURN)
+	{
+	  prepare_shrink_wrap (entry);
+	  return;
+	}
+    }
+}
+
 /* Try to perform a kind of shrink-wrapping, making sure the
    prologue/epilogue is emitted only around those parts of the
    function that require it.
@@ -666,7 +700,11 @@ try_shrink_wrapping (edge *entry_edge, rtx_insn *prologue_seq)
 	break;
       }
   if (empty_prologue)
-    return;
+    {
+      if (flag_early_return)
+	try_early_return (entry_edge);
+      return;
+    }
 
   /* Move some code down to expose more shrink-wrapping opportunities.  */
 

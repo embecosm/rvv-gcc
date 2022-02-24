@@ -3607,4 +3607,8 @@ fipa-ra
 Common Var(flag_ipa_ra) Optimization
 Use caller save register across calls if possible.
 
+fearly-return
+Common Var(flag_early_return) Optimization Init(1)
+Extend shrink-wrapping to prologue-free functions.
+
 ; This comment is to ensure we retain the blank line above.
