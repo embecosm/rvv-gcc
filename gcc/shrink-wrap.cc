@@ -604,13 +604,15 @@ try_early_return (edge *entry_edge)
     return;
   edge e;
   edge_iterator ei;
+  const int max_depth = 20;
 
   FOR_EACH_EDGE (e, ei, entry->succs)
     {
       basic_block dst = e->dest;
       rtx_insn *insn = BB_HEAD (dst);
-      while ((insn = next_active_insn (insn))
-	     && any_uncondjump_p (insn) && JUMP_LABEL (insn))
+      for (int i = max_depth;
+	   --i && (insn = next_active_insn (insn))
+	   && any_uncondjump_p (insn) && JUMP_LABEL (insn);)
 	insn = JUMP_LABEL_AS_INSN (insn);
       if (!insn || GET_CODE (PATTERN (insn)) == SIMPLE_RETURN)
 	{
