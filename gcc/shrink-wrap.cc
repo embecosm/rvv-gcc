@@ -609,15 +609,15 @@ try_early_return (edge *entry_edge)
   FOR_EACH_EDGE (e, ei, entry->succs)
     {
       basic_block dst = e->dest;
-      rtx_insn *insn = BB_HEAD (dst);
-      for (int i = max_depth;
-	   --i && (insn = next_active_insn (insn))
-	   && any_uncondjump_p (insn) && JUMP_LABEL (insn);)
-	insn = JUMP_LABEL_AS_INSN (insn);
-      if (!insn || GET_CODE (PATTERN (insn)) == SIMPLE_RETURN)
+      for (int i = max_depth; --i; dst = single_succ (dst))
 	{
-	  prepare_shrink_wrap (entry);
-	  return;
+	  if (dst == EXIT_BLOCK_PTR_FOR_FN (cfun))
+	    {
+	      prepare_shrink_wrap (entry);
+	      return;
+	    }
+	  if (!single_succ_p (dst))
+	    break;
 	}
     }
 }
