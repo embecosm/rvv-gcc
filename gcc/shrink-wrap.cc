@@ -600,7 +600,7 @@ void
 try_early_return (edge *entry_edge)
 {
   basic_block entry = (*entry_edge)->dest;
-  if (EDGE_COUNT (entry->succs) != 2)
+  if (EDGE_COUNT (entry->succs) != 2 || !single_pred_p (entry))
     return;
   edge e;
   edge_iterator ei;
