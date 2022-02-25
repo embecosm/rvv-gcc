@@ -48,39 +48,19 @@
   DONE;
 })
 
-(define_expand "crchihi4<mode>"
-  [(set (match_dup 5) (and:P (match_dup 4) (const_int 255)))
-   (set (match_dup 5)
-	(plus:P (ashift:P (match_dup 5) (const_int 1)) (match_operand 3)))
-   (set (match_dup 6)
-	(zero_extend:P (mem:QI (plus:P (match_dup 5) (match_dup 8)))))
-   (set (match_dup 7) (lshiftrt:P (match_dup 4) (const_int 8)))
-   (set (match_dup 7) (and:P (match_dup 7) (const_int 255)));; ? needed???
-   (set (match_dup 5)
-	(zero_extend:P (mem:QI (plus:P (match_dup 5) (match_dup 9)))))
-   (set (match_dup 6) (xor:P (match_dup 6) (match_dup 7)))
-   (set (match_dup 6)
-	(plus:P (ashift:P (match_dup 6) (const_int 1)) (match_dup 3)))
-   (set (match_dup 6) (zero_extend:P (mem:HI (match_dup 6))))
-   (set (match_operand:HI 0) (xor:P (match_dup 5) (match_dup 6)))]
+(define_expand "index_hi"
+  [(set (match_dup 0) (match_operand 2))]
   ""
 {
-  operands[3]
-    = force_reg (Pmode, print_crc_table (16, 8, INTVAL (operands[3]) & 65535));
-  operands[8] = GEN_INT (TARGET_BIG_ENDIAN != 0);
-  operands[9] = GEN_INT (TARGET_BIG_ENDIAN == 0);
-  operands[1] = simplify_gen_subreg (word_mode, operands[1], HImode, 0);
-  operands[2] = simplify_gen_subreg (word_mode, operands[2], HImode, 0);
-  operands[0] = simplify_gen_subreg (word_mode, operands[0], HImode, 0);
-  operands[4] = gen_rtx_XOR (Pmode, operands[1], operands[2]);
-  operands[4] = force_reg (Pmode, operands[4]);
-  operands[5] = gen_reg_rtx (Pmode);
-  operands[6] = gen_reg_rtx (Pmode);
-  operands[7] = gen_reg_rtx (Pmode);
+  /* Preferrably use sh1add.  */
+  rtx doubled = gen_rtx_ASHIFT (Pmode, operands[2], const1_rtx);
+  if (!TARGET_ZBA)
+    doubled = force_reg (Pmode, doubled);
+  operands[2] = gen_rtx_PLUS (Pmode, doubled, operands[1]);
 })
 
 (define_expand "crchihi4"
-  [(set (match_operand:HI 0)
+  [(set (match_operand:HI 0 "register_operand")
 	(umod:HI ;; Actually not umod, but crc.
 	  (xor:HI (match_operand:HI 1) (match_operand:HI 2))
 		  (match_operand:HI 3)))] ;; op3: polynom
@@ -89,25 +69,33 @@
   /* Use speed optimized CRC computation for constant polynom.  */
   if (!TARGET_SMALL_MEMORY
       || (CONST_INT_P (operands[1]) && CONST_INT_P (operands[2])))
-    expand_crc_lookup (operands, HImode);
-  else if (word_mode == SImode)
-    emit_insn (gen_crchihi4si (operands[0],
-			       operands[1], operands[2], operands[3]));
-  else
-    emit_insn (gen_crchihi4di (operands[0],
-			       operands[1], operands[2], operands[3]));
+    {
+      expand_crc_lookup (operands, HImode);
+      DONE;
+    }
+  rtx tab
+    = force_reg (Pmode, print_crc_table (16, 8, INTVAL (operands[3]) & 65535));
+  rtx lo = GEN_INT (TARGET_BIG_ENDIAN != 0);
+  rtx hi = GEN_INT (TARGET_BIG_ENDIAN == 0);
+  rtx op1 = simplify_gen_subreg (Pmode, operands[1], HImode, 0);
+  rtx op2 = simplify_gen_subreg (Pmode, operands[2], HImode, 0);
+  rtx crcin = force_reg (Pmode, gen_rtx_XOR (Pmode, op1, op2));
+  rtx ix1 = force_reg (Pmode, gen_rtx_AND (Pmode, crcin, GEN_INT (255)));
+  emit_insn (gen_index_hi (ix1, tab, ix1));
+  rtx ix2 = gen_rtx_MEM (QImode, gen_rtx_PLUS (Pmode, ix1, lo));
+  ix2 = force_reg (Pmode, gen_rtx_ZERO_EXTEND (Pmode, ix2));
+  crcin = force_reg (Pmode, gen_rtx_LSHIFTRT (Pmode, crcin, GEN_INT (8)));
+  emit_move_insn (crcin, gen_rtx_AND (Pmode, crcin, GEN_INT (255)));
+  rtx mem2 = gen_rtx_MEM (QImode, gen_rtx_PLUS (Pmode, ix1, hi));
+  emit_move_insn (ix1, gen_rtx_ZERO_EXTEND (Pmode, mem2));
+  mem2 = ix1;
+  emit_move_insn (ix2, gen_rtx_XOR (Pmode, ix2, crcin));
+  emit_insn (gen_index_hi (ix2, tab, ix2));
+  rtx mem3 = ix2;
+  emit_move_insn (mem3, gen_rtx_ZERO_EXTEND (Pmode, gen_rtx_MEM (HImode, ix2)));
+  rtx tgt = simplify_gen_subreg (Pmode, operands[0], HImode, 0);
+  emit_move_insn (tgt, gen_rtx_XOR (Pmode, mem2, mem3));
   DONE;
-})
-
-(define_expand "index_hi"
-  [(set (match_dup 0) (match_operand 2))]
-  ""
-{
-  /* Preferrably use sh1add.  */
-  rtx doubled = gen_rtx_ASHIFT (Pmode, operands[2], const1_rtx);
-  if (!TARGET_ZBA)
-    force_reg (Pmode, doubled);
-  operands[2] = gen_rtx_PLUS (Pmode, doubled, operands[1]);
 })
 
 (define_expand "crcsihi4"
