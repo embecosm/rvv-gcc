@@ -1,5 +1,6 @@
 /* { dg-do compile } */
 /* { dg-options "-Ofast -fdisable-tree-cunrolli -fdump-tree-threadfull1-details" } */
+/* { dg-additional-options "-mno-crc" { target riscv*-*-* } } */
 
 typedef unsigned short u16;
 typedef unsigned char u8;
