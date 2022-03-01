@@ -130,6 +130,7 @@ init_internal_fns ()
 #define fold_left_direct { 1, 1, false }
 #define mask_fold_left_direct { 1, 1, false }
 #define check_ptrs_direct { 0, 0, false }
+#define crc_direct { 1, -1, true }
 
 const direct_internal_fn_info direct_internal_fn_array[IFN_LAST + 1] = {
 #define DEF_INTERNAL_FN(CODE, FLAGS, FNSPEC) not_direct,
@@ -3658,7 +3659,7 @@ expand_while_optab_fn (internal_fn, gcall *stmt, convert_optab optab)
 }
 
 static void
-expand_CRC (internal_fn ifn, gcall *stmt)
+expand_crc_optab_fn (internal_fn, gcall *stmt, convert_optab optab)
 {
   tree lhs = gimple_call_lhs (stmt);
   tree rhs1 = gimple_call_arg (stmt, 0);
@@ -3680,24 +3681,19 @@ expand_CRC (internal_fn ifn, gcall *stmt)
   rtx op2 = expand_normal (rhs2);
   rtx op3 = expand_normal (rhs3);
 
+  if (CONST_INT_P (op3))
+    op3 = GEN_INT (trunc_int_for_mode (INTVAL (op3), TYPE_MODE (crc_type)));
+
   class expand_operand ops[4];
   create_output_operand (&ops[0], target, TYPE_MODE (crc_type));
   create_input_operand (&ops[1], op1, TYPE_MODE (crc_type));
   create_input_operand (&ops[2], op2, TYPE_MODE (dat_type));
   create_input_operand (&ops[3], op3, TYPE_MODE (crc_type));
-  //optab optab = direct_internal_fn_optab (ifn);
-  optab optab = ifn ? crc_optab : crc_be_optab; /* FIXME */
   insn_code icode = convert_optab_handler (optab, TYPE_MODE (dat_type),
 					   TYPE_MODE (crc_type));
   expand_insn (icode, 4, ops);
   if (!rtx_equal_p (target, ops[0].value))
     emit_move_insn (target, ops[0].value);
-}
-
-static void
-expand_CRC_BE (internal_fn ifn, gcall *stmt)
-{
-  expand_CRC (ifn, stmt);
 }
 
 /* Expanders for optabs that can use expand_direct_optab_fn.  */
@@ -3827,7 +3823,6 @@ multi_vector_optab_supported_p (convert_optab optab, tree_pair types,
 #define direct_mask_fold_left_optab_supported_p direct_optab_supported_p
 #define direct_check_ptrs_optab_supported_p direct_optab_supported_p
 #define direct_vec_set_optab_supported_p direct_optab_supported_p
-#define direct_crc_optab_supported_p convert_optab_supported_p
 #define direct_crc_optab_supported_p convert_optab_supported_p
 
 /* Return the optab used by internal function FN.  */

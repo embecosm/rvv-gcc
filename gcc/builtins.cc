@@ -2180,6 +2180,9 @@ associated_internal_fn (built_in_function fn, tree return_type)
 	return IFN_LDEXP;
       return IFN_LAST;
 
+    case BUILT_IN_CRC8S: case BUILT_IN_CRC16S: case BUILT_IN_CRC32S:
+      return IFN_CRC;
+
     default:
       return IFN_LAST;
     }
