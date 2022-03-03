@@ -3612,3 +3612,11 @@ Common Var(flag_early_return) Optimization Init(1)
 Extend shrink-wrapping to prologue-free functions.
 
 ; This comment is to ensure we retain the blank line above.
+
+fwiden-signed-iv
+Common Var(flag_widen_signed_iv) Optimization
+Widen induction variables that have undefined overflow behaviour where convenient.
+
+fwiden-any-iv
+Common Var(flag_widen_any_iv) Optimization
+Widen any induction variables where convenient.

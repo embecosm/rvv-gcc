@@ -434,7 +434,23 @@ chrec_fold_multiply (tree type,
 	     chrec_fold_multiply (type, CHREC_RIGHT (op0), op1));
 	}
 
-    CASE_CONVERT:
+    case NOP_EXPR:
+      tree inner;
+      inner = TREE_OPERAND (op0, 0);
+      if (TREE_CODE (inner) == POLYNOMIAL_CHREC
+	  && TYPE_PRECISION (type) > TYPE_PRECISION (TREE_TYPE (inner))
+	  && ((flag_widen_signed_iv
+	       && TYPE_OVERFLOW_UNDEFINED (TREE_TYPE (inner)))
+	      || flag_widen_any_iv))
+	{
+	  op0 = build_polynomial_chrec
+		  (CHREC_VARIABLE (inner),
+		   fold_convert (type, CHREC_LEFT (inner)),
+		   fold_convert (type, CHREC_RIGHT (inner)));
+	  return chrec_fold_multiply (type, op0, op1);
+	}
+      /* Fall through.  */
+    case CONVERT_EXPR:
       if (tree_contains_chrecs (op0, NULL))
 	return chrec_dont_know;
       /* FALLTHRU */
