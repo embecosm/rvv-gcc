@@ -435,13 +435,20 @@ chrec_fold_multiply (tree type,
 	}
 
     case NOP_EXPR:
+      extern bool processing_pointer_plus;
       tree inner;
       inner = TREE_OPERAND (op0, 0);
       if (TREE_CODE (inner) == POLYNOMIAL_CHREC
 	  && TYPE_PRECISION (type) > TYPE_PRECISION (TREE_TYPE (inner))
 	  && ((flag_widen_signed_iv
 	       && TYPE_OVERFLOW_UNDEFINED (TREE_TYPE (inner)))
-	      || flag_widen_any_iv))
+	      || flag_widen_any_iv)
+	  /* Should have a check if the widening is useful.
+	     For now, assume it's useful if we widen to the size of Pmode.  */
+	  //&& target_default_pointer_address_modes_p ()
+	  && TYPE_PRECISION (type) == GET_MODE_BITSIZE (Pmode)
+	  && TREE_CODE (op1) == INTEGER_CST
+	  && processing_pointer_plus)
 	{
 	  op0 = build_polynomial_chrec
 		  (CHREC_VARIABLE (inner),

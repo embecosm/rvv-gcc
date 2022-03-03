@@ -1610,6 +1610,8 @@ interpret_condition_phi (class loop *loop, gphi *condition_phi)
   return res;
 }
 
+bool processing_pointer_plus = false;
+
 /* Interpret the operation RHS1 OP RHS2.  If we didn't
    analyze this node before, follow the definitions until ending
    either on an analyzed GIMPLE_ASSIGN, or on a loop-phi-node.  On the
@@ -1702,7 +1704,33 @@ interpret_rhs_expr (class loop *loop, gimple *at_stmt,
 
     case POINTER_PLUS_EXPR:
       chrec1 = analyze_scalar_evolution (loop, rhs1);
+/*
+#0  chrec_fold_multiply (type=0x7ffff75387e0, op0=0x7ffff7620d60,
+    op1=0x7ffff7628e70)
+    at .../gcc/tree-chrec.cc:452
+#1  0x00000000013c9be2 in interpret_rhs_expr (loop=0x7ffff7646230,
+    at_stmt=0x7ffff76430b0, type=0x7ffff75387e0, rhs1=0x7ffff7626870,
+    code=MULT_EXPR, rhs2=0x7ffff7628e70)
+    at .../gcc/tree-scalar-evolution.cc:1801
+#2  0x00000000013ca387 in interpret_gimple_assign (loop=0x7ffff7646230,
+    stmt=0x7ffff76430b0)
+    at .../gcc/tree-scalar-evolution.cc:1918
+#3  0x00000000013ca4fa in analyze_scalar_evolution_1 (loop=0x7ffff7646230,
+    var=0x7ffff76268b8)
+    at .../gcc/tree-scalar-evolution.cc:1969
+#4  0x00000000013ca704 in analyze_scalar_evolution (loop=0x7ffff7646230,
+    var=0x7ffff76268b8)
+    at .../gcc/tree-scalar-evolution.cc:2038
+#5  0x00000000013c9274 in interpret_rhs_expr (loop=0x7ffff7646230,
+    at_stmt=0x7ffff7643108, type=0x7ffff761ec78, rhs1=0x7ffff7648000,
+    code=POINTER_PLUS_EXPR, rhs2=0x7ffff76268b8)
+    at .../gcc/tree-scalar-evolution.cc:1705
+*/
+  bool save_ppp;
+  save_ppp = processing_pointer_plus;
+  processing_pointer_plus = true;
       chrec2 = analyze_scalar_evolution (loop, rhs2);
+  processing_pointer_plus = save_ppp;
       chrec1 = chrec_convert (type, chrec1, at_stmt);
       chrec2 = chrec_convert (TREE_TYPE (rhs2), chrec2, at_stmt);
       chrec1 = instantiate_parameters (loop, chrec1);
