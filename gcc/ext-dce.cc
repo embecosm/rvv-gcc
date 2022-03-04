@@ -85,6 +85,8 @@ ext_dce (void)
 
 	  if (!INSN_P (insn))
 	    continue;
+
+	  bitmap live_tmp = BITMAP_ALLOC (NULL);
 	  /* First, process the sets.  */
 	  FOR_EACH_SUBRTX (iter, array, PATTERN (insn), NONCONST)
 	    {
@@ -97,9 +99,10 @@ ext_dce (void)
 		  if (GET_CODE (x) == SUBREG)
 		    {
 		      bit = SUBREG_BYTE (x).to_constant () * BITS_PER_UNIT;
+/* FIXME: BIG ENDIAN */
 		      mask = GET_MODE_MASK (GET_MODE (SUBREG_REG (x))) << bit;
 		      if (!mask)
-			mask = 0xffffffff00000000ULL;
+			mask = -100000000ULL;
 		      x = SUBREG_REG (x);
 		    }
 		  else if (GET_CODE (x) == STRICT_LOW_PART)
@@ -108,13 +111,16 @@ ext_dce (void)
 		    }
 		  if (REG_P (x))
 		    {
+		      HOST_WIDE_INT rn = REGNO (x);
+		      for (HOST_WIDE_INT i = 4 * rn; i < 4 * rn + 4; i++)
+			if (bitmap_bit_p (livenow, i))
+			  bitmap_set_bit (live_tmp, i);
 		      int start = (bit == 0 ? 0 : bit == 8 ? 1
 				   : bit == 16 ? 2 : 3);
 		      int end = ((mask & ~0xffffffffULL) ? 4
 				 : (mask & 0xffff0000) ? 3
 				 : (mask & 0xff00) ? 2 : 1);
-		      bitmap_clear_range (livenow,
-					  REGNO (x) + start, end - start);
+		      bitmap_clear_range (livenow, 4 * rn + start, end - start);
 		    }
 		  else
 		    gcc_assert (MEM_P (x));
@@ -131,30 +137,87 @@ ext_dce (void)
 		{
 		  const_rtx dst = SET_DEST (x);
 		  const_rtx src = SET_SRC (x);
+		  unsigned HOST_WIDE_INT bit = 0;
 		  enum rtx_code code = GET_CODE (src);
-		  if (GET_CODE (dst) == SUBREG || GET_CODE (dst) == ZERO_EXTRACT
+		  if (GET_CODE (dst) == SUBREG)
+		    {
+		      bit = SUBREG_BYTE (dst).to_constant () * BITS_PER_UNIT;
+/* FIXME: BIG ENDIAN */
+		      if (bit >= HOST_BITS_PER_WIDE_INT)
+			bit = HOST_BITS_PER_WIDE_INT - 1;
+		      dst = SUBREG_REG (dst);
+		    }
+		  else if (GET_CODE (dst) == ZERO_EXTRACT
 		      || GET_CODE (dst) == STRICT_LOW_PART)
 		    dst = XEXP (dst, 0);
 		  if (REG_P (dst)
 		      && (code == PLUS || code == MINUS || code == MULT
 			  || code == ASHIFT
-			  || code == ZERO_EXTEND || code == SIGN_EXTEND))
+			  || code == ZERO_EXTEND || code == SIGN_EXTEND
+			  || code == AND || code == IOR || code == XOR
+			  || code == REG
+			  || (code == SUBREG && REG_P (SUBREG_REG (src)))))
 		    {
-		      /* FIXME.  */
-		      iter.skip_subrtxes ();
+		      unsigned HOST_WIDE_INT mask_array[]
+			= { 0xff, 0xff00, 0xffff0000, -0x100000000 };
+		      HOST_WIDE_INT mask = 0;
+		      HOST_WIDE_INT rn = REGNO (x);
+		      for (int i = 0; i < 4; i++)
+			if (bitmap_bit_p (live_tmp, 4 * rn + i))
+			  mask |= mask_array[i];
+		      mask >>= bit;
+		      if (code == PLUS || code == MINUS || code == MULT
+			  || code == ASHIFT)
+			mask = (2ULL << floor_log2 (mask)) - 1;
+		      else if (code == SIGN_EXTEND || code == ZERO_EXTEND)
+			mask &= GET_MODE_MASK (GET_MODE (XEXP (src, 0)));
+		      if (code == REG)
+			x = src;
+		      else
+			x = XEXP (src, 0);
+		      for (;;)
+			{
+			  if (!REG_P (x))
+			    break;
+			  rn = REGNO (x);
+			  if (mask & 0xff)
+			    bitmap_set_bit (livenow, rn);
+			  if (mask & 0xff00)
+			    bitmap_set_bit (livenow, rn+1);
+			  if (mask & 0xffff0000)
+			    bitmap_set_bit (livenow, rn+2);
+			  if (mask & -0x100000000ULL)
+			    bitmap_set_bit (livenow, rn+3);
+			  if (GET_RTX_LENGTH (code) < 2
+			      || GET_RTX_FORMAT (code)[1] != 'e')
+			    break;
+			  x = XEXP (src, 1), code = REG;
+			}
+		      if (REG_P (x))
+			iter.skip_subrtxes ();
 		    }
 		  else if (REG_P (dst))
 		    iter.substitute (src);
 		}
 	      else if (xcode == SUBREG
-		       && GET_MODE_BITSIZE (GET_MODE  (x)).to_constant () < 32)
+		       && GET_MODE_BITSIZE (GET_MODE  (x)).to_constant () <= 32
+		       && SUBREG_BYTE (x).to_constant () == 0
+		       && REG_P (SUBREG_REG (x)))
 		{
-		  /* FIXME.  */
+		  HOST_WIDE_INT size
+		    = GET_MODE_BITSIZE (GET_MODE  (x)).to_constant ();
+		  HOST_WIDE_INT rn = 4 * REGNO (SUBREG_REG (x));
+		  bitmap_set_bit (livenow, rn);
+		  if (size > 8)
+		    bitmap_set_bit (livenow, rn+1);
+		  if (size > 16)
+		    bitmap_set_bit (livenow, rn+2);
 		  iter.skip_subrtxes ();
 		}
 	      else if (REG_P (x))
 		bitmap_set_range (livenow, REGNO (x) * 4, 4);
 	    }
+	  BITMAP_FREE (live_tmp);
 	}
 
       if (!bitmap_equal_p (livein[bb->index], livenow))
