@@ -585,6 +585,10 @@ The maximum depth of recursive inlining for inline functions.
 Common Joined UInteger Var(param_max_inline_recursive_depth_auto) Optimization Init(8) Param
 The maximum depth of recursive inlining for non-inline functions.
 
+-param=max-inline-callee-time=
+Common Joined UInteger Var(param_max_inline_callee_time) Optimization Init(0) Param
+The maximum estimated time for an inlined function.
+
 -param=max-isl-operations=
 Common Joined UInteger Var(param_max_isl_operations) Init(350000) Param Optimization
 Maximum number of isl operations, 0 means unlimited.

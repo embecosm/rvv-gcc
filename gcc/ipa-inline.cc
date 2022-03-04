@@ -473,6 +473,10 @@ can_inline_edge_by_limits_p (struct cgraph_edge *e, bool report,
   tree caller_tree = DECL_FUNCTION_SPECIFIC_OPTIMIZATION (caller->decl);
   tree callee_tree
     = callee ? DECL_FUNCTION_SPECIFIC_OPTIMIZATION (callee->decl) : NULL;
+#if 0
+ double t = estimate_edge_time (e).to_double ();
+ fprintf (stderr, "%s %s %f\n", fndecl_name (caller->decl), fndecl_name(callee->decl), t);
+#endif
   /* Check if caller growth allows the inlining.  */
   if (!DECL_DISREGARD_INLINE_LIMITS (callee->decl)
       && !disregard_limits
@@ -487,6 +491,12 @@ can_inline_edge_by_limits_p (struct cgraph_edge *e, bool report,
       e->inline_failed = CIF_EXTERN_LIVE_ONLY_STATIC;
       inlinable = false;
     }
+  else if (opt_for_fn (caller->decl, param_max_inline_callee_time) > 0
+	   && estimate_edge_time (e) >= opt_for_fn (caller->decl, param_max_inline_callee_time))
+	{
+	  e->inline_failed = CIF_INLINE_CALLEE_TIME_LIMIT;
+	  inlinable = false;
+	}
   /* Don't inline a function with a higher optimization level than the
      caller.  FIXME: this is really just tip of iceberg of handling
      optimization attribute.  */
