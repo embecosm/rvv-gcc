@@ -29,6 +29,7 @@ along with GCC; see the file COPYING3.  If not see
 #include "cfganal.h"
 #include "tree-pass.h"
 #include "rtl-iter.h"
+#include "df.h"
 
 /* We consider four bit groups for liveness:
    bit 0..7   (least significant byte)
@@ -232,6 +233,17 @@ ext_dce (void)
   livein.quick_grow (last_basic_block_for_fn (cfun));
   for (int i = 0; i < last_basic_block_for_fn (cfun); i++)
     bitmap_initialize (&livein[i], &bitmap_default_obstack);
+
+  auto_bitmap refs (&bitmap_default_obstack);
+  df_get_exit_block_use_set (refs);
+
+  unsigned i;
+  bitmap_iterator bi;
+  EXECUTE_IF_SET_IN_BITMAP (refs, 0, i, bi)
+    {
+      for (int j = 0; j < 4; j++)
+	bitmap_set_bit (&livein[EXIT_BLOCK], i * 4 + j);
+    }
 
   livenow = BITMAP_ALLOC (NULL);
 
