@@ -166,6 +166,20 @@
   [(set_attr "type" "bitmanip,load")
    (set_attr "mode" "<SUPERQI:MODE>")])
 
+;; Combine has a different idea about canonical rtl.
+;; Example: int f (int i) { return (short)i; }
+(define_insn_and_split "*extendhidi_combine"
+  [(set (match_operand:DI 0 "register_operand")
+	(sign_extend:DI
+	  (ashiftrt:SI
+	    (subreg:SI (ashift:DI (match_operand:DI 1 "register_operand")
+				  (const_int 16)) 0)
+	    (const_int 16))))]
+  "TARGET_ZBB"
+  "#"
+  "&& 1"
+  [(set (match_dup 0) (sign_extend:DI (subreg:HI (match_dup 1) 0)))])
+
 (define_insn "*zero_extendhi<GPR:mode>2_zbb"
   [(set (match_operand:GPR    0 "register_operand"     "=r,r")
 	(zero_extend:GPR
