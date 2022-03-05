@@ -338,7 +338,7 @@ public:
   {}
 
   /* opt_pass methods: */
-  virtual bool gate (function *) { return ( flag_ext_dce); }
+  virtual bool gate (function *) { return flag_ext_dce != 0; }
   virtual unsigned int execute (function *)
     {
       ext_dce ();
