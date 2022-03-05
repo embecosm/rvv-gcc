@@ -3620,3 +3620,7 @@ Widen induction variables that have undefined overflow behaviour where convenien
 fwiden-any-iv
 Common Var(flag_widen_any_iv) Optimization
 Widen any induction variables where convenient.
+
+fext-dce
+Common Var(flag_ext_dce) Optimization Init(1)
+Perform dead code elimination on zero and sign extensions with special dataflow analysis.
