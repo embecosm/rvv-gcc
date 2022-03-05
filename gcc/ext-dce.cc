@@ -58,8 +58,8 @@ ext_dce_process_bb (basic_block bb, bitmap livenow, bool modify)
 	  if (GET_CODE (x) == SET || GET_CODE (x) == CLOBBER)
 	    {
 	      unsigned bit = 0;
-	      unsigned HOST_WIDE_INT mask = GET_MODE_MASK (GET_MODE (x));
 	      x = SET_DEST (x);
+	      unsigned HOST_WIDE_INT mask = GET_MODE_MASK (GET_MODE (x));
 	      if (GET_CODE (x) == SUBREG)
 		{
 		  bit = SUBREG_BYTE (x).to_constant () * BITS_PER_UNIT;
@@ -68,7 +68,7 @@ ext_dce_process_bb (basic_block bb, bitmap livenow, bool modify)
 			   - BITS_PER_WORD - bit);
 		  mask = GET_MODE_MASK (GET_MODE (SUBREG_REG (x))) << bit;
 		  if (!mask)
-		    mask = -100000000ULL;
+		    mask = -0x100000000ULL;
 		  x = SUBREG_REG (x);
 		}
 	      else if (GET_CODE (x) == STRICT_LOW_PART)
@@ -84,7 +84,7 @@ ext_dce_process_bb (basic_block bb, bitmap livenow, bool modify)
 		  int start = (bit == 0 ? 0 : bit == 8 ? 1
 			       : bit == 16 ? 2 : 3);
 		  int end = ((mask & ~0xffffffffULL) ? 4
-			     : (mask & 0xffff0000) ? 3
+			     : (mask & 0xffff0000ULL) ? 3
 			     : (mask & 0xff00) ? 2 : 1);
 		  bitmap_clear_range (livenow, 4 * rn + start, end - start);
 		}
@@ -129,9 +129,9 @@ ext_dce_process_bb (basic_block bb, bitmap livenow, bool modify)
 		      || (code == SUBREG && REG_P (SUBREG_REG (src)))))
 		{
 		  unsigned HOST_WIDE_INT mask_array[]
-		    = { 0xff, 0xff00, 0xffff0000, -0x100000000 };
+		    = { 0xff, 0xff00, 0xffff0000ULL, -0x100000000ULL };
 		  HOST_WIDE_INT mask = 0;
-		  HOST_WIDE_INT rn = REGNO (x);
+		  HOST_WIDE_INT rn = REGNO (dst);
 		  for (int i = 0; i < 4; i++)
 		    if (bitmap_bit_p (live_tmp, 4 * rn + i))
 		      mask |= mask_array[i];
@@ -142,6 +142,12 @@ ext_dce_process_bb (basic_block bb, bitmap livenow, bool modify)
 		      HOST_WIDE_INT mask2 = GET_MODE_MASK (GET_MODE (inner));
 
 		      /* Delete dead sign / zero extensions.  */
+  if (0 && modify)
+{
+debug_rtx(insn);
+debug_bitmap (live_tmp);
+    fprintf (stderr, "m " HOST_WIDE_INT_PRINT_HEX " m2 " HOST_WIDE_INT_PRINT_HEX "\n", mask, mask2);
+}
 		      if (modify && (mask & ~mask2) == 0)
 			validate_change
 			  (insn, &SET_SRC (x),
@@ -155,7 +161,7 @@ ext_dce_process_bb (basic_block bb, bitmap livenow, bool modify)
 		    }
 		  if (code == PLUS || code == MINUS || code == MULT
 		      || code == ASHIFT)
-		    mask = (2ULL << floor_log2 (mask)) - 1;
+		    mask = mask ? ((2ULL << floor_log2 (mask)) - 1) : 0;
 		  if (BINARY_P (src))
 		    y = XEXP (src, 0);
 		  else
@@ -173,18 +179,18 @@ ext_dce_process_bb (basic_block bb, bitmap livenow, bool modify)
 			    {
 			      mask <<= bit;
 			      if (!mask)
-				mask = -100000000ULL;
+				mask = -0x100000000ULL;
 			    }
 			  y = SUBREG_REG (y);
 			}
 		      if (!REG_P (y))
 			break;
-		      rn = REGNO (y);
+		      rn = 4 * REGNO (y);
 		      if (mask & 0xff)
 			bitmap_set_bit (livenow, rn);
 		      if (mask & 0xff00)
 			bitmap_set_bit (livenow, rn+1);
-		      if (mask & 0xffff0000)
+		      if (mask & 0xffff0000ULL)
 			bitmap_set_bit (livenow, rn+2);
 		      if (mask & -0x100000000ULL)
 			bitmap_set_bit (livenow, rn+3);
@@ -216,7 +222,7 @@ ext_dce_process_bb (basic_block bb, bitmap livenow, bool modify)
 	  else if (REG_P (x))
 	    bitmap_set_range (livenow, REGNO (x) * 4, 4);
 	}
-      BITMAP_FREE (live_tmp);
+      //BITMAP_FREE (live_tmp);
     }
   return livenow;
 }
@@ -299,6 +305,10 @@ ext_dce (void)
 
 	  if (!bitmap_equal_p (&livein[bb->index], livenow))
 	    {
+	      gcc_assert (!modify);
+	      bitmap tmp = BITMAP_ALLOC (NULL);
+	      gcc_assert (!bitmap_and_compl (tmp, &livein[bb->index], livenow));
+
 	      bitmap_copy (&livein[bb->index], livenow);
 
 	      edge_iterator ei;
