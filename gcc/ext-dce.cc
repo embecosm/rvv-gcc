@@ -39,11 +39,15 @@ ext_dce (void)
   basic_block bb, *worklist, *qin, *qout, *qend;
   unsigned int qlen;
   rtx_insn *insn;
-  sbitmap *livein, livenow; /* Probably should be bitmap.  */
+  vec<bitmap_head> livein;
+  bitmap livenow;
 
-  livein = sbitmap_vector_alloc (last_basic_block_for_fn (cfun),
-				 4 * max_reg_num ());
-  livenow = sbitmap_alloc (4 * max_reg_num ());
+  livein.create (last_basic_block_for_fn (cfun));
+  livein.quick_grow (last_basic_block_for_fn (cfun));
+  for (int i = 0; i < last_basic_block_for_fn (cfun); i++)
+    bitmap_initialize (&livein[i], &bitmap_default_obstack);
+
+  livenow = BITMAP_ALLOC (NULL);
 
   qin = worklist
     = XNEWVEC (basic_block, n_basic_blocks_for_fn (cfun) - NUM_FIXED_BLOCKS);
@@ -75,9 +79,12 @@ ext_dce (void)
 	qout = worklist;
 
       bitmap_clear (livenow);
-      /* FIXME: make everything live that's live in the successors.  */
+      /* Make everything live that's live in the successors.  */
+      edge_iterator ei;
+      edge e;
 
-      bool changed = false;
+      FOR_EACH_EDGE (e, ei, bb->succs)
+	bitmap_ior_into (livenow, &livein[e->dest->index]);
 
       FOR_BB_INSNS_REVERSE (bb, insn)
 	{
@@ -99,7 +106,9 @@ ext_dce (void)
 		  if (GET_CODE (x) == SUBREG)
 		    {
 		      bit = SUBREG_BYTE (x).to_constant () * BITS_PER_UNIT;
-/* FIXME: BIG ENDIAN */
+		      if (WORDS_BIG_ENDIAN)
+			bit = (GET_MODE_BITSIZE (GET_MODE (x)).to_constant ()
+			       - BITS_PER_WORD - bit);
 		      mask = GET_MODE_MASK (GET_MODE (SUBREG_REG (x))) << bit;
 		      if (!mask)
 			mask = -100000000ULL;
@@ -142,7 +151,9 @@ ext_dce (void)
 		  if (GET_CODE (dst) == SUBREG)
 		    {
 		      bit = SUBREG_BYTE (dst).to_constant () * BITS_PER_UNIT;
-/* FIXME: BIG ENDIAN */
+		      if (WORDS_BIG_ENDIAN)
+			bit = (GET_MODE_BITSIZE (GET_MODE (dst)).to_constant ()
+			       - BITS_PER_WORD - bit);
 		      if (bit >= HOST_BITS_PER_WIDE_INT)
 			bit = HOST_BITS_PER_WIDE_INT - 1;
 		      dst = SUBREG_REG (dst);
@@ -166,17 +177,37 @@ ext_dce (void)
 			if (bitmap_bit_p (live_tmp, 4 * rn + i))
 			  mask |= mask_array[i];
 		      mask >>= bit;
+		      if (code == SIGN_EXTEND || code == ZERO_EXTEND)
+			{
+			  mask &= GET_MODE_MASK (GET_MODE (XEXP (src, 0)));
+			  src = XEXP (src, 0);
+			  code = GET_CODE (src);
+			}
 		      if (code == PLUS || code == MINUS || code == MULT
 			  || code == ASHIFT)
 			mask = (2ULL << floor_log2 (mask)) - 1;
-		      else if (code == SIGN_EXTEND || code == ZERO_EXTEND)
-			mask &= GET_MODE_MASK (GET_MODE (XEXP (src, 0)));
-		      if (code == REG)
-			x = src;
-		      else
+		      if (BINARY_P (src))
 			x = XEXP (src, 0);
+		      else
+			x = src;
 		      for (;;)
 			{
+			  if (GET_CODE (x) == SUBREG)
+			    {
+			      bit = (SUBREG_BYTE (x).to_constant ()
+				     * BITS_PER_UNIT);
+			      if (WORDS_BIG_ENDIAN)
+				bit = (GET_MODE_BITSIZE
+					(GET_MODE (x)).to_constant ()
+					 - BITS_PER_WORD - bit);
+			      if (mask)
+				{
+				  mask <<= bit;
+				  if (!mask)
+				    mask = -100000000ULL;
+				}
+			      x = SUBREG_REG (x);
+			    }
 			  if (!REG_P (x))
 			    break;
 			  rn = REGNO (x);
@@ -188,10 +219,9 @@ ext_dce (void)
 			    bitmap_set_bit (livenow, rn+2);
 			  if (mask & -0x100000000ULL)
 			    bitmap_set_bit (livenow, rn+3);
-			  if (GET_RTX_LENGTH (code) < 2
-			      || GET_RTX_FORMAT (code)[1] != 'e')
+			  if (!BINARY_P (src))
 			    break;
-			  x = XEXP (src, 1), code = REG;
+			  x = XEXP (src, 1);
 			}
 		      if (REG_P (x))
 			iter.skip_subrtxes ();
@@ -220,31 +250,33 @@ ext_dce (void)
 	  BITMAP_FREE (live_tmp);
 	}
 
-      if (!bitmap_equal_p (livein[bb->index], livenow))
+      if (!bitmap_equal_p (&livein[bb->index], livenow))
 	{
-	  changed = true;
-	  bitmap_copy (livein[bb->index], livenow);
+	  bitmap_copy (&livein[bb->index], livenow);
+
+	  edge_iterator ei;
+	  edge e;
+
+	  FOR_EACH_EDGE (e, ei, bb->preds)
+	    if (!e->src->aux && e->src != ENTRY_BLOCK_PTR_FOR_FN (cfun))
+	      {
+		*qin++ = e->src;
+		e->src->aux = e;
+		qlen++;
+		if (qin >= qend)
+		  qin = worklist;
+	      }
 	}
-
-      edge_iterator ei;
-      edge e;
-
-      if (changed)
-	FOR_EACH_EDGE (e, ei, bb->preds)
-	  if (!e->src->aux && e->src != ENTRY_BLOCK_PTR_FOR_FN (cfun))
-	    {
-	      *qin++ = e->src;
-	      e->src->aux = e;
-	      qlen++;
-	      if (qin >= qend)
-		qin = worklist;
-	    }
     }
 
   /* FIXME: Delete dead sign / zero extensions.  */
 
   /* Clean up.  */
-  sbitmap_vector_free (livein);
+  BITMAP_FREE (livenow);
+  unsigned len = livein.length ();
+  for (unsigned i = 0; i < len; i++)
+    bitmap_clear (&livein[i]);
+  livein.release ();
   clear_aux_for_blocks ();
   free (worklist);
 }
