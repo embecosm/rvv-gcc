@@ -89,7 +89,8 @@ ext_dce_process_bb (basic_block bb, bitmap livenow, bool modify)
 		  bitmap_clear_range (livenow, 4 * rn + start, end - start);
 		}
 	      else
-		gcc_assert (MEM_P (x) || x == pc_rtx);
+		gcc_assert (MEM_P (x) || x == pc_rtx
+			    || GET_CODE (x) == SCRATCH);
 	      iter.skip_subrtxes ();
 	    }
 	}
