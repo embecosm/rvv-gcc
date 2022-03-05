@@ -183,22 +183,25 @@ debug_bitmap (live_tmp);
 			    }
 			  y = SUBREG_REG (y);
 			}
-		      if (!REG_P (y))
+		      if (REG_P (y))
+			{
+			  rn = 4 * REGNO (y);
+			  if (mask & 0xff)
+			    bitmap_set_bit (livenow, rn);
+			  if (mask & 0xff00)
+			    bitmap_set_bit (livenow, rn+1);
+			  if (mask & 0xffff0000ULL)
+			    bitmap_set_bit (livenow, rn+2);
+			  if (mask & -0x100000000ULL)
+			    bitmap_set_bit (livenow, rn+3);
+			}
+		      else if (!CONSTANT_P (y))
 			break;
-		      rn = 4 * REGNO (y);
-		      if (mask & 0xff)
-			bitmap_set_bit (livenow, rn);
-		      if (mask & 0xff00)
-			bitmap_set_bit (livenow, rn+1);
-		      if (mask & 0xffff0000ULL)
-			bitmap_set_bit (livenow, rn+2);
-		      if (mask & -0x100000000ULL)
-			bitmap_set_bit (livenow, rn+3);
 		      if (!BINARY_P (src))
 			break;
 		      y = XEXP (src, 1), src = pc_rtx;
 		    }
-		  if (REG_P (y))
+		  if (REG_P (y) || CONSTANT_P (y))
 		    iter.skip_subrtxes ();
 		}
 	      else if (REG_P (dst))
