@@ -22,6 +22,7 @@ along with GCC; see the file COPYING3.  If not see
 #include "coretypes.h"
 #include "backend.h"
 #include "rtl.h"
+#include "tree.h"
 #include "memmodel.h"
 #include "insn-config.h"
 #include "emit-rtl.h"
@@ -234,6 +235,42 @@ debug_bitmap (live_tmp);
 void
 ext_dce (void)
 {
+  /* Proper PRE is hard, so for now just extend return values without
+    checking if that'll help.
+    (To check if it'd help, we'd have to do a dataflow computation to check
+     if a highpart computed from an extension that could be changed into a
+     no-op move reaches the return value copy.)
+    If a function is inlined, the return value should already be used
+    just in the mode needed, so normal ext-dce should work just fine.  */
+  if (flag_ext_dce == 2)
+    {
+      edge_iterator ei;
+      edge e;
+      rtx_insn *insn;
+
+      FOR_EACH_EDGE (e, ei, EXIT_BLOCK_PTR_FOR_FN (cfun)->preds)
+	FOR_BB_INSNS (e->src, insn)
+	  {
+	    rtx set = single_set (insn);
+	    if (!set
+		|| !REG_P (SET_SRC (set))
+		|| !REG_P (SET_DEST (set)))
+	      continue;
+	    tree decl = REG_EXPR (SET_SRC (set));
+	    if (!decl || TREE_CODE (decl) != RESULT_DECL
+		|| TREE_CODE (TREE_TYPE (decl)) != INTEGER_TYPE
+		|| maybe_ge (TYPE_PRECISION (TREE_TYPE (decl)),
+			     GET_MODE_BITSIZE (GET_MODE (SET_SRC (set)))))
+	      continue;
+	    rtx ext = gen_rtx_SUBREG (TYPE_MODE (TREE_TYPE (decl)),
+				      SET_SRC (set), 0);
+	    ext = gen_rtx_fmt_e ((TYPE_UNSIGNED (TREE_TYPE (decl))
+				  ? ZERO_EXTEND : SIGN_EXTEND),
+				 GET_MODE (SET_DEST (set)), ext);
+	    validate_change (insn, &SET_SRC (set), ext, false);
+	  }
+    }
+
   basic_block bb, *worklist, *qin, *qout, *qend;
   unsigned int qlen;
   vec<bitmap_head> livein;

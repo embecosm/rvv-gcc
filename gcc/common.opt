@@ -3622,5 +3622,9 @@ Common Var(flag_widen_any_iv) Optimization
 Widen any induction variables where convenient.
 
 fext-dce
-Common Var(flag_ext_dce) Optimization Init(0)
+Common Var(flag_ext_dce, 1) Optimization Init(0)
 Perform dead code elimination on zero and sign extensions with special dataflow analysis.
+
+fext-dce-pre
+Common Var(flag_ext_dce, 2)
+Perform dead code elimination on zero and sign extensions with special dataflow analysis.  Insert extensions on edges for partial redundancy elimination.
