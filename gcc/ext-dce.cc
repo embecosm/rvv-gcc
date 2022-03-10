@@ -29,6 +29,7 @@ along with GCC; see the file COPYING3.  If not see
 #include "recog.h"
 #include "cfganal.h"
 #include "tree-pass.h"
+#include "cfgrtl.h"
 #include "rtl-iter.h"
 #include "df.h"
 
@@ -247,6 +248,7 @@ ext_dce (void)
       edge_iterator ei;
       edge e;
       rtx_insn *insn;
+      bool need_commit = false;
 
       FOR_EACH_EDGE (e, ei, EXIT_BLOCK_PTR_FOR_FN (cfun)->preds)
 	FOR_BB_INSNS (e->src, insn)
@@ -262,13 +264,74 @@ ext_dce (void)
 		|| maybe_ge (TYPE_PRECISION (TREE_TYPE (decl)),
 			     GET_MODE_BITSIZE (GET_MODE (SET_SRC (set)))))
 	      continue;
+
 	    rtx ext = gen_rtx_SUBREG (TYPE_MODE (TREE_TYPE (decl)),
 				      SET_SRC (set), 0);
 	    ext = gen_rtx_fmt_e ((TYPE_UNSIGNED (TREE_TYPE (decl))
 				  ? ZERO_EXTEND : SIGN_EXTEND),
 				 GET_MODE (SET_DEST (set)), ext);
+
+	    /* Filter out a trivial case of a useless extension:
+	       if the register was just set to a constant or memory value.  */
+	    rtx_insn *prev = prev_nonnote_nondebug_insn (insn);
+	    if ((!prev || LABEL_P (prev)) && !bb_has_abnormal_pred (e->src))
+	      {
+		edge_iterator ei2;
+		edge e2;
+		auto_vec<edge> live_preds;
+
+		FOR_EACH_EDGE (e2, ei2, e->src->preds)
+		  {
+		    prev = BB_END (e2->src);
+		    if (NOTE_P (prev) || DEBUG_INSN_P (prev))
+		      prev = prev_nonnote_nondebug_insn (prev);
+		    rtx prev_set = NULL_RTX;
+		    if (prev)
+		      prev_set = single_set (prev);
+		    if (prev_set
+			&& rtx_equal_p (SET_DEST (prev_set), SET_SRC (set))
+			&& (CONSTANT_P (SET_SRC (prev_set))
+			    || MEM_P (SET_SRC (prev))))
+		      continue;
+		    live_preds.safe_push (e2);
+		  }
+		if (!live_preds.length ())
+		  continue;
+
+		start_sequence ();
+		rtx_insn *ext_insn
+		  = emit_insn (gen_rtx_SET (SET_SRC (set), ext));
+		if (recog (PATTERN (ext_insn), ext_insn, NULL) < 0)
+		  ext_insn = NULL;
+		end_sequence ();
+
+		if (ext_insn
+		    && live_preds.length () < EDGE_COUNT (e->src->preds)
+		    && find_regno_note (insn, REG_DEAD, REGNO (SET_SRC (set))))
+		  {
+		    unsigned int i;
+		    FOR_EACH_VEC_ELT (live_preds, i, e2)
+		      insert_insn_on_edge (copy_rtx (PATTERN (ext_insn)), e2);
+		    need_commit = true;
+		    continue;
+		  }
+	      }
+	    else
+	      {
+		rtx prev_set = NULL_RTX;
+		if (prev)
+		  prev_set = single_set (prev);
+		if (prev_set
+		    && rtx_equal_p (SET_DEST (prev_set), SET_SRC (set))
+		    && (CONSTANT_P (SET_SRC (prev_set))
+			|| MEM_P (SET_SRC (prev))))
+		  continue;
+	      }
+
 	    validate_change (insn, &SET_SRC (set), ext, false);
 	  }
+      if (need_commit)
+	commit_edge_insertions();
     }
 
   basic_block bb, *worklist, *qin, *qout, *qend;
