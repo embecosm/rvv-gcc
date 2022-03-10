@@ -52,181 +52,206 @@ ext_dce_process_bb (basic_block bb, bitmap livenow, bool modify)
 	continue;
 
       bitmap live_tmp = BITMAP_ALLOC (NULL);
+      int seen_fusage = 0;
 
       /* First, process the sets.  */
-      FOR_EACH_SUBRTX (iter, array, PATTERN (insn), NONCONST)
+      for (rtx pat = PATTERN (insn);;)
 	{
-	  const_rtx x = *iter;
-	  if (GET_CODE (x) == SET || GET_CODE (x) == CLOBBER)
+	  FOR_EACH_SUBRTX (iter, array, pat, NONCONST)
 	    {
-	      unsigned bit = 0;
-	      x = SET_DEST (x);
-	      unsigned HOST_WIDE_INT mask = GET_MODE_MASK (GET_MODE (x));
-	      if (GET_CODE (x) == SUBREG)
+	      const_rtx x = *iter;
+	      /* An EXPR_LIST (from call fusage) ends in NULL_RTX.  */
+	      if (x == NULL_RTX)
+		continue;
+	      if (GET_CODE (x) == SET || GET_CODE (x) == CLOBBER)
 		{
-		  bit = SUBREG_BYTE (x).to_constant () * BITS_PER_UNIT;
-		  if (WORDS_BIG_ENDIAN)
-		    bit = (GET_MODE_BITSIZE (GET_MODE (x)).to_constant ()
-			   - BITS_PER_WORD - bit);
-		  mask = GET_MODE_MASK (GET_MODE (SUBREG_REG (x))) << bit;
-		  if (!mask)
-		    mask = -0x100000000ULL;
-		  x = SUBREG_REG (x);
+		  unsigned bit = 0;
+		  x = SET_DEST (x);
+		  unsigned HOST_WIDE_INT mask = GET_MODE_MASK (GET_MODE (x));
+		  if (GET_CODE (x) == SUBREG)
+		    {
+		      bit = SUBREG_BYTE (x).to_constant () * BITS_PER_UNIT;
+		      if (WORDS_BIG_ENDIAN)
+			bit = (GET_MODE_BITSIZE (GET_MODE (x)).to_constant ()
+			       - BITS_PER_WORD - bit);
+		      mask = GET_MODE_MASK (GET_MODE (SUBREG_REG (x))) << bit;
+		      if (!mask)
+			mask = -0x100000000ULL;
+		      x = SUBREG_REG (x);
+		    }
+		  else if (GET_CODE (x) == STRICT_LOW_PART)
+		    {
+		      x = XEXP (x, 0);
+		    }
+		  if (REG_P (x))
+		    {
+		      HOST_WIDE_INT rn = REGNO (x);
+		      for (HOST_WIDE_INT i = 4 * rn; i < 4 * rn + 4; i++)
+			if (bitmap_bit_p (livenow, i))
+			  bitmap_set_bit (live_tmp, i);
+		      int start = (bit == 0 ? 0 : bit == 8 ? 1
+				   : bit == 16 ? 2 : 3);
+		      int end = ((mask & ~0xffffffffULL) ? 4
+				 : (mask & 0xffff0000ULL) ? 3
+				 : (mask & 0xff00) ? 2 : 1);
+		      bitmap_clear_range (livenow, 4 * rn + start, end - start);
+		    }
+		  else
+		    gcc_assert (MEM_P (x) || x == pc_rtx
+				|| GET_CODE (x) == SCRATCH);
+		  iter.skip_subrtxes ();
 		}
-	      else if (GET_CODE (x) == STRICT_LOW_PART)
-		{
-		  x = XEXP (x, 0);
-		}
-	      if (REG_P (x))
-		{
-		  HOST_WIDE_INT rn = REGNO (x);
-		  for (HOST_WIDE_INT i = 4 * rn; i < 4 * rn + 4; i++)
-		    if (bitmap_bit_p (livenow, i))
-		      bitmap_set_bit (live_tmp, i);
-		  int start = (bit == 0 ? 0 : bit == 8 ? 1
-			       : bit == 16 ? 2 : 3);
-		  int end = ((mask & ~0xffffffffULL) ? 4
-			     : (mask & 0xffff0000ULL) ? 3
-			     : (mask & 0xff00) ? 2 : 1);
-		  bitmap_clear_range (livenow, 4 * rn + start, end - start);
-		}
-	      else
-		gcc_assert (MEM_P (x) || x == pc_rtx
-			    || GET_CODE (x) == SCRATCH);
-	      iter.skip_subrtxes ();
 	    }
+	  if (GET_CODE (insn) != CALL_INSN || seen_fusage > 0)
+	    break;
+	  pat = CALL_INSN_FUNCTION_USAGE (insn);
+	  seen_fusage++;
 	}
       /* Now, process the uses.  */
-      subrtx_var_iterator::array_type array_var;
-      FOR_EACH_SUBRTX_VAR (iter, array_var, PATTERN (insn), NONCONST)
+      for (rtx pat = PATTERN (insn);;)
 	{
-	  rtx x = *iter;
-	  enum rtx_code xcode = GET_CODE (x);
-
-	  if (GET_CODE (x) == SET)
+	  subrtx_var_iterator::array_type array_var;
+	  FOR_EACH_SUBRTX_VAR (iter, array_var, pat, NONCONST)
 	    {
-	      const_rtx dst = SET_DEST (x);
-	      rtx src = SET_SRC (x);
-	      const_rtx y;
-	      unsigned HOST_WIDE_INT bit = 0;
-	      enum rtx_code code = GET_CODE (src);
-	      if (GET_CODE (dst) == SUBREG)
-		{
-		  bit = SUBREG_BYTE (dst).to_constant () * BITS_PER_UNIT;
-		  if (WORDS_BIG_ENDIAN)
-		    bit = (GET_MODE_BITSIZE (GET_MODE (dst)).to_constant ()
-			   - BITS_PER_WORD - bit);
-		  if (bit >= HOST_BITS_PER_WIDE_INT)
-		    bit = HOST_BITS_PER_WIDE_INT - 1;
-		  dst = SUBREG_REG (dst);
-		}
-	      else if (GET_CODE (dst) == ZERO_EXTRACT
-		       || GET_CODE (dst) == STRICT_LOW_PART)
-		dst = XEXP (dst, 0);
-	      if (REG_P (dst)
-		  && (code == PLUS || code == MINUS || code == MULT
-		      || code == ASHIFT
-		      || code == ZERO_EXTEND || code == SIGN_EXTEND
-		      || code == AND || code == IOR || code == XOR
-		      || code == REG
-		      || (code == SUBREG && REG_P (SUBREG_REG (src)))))
-		{
-		  unsigned HOST_WIDE_INT mask_array[]
-		    = { 0xff, 0xff00, 0xffff0000ULL, -0x100000000ULL };
-		  HOST_WIDE_INT mask = 0;
-		  HOST_WIDE_INT rn = REGNO (dst);
-		  for (int i = 0; i < 4; i++)
-		    if (bitmap_bit_p (live_tmp, 4 * rn + i))
-		      mask |= mask_array[i];
-		  mask >>= bit;
-		  if (code == SIGN_EXTEND || code == ZERO_EXTEND)
-		    {
-		      rtx inner = XEXP (src, 0);
-		      HOST_WIDE_INT mask2 = GET_MODE_MASK (GET_MODE (inner));
+	      rtx x = *iter;
+	      /* An EXPR_LIST (from call fusage) ends in NULL_RTX.  */
+	      if (x == NULL_RTX)
+		continue;
+	      enum rtx_code xcode = GET_CODE (x);
 
-		      /* Delete dead sign / zero extensions.  */
-  if (0 && modify)
+	      if (GET_CODE (x) == SET)
+		{
+		  const_rtx dst = SET_DEST (x);
+		  rtx src = SET_SRC (x);
+		  const_rtx y;
+		  unsigned HOST_WIDE_INT bit = 0;
+		  enum rtx_code code = GET_CODE (src);
+		  if (GET_CODE (dst) == SUBREG)
+		    {
+		      bit = SUBREG_BYTE (dst).to_constant () * BITS_PER_UNIT;
+		      if (WORDS_BIG_ENDIAN)
+			bit = (GET_MODE_BITSIZE (GET_MODE (dst)).to_constant ()
+			       - BITS_PER_WORD - bit);
+		      if (bit >= HOST_BITS_PER_WIDE_INT)
+			bit = HOST_BITS_PER_WIDE_INT - 1;
+		      dst = SUBREG_REG (dst);
+		    }
+		  else if (GET_CODE (dst) == ZERO_EXTRACT
+			   || GET_CODE (dst) == STRICT_LOW_PART)
+		    dst = XEXP (dst, 0);
+		  if (REG_P (dst)
+		      && (code == PLUS || code == MINUS || code == MULT
+			  || code == ASHIFT
+			  || code == ZERO_EXTEND || code == SIGN_EXTEND
+			  || code == AND || code == IOR || code == XOR
+			  || code == REG
+			  || (code == SUBREG && REG_P (SUBREG_REG (src)))))
+		    {
+		      unsigned HOST_WIDE_INT mask_array[]
+			= { 0xff, 0xff00, 0xffff0000ULL, -0x100000000ULL };
+		      HOST_WIDE_INT mask = 0;
+		      HOST_WIDE_INT rn = REGNO (dst);
+		      for (int i = 0; i < 4; i++)
+			if (bitmap_bit_p (live_tmp, 4 * rn + i))
+			  mask |= mask_array[i];
+		      mask >>= bit;
+		      if (code == SIGN_EXTEND || code == ZERO_EXTEND)
+			{
+			  rtx inner = XEXP (src, 0);
+			  HOST_WIDE_INT mask2
+			    = GET_MODE_MASK (GET_MODE (inner));
+
+			  /* Delete dead sign / zero extensions.  */
+      if (0 && modify)
 {
 debug_rtx(insn);
-debug_bitmap (live_tmp);
-    fprintf (stderr, "m " HOST_WIDE_INT_PRINT_HEX " m2 " HOST_WIDE_INT_PRINT_HEX "\n", mask, mask2);
+debug_bitmap     (live_tmp);
+	fprintf (stderr, "m " HOST_WIDE_INT_PRINT_HEX " m2 " HOST_WIDE_INT_PRINT_HEX "\n", mask, mask2);
 }
-		      if (modify && (mask & ~mask2) == 0)
-			validate_change
-			  (insn, &SET_SRC (x),
-			   simplify_gen_subreg
-			     (GET_MODE (src), inner, GET_MODE (inner), 0),
-			   false);
+			  if (modify && (mask & ~mask2) == 0)
+			    validate_change
+			      (insn, &SET_SRC (x),
+			       simplify_gen_subreg
+				 (GET_MODE (src), inner, GET_MODE (inner), 0),
+			       false);
 
-		      mask &= mask2;
-		      src = XEXP (src, 0);
-		      code = GET_CODE (src);
-		    }
-		  if (code == PLUS || code == MINUS || code == MULT
-		      || code == ASHIFT)
-		    mask = mask ? ((2ULL << floor_log2 (mask)) - 1) : 0;
-		  if (BINARY_P (src))
-		    y = XEXP (src, 0);
-		  else
-		    y = src;
-		  for (;;)
-		    {
-		      if (GET_CODE (y) == SUBREG)
+			  mask &= mask2;
+			  src = XEXP (src, 0);
+			  code = GET_CODE (src);
+			}
+		      if (code == PLUS || code == MINUS || code == MULT
+			  || code == ASHIFT)
+			mask = mask ? ((2ULL << floor_log2 (mask)) - 1) : 0;
+		      if (BINARY_P (src))
+			y = XEXP (src, 0);
+		      else
+			y = src;
+		      for (;;)
 			{
-			  bit = SUBREG_BYTE (y).to_constant () * BITS_PER_UNIT;
-			  if (WORDS_BIG_ENDIAN)
-			    bit = (GET_MODE_BITSIZE
-				    (GET_MODE (y)).to_constant ()
-				     - BITS_PER_WORD - bit);
-			  if (mask)
+			  if (GET_CODE (y) == SUBREG)
 			    {
-			      mask <<= bit;
-			      if (!mask)
-				mask = -0x100000000ULL;
+			      bit = (SUBREG_BYTE (y).to_constant ()
+				     * BITS_PER_UNIT);
+			      if (WORDS_BIG_ENDIAN)
+				bit = (GET_MODE_BITSIZE
+					(GET_MODE (y)).to_constant ()
+					 - BITS_PER_WORD - bit);
+			      if (mask)
+				{
+				  mask <<= bit;
+				  if (!mask)
+				    mask = -0x100000000ULL;
+				}
+			      y = SUBREG_REG (y);
 			    }
-			  y = SUBREG_REG (y);
+			  if (REG_P (y))
+			    {
+			      rn = 4 * REGNO (y);
+			      if (mask & 0xff)
+				bitmap_set_bit (livenow, rn);
+			      if (mask & 0xff00)
+				bitmap_set_bit (livenow, rn+1);
+			      if (mask & 0xffff0000ULL)
+				bitmap_set_bit (livenow, rn+2);
+			      if (mask & -0x100000000ULL)
+				bitmap_set_bit (livenow, rn+3);
+			    }
+			  else if (!CONSTANT_P (y))
+			    break;
+			  if (!BINARY_P (src))
+			    break;
+			  y = XEXP (src, 1), src = pc_rtx;
 			}
-		      if (REG_P (y))
-			{
-			  rn = 4 * REGNO (y);
-			  if (mask & 0xff)
-			    bitmap_set_bit (livenow, rn);
-			  if (mask & 0xff00)
-			    bitmap_set_bit (livenow, rn+1);
-			  if (mask & 0xffff0000ULL)
-			    bitmap_set_bit (livenow, rn+2);
-			  if (mask & -0x100000000ULL)
-			    bitmap_set_bit (livenow, rn+3);
-			}
-		      else if (!CONSTANT_P (y))
-			break;
-		      if (!BINARY_P (src))
-			break;
-		      y = XEXP (src, 1), src = pc_rtx;
+		      if (REG_P (y) || CONSTANT_P (y))
+			iter.skip_subrtxes ();
 		    }
-		  if (REG_P (y) || CONSTANT_P (y))
-		    iter.skip_subrtxes ();
+		  else if (REG_P (dst))
+		    iter.substitute (src);
 		}
-	      else if (REG_P (dst))
-		iter.substitute (src);
+	      else if (xcode == SUBREG
+		       && GET_MODE_BITSIZE (GET_MODE  (x)).to_constant () <= 32
+		       && SUBREG_BYTE (x).to_constant () == 0
+		       && REG_P (SUBREG_REG (x)))
+		{
+		  HOST_WIDE_INT size
+		    = GET_MODE_BITSIZE (GET_MODE  (x)).to_constant ();
+		  HOST_WIDE_INT rn = 4 * REGNO (SUBREG_REG (x));
+		  bitmap_set_bit (livenow, rn);
+		  if (size > 8)
+		    bitmap_set_bit (livenow, rn+1);
+		  if (size > 16)
+		    bitmap_set_bit (livenow, rn+2);
+		  iter.skip_subrtxes ();
+		}
+	      else if (REG_P (x))
+		bitmap_set_range (livenow, REGNO (x) * 4, 4);
+	      else if (GET_CODE (x) == CLOBBER)
+		continue;
 	    }
-	  else if (xcode == SUBREG
-		   && GET_MODE_BITSIZE (GET_MODE  (x)).to_constant () <= 32
-		   && SUBREG_BYTE (x).to_constant () == 0
-		   && REG_P (SUBREG_REG (x)))
-	    {
-	      HOST_WIDE_INT size
-		= GET_MODE_BITSIZE (GET_MODE  (x)).to_constant ();
-	      HOST_WIDE_INT rn = 4 * REGNO (SUBREG_REG (x));
-	      bitmap_set_bit (livenow, rn);
-	      if (size > 8)
-		bitmap_set_bit (livenow, rn+1);
-	      if (size > 16)
-		bitmap_set_bit (livenow, rn+2);
-	      iter.skip_subrtxes ();
-	    }
-	  else if (REG_P (x))
-	    bitmap_set_range (livenow, REGNO (x) * 4, 4);
+	  if (GET_CODE (insn) != CALL_INSN || seen_fusage > 1)
+	    break;
+	  pat = CALL_INSN_FUNCTION_USAGE (insn);
+	  seen_fusage++;
 	}
       //BITMAP_FREE (live_tmp);
     }
