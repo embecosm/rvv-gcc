@@ -126,6 +126,14 @@ ext_dce_process_bb (basic_block bb, bitmap livenow, bool modify)
 	  seen_fusage++;
 	}
       /* Now, process the uses.  */
+      if (JUMP_P (insn) && find_reg_note (insn, REG_NON_LOCAL_GOTO, NULL_RTX))
+	{
+	  /* The frame ptr is used by a non-local goto.  */
+	  bitmap_set_range (livenow, FRAME_POINTER_REGNUM * 4, 4);
+	  if (!HARD_FRAME_POINTER_IS_FRAME_POINTER)
+	    bitmap_set_range (livenow, HARD_FRAME_POINTER_REGNUM * 4, 4);
+	}
+
       for (rtx pat = PATTERN (insn);;)
 	{
 	  subrtx_var_iterator::array_type array_var;
@@ -274,6 +282,14 @@ debug_bitmap     (live_tmp);
 	    break;
 	  pat = CALL_INSN_FUNCTION_USAGE (insn);
 	  seen_fusage++;
+	  if (!FAKE_CALL_P (insn))
+	    bitmap_set_range (livenow, STACK_POINTER_REGNUM * 4, 4);
+	  /* Unless this is a call to a const function, it can read any
+	     global register.  */
+	  if (RTL_CONST_CALL_P (insn))
+	    for (unsigned i = 0; i < FIRST_PSEUDO_REGISTER; i++)
+	      if (global_regs[i])
+		bitmap_set_range (livenow, i * 4, 4);
 	}
       //BITMAP_FREE (live_tmp);
     }
