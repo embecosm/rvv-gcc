@@ -83,6 +83,20 @@ ext_dce_process_bb (basic_block bb, bitmap livenow, bool modify)
 		    {
 		      x = XEXP (x, 0);
 		    }
+		  else if (GET_CODE (x) == ZERO_EXTRACT)
+		    {
+		       /* If we are not sure what is being overwritten,
+			  assume nothing is.  */
+		      if (!CONST_INT_P (XEXP (x, 1))
+			  || !CONST_INT_P (XEXP (x, 2)))
+			continue;
+		      mask = (1ULL << INTVAL (XEXP (x, 1))) - 1;
+		      bit = INTVAL (XEXP (x, 2));
+		      if (BITS_BIG_ENDIAN)
+			bit = (GET_MODE_BITSIZE (GET_MODE (x))
+			       - INTVAL (XEXP (x, 1)) - bit).to_constant ();
+		      x = XEXP (x, 0);
+		    }
 		  if (REG_P (x))
 		    {
 		      HOST_WIDE_INT rn = REGNO (x);
@@ -99,6 +113,10 @@ ext_dce_process_bb (basic_block bb, bitmap livenow, bool modify)
 		  else
 		    gcc_assert (MEM_P (x) || x == pc_rtx
 				|| GET_CODE (x) == SCRATCH);
+		  iter.skip_subrtxes ();
+		}
+	      else if (GET_CODE (x) == COND_EXEC)
+		{
 		  iter.skip_subrtxes ();
 		}
 	    }
@@ -155,6 +173,10 @@ ext_dce_process_bb (basic_block bb, bitmap livenow, bool modify)
 			if (bitmap_bit_p (live_tmp, 4 * rn + i))
 			  mask |= mask_array[i];
 		      mask >>= bit;
+
+		      /* ??? Could also handle ZERO_EXTRACT / SIGN_EXTRACT
+			 of the source specially to improve optimization.  */
+
 		      if (code == SIGN_EXTEND || code == ZERO_EXTEND)
 			{
 			  rtx inner = XEXP (src, 0);
