@@ -636,7 +636,8 @@ public:
       tree polynom_arg = build_int_cst (TREE_TYPE (crc_state), polynom);
 #endif
 
-      if (GET_MODE_BITSIZE (TYPE_MODE (TREE_TYPE (data_arg))) != bits)
+      if (GET_MODE_BITSIZE (TYPE_MODE (TREE_TYPE (data_arg))).to_constant ()
+	  != bits)
 	return false;
 
       fn_call = gimple_build_call_internal (IFN_CRC, 3,

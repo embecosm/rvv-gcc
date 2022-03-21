@@ -89,6 +89,7 @@ extern void hook_void_tree (tree);
 extern void hook_void_tree_treeptr (tree, tree *);
 extern void hook_void_int_int (int, int);
 extern void hook_void_gcc_optionsp (struct gcc_options *);
+extern bool hook_bool_uint_false (unsigned int);
 extern bool hook_bool_uint_true (unsigned int);
 extern bool hook_bool_uint_uintp_false (unsigned int, unsigned int *);
 

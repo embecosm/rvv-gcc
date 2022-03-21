@@ -520,6 +520,14 @@ hook_void_gcc_optionsp (struct gcc_options *)
 {
 }
 
+/* Generic hook that takes an unsigned int and returns false.  */
+
+bool
+hook_bool_uint_false (unsigned int)
+{
+  return false;
+}
+
 /* Generic hook that takes an unsigned int and returns true.  */
 
 bool
