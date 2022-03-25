@@ -112,17 +112,107 @@ gimple_expand_vec_set_expr (struct function *fun, gimple_stmt_iterator *gsi)
   return cfg_changed;
 }
 
-/* Subroutine of gimple_expand_vec_cond_expr, it generate
-   vcond_mask for vec_cond expression.  */
+/* Subroutine of gimple_gen_vcond_mask, it generates invert mask for op0.  */
+
+static tree
+gimple_gen_inverse_mask (gimple_seq *stmts, location_t loc, tree op0)
+{
+  bool use_swap_comparison_p = false;
+  gimple *def_stmt = SSA_NAME_DEF_STMT (op0);
+  enum tree_code tcode;
+  internal_fn fn = IFN_LAST;
+  tree op0a = NULL_TREE, op0b = NULL_TREE, op1 = NULL_TREE;
+  tree tem = NULL_TREE;
+
+  if (def_stmt && is_gimple_assign (def_stmt))
+    {
+      tcode = gimple_assign_rhs_code (def_stmt);
+      if (TREE_CODE_CLASS (tcode) == tcc_comparison)
+	{
+	  use_swap_comparison_p = true;
+	  op0a = gimple_assign_rhs1 (def_stmt);
+	  op0b = gimple_assign_rhs2 (def_stmt);
+	}
+    }
+
+  if (def_stmt && is_gimple_call (def_stmt)
+      && gimple_call_internal_p (def_stmt))
+    {
+      fn = gimple_call_internal_fn (def_stmt);
+      if (fn == IFN_VEC_CMP_VS || fn == IFN_VEC_CMPU_VS)
+	{
+	  use_swap_comparison_p = true;
+	  op0a = gimple_call_arg (def_stmt, 0);
+	  op0b = gimple_call_arg (def_stmt, 1);
+	  tcode
+	    = (enum tree_code) int_cst_value (gimple_call_arg (def_stmt, 2));
+	}
+
+      if (fn == IFN_LEN_VEC_CMP_VS || fn == IFN_LEN_VEC_CMPU_VS
+	  || fn == IFN_LEN_VEC_CMP || fn == IFN_LEN_VEC_CMPU)
+	{
+	  use_swap_comparison_p = true;
+	  op0a = gimple_call_arg (def_stmt, 0);
+	  op0b = gimple_call_arg (def_stmt, 1);
+	  op1 = gimple_call_arg (def_stmt, 2);
+	  tcode
+	    = (enum tree_code) int_cst_value (gimple_call_arg (def_stmt, 3));
+	}
+    }
+
+  enum tree_code new_code
+    = invert_tree_comparison (tcode, HONOR_NANS (TREE_TYPE (op0a)));
+  if (new_code == ERROR_MARK)
+    use_swap_comparison_p = false;
+
+  if (!use_swap_comparison_p)
+    {
+      if (op1 && direct_internal_fn_supported_p (IFN_LEN_NOT, TREE_TYPE (op0),
+						 OPTIMIZE_FOR_BOTH))
+	tem = gimple_build (stmts, loc, as_combined_fn (IFN_LEN_NOT),
+			    TREE_TYPE (op0), op0, op1);
+      else
+	tem = gimple_build (stmts, loc, BIT_NOT_EXPR, TREE_TYPE (op0), op0);
+    }
+  else
+    {
+      if (is_gimple_assign (def_stmt))
+	tem = gimple_build (stmts, loc, new_code, TREE_TYPE (op0), op0a, op0b);
+      else
+	{
+	  if (op1)
+	    {
+	      tem = create_tmp_reg_or_ssa_name (TREE_TYPE (op0));
+	      gcall *call
+		= gimple_build_call_internal (fn, 4, op0a, op0b, op1,
+					      build_int_cst (integer_type_node,
+							     new_code));
+	      gimple_set_lhs (call, tem);
+	      gimple_set_location (call, loc);
+	      gimple_seq_add_stmt_without_update (stmts, call);
+	    }
+	  else
+	    tem = gimple_build (stmts, loc, as_combined_fn (fn),
+				TREE_TYPE (op0), op0a, op0b,
+				build_int_cst (integer_type_node, new_code));
+	}
+    }
+
+  gcc_assert (tem != NULL_TREE);
+  return tem;
+}
+
+/* Subroutine of gimple_expand_vec_cond_expr and gimple_expand_len_vcond_fn,
+   it generates vcond_mask for vec_cond expression and len_vcond fn.  */
 
 static gimple *
-gimple_gen_vcond_mask (gimple_stmt_iterator *gsi, location_t loc, tree op0,
-		       tree op1, tree op2, tree op3)
+gimple_gen_vcond_mask (gimple_stmt_iterator *gsi, location_t loc,
+		       tree op0, tree op1, tree op2, tree op3)
 {
   enum insn_code code
-    = (op3 ?
-       get_len_vcond_mask_vs_icode (TYPE_MODE (TREE_TYPE (op1)),
-				    TYPE_MODE (TREE_TYPE (op0)))
+    = (op3
+       ? get_len_vcond_mask_vs_icode (TYPE_MODE (TREE_TYPE (op1)),
+				      TYPE_MODE (TREE_TYPE (op0)))
        : get_vcond_mask_vs_icode (TYPE_MODE (TREE_TYPE (op1)),
 				  TYPE_MODE (TREE_TYPE (op0))));
 
@@ -141,30 +231,15 @@ gimple_gen_vcond_mask (gimple_stmt_iterator *gsi, location_t loc, tree op0,
       if (splat_vector_p (op2))
 	{
 	  gimple_seq stmts = NULL;
-	  tree tem = NULL_TREE;
+	  tree tem = gimple_gen_inverse_mask (&stmts, loc, op0);
+	  gsi_insert_seq_before (gsi, stmts, GSI_SAME_STMT);
 	  if (op3)
-	    {
-
-	      if (direct_internal_fn_supported_p (IFN_LEN_NOT, TREE_TYPE (op0),
-						  OPTIMIZE_FOR_BOTH))
-		tem = gimple_build (&stmts, loc, as_combined_fn (IFN_LEN_NOT),
-				    TREE_TYPE (op0), op0, op3);
-	      else
-		tem = gimple_build (&stmts, loc, BIT_NOT_EXPR, TREE_TYPE (op0),
-				    op0);
-	      gsi_insert_seq_before (gsi, stmts, GSI_SAME_STMT);
-	      return gimple_build_call_internal (IFN_LEN_VCOND_MASK_VS, 4, tem,
-						 splat_vector_p (op2), op1,
-						 op3);
-	    }
+	    return gimple_build_call_internal (IFN_LEN_VCOND_MASK_VS, 4, tem,
+					       splat_vector_p (op2), op1,
+					       op3);
 	  else
-	    {
-	      tem = gimple_build (&stmts, loc, BIT_NOT_EXPR, TREE_TYPE (op0),
-				  op0);
-	      gsi_insert_seq_before (gsi, stmts, GSI_SAME_STMT);
-	      return gimple_build_call_internal (IFN_VCOND_MASK_VS, 3, tem,
-						 splat_vector_p (op2), op1);
-	    }
+	    return gimple_build_call_internal (IFN_VCOND_MASK_VS, 3, tem,
+					       splat_vector_p (op2), op1);
 	}
     }
 
@@ -378,7 +453,7 @@ gimple_expand_len_vcond_fn (
     hash_map<tree, unsigned int> *vec_cond_ssa_name_uses)
 {
   tree lhs, op0a = NULL_TREE, op0b = NULL_TREE;
-  internal_fn code;
+  internal_fn fn;
   enum tree_code tcode;
   machine_mode cmp_op_mode;
   bool unsignedp;
@@ -393,8 +468,8 @@ gimple_expand_len_vcond_fn (
   if (!gimple_call_internal_p (stmt))
     return NULL;
 
-  code = gimple_call_internal_fn (stmt);
-  if (!(code == IFN_LEN_VCOND || code == IFN_LEN_VCONDU))
+  fn = gimple_call_internal_fn (stmt);
+  if (!(fn == IFN_LEN_VCOND || fn == IFN_LEN_VCONDU))
     return NULL;
 
   tree op0 = gimple_call_arg (stmt, 0);
@@ -435,17 +510,21 @@ gimple_expand_len_vcond_fn (
 	  FOR_EACH_IMM_USE_STMT (use_stmt, imm_iter, op0)
 	    {
 	      gcall *call = dyn_cast<gcall *> (use_stmt);
-	      if (call != NULL
-		  && gimple_call_internal_p (call)
-		  && (code == IFN_LEN_VCOND || code == IFN_LEN_VCONDU)
+	      if (call != NULL && gimple_call_internal_p (call)
+		  && (fn == IFN_LEN_VCOND || fn == IFN_LEN_VCONDU)
 		  && gimple_call_arg (call, 0) == op0)
 		used_vec_cond_exprs++;
 	    }
-	  vec_cond_ssa_name_uses->put (op0, used_vec_cond_exprs);
-	}
+	    vec_cond_ssa_name_uses->put (op0, used_vec_cond_exprs);
+	  }
 
       gcall *def_stmt = dyn_cast<gcall *> (SSA_NAME_DEF_STMT (op0));
-      if (def_stmt)
+      internal_fn def_fn = gimple_call_internal_p (def_stmt)
+			       ? IFN_LAST
+			       : gimple_call_internal_fn (def_stmt);
+      if (def_stmt && def_fn != IFN_LAST
+	  && (def_fn == IFN_LEN_VEC_CMP_VS || def_fn == IFN_LEN_VEC_CMPU_VS
+	      || def_fn == IFN_LEN_VEC_CMP || def_fn == IFN_LEN_VEC_CMPU))
 	{
 	  op0a = gimple_call_arg (def_stmt, 0);
 	  op0b = gimple_call_arg (def_stmt, 1);
@@ -457,8 +536,7 @@ gimple_expand_len_vcond_fn (
 
 	  /* Try to fold x CMP y ? -1 : 0 to x CMP y.  */
 
-	  if (integer_minus_onep (op1)
-	      && integer_zerop (op2)
+	  if (integer_minus_onep (op1) && integer_zerop (op2)
 	      && TYPE_MODE (TREE_TYPE (lhs)) == TYPE_MODE (TREE_TYPE (op0)))
 	    {
 	      tree conv_op = build1 (VIEW_CONVERT_EXPR, TREE_TYPE (lhs), op0);
@@ -483,11 +561,8 @@ gimple_expand_len_vcond_fn (
 	  /* If the comparison expression can be transformed to
 	     LEN_VEC_CMP_VS. We prefers LEN_VEC_CMP_VS + VCOND_MASK instead
 	     of LEN_VCOND.  */
-	  else if (gimple_call_internal_p (def_stmt)
-		   && ((gimple_call_internal_fn (def_stmt)
-			== IFN_LEN_VEC_CMP_VS)
-		       || (gimple_call_internal_fn (def_stmt)
-			   == IFN_LEN_VEC_CMPU_VS)))
+	  else if (def_fn == IFN_LEN_VEC_CMP_VS
+		   || def_fn == IFN_LEN_VEC_CMPU_VS)
 	    tcode = TREE_CODE (op0);
 	}
       else
