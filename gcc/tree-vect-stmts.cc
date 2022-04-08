@@ -10937,7 +10937,6 @@ vectorizable_condition (vec_info *vinfo,
 	= (loop_lens && (int) loop_lens->length () == vec_num * ncopies
 	   ? vect_get_loop_len (loop_vinfo, loop_lens, vec_num * ncopies, i)
 	   : NULL);
-      bool unsigned_p = TYPE_UNSIGNED (TREE_TYPE (vec_cond_lhs));
 
       if (masked)
 	vec_compare = vec_cond_lhs;
@@ -10948,6 +10947,7 @@ vectorizable_condition (vec_info *vinfo,
 	    {
 	      gimple_seq stmts = NULL;
 
+	      bool unsigned_p = TYPE_UNSIGNED (TREE_TYPE (vec_cond_lhs));
 	      if (len
 		  && (get_len_vec_cmp_icode
 		      (TYPE_MODE (TREE_TYPE (vec_cond_lhs)),
@@ -11125,10 +11125,8 @@ vectorizable_condition (vec_info *vinfo,
 		  (TYPE_MODE (TREE_TYPE (vec_cond_lhs)),
 		   TYPE_MODE (TREE_TYPE (vec_compare)))))
 	    {
-	      new_stmt = gimple_build_call_internal ((unsigned_p
-						      ? IFN_LEN_VCONDU
-						      : IFN_LEN_VCOND),
-						     4, vec_compare,
+	      new_stmt = gimple_build_call_internal (IFN_LEN_VCOND, 4,
+						     vec_compare,
 						     vec_then_clause,
 						     vec_else_clause, len);
 	      gimple_call_set_lhs (new_stmt, new_temp);

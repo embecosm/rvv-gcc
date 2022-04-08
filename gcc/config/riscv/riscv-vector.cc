@@ -1093,7 +1093,7 @@ riscv_expand_quotient (int quotient, machine_mode mode, rtx clobber_vlenb, rtx d
 
 void
 riscv_vector_expand_poly_move (machine_mode mode, rtx dest, rtx clobber,
-				 rtx src)
+			       rtx src)
 {
   poly_int64 value = rtx_to_poly_int64 (src);
   int offset = value.coeffs[0];
@@ -1101,51 +1101,67 @@ riscv_vector_expand_poly_move (machine_mode mode, rtx dest, rtx clobber,
   int vlenb = BYTES_PER_RISCV_VECTOR.coeffs[1];
   int div_factor = 0;
 
-  if ((factor % vlenb) == 0)
-    riscv_expand_quotient(factor / vlenb, mode, clobber, dest);
+  if (vlenb == 0)
+    gcc_assert (factor == 0);
+  else if ((factor % vlenb) == 0)
+    riscv_expand_quotient (factor / vlenb, mode, clobber, dest);
   else if ((factor % (vlenb / 2)) == 0)
     {
-      riscv_expand_quotient(factor / (vlenb / 2), mode, clobber, dest);
+      riscv_expand_quotient (factor / (vlenb / 2), mode, clobber, dest);
       div_factor = 2;
     }
   else if ((factor % (vlenb / 4)) == 0)
     {
-      riscv_expand_quotient(factor / (vlenb / 4), mode, clobber, dest);
+      riscv_expand_quotient (factor / (vlenb / 4), mode, clobber, dest);
       div_factor = 4;
     }
   else if ((factor % (vlenb / 8)) == 0)
     {
-      riscv_expand_quotient(factor / (vlenb / 8), mode, clobber, dest);
+      riscv_expand_quotient (factor / (vlenb / 8), mode, clobber, dest);
       div_factor = 8;
     }
   else if ((factor % (vlenb / 16)) == 0)
     {
-      riscv_expand_quotient(factor / (vlenb / 16), mode, clobber, dest);
+      riscv_expand_quotient (factor / (vlenb / 16), mode, clobber, dest);
       div_factor = 16;
     }
   else
-    gcc_unreachable();
+    gcc_unreachable ();
 
   if (div_factor != 0)
     {
       if (GET_MODE_SIZE (mode).to_constant () <= GET_MODE_SIZE (Pmode))
-	emit_insn (gen_rtx_SET (dest, gen_rtx_ASHIFTRT (mode, dest, GEN_INT (exact_log2 (div_factor)))));
+	emit_insn
+	  (gen_rtx_SET (dest,
+			gen_rtx_ASHIFTRT (mode,
+					  dest,
+					  GEN_INT (exact_log2 (div_factor)))));
       else
 	{
 	  /* We should use SImode to simulate DImode shift.  */
-	  /* prologue and epilogue can not go through this condition.  */
+	  /* Prologue and epilogue cannot go through this condition.  */
 	  gcc_assert (can_create_pseudo_p ());
 	  rtx reg = gen_reg_rtx (Pmode);
-	  emit_insn (gen_rtx_SET (reg, gen_rtx_ASHIFT (Pmode, gen_highpart (Pmode, dest),
-	      GEN_INT (GET_MODE_BITSIZE (Pmode) - exact_log2 (div_factor)))));
+	  emit_insn (gen_rtx_SET
+		     (reg,
+		      gen_rtx_ASHIFT (Pmode,
+				      gen_highpart (Pmode, dest),
+				      GEN_INT (GET_MODE_BITSIZE (Pmode)
+					       - exact_log2 (div_factor)))));
+	  emit_insn (gen_rtx_SET
+		     (gen_lowpart (Pmode, dest),
+		      gen_rtx_LSHIFTRT (Pmode,
+					gen_lowpart (Pmode, dest),
+					GEN_INT (exact_log2 (div_factor)))));
 	  emit_insn (gen_rtx_SET (gen_lowpart (Pmode, dest),
-	      gen_rtx_LSHIFTRT (Pmode, gen_lowpart (Pmode, dest),
-	      GEN_INT (exact_log2 (div_factor)))));
-	  emit_insn (gen_rtx_SET (gen_lowpart (Pmode, dest),
-	      gen_rtx_IOR (Pmode, reg, gen_lowpart (Pmode, dest))));
-	  emit_insn (gen_rtx_SET (gen_highpart (Pmode, dest),
-	      gen_rtx_ASHIFTRT (Pmode, gen_highpart (Pmode, dest),
-	      GEN_INT (exact_log2 (div_factor)))));
+				  gen_rtx_IOR (Pmode,
+					       reg,
+					       gen_lowpart (Pmode, dest))));
+	  emit_insn (gen_rtx_SET
+		     (gen_highpart (Pmode, dest),
+		      gen_rtx_ASHIFTRT (Pmode,
+					gen_highpart (Pmode, dest),
+					GEN_INT (exact_log2 (div_factor)))));
 	}
     }
 
@@ -1156,16 +1172,27 @@ riscv_vector_expand_poly_move (machine_mode mode, rtx dest, rtx clobber,
   else if (SMALL_OPERAND (constant))
     {
       if (GET_MODE_SIZE (mode).to_constant () <= GET_MODE_SIZE (Pmode))
-	emit_insn (gen_rtx_SET (dest, gen_rtx_PLUS (mode, dest, GEN_INT (constant))));
+	emit_insn (gen_rtx_SET (dest, gen_rtx_PLUS (mode,
+						    dest,
+						    GEN_INT (constant))));
       else
 	{
 	  /* We should use SImode to simulate DImode addition.  */
-	  /* prologue and epilogue can not go through this condition.  */
+	  /* Prologue and epilogue cannot go through this condition.  */
 	  gcc_assert (can_create_pseudo_p ());
 	  rtx reg = gen_reg_rtx (Pmode);
-	  emit_insn (gen_rtx_SET (reg, gen_rtx_PLUS (Pmode, gen_lowpart (Pmode, dest), GEN_INT (constant))));
-	  emit_insn (gen_rtx_SET (gen_lowpart (Pmode, dest), gen_rtx_LTU (Pmode, reg, gen_lowpart (Pmode, dest))));
-	  emit_insn (gen_rtx_SET (gen_highpart (Pmode, dest), gen_rtx_PLUS (Pmode, gen_lowpart (Pmode, dest), gen_highpart (Pmode, dest))));
+	  emit_insn (gen_rtx_SET (reg,
+				  gen_rtx_PLUS (Pmode,
+						gen_lowpart (Pmode, dest),
+						GEN_INT (constant))));
+	  emit_insn (gen_rtx_SET (gen_lowpart (Pmode, dest),
+				  gen_rtx_LTU (Pmode,
+					       reg,
+					       gen_lowpart (Pmode, dest))));
+	  emit_insn (gen_rtx_SET (gen_highpart (Pmode, dest),
+				  gen_rtx_PLUS (Pmode,
+						gen_lowpart (Pmode, dest),
+						gen_highpart (Pmode, dest))));
 	  riscv_emit_move (gen_lowpart (Pmode, dest), reg);
 	}
     }
@@ -1526,8 +1553,9 @@ riscv_vector_expand_while_len (rtx *operands)
    Use TARGET as the target register if nonnull and convenient.  */
 
 static rtx
-riscv_vector_emit_int_cmp (rtx target, machine_mode mask_mode, rtx_code cmp,
-			   machine_mode data_mode, rtx op1, rtx op2, rtx op3)
+riscv_vector_emit_int_cmp (rtx target, machine_mode mask_mode,
+			   enum rtx_code cmp, machine_mode data_mode, rtx op1,
+			   rtx op2, rtx op3)
 {
   rtx x;
   insn_code icode;
@@ -1567,7 +1595,7 @@ riscv_vector_emit_int_cmp (rtx target, machine_mode mask_mode, rtx_code cmp,
      (set TARGET (CODE OP0 OP1)).  */
 
 void
-riscv_expand_vec_cmp_int (rtx target, rtx_code code, rtx op0, rtx op1, rtx op2)
+riscv_expand_vec_cmp_int (rtx target, enum rtx_code code, rtx op0, rtx op1, rtx op2)
 {
   machine_mode mask_mode = GET_MODE (target);
   machine_mode data_mode = GET_MODE (op0);
@@ -1582,8 +1610,9 @@ riscv_expand_vec_cmp_int (rtx target, rtx_code code, rtx op0, rtx op1, rtx op2)
    Use TARGET as the target register if nonnull and convenient.  */
 
 static rtx
-riscv_vector_emit_float_cmp (rtx target, machine_mode mask_mode, rtx_code cmp,
-			     machine_mode data_mode, rtx op1, rtx op2, rtx op3)
+riscv_vector_emit_float_cmp (rtx target, machine_mode mask_mode,
+			     enum rtx_code cmp, machine_mode data_mode, rtx op1,
+			     rtx op2, rtx op3)
 {
   rtx f;
   insn_code icode;
@@ -1623,7 +1652,7 @@ riscv_vector_emit_float_cmp (rtx target, machine_mode mask_mode, rtx_code cmp,
      (set TARGET (CODE OP0 OP1)).  */
 
 void
-riscv_expand_vec_cmp_float (rtx target, rtx_code code, rtx op0, rtx op1,
+riscv_expand_vec_cmp_float (rtx target, enum rtx_code code, rtx op0, rtx op1,
 			    rtx op2)
 {
   machine_mode mask_mode = GET_MODE (target);
@@ -1664,33 +1693,33 @@ riscv_expand_vcond (machine_mode data_mode, machine_mode cmp_mode,
 		    machine_mode mask_mode, rtx *ops, bool len_p)
 {
   rtx mask = gen_reg_rtx (mask_mode);
+  enum rtx_code code = GET_CODE (ops[3]);
   if (FLOAT_MODE_P (cmp_mode))
     {
       if (len_p)
-	riscv_expand_vec_cmp_float (mask, GET_CODE (ops[3]), ops[4], ops[5],
-				    ops[6]);
+	riscv_expand_vec_cmp_float (mask, code, ops[4], ops[5], ops[6]);
       else
-	riscv_expand_vec_cmp_float (mask, GET_CODE (ops[3]), ops[4], ops[5],
+	riscv_expand_vec_cmp_float (mask, code, ops[4], ops[5],
 				    gen_rtx_REG (Pmode, X0_REGNUM));
     }
   else
     {
       if (len_p)
-	riscv_expand_vec_cmp_int (mask, GET_CODE (ops[3]), ops[4], ops[5],
-				  ops[6]);
+	riscv_expand_vec_cmp_int (mask, code, ops[4], ops[5], ops[6]);
       else
-	riscv_expand_vec_cmp_int (mask, GET_CODE (ops[3]), ops[4], ops[5],
+	riscv_expand_vec_cmp_int (mask, code, ops[4], ops[5],
 				  gen_rtx_REG (Pmode, X0_REGNUM));
     }
 
+  ops[0] = force_reg (data_mode, ops[0]);
+  ops[2] = force_reg (data_mode, ops[2]);
+
   if (len_p)
-    emit_insn (gen_len_vcond_mask (
-	data_mode, data_mode, force_reg (data_mode, ops[0]), ops[1],
-	force_reg (data_mode, ops[2]), mask, ops[6]));
+    emit_insn (gen_len_vcond_mask (data_mode, data_mode, ops[0], ops[1], ops[2],
+				   mask, ops[6]));
   else
-    emit_insn (gen_vcond_mask (data_mode, data_mode,
-			       force_reg (data_mode, ops[0]), ops[1],
-			       force_reg (data_mode, ops[2]), mask));
+    emit_insn (gen_vcond_mask (data_mode, data_mode, ops[0], ops[1], ops[2],
+			       mask));
 }
 
 rtx
