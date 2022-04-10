@@ -139,6 +139,7 @@ extern void riscv_expand_vcond (machine_mode, machine_mode, machine_mode,
 extern void riscv_expand_vec_cmp_int (rtx, enum rtx_code, rtx, rtx, rtx);
 extern void riscv_expand_vec_cmp_float (rtx, enum rtx_code, rtx, rtx, rtx);
 #endif
+extern void riscv_vector_insert_vsetvli_after_reload (function *);
 
 /* Routines implemented in riscv-c.cc.  */
 void riscv_cpu_cpp_builtins (cpp_reader *);
@@ -157,7 +158,6 @@ extern bool riscv_hard_regno_rename_ok (unsigned, unsigned);
 
 rtl_opt_pass * make_pass_shorten_memrefs (gcc::context *ctxt);
 rtl_opt_pass * make_pass_insert_vsetvli (gcc::context *ctxt);
-rtl_opt_pass * make_pass_insert_vsetvli2 (gcc::context *ctxt);
 
 /* Information about one CPU we know about.  */
 struct riscv_cpu_info {
