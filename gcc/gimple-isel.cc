@@ -432,7 +432,7 @@ gimple_expand_vec_cond_expr (struct function *fun, gimple_stmt_iterator *gsi,
     {
       if (tcode == LT_EXPR
 	  && op0a == op0
-	  && !VECTOR_MODE_P (TYPE_MODE (TREE_TYPE (op0b))))
+	  && VECTOR_MODE_P (TYPE_MODE (TREE_TYPE (op0b))))
 	{
 	  /* A VEC_COND_EXPR condition could be folded from EQ_EXPR/NE_EXPR
 	     into a constant when only get_vcond_eq_icode is supported.
@@ -443,7 +443,7 @@ gimple_expand_vec_cond_expr (struct function *fun, gimple_stmt_iterator *gsi,
 	  && direct_internal_fn_supported_p (IFN_VCONDEQ, TREE_TYPE (lhs),
 					     TREE_TYPE (op0a),
 					     OPTIMIZE_FOR_BOTH)
-	  && !VECTOR_MODE_P (TYPE_MODE (TREE_TYPE (op0b))))
+	  && VECTOR_MODE_P (TYPE_MODE (TREE_TYPE (op0b))))
 	{
 	  tree tcode_tree = build_int_cst (integer_type_node, tcode);
 	  return gimple_build_call_internal (IFN_VCONDEQ, 5, op0a, op0b, op1,

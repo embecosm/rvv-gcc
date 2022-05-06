@@ -1829,11 +1829,6 @@ check_load_store_for_partial_vectors (loop_vec_info loop_vinfo, tree vectype,
   machine_mode mask_mode;
   bool using_partial_vectors_p = false;
 
-  /* The loads and stores in RVV (RISC-V 'V' Extension) depend on both
-     vector-length and mask register. We need both maskload and maskstore
-     and len_load and len_store pattern for the auto-vectorization.
-     The current GCC can't make them both work, so we change the code here
-     to work around and let len_load and len_store have higher priority.  */
   machine_mode vmode;
   if (get_len_load_store_mode (vecmode, is_load).exists (&vmode)
       && can_vec_len_load_store_p (vecmode, is_load))

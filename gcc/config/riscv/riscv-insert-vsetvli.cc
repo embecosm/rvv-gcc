@@ -977,11 +977,7 @@ get_info_for_vsetvli (rtx_insn *insn, vinfo curr_info)
 	    remove_insn (insn);
 	}
       else
-	{
-	  new_info.set_avl (gen_rtx_REG (Pmode, X0_REGNUM));
-	  new_info.set_avl_source (NULL_RTX);
-	  new_info.set_vtype (INTVAL (recog_data.operand[0]));
-	}
+	new_info = vinfo::get_unknown ();
       return new_info;
     }
 
@@ -1746,7 +1742,10 @@ riscv_vector_insert_vsetvli_after_reload (function *fn)
     FOR_BB_INSNS (bb, insn)
     {
       if (vsetvli_insn_p (insn))
-	curr_info = get_info_for_vsetvli (insn, curr_info);
+	{
+	  curr_info = get_info_for_vsetvli (insn, curr_info);
+	  continue;
+	}
 
       rtx clobber;
       if (recog_need_insert_vsetvli_after_reload_p (insn, &clobber))
@@ -1773,7 +1772,6 @@ riscv_vector_insert_vsetvli_after_reload (function *fn)
 			   INSN_UID (insn));
 		  print_rtl_single(dump_file, clobber);
 		}
-
 	    }
 
 	  rtx pat;
@@ -1808,6 +1806,7 @@ riscv_vector_insert_vsetvli_after_reload (function *fn)
 	  vinfo new_info = compute_info_for_instr (insn, curr_info);
 	  if (changed_p && need_vsetvli (insn, new_info, curr_info))
 	    {
+	      changed_p = false;
 	      curr_info = new_info;
 	      emit_vsetvl_insn (gen_rtx_REG (Pmode, X0_REGNUM),
 				new_info.get_avl (),
@@ -1819,7 +1818,6 @@ riscv_vector_insert_vsetvli_after_reload (function *fn)
 		  print_rtl_single(dump_file, insn);
 		}
 	    }
-	  changed_p = false;
 	  replace_op (insn, const0_rtx, REPLACE_VL);
 	  continue;
 	}
