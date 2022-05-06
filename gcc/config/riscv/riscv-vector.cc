@@ -3795,14 +3795,16 @@ riscv_vector_preferred_simd_mode (scalar_mode mode, unsigned vf)
 		: VNx64HFmode);
       break;
     case E_SFmode:
-      if (TARGET_HARD_FLOAT)
+      if (TARGET_HARD_FLOAT
+	  && riscv_vector_elen_flags != MASK_VECTOR_ELEN_32
+	  && riscv_vector_elen_flags != MASK_VECTOR_ELEN_64)
 	return (vf == 1 ? VNx4SFmode
 		: vf == 2 ? VNx8SFmode
 		: vf == 4 ? VNx16SFmode
 		: VNx32SFmode);
       break;
     case E_DFmode:
-      if (TARGET_DOUBLE_FLOAT)
+      if (TARGET_DOUBLE_FLOAT && TARGET_VECTOR_ELEN_FP_64)
 	return (vf == 1 ? VNx2DFmode
 		: vf == 2 ? VNx4DFmode
 		: vf == 4 ? VNx8DFmode
