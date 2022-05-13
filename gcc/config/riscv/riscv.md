@@ -70,6 +70,9 @@
   ;; Stack Smash Protector
   UNSPEC_SSP_SET
   UNSPEC_SSP_TEST
+
+  ;; End position of string.
+  UNSPEC_STREND
 ])
 
 (define_constants
@@ -104,7 +107,8 @@
    (RVV_POLICY_ANY		0)
    (RVV_POLICY_TU		1)
    (RVV_POLICY_MU		2)
-   (DO_NOT_UPDATE_VL_VTYPE	256)
+   (RVV_POLICY_TAMA		3)
+   (DO_NOT_UPDATE_VL_VTYPE	21)
 
    (RVV_GATHER_LOAD		0)
    (RVV_LEN_GATHER_LOAD		2)
@@ -596,7 +600,9 @@
 			 (unge "unge")
 			 (ungt "ungt")
 			 (uneq "uneq")
-			 (ltgt "ltgt")])
+			 (ltgt "ltgt")
+			 (sign_extend "extend")
+			 (zero_extend "zero_extend")])
 
 ;; <insn> expands to the name of the insn that implements a particular code.
 (define_code_attr insn [(ashift "sll")
@@ -2112,6 +2118,17 @@
   else
     FAIL;
 })
+
+(define_insn "@strend<mode>"
+  [(set (match_operand:P 0 "register_operand" "=r")
+	(unspec_volatile:P [(match_operand:P 1 "register_operand" "r")
+			    (match_operand:P 2 "register_operand" "r")
+			    (match_operand:P 3 "register_operand" "r")]
+			   UNSPEC_STREND))]
+  ""
+  "sub\t%2,%2,%3\n\tsub\t%0,%1,%2"
+  [(set_attr "move_type" "move")
+   (set_attr "mode" "<MODE>")])
 
 (define_expand "cmpstr<mode>"
   [(match_operand:ANYI  0 "register_operand")   ;; Result
