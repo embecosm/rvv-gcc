@@ -313,7 +313,3 @@ Recognize some crc calculations to make them into built-in functions.
 memory-small
 Target Bool Var(TARGET_SMALL_MEMORY) Init(1)
 Don't use large lookup tables.
-
-mrvv
-Target Var(TARGET_RVV)
-Use RVV instructions to do auto-vectorization.

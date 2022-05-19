@@ -8511,44 +8511,17 @@ vectorizable_store (vec_info *vinfo,
 				     VEC_ARRAY).  */
 	      unsigned int align = TYPE_ALIGN (TREE_TYPE (vectype));
 	      tree alias_ptr = build_int_cst (ref_type, align);
-	      if (loop_lens
-		  && (direct_internal_fn_supported_p
-		      (IFN_LEN_MASK_STORE_LANES,
-		       tree_pair (TREE_TYPE (vec_array), vectype),
-		       OPTIMIZE_FOR_SPEED)))
-		{
-		  tree final_len
-		    = vect_get_loop_len (loop_vinfo, loop_lens, ncopies, j);
-		  call
-		    = gimple_build_call_internal (IFN_LEN_MASK_STORE_LANES,
-						  5, dataref_ptr, alias_ptr,
-						  final_mask, vec_array,
-						  final_len);
-		}
-	      else
-		call = gimple_build_call_internal (IFN_MASK_STORE_LANES, 4,
-						   dataref_ptr, alias_ptr,
-						   final_mask, vec_array);
+	      call = gimple_build_call_internal (IFN_MASK_STORE_LANES, 4,
+						 dataref_ptr, alias_ptr,
+						 final_mask, vec_array);
 	    }
 	  else
 	    {
 	      /* Emit:
 		   MEM_REF[...all elements...] = STORE_LANES (VEC_ARRAY).  */
 	      data_ref = create_array_ref (aggr_type, dataref_ptr, ref_type);
-	      if (loop_lens
-		  && (direct_internal_fn_supported_p
-		      (IFN_LEN_STORE_LANES,
-		       tree_pair (TREE_TYPE (vec_array), vectype),
-		       OPTIMIZE_FOR_SPEED)))
-		{
-		  tree final_len
-		    = vect_get_loop_len (loop_vinfo, loop_lens, ncopies, j);
-		  call = gimple_build_call_internal (IFN_LEN_STORE_LANES, 2,
-						     vec_array, final_len);
-		}
-	      else
-		call
-		  = gimple_build_call_internal (IFN_STORE_LANES, 1, vec_array);
+	      call = gimple_build_call_internal (IFN_STORE_LANES, 1,
+						 vec_array);
 	      gimple_call_set_lhs (call, data_ref);
 	    }
 	  gimple_call_set_nothrow (call, true);
@@ -9890,42 +9863,16 @@ vectorizable_load (vec_info *vinfo,
 		                                VEC_MASK).  */
 	      unsigned int align = TYPE_ALIGN (TREE_TYPE (vectype));
 	      tree alias_ptr = build_int_cst (ref_type, align);
-	      if (loop_lens
-		  && (direct_internal_fn_supported_p
-		      (IFN_LEN_MASK_LOAD_LANES,
-		       tree_pair (TREE_TYPE (vec_array), vectype),
-		       OPTIMIZE_FOR_SPEED)))
-		{
-		  tree final_len
-		    = vect_get_loop_len (loop_vinfo, loop_lens, ncopies, j);
-		  call = gimple_build_call_internal (IFN_LEN_MASK_LOAD_LANES,
-						     4, dataref_ptr, alias_ptr,
-						     final_mask, final_len);
-		}
-	      else
-		call = gimple_build_call_internal (IFN_MASK_LOAD_LANES, 3,
-						   dataref_ptr, alias_ptr,
-						   final_mask);
+	      call = gimple_build_call_internal (IFN_MASK_LOAD_LANES, 3,
+						 dataref_ptr, alias_ptr,
+						 final_mask);
 	    }
 	  else
 	    {
 	      /* Emit:
 		   VEC_ARRAY = LOAD_LANES (MEM_REF[...all elements...]).  */
 	      data_ref = create_array_ref (aggr_type, dataref_ptr, ref_type);
-	      if (loop_lens
-		  && (direct_internal_fn_supported_p
-		      (IFN_LEN_LOAD_LANES,
-		       tree_pair (TREE_TYPE (vec_array), vectype),
-		       OPTIMIZE_FOR_SPEED)))
-		{
-		  tree final_len
-		    = vect_get_loop_len (loop_vinfo, loop_lens, ncopies, j);
-		  call = gimple_build_call_internal (IFN_LEN_LOAD_LANES, 2,
-						     data_ref, final_len);
-		}
-	      else
-		call = gimple_build_call_internal (IFN_LOAD_LANES, 1,
-						   data_ref);
+	      call = gimple_build_call_internal (IFN_LOAD_LANES, 1, data_ref);
 	    }
 	  gimple_call_set_lhs (call, vec_array);
 	  gimple_call_set_nothrow (call, true);

@@ -560,7 +560,7 @@ vect_set_loop_controls_directly (class loop *loop, loop_vec_info loop_vinfo,
   if (!use_masks_p)
     length_limit = build_int_cst (compare_type, nitems_per_ctrl);
 
-  if (!use_masks_p && !niters_skip
+  if (!use_masks_p && !niters_skip && rgc->controls.length () == 1
       && direct_internal_fn_supported_p (IFN_WHILE_LEN, compare_type, iv_type,
 					 OPTIMIZE_FOR_SPEED))
     return

@@ -1889,6 +1889,20 @@ riscv_legitimize_const_move (machine_mode mode, rtx dest, rtx src)
       return;
     }
 
+  /* Handle const:SI (plus:SI (symbol_ref:SI)
+			      (const_poly_int:SI [16, 16])))  */
+  if (GET_CODE (src) == CONST && GET_CODE (XEXP (src, 0)) == PLUS
+      && CONST_POLY_INT_P (XEXP (XEXP (src, 0), 1)))
+    {
+      rtx reg = gen_reg_rtx (mode);
+      rtx clobber = gen_reg_rtx (mode);
+      riscv_emit_move (dest, XEXP (XEXP (src, 0), 0));
+      riscv_vector_expand_poly_move (mode, reg, clobber,
+				     XEXP (XEXP (src, 0), 1));
+      emit_insn (gen_rtx_SET (dest, gen_rtx_PLUS (mode, dest, reg)));
+      return;
+    }
+
   src = force_const_mem (mode, src);
 
   /* When using explicit relocs, constant pool references are sometimes
@@ -2436,11 +2450,11 @@ riscv_rtx_costs (rtx x, machine_mode mode, int outer_code, int opno ATTRIBUTE_UN
 	  }
       }
 
-    if (float_mode_p)
-      *total = tune_param->fp_add[mode == DFmode];
-    else
-      *total = COSTS_N_INSNS ((GET_MODE_SIZE (mode).to_constant ()
-			       > UNITS_PER_WORD) ? 4 : 1);
+      if (float_mode_p)
+	*total = tune_param->fp_add[mode == DFmode];
+      else
+	*total = COSTS_N_INSNS ((GET_MODE_SIZE (mode).to_constant ()
+				> UNITS_PER_WORD) ? 4 : 1);
 
     return false;
 
@@ -4560,7 +4574,7 @@ riscv_compute_frame_info (void)
 	interrupt_save_prologue_temp = true;
     }
 
-  frame->reset();
+  frame->reset ();
 
   if (!cfun->machine->naked_p)
     {
@@ -5495,7 +5509,7 @@ riscv_modes_tieable_p (machine_mode mode1, machine_mode mode2)
 		   && GET_MODE_CLASS (mode2) == MODE_FLOAT)))
     {
       /* When V extension is enabled it implies F or D extension
-	 is also enabled.  In this situation, disable float
+	 is also enabled.  In this situation do not allow float
 	 and scalar mode to be tied.  */
       return false;
     }
@@ -5865,7 +5879,7 @@ riscv_option_override (void)
   /* Convert -mriscv-vector-bits to a chunks count.  */
   riscv_vector_chunks = riscv_convert_riscv_vector_bits (riscv_vector_bits);
 
-  if (TARGET_VECTOR && TARGET_RVV)
+  if (TARGET_VECTOR)
     riscv_vectorization_factor = riscv_vector_lmul;
 }
 
@@ -6252,10 +6266,6 @@ riscv_reorg (void)
   /* Do nothing unless we have -msave-restore */
   if (TARGET_SAVE_RESTORE)
     riscv_remove_unneeded_save_restore_calls ();
-
-  /* Insert vsetvli for vector spilling after reload.  */
-  if (TARGET_VECTOR && reload_completed)
-    riscv_vector_insert_vsetvli_after_reload (cfun);
 }
 
 /* Return nonzero if register FROM_REGNO can be renamed to register
@@ -6711,7 +6721,7 @@ static opt_machine_mode
 riscv_array_mode (machine_mode mode, unsigned HOST_WIDE_INT nelems)
 {
   machine_mode vmode;
-  if (TARGET_VECTOR && TARGET_RVV
+  if (TARGET_VECTOR
       && riscv_vector_tuple_mode (mode, nelems).exists (&vmode)
       && VECTOR_MODE_P (vmode))
     return vmode;
@@ -6853,7 +6863,7 @@ static opt_machine_mode
 riscv_get_mask_mode (machine_mode mode)
 {
   machine_mode mask_mode = VOIDmode;
-  if (TARGET_VECTOR && TARGET_RVV
+  if (TARGET_VECTOR
       && riscv_vector_get_mask_mode (mode).exists (&mask_mode))
     return mask_mode;
 
