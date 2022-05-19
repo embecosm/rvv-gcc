@@ -124,7 +124,6 @@ extern void emit_op7 (unsigned int unspec, machine_mode Vmode,
 		      bool (*imm_p) (rtx), int i, bool reverse);
 extern void riscv_vector_expand_vector_init (rtx, rtx);
 extern bool riscv_vector_strided_const_vector_p (rtx);
-extern void riscv_vector_expand_series_const_vector (rtx, rtx);
 extern void riscv_vector_expand_vec_perm (rtx, rtx, rtx, rtx);
 extern void riscv_init_expanders (void);
 extern void riscv_vector_expand_gather_scatter (rtx *, unsigned int);
