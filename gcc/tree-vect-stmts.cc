@@ -1830,21 +1830,20 @@ check_load_store_for_partial_vectors (loop_vec_info loop_vinfo, tree vectype,
   bool using_partial_vectors_p = false;
 
   machine_mode vmode;
-  if (get_len_load_store_mode (vecmode, is_load).exists (&vmode)
-      && can_vec_len_load_store_p (vecmode, is_load))
+  if (get_len_load_store_mode (vecmode, is_load).exists (&vmode))
     {
       nvectors = group_memory_nvectors (group_size * vf, nunits);
       vec_loop_lens *lens = &LOOP_VINFO_LENS (loop_vinfo);
       unsigned factor = (vecmode == vmode) ? 1 : GET_MODE_UNIT_SIZE (vecmode);
       vect_record_loop_len (loop_vinfo, lens, nvectors, vectype, factor);
       using_partial_vectors_p = true;
+      return;
     }
 
-  if (!using_partial_vectors_p
-      && targetm.vectorize.get_mask_mode (vecmode).exists (&mask_mode)
+  if (targetm.vectorize.get_mask_mode (vecmode).exists (&mask_mode)
       && can_vec_mask_load_store_p (vecmode, mask_mode, is_load))
     {
-      unsigned int nvectors = group_memory_nvectors (group_size * vf, nunits);
+      nvectors = group_memory_nvectors (group_size * vf, nunits);
       vect_record_loop_mask (loop_vinfo, masks, nvectors, vectype, scalar_mask);
       using_partial_vectors_p = true;
     }
@@ -6368,6 +6367,9 @@ vectorizable_operation (vec_info *vinfo,
   int reduc_idx = STMT_VINFO_REDUC_IDX (stmt_info);
   vec_loop_masks *masks = (loop_vinfo ? &LOOP_VINFO_MASKS (loop_vinfo) : NULL);
   vec_loop_lens *lens = (loop_vinfo ? &LOOP_VINFO_LENS (loop_vinfo) : NULL);
+  bool masked_loop_p = loop_vinfo && LOOP_VINFO_FULLY_MASKED_P (loop_vinfo);
+  bool with_len_loop_p = (loop_vinfo
+			  && LOOP_VINFO_FULLY_WITH_LENGTH_P (loop_vinfo));
   internal_fn cond_fn = get_conditional_internal_fn (code);
   internal_fn len_fn = get_with_length_internal_fn (code);
 
@@ -6450,10 +6452,6 @@ vectorizable_operation (vec_info *vinfo,
   if (dump_enabled_p ())
     dump_printf_loc (MSG_NOTE, vect_location,
                      "transform binary/unary operation.\n");
-
-  bool masked_loop_p = loop_vinfo && LOOP_VINFO_FULLY_MASKED_P (loop_vinfo);
-  bool with_len_loop_p
-    = loop_vinfo && LOOP_VINFO_FULLY_WITH_LENGTH_P (loop_vinfo);
 
   /* POINTER_DIFF_EXPR has pointer arguments which are vectorized as
      vectors with unsigned elements, but the result is signed.  So, we
