@@ -248,9 +248,16 @@
    (clobber (reg:SI VTYPE_REGNUM))]
   "TARGET_VECTOR"
   "#"
-  "&& reload_completed"
+  "&& (reload_completed || (REG_P (operands[0])
+   && REG_P (operands[1])))"
   [(const_int 0)]
   {
+    if (!reload_completed)
+      {
+	gcc_assert (REG_P (operands[0]) && REG_P (operands[1]));
+	emit_insn (gen_rtx_SET (operands[0], operands[1]));
+	DONE;
+      }
     riscv_vector_expand_tuple (<VTSUB>mode, operands);
     DONE;
   }
@@ -268,13 +275,34 @@
    (clobber (reg:SI VTYPE_REGNUM))]
   "TARGET_VECTOR"
   "#"
+  "&& (reload_completed || (REG_P (operands[0])
+   && REG_P (operands[1])))"
+  [(const_int 0)]
+  {
+    if (!reload_completed)
+      {
+	gcc_assert (REG_P (operands[0]) && REG_P (operands[1]));
+	emit_insn (gen_rtx_SET (operands[0], operands[1]));
+	DONE;
+      }
+    riscv_vector_expand_tuple (<VTSUB>mode, operands);
+    DONE;
+  }
+  [(set_attr "type" "vcopy,vle,vse,vmove")
+   (set_attr "mode" "<VTSUB>")])
+
+(define_insn_and_split "*mov<mode>"
+  [(set (match_operand:VT 0 "register_operand" "=vr")
+	(match_operand:VT 1 "register_operand" "vr"))]
+  "TARGET_VECTOR"
+  "#"
   "&& reload_completed"
   [(const_int 0)]
   {
     riscv_vector_expand_tuple (<VTSUB>mode, operands);
     DONE;
   }
-  [(set_attr "type" "vcopy,vle,vse,vmove")
+  [(set_attr "type" "vcopy")
    (set_attr "mode" "<VTSUB>")])
 
 ;; Misalign move patterns for all vector modes.
