@@ -7253,6 +7253,9 @@ riscv_vectorize_create_costs (vec_info *vinfo, bool costing_for_scalar)
 #undef TARGET_VECTORIZE_EMPTY_MASK_IS_EXPENSIVE
 #define TARGET_VECTORIZE_EMPTY_MASK_IS_EXPENSIVE hook_bool_uint_false
 
+#undef TARGET_VECTORIZE_LOOP_LEN_OVERRIDE_MASK
+#define TARGET_VECTORIZE_LOOP_LEN_OVERRIDE_MASK hook_bool_void_true
+
 #undef TARGET_VECTORIZE_BUILTIN_VECTORIZATION_COST
 #define TARGET_VECTORIZE_BUILTIN_VECTORIZATION_COST riscv_builtin_vectorization_cost
 

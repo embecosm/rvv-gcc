@@ -6372,6 +6372,7 @@ vectorizable_operation (vec_info *vinfo,
 			  && LOOP_VINFO_FULLY_WITH_LENGTH_P (loop_vinfo));
   internal_fn cond_fn = get_conditional_internal_fn (code);
   internal_fn len_fn = get_with_length_internal_fn (code);
+  internal_fn len_tail_fn = get_with_length_tail_internal_fn (code);
 
   /* If operating on inactive elements could generate spurious traps,
      we need to restrict the operation to active lanes.  Note that this
@@ -6390,9 +6391,12 @@ vectorizable_operation (vec_info *vinfo,
 	  && LOOP_VINFO_CAN_USE_PARTIAL_VECTORS_P (loop_vinfo)
 	  && mask_out_inactive)
 	{
-	  if (cond_fn == IFN_LAST
-	      || !direct_internal_fn_supported_p (cond_fn, vectype,
-						  OPTIMIZE_FOR_SPEED))
+	  if ((cond_fn == IFN_LAST
+	       || !direct_internal_fn_supported_p (cond_fn, vectype,
+						   OPTIMIZE_FOR_SPEED))
+	      && (len_tail_fn == IFN_LAST
+		  || !direct_internal_fn_supported_p (len_tail_fn, vectype,
+						      OPTIMIZE_FOR_SPEED)))
 	    {
 	      if (dump_enabled_p ())
 		dump_printf_loc (MSG_MISSED_OPTIMIZATION, vect_location,
@@ -6401,8 +6405,14 @@ vectorizable_operation (vec_info *vinfo,
 	      LOOP_VINFO_CAN_USE_PARTIAL_VECTORS_P (loop_vinfo) = false;
 	    }
 	  else
-	    vect_record_loop_mask (loop_vinfo, masks, ncopies * vec_num,
-				   vectype, NULL);
+	    {
+	      if (targetm.vectorize.loop_len_override_mask ())
+		vect_record_loop_len (loop_vinfo, lens, ncopies * vec_num,
+				      vectype, 1);
+	      else
+		vect_record_loop_mask (loop_vinfo, masks, ncopies * vec_num,
+				       vectype, NULL);
+	    }
 	}
 
       /* Put types on constant and invariant SLP children.  */
@@ -6554,6 +6564,22 @@ vectorizable_operation (vec_info *vinfo,
 	      vops.quick_push (else_value);
 	    }
 	  gcall *call = gimple_build_call_internal_vec (cond_fn, vops);
+	  new_temp = make_ssa_name (vec_dest, call);
+	  gimple_call_set_lhs (call, new_temp);
+	  gimple_call_set_nothrow (call, true);
+	  vect_finish_stmt_generation (vinfo, stmt_info, call, gsi);
+	  new_stmt = call;
+	}
+      else if (with_len_loop_p && reduc_idx >= 0)
+	{
+	  /* Perform the operation on active elements only and take inactive
+	     elements (tail elements) from the reduction chain input.  */
+	  gcc_assert (!vop2);
+	  vop2 = reduc_idx == 1 ? vop1 : vop0;
+	  tree len = vect_get_loop_len (loop_vinfo, lens,
+					vec_num * ncopies, i);
+	  gcall *call = gimple_build_call_internal (len_tail_fn, 4, len,
+						    vop0, vop1, vop2);
 	  new_temp = make_ssa_name (vec_dest, call);
 	  gimple_call_set_lhs (call, new_temp);
 	  gimple_call_set_nothrow (call, true);
