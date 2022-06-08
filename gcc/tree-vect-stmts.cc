@@ -5289,7 +5289,8 @@ vectorizable_conversion (vec_info *vinfo,
 						 TREE_TYPE (vop0));
 	  if (lens && len_fn != IFN_LAST && (int)lens->length () == ncopies)
 	    {
-	      tree len = vect_get_loop_len (loop_vinfo, lens, 1 * ncopies, i);
+	      tree len = vect_get_loop_len (gsi, loop_vinfo, lens, 1 * ncopies,
+					    TREE_TYPE (vec_dest), i);
 	      new_stmt = gimple_build_call_internal (len_fn, 2, vop0, len);
 	      new_temp = make_ssa_name (vec_dest, new_stmt);
 	      gimple_call_set_lhs (new_stmt, new_temp);
@@ -6049,7 +6050,8 @@ vectorizable_shift (vec_info *vinfo,
 	  && direct_internal_fn_supported_p (len_fn, vectype,
 					     OPTIMIZE_FOR_SPEED))
 	{
-	  tree len = vect_get_loop_len (loop_vinfo, lens, ncopies, i);
+	  tree len = vect_get_loop_len (gsi, loop_vinfo, lens, ncopies,
+					vectype, i);
 	  gcall *call
 	    = gimple_build_call_internal (len_fn, 3, vop0, vop1, len);
 	  new_stmt = call;
@@ -6576,8 +6578,8 @@ vectorizable_operation (vec_info *vinfo,
 	     elements (tail elements) from the reduction chain input.  */
 	  gcc_assert (!vop2);
 	  vop2 = reduc_idx == 1 ? vop1 : vop0;
-	  tree len = vect_get_loop_len (loop_vinfo, lens,
-					vec_num * ncopies, i);
+	  tree len = vect_get_loop_len (gsi, loop_vinfo, lens,
+					vec_num * ncopies, vectype, i);
 	  gcall *call = gimple_build_call_internal (len_tail_fn, 4, len,
 						    vop0, vop1, vop2);
 	  new_temp = make_ssa_name (vec_dest, call);
@@ -6628,10 +6630,11 @@ vectorizable_operation (vec_info *vinfo,
 	  if (!masked_loop_p && lens && with_len_loop_p && len_fn != IFN_LAST
 	      && direct_internal_fn_supported_p (len_fn, vectype,
 						 OPTIMIZE_FOR_SPEED)
-	      && (int) lens->length () == vec_num * ncopies)
+	      && (int) lens->length () == vec_num * ncopies
+	      && LOOP_VINFO_REDUCTIONS (loop_vinfo).length () == 0)
 	    {
-	      tree len = vect_get_loop_len (loop_vinfo, lens,
-					    vec_num * ncopies, i);
+	      tree len = vect_get_loop_len (gsi, loop_vinfo, lens,
+					    vec_num * ncopies, vectype, i);
 	      gcall *call;
 	      /* Unary Operation.  */
 	      if (!vop1)
@@ -8595,8 +8598,8 @@ vectorizable_store (vec_info *vinfo,
 			       OPTIMIZE_FOR_SPEED)))
 			{
 			  tree final_len
-			    = vect_get_loop_len (loop_vinfo, loop_lens,
-						 vec_num * ncopies,
+			    = vect_get_loop_len (gsi, loop_vinfo, loop_lens,
+						 vec_num * ncopies, vectype,
 						 vec_num * j + i);
 			  call
 			    = (gimple_build_call_internal
@@ -8617,9 +8620,10 @@ vectorizable_store (vec_info *vinfo,
 				tree_pair (vectype, TREE_TYPE (vec_offset)),
 				OPTIMIZE_FOR_SPEED)))
 		    {
-		      tree final_len = vect_get_loop_len (loop_vinfo,
+		      tree final_len = vect_get_loop_len (gsi, loop_vinfo,
 							  loop_lens,
 							  vec_num * ncopies,
+							  vectype,
 							  vec_num * j + i);
 		      call = gimple_build_call_internal (IFN_LEN_SCATTER_STORE,
 							 5, dataref_ptr,
@@ -8692,9 +8696,10 @@ vectorizable_store (vec_info *vinfo,
 			   tree_pair (vectype, TREE_TYPE (final_mask)),
 			   OPTIMIZE_FOR_SPEED)))
 		    {
-		      tree final_len = vect_get_loop_len (loop_vinfo,
+		      tree final_len = vect_get_loop_len (gsi, loop_vinfo,
 							  loop_lens,
 							  vec_num * ncopies,
+							  vectype,
 							  vec_num * j + i);
 		      call = gimple_build_call_internal (IFN_LEN_MASK_STORE, 5,
 							 dataref_ptr, ptr,
@@ -8712,8 +8717,9 @@ vectorizable_store (vec_info *vinfo,
 	      else if (loop_lens)
 		{
 		  tree final_len
-		    = vect_get_loop_len (loop_vinfo, loop_lens,
-					 vec_num * ncopies, vec_num * j + i);
+		    = vect_get_loop_len (gsi, loop_vinfo, loop_lens,
+					 vec_num * ncopies, vectype,
+					 vec_num * j + i);
 		  tree ptr = build_int_cst (ref_type, align * BITS_PER_UNIT);
 		  machine_mode vmode = TYPE_MODE (vectype);
 		  opt_machine_mode new_ovmode
@@ -9962,8 +9968,10 @@ vectorizable_load (vec_info *vinfo,
 				     OPTIMIZE_FOR_SPEED)))
 			      {
 				tree final_len
-				  = vect_get_loop_len (loop_vinfo, loop_lens,
+				  = vect_get_loop_len (gsi, loop_vinfo,
+						       loop_lens,
 						       vec_num * ncopies,
+						       vectype,
 						       vec_num * j + i);
 				call
 				  = (gimple_build_call_internal
@@ -9984,8 +9992,8 @@ vectorizable_load (vec_info *vinfo,
 				      OPTIMIZE_FOR_SPEED)))
 			  {
 			    tree final_len
-			      = vect_get_loop_len (loop_vinfo, loop_lens,
-						   vec_num * ncopies,
+			      = vect_get_loop_len (gsi, loop_vinfo, loop_lens,
+						   vec_num * ncopies, vectype,
 						   vec_num * j + i);
 			    call = (gimple_build_call_internal
 				    (IFN_LEN_GATHER_LOAD, 5, dataref_ptr,
@@ -10090,8 +10098,8 @@ vectorizable_load (vec_info *vinfo,
 				 OPTIMIZE_FOR_SPEED)))
 			  {
 			    tree final_len
-			      = vect_get_loop_len (loop_vinfo, loop_lens,
-						   vec_num * ncopies,
+			      = vect_get_loop_len (gsi, loop_vinfo, loop_lens,
+						   vec_num * ncopies, vectype,
 						   vec_num * j + i);
 			    call
 			      = gimple_build_call_internal (IFN_LEN_MASK_LOAD,
@@ -10110,9 +10118,9 @@ vectorizable_load (vec_info *vinfo,
 		    else if (loop_lens && memory_access_type != VMAT_INVARIANT)
 		      {
 			tree final_len
-			  = vect_get_loop_len (loop_vinfo, loop_lens,
+			  = vect_get_loop_len (gsi, loop_vinfo, loop_lens,
 					       vec_num * ncopies,
-					       vec_num * j + i);
+					       vectype, vec_num * j + i);
 			tree ptr = build_int_cst (ref_type,
 						  align * BITS_PER_UNIT);
 
@@ -10901,7 +10909,8 @@ vectorizable_condition (vec_info *vinfo,
 	   : NULL);
       tree len
 	= (loop_lens && (int) loop_lens->length () == vec_num * ncopies
-	   ? vect_get_loop_len (loop_vinfo, loop_lens, vec_num * ncopies, i)
+	   ? vect_get_loop_len (gsi, loop_vinfo, loop_lens, vec_num * ncopies,
+				vectype, i)
 	   : NULL);
 
       if (masked)
@@ -11324,16 +11333,16 @@ vectorizable_comparison (vec_info *vinfo,
 
       tree len
 	= (loop_lens && (int) loop_lens->length () == ncopies
-	   ? vect_get_loop_len (loop_vinfo, loop_lens, 1 * ncopies, i)
+	   ? vect_get_loop_len (gsi, loop_vinfo, loop_lens, 1 * ncopies,
+				vectype, i)
 	   : NULL);
       if (bitop1 == NOP_EXPR)
 	{
 	  bool unsignedp = TYPE_UNSIGNED (TREE_TYPE (vec_rhs1));
 	  if (len
-	      && (get_len_vec_cmp_icode
-		  (TYPE_MODE (TREE_TYPE (vec_rhs1)),
-		   TYPE_MODE (TREE_TYPE (new_temp)),
-		   unsignedp) != CODE_FOR_nothing))
+	      && get_len_vec_cmp_icode (TYPE_MODE (TREE_TYPE (vec_rhs1)),
+					TYPE_MODE (TREE_TYPE (new_temp)),
+					unsignedp) != CODE_FOR_nothing)
 	    {
 	      tree code_tree = build_int_cst (integer_type_node, code);
 	      new_stmt
