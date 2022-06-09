@@ -177,7 +177,7 @@ recog_clobber_vl_vtype (rtx_insn *insn)
 }
 
 static bool
-is_vector_config_instr (rtx_insn *insn)
+vector_config_instr_p (rtx_insn *insn)
 {
   return insn && INSN_P (insn) && recog_memoized (insn) >= 0 &&
 	 get_attr_type (insn) == TYPE_VSETVL;
@@ -186,14 +186,46 @@ is_vector_config_instr (rtx_insn *insn)
 /// Return true if this is 'vsetvli x0, x0, vtype' which preserves
 /// VL and only sets VTYPE.
 static bool
-is_vl_preserving_config (rtx_insn *insn)
+vl_preserving_config_p (rtx_insn *insn)
 {
-  if (is_vector_config_instr (insn))
+  if (vector_config_instr_p (insn))
     {
       extract_insn_cached (insn);
       return recog_data.n_operands == 1;
     }
   return false;
+}
+
+static bool
+scalar_move_insn_p (rtx_insn *insn)
+{
+  return (insn && INSN_P (insn) && recog_memoized (insn) >= 0
+	  && (get_attr_type (insn) == TYPE_VMV_S_X
+	      || get_attr_type (insn) == TYPE_VFMV_S_F));
+}
+
+static bool
+store_insn_p (rtx_insn *insn)
+{
+  return (insn && INSN_P (insn) && recog_memoized (insn) >= 0
+	  && (get_attr_type (insn) == TYPE_VSE
+	      || get_attr_type (insn) == TYPE_VSSE
+	      || get_attr_type (insn) == TYPE_VSUXEI
+	      || get_attr_type (insn) == TYPE_VSOXEI
+	      || get_attr_type (insn) == TYPE_VSSEG
+	      || get_attr_type (insn) == TYPE_VSSSEG
+	      || get_attr_type (insn) == TYPE_VSUXSEGEI
+	      || get_attr_type (insn) == TYPE_VSOXSEGEI));
+}
+
+static bool
+can_skip_load_store_insn_p (rtx_insn *insn)
+{
+  return (insn && INSN_P (insn) && recog_memoized (insn) >= 0
+	  && (get_attr_type (insn) == TYPE_VSE
+	      || get_attr_type (insn) == TYPE_VSSE
+	      || get_attr_type (insn) == TYPE_VLE
+	      || get_attr_type (insn) == TYPE_VLSE));
 }
 
 static bool
@@ -424,18 +456,14 @@ private:
   uint8_t vta : 1;
   uint8_t vsew : 3;
   uint8_t vlmul : 3;
-  uint8_t all_maskop_p : 1;
-  uint8_t store_p : 1;
   uint8_t sew_lmul_ratio_only_p : 1;
-  uint8_t scalar_move_p : 1;
   rtx avl;
   rtx avl_source;
 
 public:
   vinfo ()
-      : state (STATE_UNINITIALIZED), vma (false), vta (false), vsew (0),
-	vlmul (0), all_maskop_p (false), store_p (false), sew_lmul_ratio_only_p (false),
-	scalar_move_p (false), avl (NULL_RTX), avl_source (NULL_RTX)
+      : state (STATE_UNINITIALIZED), vma (false), vta (false), vsew (0), vlmul (0),
+	sew_lmul_ratio_only_p (false), avl (NULL_RTX), avl_source (NULL_RTX)
   {
   }
 
@@ -560,12 +588,6 @@ public:
     return vma;
   }
 
-  uint8_t
-  get_store_p () const
-  {
-    return store_p;
-  }
-
   bool
   compare_vl (const vinfo &info) const
   {
@@ -671,8 +693,7 @@ public:
   }
 
   void
-  set_vtype (unsigned vl, unsigned vs, bool vt, bool vm, bool m_p,
-	     bool st_p, bool is_scalar_move_op)
+  set_vtype (unsigned vl, unsigned vs, bool vt, bool vm)
   {
     gcc_assert (valid_p () && !unknown_p () &&
 		"Can't set VTYPE for uninitialized or unknown.");
@@ -680,9 +701,6 @@ public:
     vta = vt;
     vsew = vs;
     vlmul = vl;
-    all_maskop_p = m_p;
-    store_p = st_p;
-    scalar_move_p = is_scalar_move_op;
   }
 
   // Encode VTYPE into the binary format used by the the VSETVLI instruction
@@ -852,7 +870,7 @@ public:
   }
 
   bool
-  compatible_vtype_p (const vinfo &info) const
+  compatible_vtype_p (rtx_insn *insn, const vinfo &info) const
   {
     // Simple case, see if full VTYPE matches.
     if (vtype_equal_p (info))
@@ -862,8 +880,10 @@ public:
     // FIXME: Mask reg operations are probably ok if "this" VLMAX is larger
     // than "InstrInfo".
     // FIXME: The policy bits can probably be ignored for mask reg operations.
-    if (info.all_maskop_p && vlmax_equal_p (info) && vta == info.vta &&
-	vma == info.vma)
+    machine_mode mode = riscv_translate_attr_mode (insn);
+    if (riscv_vector_mask_mode_p (mode)
+	&& vlmax_equal_p (info) && vta == info.vta
+	&& vma == info.vma)
       return true;
 
     return false;
@@ -871,9 +891,9 @@ public:
 
   // Determine whether the vector instructions requirements represented by
   // InstrInfo are compatible with the previous vsetvli instruction represented
-  // by this.
+  // by this. insn is the instruction whose requirements we're considering.
   bool
-  compatible_p (const vinfo &require) const
+  compatible_p (rtx_insn *insn, const vinfo &require) const
   {
     gcc_assert (valid_p () && require.valid_p () &&
 		"Can't compare invalid VSETVLI Infos.");
@@ -897,7 +917,7 @@ public:
     // For vmv.s.x and vfmv.s.f, there is only two behaviors, VL = 0 and VL > 0.
     // So it's compatible when we could make sure that both VL be the same
     // situation.
-    if (require.scalar_move_p && require.get_avl () &&
+    if (scalar_move_insn_p (insn) && require.get_avl () &&
 	CONST_SCALAR_INT_P (require.get_avl ()) &&
 	((has_nonzero_avl () && require.has_nonzero_avl ()) ||
 	 (has_zero_avl () && require.has_zero_avl ())) &&
@@ -908,12 +928,11 @@ public:
     if (!avl_equal_p (require))
       return false;
 
-    if (compatible_vtype_p (require))
+    if (compatible_vtype_p (insn, require))
       return true;
 
     // Store instructions don't use the policy fields.
-    // TODO: Move into hasCompatibleVTYPE?
-    if (require.store_p && vlmul == require.vlmul && vsew == require.vsew)
+    if (store_insn_p (insn) && vlmul == require.vlmul && vsew == require.vsew)
       return true;
 
     // Anything else is not compatible.
@@ -933,10 +952,6 @@ public:
       return false;
 
     if (!avl_equal_p (info))
-      return false;
-
-    // Stores can ignore the tail and mask policies.
-    if (!info.store_p && (vta != info.vta || vma != info.vma))
       return false;
 
     return calc_sew_lmul_ratio () == calc_sew_lmul_ratio (vsew_arg, info.vlmul);
@@ -988,7 +1003,6 @@ public:
     vta = other.vta;
     vsew = other.vsew;
     vlmul = other.vlmul;
-    all_maskop_p = other.all_maskop_p;
     sew_lmul_ratio_only_p = other.sew_lmul_ratio_only_p;
     avl = other.avl;
     avl_source = other.avl_source;
@@ -1059,9 +1073,6 @@ public:
     fprintf (dump_file, "  Vlmul=%d\n", (unsigned int)vlmul);
     fprintf (dump_file, "  TailAgnostic=%d\n", (unsigned int)vta);
     fprintf (dump_file, "  MaskAgnostic=%d\n", (unsigned int)vma);
-    fprintf (dump_file, "  MaskOp=%d\n", (unsigned int)all_maskop_p);
-    fprintf (dump_file, "  Store_p=%d\n", (unsigned int)store_p);
-    fprintf (dump_file, "  Scalar_move_p=%d\n", (unsigned int)scalar_move_p);
     fprintf (dump_file, "  Sew_lmul_ratio_only_p=%d\n", (unsigned int)sew_lmul_ratio_only_p);
     fprintf (dump_file, "}\n");
   }
@@ -1182,7 +1193,7 @@ get_info_for_vsetvli (rtx_insn *insn, vinfo curr_info)
 	  new_info.set_avl_source (curr_info.get_avl_source ());
 	  new_info.set_vtype (INTVAL (recog_data.operand[0]));
 	  /* If this X0, X0 vsetvli is redundant, remove it.  */
-	  if (curr_info.compatible_vtype_p (new_info))
+	  if (curr_info.compatible_vtype_p (insn, new_info))
 	    remove_insn (insn);
 	}
       else
@@ -1285,38 +1296,6 @@ analyze_vma_vta (rtx_insn *insn, vinfo curr_info)
   return (vma_p << 1) | vta_p;
 }
 
-static bool
-scalar_move_insn_p (rtx_insn *insn)
-{
-  return insn && INSN_P (insn) && recog_memoized (insn) >= 0 &&
-	 (get_attr_type (insn) == TYPE_VMV_S_X ||
-	  get_attr_type (insn) == TYPE_VFMV_S_F);
-}
-
-static bool
-store_insn_p (rtx_insn *insn)
-{
-  return insn && INSN_P (insn) && recog_memoized (insn) >= 0 &&
-	 (get_attr_type (insn) == TYPE_VSE ||
-	  get_attr_type (insn) == TYPE_VSSE ||
-	  get_attr_type (insn) == TYPE_VSUXEI ||
-	  get_attr_type (insn) == TYPE_VSOXEI ||
-	  get_attr_type (insn) == TYPE_VSSEG ||
-	  get_attr_type (insn) == TYPE_VSSSEG ||
-	  get_attr_type (insn) == TYPE_VSUXSEGEI ||
-	  get_attr_type (insn) == TYPE_VSOXSEGEI);
-}
-
-static bool
-can_skip_load_store_insn_p (rtx_insn *insn)
-{
-  return insn && INSN_P (insn) && recog_memoized (insn) >= 0 &&
-	 (get_attr_type (insn) == TYPE_VSE ||
-	  get_attr_type (insn) == TYPE_VSSE ||
-	  get_attr_type (insn) == TYPE_VLE ||
-	  get_attr_type (insn) == TYPE_VLSE);
-}
-
 static vinfo
 compute_info_for_instr (rtx_insn *insn, vinfo curr_info)
 {
@@ -1342,30 +1321,32 @@ compute_info_for_instr (rtx_insn *insn, vinfo curr_info)
     info.set_avl (NULL_RTX);
 
   machine_mode mode = riscv_translate_attr_mode (insn);
-  bool st_p = store_insn_p (insn);
-  bool scalar_move_p = scalar_move_insn_p (insn);
 
   unsigned int vma_vta = analyze_vma_vta (insn, curr_info);
   unsigned int vta = vma_vta & 0x1;
   unsigned int vma = (vma_vta >> 1) & 0x1;
   info.set_vtype (riscv_classify_vlmul_field (mode),
 		  riscv_classify_vsew_field (mode),
-		  /*TailAgnostic*/ vta, /*MaskAgnostic*/ vma,
-		  riscv_vector_mask_mode_p (mode), st_p, scalar_move_p);
+		  /*TailAgnostic*/ vta, /*MaskAgnostic*/ vma);
 
   return info;
 }
 
 static bool
-can_skip_vsetvli_for_load_store_p (rtx_insn *insn, const vinfo &new_info, const vinfo &curr_info)
+can_skip_vsetvli_for_load_store_p (rtx_insn *insn, const vinfo &require, const vinfo &curr_info)
 {
   gcc_assert (recog_memoized (insn) >= 0);
   if (!can_skip_load_store_insn_p (insn))
     return false;
+
   machine_mode mode = riscv_translate_attr_mode (insn);
   unsigned vsew = riscv_classify_vsew_field (mode);
-  gcc_assert (store_insn_p (insn) == new_info.get_store_p ());
-  return curr_info.load_store_compatible_p (vsew, new_info);
+
+  // Stores can ignore the tail and mask policies.
+  if (!store_insn_p (insn) && !curr_info.policy_equal_p (require))
+    return false;
+
+  return curr_info.load_store_compatible_p (vsew, require);
 }
 
 static bool
@@ -1374,7 +1355,7 @@ need_vsetvli (rtx_insn *insn, const vinfo &require, const vinfo &curr_info)
   if (!need_vsetvli_p (insn))
     return false;
 
-  if (curr_info.compatible_p (require))
+  if (curr_info.compatible_p (insn, require))
     return false;
 
   // We didn't find a compatible value. If our AVL is a virtual register,
@@ -1384,12 +1365,12 @@ need_vsetvli (rtx_insn *insn, const vinfo &require, const vinfo &curr_info)
   if (!curr_info.unknown_p () && require.avl_reg_p () &&
       REGNO (require.get_avl ()) >= FIRST_PSEUDO_REGISTER &&
       !curr_info.get_sew_lmul_ratio_only_p () &&
-      curr_info.compatible_vtype_p (require))
+      curr_info.compatible_vtype_p (insn, require))
     {
       rtx_insn *def_rtl = fetch_def_insn (insn, require);
       if (def_rtl != NULL)
 	{
-	  if (is_vector_config_instr (def_rtl))
+	  if (vector_config_instr_p (def_rtl))
 	    {
 	      vinfo def_info = get_info_for_vsetvli (def_rtl, curr_info);
 	      if (def_info.avl_equal_p (curr_info) &&
@@ -1409,7 +1390,8 @@ needvsetvli (rtx_insn *insn, const vinfo &require, const vinfo &curr_info)
     return false;
   // If this is a unit-stride or strided load/store, we may be able to use
   // the EMUL=(EEW/SEW)*LMUL relationship to avoid changing VTYPE.
-  return !can_skip_vsetvli_for_load_store_p (insn, require, curr_info);
+  return (curr_info.unknown_p ()
+	  || !can_skip_vsetvli_for_load_store_p (insn, require, curr_info));
 }
 
 // If we weren't able to prove a vsetvli was directly unneeded, it might
@@ -1485,14 +1467,14 @@ need_vsetvli_phi (const vinfo &new_info, rtx_insn *rtl)
 	      if (recog_data.n_operands > 0 &&
 		  rtx_equal_p (recog_data.operand[0], avl))
 		{
+		  // We need the PHI input to the be the output of a VSET(I)VLI.
 		  if (get_attr_type (def_rtl) &&
 		      get_attr_type (def_rtl) == TYPE_VSETVL)
 		    {
 		      basic_block def_bb = BLOCK_FOR_INSN (def_rtl);
 		      bb_vinfo info = bb_vinfo_map.at(def_bb->index);
-		      // If the exit from the predecessor has the VTYPE
-		      // we are looking for we might be able to avoid a
-		      // VSETVLI.
+		      // If the exit from the predecessor has the VTYPE we
+		      // are looking for we might be able to avoid a VSETVLI.
 		      if (info.exit.unknown_p () ||
 			  !info.exit.vtype_equal_p (new_info))
 			return true;
@@ -1530,7 +1512,7 @@ compute_vl_vtype_changes (basic_block bb)
   FOR_BB_INSNS (bb, insn)
   {
     // If this is an explicit VSETVLI or VSETIVLI, update our state.
-    if (is_vector_config_instr (insn))
+    if (vector_config_instr_p (insn))
       {
 	vector_p = true;
 	info.change = get_info_for_vsetvli (insn, curr_info);
@@ -1746,7 +1728,7 @@ emit_vsetvlis (const basic_block bb)
   FOR_BB_INSNS (bb, insn)
   {
     // If this is an explicit VSETVLI or VSETIVLI, update our state.
-    if (is_vector_config_instr (insn))
+    if (vector_config_instr_p (insn))
       {
 	curr_info = get_info_for_vsetvli (insn, curr_info);
 	continue;
@@ -1820,7 +1802,7 @@ dolocalprepass (const basic_block bb)
   FOR_BB_INSNS (bb, insn)
   {
     // If this is an explicit VSETVLI or VSETIVLI, update our state.
-    if (is_vector_config_instr (insn))
+    if (vector_config_instr_p (insn))
       {
 	curr_info = get_info_for_vsetvli (insn, curr_info);
 	continue;
@@ -1867,7 +1849,7 @@ dolocalprepass (const basic_block bb)
 
 		if (def_rtl != NULL)
 		  {
-		    if (is_vector_config_instr (def_rtl))
+		    if (vector_config_instr_p (def_rtl))
 		      {
 			vinfo def_info = get_info_for_vsetvli (def_rtl, curr_info);
 			if (def_info.avl_equal_p (curr_info) &&
@@ -1894,7 +1876,7 @@ dolocalprepass (const basic_block bb)
 		rtx_insn *def_rtl = fetch_def_insn (insn, require);
 		if (def_rtl != NULL)
 		  {
-		    if (is_vector_config_instr (def_rtl))
+		    if (vector_config_instr_p (def_rtl))
 		      {
 			vinfo def_info = get_info_for_vsetvli (def_rtl, curr_info);
 			if (def_info.vlmax_equal_p (require) &&
@@ -1937,7 +1919,7 @@ dolocalpostpass (const basic_block bb)
       if (update_vl_vtype_p (insn) || use_vtype_p (insn))
 	used_vtype = true;
 
-      if (!is_vector_config_instr (insn))
+      if (!vector_config_instr_p (insn))
 	continue;
 
       extract_insn_cached (insn);
@@ -1948,7 +1930,7 @@ dolocalpostpass (const basic_block bb)
 	      to_delete.push_back (prev_insn);
 	      // fallthrough
 	    }
-	  else if (!used_vtype && is_vl_preserving_config (insn))
+	  else if (!used_vtype && vl_preserving_config_p (insn))
 	    {
 	      // Note: `vsetvli x0, x0, vtype' is the canonical instruction
 	      // for this case.  If you find yourself wanting to add other
@@ -2059,7 +2041,7 @@ dopre (const basic_block bb)
   vinfo curr_info;
   FOR_BB_INSNS (bb, insn)
     {
-      if (is_vector_config_instr (insn))
+      if (vector_config_instr_p (insn))
 	return;
 
       if (use_vtype_p (insn))
@@ -2220,7 +2202,7 @@ rest_of_handle_insert_vsetvli (function *fn)
 	  rtx_insn *insn = NULL;
 	  FOR_BB_INSNS (bb, insn)
 	    {
-	      if (is_vector_config_instr (insn))
+	      if (vector_config_instr_p (insn))
 		{
 		  extract_insn_cached (insn);
 		  if (recog_data.n_operands == 3
