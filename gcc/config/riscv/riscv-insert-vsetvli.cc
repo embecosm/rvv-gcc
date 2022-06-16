@@ -411,9 +411,9 @@ get_avl_source (rtx avl, rtx_insn *rtl)
       next = insn->next_any_insn ();
       if (insn->rtl () == rtl)
 	{
-	  resource_info resource{GET_MODE (avl), REGNO (avl)};
+	  resource_info resource = full_register (REGNO (avl));
 	  def_lookup dl = crtl->ssa->find_def (resource, insn);
-	  def_info *def = dl.prev_def (insn);
+	  def_info *def = dl.last_def_of_prev_group ();
 
 	  if (!def)
 	    return NULL_RTX;
@@ -428,7 +428,49 @@ get_avl_source (rtx avl, rtx_insn *rtl)
 	  rtx_insn *def_rtl = def_insn->rtl ();
 
 	  if (!def_rtl)
-	    return NULL_RTX;
+	    {
+	      if (def_insn->is_phi ())
+		{
+		  // There is an existing phi.
+		  phi_info *phi = as_a<phi_info *> (def);
+		  avl_source = NULL_RTX;
+		  for (unsigned int i = 0; i < phi->num_inputs (); i++)
+		    {
+		      def_info *phi_def = phi->input_value (i);
+		      if (!phi_def)
+			break;
+		      insn_info *phi_def_insn = phi_def->insn ();
+		      rtx_insn *phi_def_rtl = phi_def_insn->rtl ();
+		      if (!phi_def_rtl)
+			break;
+		      if (!INSN_P (phi_def_rtl))
+			break;
+
+		      // So far we only check single set.
+		      // Maybe optimize in the future ?????
+		      if (single_set (phi_def_rtl))
+			{
+			  if (!avl_source)
+			    avl_source = SET_SRC (single_set (phi_def_rtl));
+			  else
+			    {
+			      if (!(rtx_equal_p
+				    (avl_source,
+				     SET_SRC (single_set (phi_def_rtl)))))
+				{
+				  avl_source = NULL_RTX;
+				  break;
+				}
+			    }
+			}
+		    }
+
+		  if (avl_source)
+		    return avl_source;
+		}
+
+	      return NULL_RTX;
+	    }
 
 	  if (INSN_P (def_rtl) && single_set (def_rtl))
 	    {
@@ -1131,7 +1173,7 @@ fetch_def_insn (rtx_insn *rtl, const vinfo info)
 	{
 	  resource_info resource{GET_MODE (avl), REGNO (avl)};
 	  def_lookup dl = crtl->ssa->find_def (resource, insn);
-	  def_info *def = dl.prev_def (insn);
+	  def_info *def = dl.last_def_of_prev_group ();
 
 	  if (!def)
 	    return NULL;
@@ -1312,9 +1354,9 @@ compute_info_for_instr (rtx_insn *insn, vinfo curr_info)
       else
 	{
 	  unsigned int offset = get_vl_offset (insn);
+	  info.set_avl (recog_data.operand[recog_data.n_operands - offset]);
 	  info.set_avl_source (get_avl_source (
 	      recog_data.operand[recog_data.n_operands - offset], insn));
-	  info.set_avl (recog_data.operand[recog_data.n_operands - offset]);
 	}
     }
   else
@@ -1441,7 +1483,7 @@ need_vsetvli_phi (const vinfo &new_info, rtx_insn *rtl)
 	  insn_info *phi_insn = ebb->phi_insn ();
 	  phi_info *phi;
 	  def_lookup dl = crtl->ssa->find_def (resource, phi_insn);
-	  def_info *set = dl.prev_def (phi_insn);
+	  def_info *set = dl.last_def_of_prev_group ();
 
 	  if (!set)
 	    return true;
@@ -1575,7 +1617,8 @@ compute_incoming_vl_vtype (const basic_block bb)
       FOR_EACH_EDGE (e, ei, bb->preds)
       {
 	basic_block ancestor = e->src;
-	in_info = in_info.intersect (bb_vinfo_map.at(ancestor->index).exit);
+	vinfo ancestor_info = bb_vinfo_map.at (ancestor->index).exit;
+	in_info = in_info.intersect (ancestor_info);
       }
     }
 
@@ -1591,7 +1634,7 @@ compute_incoming_vl_vtype (const basic_block bb)
   if (dump_file)
     {
       fprintf (dump_file, "Entry state of bb %d changed to\n", bb->index);
-      info.pred.print ();
+      bb_vinfo_map[bb->index].pred.print ();
     }
 
   // Note: It's tempting to cache the state changes here, but due to the
@@ -1611,7 +1654,7 @@ compute_incoming_vl_vtype (const basic_block bb)
   if (dump_file)
     {
       fprintf (dump_file, "Exit state of bb %d changed to\n", bb->index);
-      info.exit.print ();
+      bb_vinfo_map[bb->index].exit.print ();
     }
   // Add the successors to the work list so we can propagate the changed exit
   // status.

@@ -61,14 +61,15 @@
 #include "langhooks-def.h"
 #include "riscv-vector.h"
 #include <string>
+#include <vector>
 
 namespace riscv_vector
 {
 
 /* The macro defines the maximum length of name string.  */
 static const unsigned int NAME_MAXLEN = 32;
-/* The macro defines the maxmum number of tuple.  For
-   RISC-V 'V' Extension, the maxmum tuple number is 8.  */
+/* The macro defines the maximum number of tuple.  For
+   RISC-V 'V' Extension, the maximum tuple number is 8.  */
 static const unsigned int MAX_TUPLE_NUM = 8;
 
 /* Describes the various of data_type.
@@ -704,6 +705,9 @@ public:
   // Use the same construction function as the basic_alu.
   using basic_alu::basic_alu;
 
+  virtual gimple *fold (const function_instance &, gimple_stmt_iterator *,
+			gcall *) const OVERRIDE;
+
   virtual void get_argument_types (const function_instance &,
 				   vec<tree> &) const OVERRIDE;
 
@@ -731,6 +735,9 @@ public:
 				   vec<tree> &) const OVERRIDE;
 
   virtual bool can_be_overloaded_p (const function_instance &) const OVERRIDE;
+
+  virtual gimple *fold (const function_instance &, gimple_stmt_iterator *,
+			gcall *) const OVERRIDE;
 };
 
 /* A function_base for reduction functions.  */
@@ -925,8 +932,8 @@ public:
 
   virtual bool can_be_overloaded_p (const function_instance &) const OVERRIDE;
 
-  virtual gimple * fold (const function_instance &, gimple_stmt_iterator *,
-	gcall *) const OVERRIDE;
+  virtual gimple *fold (const function_instance &, gimple_stmt_iterator *,
+			gcall *) const OVERRIDE;
 
   virtual rtx expand (const function_instance &, tree, rtx) const OVERRIDE;
 };
@@ -966,8 +973,8 @@ public:
   virtual void get_argument_types (const function_instance &,
 				   vec<tree> &) const OVERRIDE;
 
-  virtual gimple * fold (const function_instance &, gimple_stmt_iterator *,
-	gcall *) const OVERRIDE;
+  virtual gimple *fold (const function_instance &, gimple_stmt_iterator *,
+			gcall *) const OVERRIDE;
 
   virtual rtx expand (const function_instance &, tree, rtx) const OVERRIDE;
 };
@@ -1113,6 +1120,11 @@ class vrsub : public binop
 public:
   // Use the same construction function as the binop.
   using binop::binop;
+
+  virtual char *assemble_name (function_instance &) OVERRIDE;
+
+  virtual gimple *fold (const function_instance &, gimple_stmt_iterator *,
+			gcall *) const OVERRIDE;
 
   virtual rtx expand (const function_instance &, tree, rtx) const OVERRIDE;
 };
@@ -1304,6 +1316,9 @@ public:
 
   virtual void get_argument_types (const function_instance &,
 				   vec<tree> &) const OVERRIDE;
+
+  virtual gimple *fold (const function_instance &, gimple_stmt_iterator *,
+			gcall *) const OVERRIDE;
 };
 
 /* A function_base for vsll functions.  */
@@ -1713,7 +1728,11 @@ public:
   // Use the same construction function as the binop.
   using binop::binop;
 
-  virtual size_t get_position_of_dest_arg (enum predication_index) const OVERRIDE;
+  virtual gimple *fold (const function_instance &, gimple_stmt_iterator *,
+			gcall *) const OVERRIDE;
+
+  virtual size_t get_position_of_dest_arg
+    (enum predication_index) const OVERRIDE;
 
   virtual rtx expand (const function_instance &, tree, rtx) const OVERRIDE;
 };
@@ -3025,6 +3044,9 @@ public:
   // Use the same construction function as the binop.
   using binop::binop;
 
+  virtual gimple *fold (const function_instance &, gimple_stmt_iterator *,
+			gcall *) const OVERRIDE;
+
   virtual rtx expand (const function_instance &, tree, rtx) const OVERRIDE;
 };
 
@@ -3034,6 +3056,9 @@ class vslide1down : public binop
 public:
   // Use the same construction function as the binop.
   using binop::binop;
+
+  virtual gimple *fold (const function_instance &, gimple_stmt_iterator *,
+			gcall *) const OVERRIDE;
 
   virtual rtx expand (const function_instance &, tree, rtx) const OVERRIDE;
 };
@@ -3109,8 +3134,8 @@ public:
 
   size_t get_position_of_mask_arg (enum predication_index) const OVERRIDE;
 
-  virtual gimple * fold (const function_instance &, gimple_stmt_iterator *,
-	gcall *) const OVERRIDE;
+  virtual gimple *fold (const function_instance &, gimple_stmt_iterator *,
+			gcall *) const OVERRIDE;
 
   virtual rtx expand (const function_instance &, tree, rtx) const OVERRIDE;
 };
@@ -3141,8 +3166,8 @@ public:
 
   size_t get_position_of_mask_arg (enum predication_index) const OVERRIDE;
 
-  virtual gimple * fold (const function_instance &, gimple_stmt_iterator *,
-	gcall *) const OVERRIDE;
+  virtual gimple *fold (const function_instance &, gimple_stmt_iterator *,
+			gcall *) const OVERRIDE;
 
   virtual rtx expand (const function_instance &, tree, rtx) const OVERRIDE;
 };
@@ -3169,8 +3194,8 @@ public:
   virtual void get_argument_types (const function_instance &,
 				   vec<tree> &) const OVERRIDE;
 
-  virtual gimple * fold (const function_instance &, gimple_stmt_iterator *,
-	gcall *) const OVERRIDE;
+  virtual gimple *fold (const function_instance &, gimple_stmt_iterator *,
+			gcall *) const OVERRIDE;
 
   virtual rtx expand (const function_instance &, tree, rtx) const OVERRIDE;
 };
@@ -3201,8 +3226,8 @@ public:
 
   size_t get_position_of_mask_arg (enum predication_index) const OVERRIDE;
 
-  virtual gimple * fold (const function_instance &, gimple_stmt_iterator *,
-	gcall *) const OVERRIDE;
+  virtual gimple *fold (const function_instance &, gimple_stmt_iterator *,
+			gcall *) const OVERRIDE;
 
   virtual rtx expand (const function_instance &, tree, rtx) const OVERRIDE;
 };
@@ -3229,8 +3254,8 @@ public:
   virtual void get_argument_types (const function_instance &,
 				   vec<tree> &) const OVERRIDE;
 
-  virtual gimple * fold (const function_instance &, gimple_stmt_iterator *,
-	gcall *) const OVERRIDE;
+  virtual gimple *fold (const function_instance &, gimple_stmt_iterator *,
+			gcall *) const OVERRIDE;
 
   virtual rtx expand (const function_instance &, tree, rtx) const OVERRIDE;
 };
@@ -3262,8 +3287,8 @@ public:
 
   size_t get_position_of_mask_arg (enum predication_index) const OVERRIDE;
 
-  virtual gimple * fold (const function_instance &, gimple_stmt_iterator *,
-	gcall *) const OVERRIDE;
+  virtual gimple *fold (const function_instance &, gimple_stmt_iterator *,
+			gcall *) const OVERRIDE;
 
   virtual rtx expand (const function_instance &, tree, rtx) const OVERRIDE;
 };
@@ -3298,8 +3323,8 @@ public:
   virtual void get_argument_types (const function_instance &,
 				   vec<tree> &) const OVERRIDE;
 
-  virtual gimple * fold (const function_instance &, gimple_stmt_iterator *,
-	gcall *) const OVERRIDE;
+  virtual gimple *fold (const function_instance &, gimple_stmt_iterator *,
+			gcall *) const OVERRIDE;
 
   virtual rtx expand (const function_instance &, tree, rtx) const OVERRIDE;
 };
