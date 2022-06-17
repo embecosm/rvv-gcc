@@ -1392,7 +1392,7 @@ can_skip_vsetvli_for_load_store_p (rtx_insn *insn, const vinfo &require, const v
 }
 
 static bool
-need_vsetvli (rtx_insn *insn, const vinfo &require, const vinfo &curr_info)
+needvsetvli (rtx_insn *insn, const vinfo &require, const vinfo &curr_info)
 {
   if (!need_vsetvli_p (insn))
     return false;
@@ -1400,14 +1400,14 @@ need_vsetvli (rtx_insn *insn, const vinfo &require, const vinfo &curr_info)
   if (curr_info.compatible_p (insn, require))
     return false;
 
-  // We didn't find a compatible value. If our AVL is a virtual register,
-  // it might be defined by a VSET(I)VLI. If it has the same VTYPE we need
+  // We didn't find a compatible value.  If our AVL is a virtual register,
+  // it might be defined by a VSET(I)VLI.  If it has the same VTYPE we need
   // and the last VL/VTYPE we observed is the same, we don't need a
   // VSETVLI here.
-  if (!curr_info.unknown_p () && require.avl_reg_p () &&
-      REGNO (require.get_avl ()) >= FIRST_PSEUDO_REGISTER &&
-      !curr_info.get_sew_lmul_ratio_only_p () &&
-      curr_info.compatible_vtype_p (insn, require))
+  if (!curr_info.unknown_p () && require.avl_reg_p ()
+      && REGNO (require.get_avl ()) >= FIRST_PSEUDO_REGISTER
+      && !curr_info.get_sew_lmul_ratio_only_p ()
+      && curr_info.compatible_vtype_p (insn, require))
     {
       rtx_insn *def_rtl = fetch_def_insn (insn, require);
       if (def_rtl != NULL)
@@ -1415,21 +1415,13 @@ need_vsetvli (rtx_insn *insn, const vinfo &require, const vinfo &curr_info)
 	  if (vector_config_instr_p (def_rtl))
 	    {
 	      vinfo def_info = get_info_for_vsetvli (def_rtl, curr_info);
-	      if (def_info.avl_equal_p (curr_info) &&
-		  def_info.vlmax_equal_p (curr_info))
+	      if (def_info.avl_equal_p (curr_info)
+		  && def_info.vlmax_equal_p (curr_info))
 		return false;
 	    }
 	}
     }
 
-  return true;
-}
-
-static bool
-needvsetvli (rtx_insn *insn, const vinfo &require, const vinfo &curr_info)
-{
-  if (!need_vsetvli (insn, require, curr_info))
-    return false;
   // If this is a unit-stride or strided load/store, we may be able to use
   // the EMUL=(EEW/SEW)*LMUL relationship to avoid changing VTYPE.
   return (curr_info.unknown_p ()
@@ -1788,7 +1780,7 @@ emit_vsetvlis (const basic_block bb)
 	    curr_info = bb_vinfo_map[bb->index].pred;
 	    gcc_assert (curr_info.valid_p () &&
 			"Expected a valid predecessor state.");
-	    if (need_vsetvli (insn, new_info, curr_info))
+	    if (needvsetvli (insn, new_info, curr_info))
 	      {
 		// If this is the first implicit state change, and the state change
 		// requested can be proven to produce the same register contents, we
