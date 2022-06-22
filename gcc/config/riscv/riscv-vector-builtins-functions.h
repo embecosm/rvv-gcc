@@ -63,8 +63,7 @@
 #include <string>
 #include <vector>
 
-namespace riscv_vector
-{
+namespace riscv_vector {
 
 /* The macro defines the maximum length of name string.  */
 static const unsigned int NAME_MAXLEN = 32;
@@ -257,13 +256,13 @@ get_vma_vta (vector_policy vma, vector_policy vta)
 constexpr vector_policy
 get_vma (unsigned int vma_vta)
 {
-  return (vector_policy)((vma_vta >> 2) & 0b11);
+  return (vector_policy) ((vma_vta >> 2) & 0b11);
 }
 
 constexpr vector_policy
 get_vta (unsigned int vma_vta)
 {
-  return (vector_policy)(vma_vta & 0b11);
+  return (vector_policy) (vma_vta & 0b11);
 }
 
 const unsigned int tama_policy
@@ -399,8 +398,8 @@ public:
 class function_builder
 {
 public:
-  function_builder (const char *, vector_arg_all_modes &, uint64_t,
-		    uint64_t, uint64_t, const unsigned int);
+  function_builder (const char *, vector_arg_all_modes &, uint64_t, uint64_t,
+		    uint64_t, const unsigned int);
 
   virtual ~function_builder ();
 
@@ -415,9 +414,8 @@ public:
      or an arbitrary value if the function doesn't return a result.  */
   virtual rtx expand (const function_instance &, tree, rtx) const = 0;
 
-  rtx
-  expand_builtin_insn (enum insn_code, tree, rtx,
-		       const function_instance &) const;
+  rtx expand_builtin_insn (enum insn_code, tree, rtx,
+			   const function_instance &) const;
 
   virtual tree get_return_type (const function_instance &) const;
 
@@ -2342,7 +2340,8 @@ public:
   // Use the same construction function as the binop.
   using binop::binop;
 
-  virtual size_t get_position_of_dest_arg (enum predication_index) const OVERRIDE;
+  virtual size_t
+    get_position_of_dest_arg (enum predication_index) const OVERRIDE;
 
   virtual rtx expand (const function_instance &, tree, rtx) const OVERRIDE;
 };
@@ -3132,7 +3131,8 @@ public:
   // Use the same construction function as the unop.
   using unop::unop;
 
-  virtual size_t get_position_of_dest_arg (enum predication_index) const OVERRIDE;
+  virtual size_t
+    get_position_of_dest_arg (enum predication_index) const OVERRIDE;
 
   virtual rtx expand (const function_instance &, tree, rtx) const OVERRIDE;
 };

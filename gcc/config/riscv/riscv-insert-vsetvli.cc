@@ -64,21 +64,22 @@ along with GCC; see the file COPYING3.  If not see
 using namespace riscv_vector;
 using namespace rtl_ssa;
 
-/*  This pass is to insert vsetvli instructions for RVV instructions that depend on vtype or vl.
-    Because Clang+LLVM compiler has the mature pass to insert vsetvli instructions and works well,
-    algorithm follows the Clang+LLVM compiler Pass.
+/* This pass is to insert vsetvli instructions for RVV instructions that
+   depend on vtype or vl.  Because Clang+LLVM compiler has the mature pass
+   to insert vsetvli instructions and works well, algorithm follows the
+   Clang+LLVM compiler Pass.
 
-    This pass consists of 3 phases:
+   This pass consists of 3 phases:
 
-    Phase 1 collects how each basic block affects VL/VTYPE.
+   Phase 1 collects how each basic block affects VL/VTYPE.
 
-    Phase 2 uses the information from phase 1 to do a data flow analysis to
-    propagate the VL/VTYPE changes through the function. This gives us the
-    VL/VTYPE at the start of each basic block.
+   Phase 2 uses the information from phase 1 to do a data flow analysis to
+   propagate the VL/VTYPE changes through the function.  This gives us the
+   VL/VTYPE at the start of each basic block.
 
-    Phase 3 inserts vsetvli instructions in each basic block. Information from
-    phase 2 is used to prevent inserting a vsetvli before the first vector
-    instruction in the block if possible.  */
+   Phase 3 inserts vsetvli instructions in each basic block.  Information
+   from phase 2 is used to prevent inserting a vsetvli before the first
+   vector instruction in the block if possible.  */
 
 enum state_enum
 {
@@ -179,8 +180,8 @@ recog_clobber_vl_vtype (rtx_insn *insn)
 static bool
 vector_config_instr_p (rtx_insn *insn)
 {
-  return insn && INSN_P (insn) && recog_memoized (insn) >= 0 &&
-	 get_attr_type (insn) == TYPE_VSETVL;
+  return (insn && INSN_P (insn) && recog_memoized (insn) >= 0
+	  && get_attr_type (insn) == TYPE_VSETVL);
 }
 
 /// Return true if this is 'vsetvli x0, x0, vtype' which preserves
@@ -312,9 +313,9 @@ use_vl_p (rtx_insn *insn)
 		   gen_rtx_REG (SImode, VL_REGNUM)))
     return true;
 
-  if (XVECLEN (src, 0) > 1 &&
-      rtx_equal_p (XVECEXP (src, 0, XVECLEN (src, 0) - 2),
-		   gen_rtx_REG (SImode, VL_REGNUM)))
+  if (XVECLEN (src, 0) > 1
+      && rtx_equal_p (XVECEXP (src, 0, XVECLEN (src, 0) - 2),
+		      gen_rtx_REG (SImode, VL_REGNUM)))
     return true;
 
   return false;
@@ -513,15 +514,12 @@ get_avl_source (rtx avl, rtx_insn *rtl)
 			{
 			  if (!avl_source)
 			    avl_source = SET_SRC (single_set (phi_def_rtl));
-			  else
+			  else if (!(rtx_equal_p
+				     (avl_source,
+				      SET_SRC (single_set (phi_def_rtl)))))
 			    {
-			      if (!(rtx_equal_p
-				    (avl_source,
-				     SET_SRC (single_set (phi_def_rtl)))))
-				{
-				  avl_source = NULL_RTX;
-				  break;
-				}
+			      avl_source = NULL_RTX;
+			      break;
 			    }
 			}
 		    }
@@ -662,7 +660,8 @@ struct demanded_fields
   }
 
   // Mark all VTYPE subfields and properties as demanded
-  void demand_vtype () {
+  void demand_vtype ()
+  {
     sew = true;
     lmul = true;
     sew_lmul_ratio = true;
@@ -792,77 +791,48 @@ private:
 
 public:
   vinfo ()
-      : state (STATE_UNINITIALIZED), vma (false), vta (false), vsew (0), vlmul (0),
-	sew_lmul_ratio_only_p (false), avl (NULL_RTX), avl_source (NULL_RTX)
-  {
-  }
+    : state (STATE_UNINITIALIZED), vma (false), vta (false), vsew (0),
+      vlmul (0), sew_lmul_ratio_only_p (false), avl (NULL_RTX),
+      avl_source (NULL_RTX)
+  {}
 
   ~vinfo () {}
 
-  static vinfo
-  get_unknown ()
+  static vinfo get_unknown ()
   {
     vinfo info;
     info.set_unknown ();
     return info;
   }
 
-  bool
-  valid_p () const
-  {
-    return state != STATE_UNINITIALIZED;
-  }
-  void
-  set_unknown ()
-  {
-    state = STATE_UNKNOWN;
-  }
-  bool
-  unknown_p () const
-  {
-    return state == STATE_UNKNOWN;
-  }
+  bool valid_p () const { return state != STATE_UNINITIALIZED; }
+  void set_unknown () { state = STATE_UNKNOWN; }
+  bool unknown_p () const { return state == STATE_UNKNOWN; }
 
-  bool
-  known_p () const
-  {
-    return state == STATE_KNOWN;
-  }
+  bool known_p () const { return state == STATE_KNOWN; }
 
-  void
-  set_avl (rtx op)
+  void set_avl (rtx op)
   {
     avl = op;
     state = STATE_KNOWN;
   }
 
-  void
-  set_avl_source (rtx op)
-  {
-    avl_source = op;
-  }
+  void set_avl_source (rtx op) { avl_source = op; }
 
-  bool
-  avl_const_p () const
+  bool avl_const_p () const
   {
     return get_avl () && CONST_SCALAR_INT_P (get_avl ());
   }
 
-  bool
-  avl_reg_p () const
-  {
-    return get_avl () && REG_P (get_avl ());
-  }
+  bool avl_reg_p () const { return get_avl () && REG_P (get_avl ()); }
 
-  rtx
-  get_avl () const
+  rtx get_avl () const
   {
     gcc_assert (known_p ());
     return avl;
   }
 
-  bool
-  has_zero_avl () const
+  bool has_zero_avl () const
   {
     if (!known_p ())
       return false;
@@ -873,8 +843,7 @@ public:
     return false;
   }
 
-  bool
-  has_nonzero_avl () const
+  bool has_nonzero_avl () const
   {
     if (!known_p ())
       return false;
@@ -887,46 +856,30 @@ public:
     return false;
   }
 
-  rtx
-  get_avl_source () const
+  rtx get_avl_source () const
   {
     gcc_assert (known_p ());
     return avl_source;
   }
 
-  unsigned int
-  get_vsew () const
-  {
-    return vsew;
-  }
+  unsigned int get_vsew () const { return vsew; }
 
-  unsigned int
-  get_sew () const
+  unsigned int get_sew () const
   {
     machine_mode inner = vsew_to_int_mode (vsew);
     return GET_MODE_BITSIZE (as_a<scalar_mode> (inner));
   };
 
-  enum vlmul_field_enum
-  get_vlmul () const
+  enum vlmul_field_enum get_vlmul () const
   {
     return (enum vlmul_field_enum) vlmul;
   }
 
-  unsigned int
-  get_vta () const
-  {
-    return vta;
-  }
+  unsigned int get_vta () const { return vta; }
 
-  unsigned int
-  get_vma () const
-  {
-    return vma;
-  }
+  unsigned int get_vma () const { return vma; }
 
-  bool
-  compare_vl (const vinfo &info) const
+  bool compare_vl (const vinfo &info) const
   {
     /* Optimize the code as follows:
        if RVV is a fixed vector-length = 128bit.
@@ -941,13 +894,14 @@ public:
       {
 	unsigned int vsew = info.get_vsew ();
 	machine_mode inner = vsew_to_int_mode (vsew);
-	machine_mode mode = riscv_vector::vector_builtin_mode (
-	    as_a<scalar_mode> (inner), info.get_vlmul ());
+	machine_mode mode
+	  = riscv_vector::vector_builtin_mode (as_a<scalar_mode> (inner),
+					       info.get_vlmul ());
 	if (CONST_SCALAR_INT_P (info.get_avl ()))
 	  {
-	    if (GET_MODE_NUNITS (mode).is_constant () &&
-		INTVAL (info.get_avl ()) ==
-		    GET_MODE_NUNITS (mode).to_constant ())
+	    if (GET_MODE_NUNITS (mode).is_constant ()
+		&& INTVAL (info.get_avl ())
+		     == GET_MODE_NUNITS (mode).to_constant ())
 	      return true;
 	  }
 
@@ -955,15 +909,15 @@ public:
 	  {
 	    if (info.get_avl_source ())
 	      {
-		if (CONST_SCALAR_INT_P (info.get_avl_source ()) &&
-		    GET_MODE_NUNITS (mode).is_constant () &&
-		    INTVAL (info.get_avl_source ()) ==
-			GET_MODE_NUNITS (mode).to_constant ())
+		if (CONST_SCALAR_INT_P (info.get_avl_source ())
+		    && GET_MODE_NUNITS (mode).is_constant ()
+		    && INTVAL (info.get_avl_source ())
+			 == GET_MODE_NUNITS (mode).to_constant ())
 		  return true;
-		if (CONST_POLY_INT_P (info.get_avl_source ()) &&
-		    !GET_MODE_NUNITS (mode).is_constant () &&
-		    known_eq (rtx_to_poly_int64 (info.get_avl_source ()),
-			      GET_MODE_NUNITS (mode)))
+		if (CONST_POLY_INT_P (info.get_avl_source ())
+		    && !GET_MODE_NUNITS (mode).is_constant ()
+		    && known_eq (rtx_to_poly_int64 (info.get_avl_source ()),
+				 GET_MODE_NUNITS (mode)))
 		  return true;
 	      }
 	  }
@@ -972,13 +926,12 @@ public:
     return false;
   }
 
-  bool
-  avl_equal_p (const vinfo &other) const
+  bool avl_equal_p (const vinfo &other) const
   {
-    gcc_assert (valid_p () && other.valid_p () &&
-		"Can't compare invalid VSETVLI Infos.");
-    gcc_assert (!unknown_p () && !other.unknown_p () &&
-		"Can't compare AVL in unknown state.");
+    gcc_assert (valid_p () && other.valid_p ()
+		&& "Can't compare invalid VSETVLI Infos.");
+    gcc_assert (!unknown_p () && !other.unknown_p ()
+		&& "Can't compare AVL in unknown state.");
 
     if (compare_vl (other))
       return true;
@@ -995,45 +948,41 @@ public:
     if (get_avl_source () && rtx_equal_p (get_avl_source (), other.get_avl ()))
       return true;
 
-    if (other.get_avl_source () &&
-	rtx_equal_p (other.get_avl_source (), get_avl ()))
+    if (other.get_avl_source ()
+	&& rtx_equal_p (other.get_avl_source (), get_avl ()))
       return true;
 
     return rtx_equal_p (get_avl_source (), other.get_avl_source ());
   }
 
-  void
-  set_vma (unsigned int vma)
+  void set_vma (unsigned int vma)
   {
-    gcc_assert (valid_p () && !unknown_p () &&
-		"Can't set VTYPE for uninitialized or unknown.");
+    gcc_assert (valid_p () && !unknown_p ()
+		&& "Can't set VTYPE for uninitialized or unknown.");
     vma = vma;
   }
 
-  void
-  set_vta (unsigned int vta)
+  void set_vta (unsigned int vta)
   {
-    gcc_assert (valid_p () && !unknown_p () &&
-		"Can't set VTYPE for uninitialized or unknown.");
+    gcc_assert (valid_p () && !unknown_p ()
+		&& "Can't set VTYPE for uninitialized or unknown.");
     vta = vta;
   }
 
-  void
-  set_vtype (unsigned int vtype)
+  void set_vtype (unsigned int vtype)
   {
-    gcc_assert (valid_p () && !unknown_p () &&
-		"Can't set VTYPE for uninitialized or unknown.");
+    gcc_assert (valid_p () && !unknown_p ()
+		&& "Can't set VTYPE for uninitialized or unknown.");
     vma = riscv_parse_vma_field (vtype);
     vta = riscv_parse_vta_field (vtype);
     vsew = riscv_parse_vsew_field (vtype);
     vlmul = riscv_parse_vlmul_field (vtype);
   }
 
-  void
-  set_vtype (unsigned vl, unsigned vs, bool vt, bool vm)
+  void set_vtype (unsigned vl, unsigned vs, bool vt, bool vm)
   {
-    gcc_assert (valid_p () && !unknown_p () &&
-		"Can't set VTYPE for uninitialized or unknown.");
+    gcc_assert (valid_p () && !unknown_p ()
+		&& "Can't set VTYPE for uninitialized or unknown.");
     vma = vm;
     vta = vt;
     vsew = vs;
@@ -1049,11 +998,10 @@ public:
   // 6    | vta          | Vector tail agnostic
   // 5:3  | vsew[2:0]    | Standard element width(SEW) setting
   // 2:0  | vlmul[2:0]   | Vector register group multiplier(LMUL) setting
-  unsigned
-  encode_vtype () const
+  unsigned encode_vtype () const
   {
-    gcc_assert (valid_p () && !unknown_p () && !sew_lmul_ratio_only_p &&
-		"Can't set VTYPE for uninitialized or unknown.");
+    gcc_assert (valid_p () && !unknown_p () && !sew_lmul_ratio_only_p
+		&& "Can't set VTYPE for uninitialized or unknown.");
     gcc_assert (vsew >= 0 && vsew <= 7 && "Invalid SEW.");
     unsigned vtype = (vsew << 3) | (vlmul & 0x7);
     if (vta)
@@ -1064,50 +1012,42 @@ public:
     return vtype;
   }
 
-  bool
-  get_sew_lmul_ratio_only_p () const
-  {
-    return sew_lmul_ratio_only_p;
-  }
+  bool get_sew_lmul_ratio_only_p () const { return sew_lmul_ratio_only_p; }
 
-  bool
-  sew_equal_p (const vinfo &other) const
+  bool sew_equal_p (const vinfo &other) const
   {
-    gcc_assert (valid_p () && other.valid_p () &&
-		"Can't compare invalid VSETVLI Infos.");
-    gcc_assert (!unknown_p () && !other.unknown_p () &&
-		"Can't compare VTYPE in unknown state.");
-    gcc_assert (!sew_lmul_ratio_only_p && !other.sew_lmul_ratio_only_p &&
-		"Can't compare when only LMUL/SEW ratio is valid.");
+    gcc_assert (valid_p () && other.valid_p ()
+		&& "Can't compare invalid VSETVLI Infos.");
+    gcc_assert (!unknown_p () && !other.unknown_p ()
+		&& "Can't compare VTYPE in unknown state.");
+    gcc_assert (!sew_lmul_ratio_only_p && !other.sew_lmul_ratio_only_p
+		&& "Can't compare when only LMUL/SEW ratio is valid.");
     return vsew == other.vsew;
   }
 
-  bool
-  vtype_equal_p (const vinfo &other) const
+  bool vtype_equal_p (const vinfo &other) const
   {
-    gcc_assert (valid_p () && other.valid_p () &&
-		"Can't compare invalid VSETVLI Infos.");
-    gcc_assert (!unknown_p () && !other.unknown_p () &&
-		"Can't compare VTYPE in unknown state.");
-    gcc_assert (!sew_lmul_ratio_only_p && !other.sew_lmul_ratio_only_p &&
-		"Can't compare when only LMUL/SEW ratio is valid.");
-    return std::tie (vma, vta, vsew, vlmul) ==
-	   std::tie (other.vma, other.vta, other.vsew, other.vlmul);
+    gcc_assert (valid_p () && other.valid_p ()
+		&& "Can't compare invalid VSETVLI Infos.");
+    gcc_assert (!unknown_p () && !other.unknown_p ()
+		&& "Can't compare VTYPE in unknown state.");
+    gcc_assert (!sew_lmul_ratio_only_p && !other.sew_lmul_ratio_only_p
+		&& "Can't compare when only LMUL/SEW ratio is valid.");
+    return std::tie (vma, vta, vsew, vlmul)
+	   == std::tie (other.vma, other.vta, other.vsew, other.vlmul);
   }
 
-  bool
-  policy_equal_p (const vinfo &other) const
+  bool policy_equal_p (const vinfo &other) const
   {
-    gcc_assert (valid_p () && other.valid_p () &&
-		"Can't compare invalid VSETVLI Infos.");
-    gcc_assert (!unknown_p () && !other.unknown_p () &&
-		"Can't compare VTYPE in unknown state.");
+    gcc_assert (valid_p () && other.valid_p ()
+		&& "Can't compare invalid VSETVLI Infos.");
+    gcc_assert (!unknown_p () && !other.unknown_p ()
+		&& "Can't compare VTYPE in unknown state.");
 
     return vta == other.vta && vma == other.vma;
   }
 
-  unsigned
-  calc_sew_lmul_ratio () const
+  unsigned calc_sew_lmul_ratio () const
   {
     gcc_assert (valid_p () && !unknown_p ()
 		&& "Can't use VTYPE for uninitialized or unknown.");
@@ -1118,33 +1058,31 @@ public:
   // Note that having the same VLMAX ensures that both share the same
   // function from AVL to VL; that is, they must produce the same VL value
   // for any given AVL value.
-  bool
-  vlmax_equal_p (const vinfo &other) const
+  bool vlmax_equal_p (const vinfo &other) const
   {
-    gcc_assert (valid_p () && other.valid_p () &&
-		"Can't compare invalid VSETVLI Infos.");
-    gcc_assert (!unknown_p () && !other.unknown_p () &&
-		"Can't compare AVL in unknown state.");
+    gcc_assert (valid_p () && other.valid_p ()
+		&& "Can't compare invalid VSETVLI Infos.");
+    gcc_assert (!unknown_p () && !other.unknown_p ()
+		&& "Can't compare AVL in unknown state.");
     return calc_sew_lmul_ratio () == other.calc_sew_lmul_ratio ();
   }
 
-  bool
-  compatible_vtype_p (rtx_insn *insn, const vinfo &require) const
+  bool compatible_vtype_p (rtx_insn *insn, const vinfo &require) const
   {
     demanded_fields used = get_demanded (insn);
-    return are_compatible_vtypes (encode_vtype (), require.encode_vtype (), used);
+    return are_compatible_vtypes (encode_vtype (), require.encode_vtype (),
+				  used);
   }
 
   // Determine whether the vector instructions requirements represented by
   // InstrInfo are compatible with the previous vsetvli instruction represented
   // by this. insn is the instruction whose requirements we're considering.
-  bool
-  compatible_p (rtx_insn *insn, const vinfo &require) const
+  bool compatible_p (rtx_insn *insn, const vinfo &require) const
   {
-    gcc_assert (valid_p () && require.valid_p () &&
-		"Can't compare invalid VSETVLI Infos.");
-    gcc_assert (!require.sew_lmul_ratio_only_p &&
-		"Expected a valid VTYPE for instruction.");
+    gcc_assert (valid_p () && require.valid_p ()
+		&& "Can't compare invalid VSETVLI Infos.");
+    gcc_assert (!require.sew_lmul_ratio_only_p
+		&& "Expected a valid VTYPE for instruction.");
 
     // Nothing is compatible with Unknown.
     if (unknown_p () || require.unknown_p ())
@@ -1158,8 +1096,7 @@ public:
     return avl_equal_p (require) && compatible_vtype_p (insn, require);
   }
 
-  bool
-  operator== (const vinfo &other) const
+  bool operator== (const vinfo &other) const
   {
     // Uninitialized is only equal to another Uninitialized.
     if (!valid_p ())
@@ -1207,14 +1144,9 @@ public:
     return false;
   }
 
-  bool
-  operator!= (const vinfo &Other) const
-  {
-    return !(*this == Other);
-  }
+  bool operator!= (const vinfo &Other) const { return !(*this == Other); }
 
-  vinfo &
-  operator= (const vinfo &other)
+  vinfo &operator= (const vinfo &other)
   {
     state = other.state;
     vma = other.vma;
@@ -1229,8 +1161,7 @@ public:
 
   // Calculate the vinfo visible to a block assuming this and other are
   // both predecessors.
-  vinfo
-  intersect (const vinfo &other) const
+  vinfo intersect (const vinfo &other) const
   {
     // If the new value isn't valid, ignore it.
     if (!other.valid_p ())
@@ -1262,8 +1193,7 @@ public:
   }
 
   // Print debug info into rtl dump file.  */
-  void
-  print () const
+  void print () const
   {
     fprintf (dump_file, "{\n");
     if (known_p ())
@@ -1287,11 +1217,12 @@ public:
       }
     else
       fprintf (dump_file, "  Avl=(nil)\n  Avl Source=(nil)\n");
-    fprintf (dump_file, "  Vsew=%d\n", (unsigned int)vsew);
-    fprintf (dump_file, "  Vlmul=%d\n", (unsigned int)vlmul);
-    fprintf (dump_file, "  TailAgnostic=%d\n", (unsigned int)vta);
-    fprintf (dump_file, "  MaskAgnostic=%d\n", (unsigned int)vma);
-    fprintf (dump_file, "  Sew_lmul_ratio_only_p=%d\n", (unsigned int)sew_lmul_ratio_only_p);
+    fprintf (dump_file, "  Vsew=%d\n", (unsigned int) vsew);
+    fprintf (dump_file, "  Vlmul=%d\n", (unsigned int) vlmul);
+    fprintf (dump_file, "  TailAgnostic=%d\n", (unsigned int) vta);
+    fprintf (dump_file, "  MaskAgnostic=%d\n", (unsigned int) vma);
+    fprintf (dump_file, "  Sew_lmul_ratio_only_p=%d\n",
+	     (unsigned int) sew_lmul_ratio_only_p);
     fprintf (dump_file, "}\n");
   }
 };
@@ -1483,10 +1414,12 @@ analyze_vma_vta (rtx_insn *insn, vinfo curr_info)
     return 1;
   unsigned int offset = get_policy_offset (insn);
   extract_insn_cached (insn);
-  vector_policy vma =
-      riscv_vector::get_vma (INTVAL (recog_data.operand[recog_data.n_operands - offset]));
-  vector_policy vta =
-      riscv_vector::get_vta (INTVAL (recog_data.operand[recog_data.n_operands - offset]));
+  vector_policy vma
+    = (riscv_vector::get_vma
+       (INTVAL (recog_data.operand[recog_data.n_operands - offset])));
+  vector_policy vta
+    = (riscv_vector::get_vta
+       (INTVAL (recog_data.operand[recog_data.n_operands - offset])));
   unsigned int vma_p = 0;
   unsigned int vta_p = 0;
   if (vma == vector_policy::agnostic)
@@ -1534,8 +1467,9 @@ compute_info_for_instr (rtx_insn *insn, vinfo curr_info)
 	{
 	  unsigned int offset = get_vl_offset (insn);
 	  info.set_avl (recog_data.operand[recog_data.n_operands - offset]);
-	  info.set_avl_source (get_avl_source (
-	      recog_data.operand[recog_data.n_operands - offset], insn));
+	  info.set_avl_source
+	    (get_avl_source
+	     (recog_data.operand[recog_data.n_operands - offset], insn));
 	}
     }
   else
@@ -1626,10 +1560,10 @@ need_vsetvli_phi (const vinfo &new_info, rtx_insn *rtl)
       avl = vsetvl_e8mf8 (vl << 2);
     for (int i = 0; i < m; i++)
       {
-	v0 = vle8_v_i8mf8 (base + i * 32,avl);
-	v0 = vadd_vv_i8mf8 (v0,v0,avl);
+	v0 = vle8_v_i8mf8 (base + i * 32, avl);
+	v0 = vadd_vv_i8mf8 (v0, v0, avl);
       }
-    *(vint8mf8_t*)out = v0;
+    *(vint8mf8_t*) out = v0;
   } */
 
   /* We need use rtl ssa phi to optimize which needs
@@ -1637,8 +1571,8 @@ need_vsetvli_phi (const vinfo &new_info, rtx_insn *rtl)
   if (optimize < 2)
     return true;
 
-  if (!(!new_info.unknown_p () && new_info.get_avl () &&
-	GET_CODE (new_info.get_avl ()) == REG))
+  if (!(!new_info.unknown_p () && new_info.get_avl ()
+	&& GET_CODE (new_info.get_avl ()) == REG))
     return true;
 
   rtx avl = new_info.get_avl ();
@@ -1679,27 +1613,27 @@ need_vsetvli_phi (const vinfo &new_info, rtx_insn *rtl)
 	      if (!INSN_P (def_rtl))
 		return true;
 	      extract_insn_cached (def_rtl);
-	      if (recog_data.n_operands > 0 &&
-		  rtx_equal_p (recog_data.operand[0], avl))
+	      if (recog_data.n_operands > 0
+		  && rtx_equal_p (recog_data.operand[0], avl))
 		{
 		  // We need the PHI input to the be the output of a VSET(I)VLI.
-		  if (get_attr_type (def_rtl) &&
-		      get_attr_type (def_rtl) == TYPE_VSETVL)
+		  if (get_attr_type (def_rtl)
+		      && get_attr_type (def_rtl) == TYPE_VSETVL)
 		    {
 		      basic_block def_bb = BLOCK_FOR_INSN (def_rtl);
-		      bb_vinfo info = bb_vinfo_map.at(def_bb->index);
+		      bb_vinfo info = bb_vinfo_map.at (def_bb->index);
 		      // If the exit from the predecessor has the VTYPE we
 		      // are looking for we might be able to avoid a VSETVLI.
-		      if (info.exit.unknown_p () ||
-			  !info.exit.vtype_equal_p (new_info))
+		      if (info.exit.unknown_p ()
+			  || !info.exit.vtype_equal_p (new_info))
 			return true;
 		      // We found a VSET(I)VLI make sure it matches the
 		      // output of the predecessor block.
 		      vinfo curr_info;
-		      vinfo avl_def_info =
-			  get_info_for_vsetvli (def_rtl, curr_info);
-		      if (!avl_def_info.vtype_equal_p (info.exit) ||
-			  !avl_def_info.avl_equal_p (info.exit))
+		      vinfo avl_def_info
+			= get_info_for_vsetvli (def_rtl, curr_info);
+		      if (!avl_def_info.vtype_equal_p (info.exit)
+			  || !avl_def_info.avl_equal_p (info.exit))
 			return true;
 		    }
 		  else
@@ -1788,22 +1722,22 @@ compute_vl_vtype_changes (basic_block bb)
 {
   bool vector_p = false;
 
-  bb_vinfo& info = bb_vinfo_map[bb->index];
+  bb_vinfo &info = bb_vinfo_map[bb->index];
   info.change = info.pred;
   rtx_insn *insn = NULL;
 
   FOR_BB_INSNS (bb, insn)
-  {
-    transfer_before (info.change, insn);
-    /*  According to vector.md, each instruction pattern parallel.
-	It should have at least 2 side effects.
-	The last 2 side effects are use vl && use vtype  */
+    {
+      transfer_before (info.change, insn);
+      /*  According to vector.md, each instruction pattern parallel.
+	  It should have at least 2 side effects.
+	  The last 2 side effects are use vl && use vtype  */
 
-    if (vector_config_instr_p (insn) || use_vtype_p (insn))
-      vector_p = true;
+      if (vector_config_instr_p (insn) || use_vtype_p (insn))
+	vector_p = true;
 
-    transfer_after (info.change, insn);
-  }
+      transfer_after (info.change, insn);
+    }
 
   return vector_p;
 }
@@ -1811,7 +1745,7 @@ compute_vl_vtype_changes (basic_block bb)
 static void
 compute_incoming_vl_vtype (const basic_block bb)
 {
-  bb_vinfo& info = bb_vinfo_map[bb->index];
+  bb_vinfo &info = bb_vinfo_map[bb->index];
   info.inqueue = false;
 
   vinfo in_info;
@@ -1825,11 +1759,11 @@ compute_incoming_vl_vtype (const basic_block bb)
       edge e;
       edge_iterator ei;
       FOR_EACH_EDGE (e, ei, bb->preds)
-      {
-	basic_block ancestor = e->src;
-	vinfo ancestor_info = bb_vinfo_map.at (ancestor->index).exit;
-	in_info = in_info.intersect (ancestor_info);
-      }
+	{
+	  basic_block ancestor = e->src;
+	  vinfo ancestor_info = bb_vinfo_map.at (ancestor->index).exit;
+	  in_info = in_info.intersect (ancestor_info);
+	}
     }
 
   // If we don't have any valid predecessor value, wait until we do.
@@ -1871,11 +1805,11 @@ compute_incoming_vl_vtype (const basic_block bb)
   edge e;
   edge_iterator ei;
   FOR_EACH_EDGE (e, ei, bb->succs)
-  {
-    basic_block succ = e->dest;
-    if (!bb_vinfo_map[succ->index].inqueue)
-      bb_queue.push_back (succ);
-  }
+    {
+      basic_block succ = e->dest;
+      if (!bb_vinfo_map[succ->index].inqueue)
+	bb_queue.push_back (succ);
+    }
 }
 
 static void
@@ -1887,7 +1821,7 @@ insert_vsetvli (rtx_insn *insn, const vinfo &curr_info, const vinfo &prev_info)
   rtx zero = gen_rtx_REG (Pmode, X0_REGNUM);
 
   if (recog_clobber_vl_vtype (insn) == MOV_CLOBBER_REG_MEM
-    || recog_clobber_vl_vtype (insn) == MOV_CLOBBER_MEM_REG)
+      || recog_clobber_vl_vtype (insn) == MOV_CLOBBER_MEM_REG)
     {
       gcc_assert (reload_completed
 		  && rtx_equal_p (curr_info.get_avl (),
@@ -1900,8 +1834,9 @@ insert_vsetvli (rtx_insn *insn, const vinfo &curr_info, const vinfo &prev_info)
 
   // Use X0, X0 form if the AVL is the same and the SEW+LMUL gives the same
   // VLMAX
-  if (prev_info.valid_p () && !prev_info.unknown_p () &&
-      curr_info.avl_equal_p (prev_info) && curr_info.vlmax_equal_p (prev_info))
+  if (prev_info.valid_p () && !prev_info.unknown_p ()
+      && curr_info.avl_equal_p (prev_info)
+      && curr_info.vlmax_equal_p (prev_info))
     {
       emit_vsetvl_insn (zero, zero, vtype, insn);
       return;
@@ -1909,8 +1844,8 @@ insert_vsetvli (rtx_insn *insn, const vinfo &curr_info, const vinfo &prev_info)
 
   if (curr_info.get_avl () == NULL_RTX)
     {
-      if (prev_info.valid_p () && !prev_info.unknown_p () &&
-	  curr_info.vlmax_equal_p (prev_info))
+      if (prev_info.valid_p () && !prev_info.unknown_p ()
+	  && curr_info.vlmax_equal_p (prev_info))
 	{
 	  emit_vsetvl_insn (zero, zero, vtype, insn);
 	  return;
@@ -1982,53 +1917,54 @@ emit_vsetvlis (const basic_block bb)
   rtx_insn *insn = NULL;
 
   FOR_BB_INSNS (bb, insn)
-  {
-    const vinfo prev_info = curr_info;
-    transfer_before (curr_info, insn);
+    {
+      const vinfo prev_info = curr_info;
+      transfer_before (curr_info, insn);
 
-    // If this is an explicit VSETVLI or VSETIVLI, update our state.
-    if (vector_config_instr_p (insn))
-      prefix_transparent = false;
+      // If this is an explicit VSETVLI or VSETIVLI, update our state.
+      if (vector_config_instr_p (insn))
+	prefix_transparent = false;
 
-    if (use_vtype_p (insn))
-      {
-	if (prev_info != curr_info)
-	  {
-	    // If this is the first implicit state change, and the state change
-	    // requested can be proven to produce the same register contents, we
-	    // can skip emitting the actual state change and continue as if we
-	    // had since we know the GPR result of the implicit state change
-	    // wouldn't be used and VL/VTYPE registers are correct.  Note that
-	    // we *do* need to model the state as if it changed as while the
-	    // register contents are unchanged, the abstract model can change.
-	    if (!prefix_transparent || need_vsetvli_phi (curr_info, insn))
-	      insert_vsetvli (insn, curr_info, prev_info);
-	    prefix_transparent = false;
-	  }
+      if (use_vtype_p (insn))
+	{
+	  if (prev_info != curr_info)
+	    {
+	      // If this is the first implicit state change, and the state
+	      // change requested can be proven to produce the same register
+	      // contents, we can skip emitting the actual state change and
+	      // continue as if we had since we know the GPR result of the
+	      // implicit state change wouldn't be used and VL/VTYPE registers
+	      // are correct.  Note that we *do* need to model the state as if
+	      // it changed as while the register contents are unchanged, the
+	      // abstract model can change.
+	      if (!prefix_transparent || need_vsetvli_phi (curr_info, insn))
+		insert_vsetvli (insn, curr_info, prev_info);
+	      prefix_transparent = false;
+	    }
 
-	cleanup_insn_op (insn);
-      }
+	  cleanup_insn_op (insn);
+	}
 
-    // If this is something updates VL/VTYPE that we don't know about, set
-    // the state to unknown.
-    if (update_vl_vtype_p (insn))
-      prefix_transparent = false;
+      // If this is something updates VL/VTYPE that we don't know about, set
+      // the state to unknown.
+      if (update_vl_vtype_p (insn))
+	prefix_transparent = false;
 
-    transfer_after (curr_info, insn);
+      transfer_after (curr_info, insn);
 
-    // If we reach the end of the block and our current info doesn't match the
-    // expected info, insert a vsetvli to correct.
-    if (insn == BB_END (bb))
-      {
-	const vinfo exit_info = bb_vinfo_map.at(bb->index).exit;
-	if (curr_info.valid_p () && exit_info.valid_p () &&
-	    !exit_info.unknown_p () && curr_info != exit_info)
-	  {
-	    insert_vsetvli (insn, exit_info, curr_info);
-	    curr_info = exit_info;
-	  }
-      }
-  }
+      // If we reach the end of the block and our current info doesn't match
+      // the expected info, insert a vsetvli to correct.
+      if (insn == BB_END (bb))
+	{
+	  const vinfo exit_info = bb_vinfo_map.at (bb->index).exit;
+	  if (curr_info.valid_p () && exit_info.valid_p ()
+	      && !exit_info.unknown_p () && curr_info != exit_info)
+	    {
+	      insert_vsetvli (insn, exit_info, curr_info);
+	      curr_info = exit_info;
+	    }
+	}
+    }
 }
 
 static void
@@ -2037,99 +1973,101 @@ dolocalprepass (const basic_block bb)
   rtx_insn *insn = NULL;
   vinfo curr_info = vinfo::get_unknown ();
   FOR_BB_INSNS (bb, insn)
-  {
-    // If this is an explicit VSETVLI or VSETIVLI, update our state.
-    if (vector_config_instr_p (insn))
-      {
-	curr_info = get_info_for_vsetvli (insn, curr_info);
-	continue;
-      }
+    {
+      // If this is an explicit VSETVLI or VSETIVLI, update our state.
+      if (vector_config_instr_p (insn))
+	{
+	  curr_info = get_info_for_vsetvli (insn, curr_info);
+	  continue;
+	}
 
-    if (scalar_move_insn_p (insn))
-      {
-	gcc_assert (use_vtype_p (insn) && use_vl_p (insn));
-	const vinfo new_info = compute_info_for_instr (insn, curr_info);
+      if (scalar_move_insn_p (insn))
+	{
+	  gcc_assert (use_vtype_p (insn) && use_vl_p (insn));
+	  const vinfo new_info = compute_info_for_instr (insn, curr_info);
 
-	// For vmv.s.x and vfmv.s.f, there are only two behaviors, VL = 0 and
-	// VL > 0. We can discard the user requested AVL and just use the last
-	// one if we can prove it equally zero.  This removes a vsetvli entirely
-	// if the types match or allows use of cheaper avl preserving variant
-	// if VLMAX doesn't change.  If VLMAX might change, we couldn't use
-	// the 'vsetvli x0, x0, vtype" variant, so we avoid the transform to
-	// prevent extending live range of an avl register operand.
-	// TODO: We can probably relax this for immediates.
-	if (((curr_info.has_nonzero_avl () && new_info.has_nonzero_avl ()) ||
-	     (curr_info.has_zero_avl () && new_info.has_zero_avl ())) &&
-	    new_info.vlmax_equal_p (curr_info))
-	  {
-	    replace_op (insn, curr_info.get_avl (), REPLACE_VL);
-	    curr_info = compute_info_for_instr (insn, curr_info);
-	    continue;
-	  }
-      }
+	  // For vmv.s.x and vfmv.s.f, there are only two behaviors, VL = 0
+	  // and VL > 0. We can discard the user requested AVL and just use
+	  // the last one if we can prove it equally zero.  This removes a
+	  // vsetvli entirely if the types match or allows use of cheaper
+	  // avl preserving variant if VLMAX doesn't change.  If VLMAX might
+	  // change, we couldn't use the 'vsetvli x0, x0, vtype" variant,
+	  // so we avoid the transform to prevent extending live range of
+	  // an avl register operand.
+	  // TODO: We can probably relax this for immediates.
+	  if (((curr_info.has_nonzero_avl () && new_info.has_nonzero_avl ())
+	       || (curr_info.has_zero_avl () && new_info.has_zero_avl ()))
+	      && new_info.vlmax_equal_p (curr_info))
+	    {
+	      replace_op (insn, curr_info.get_avl (), REPLACE_VL);
+	      curr_info = compute_info_for_instr (insn, curr_info);
+	      continue;
+	    }
+	}
 
-    if (use_vtype_p (insn))
-      {
-	if (use_vl_p (insn))
-	  {
-	    const auto require = compute_info_for_instr (insn, curr_info);
-	    // Two cases involving an AVL resulting from a previous vsetvli.
-	    // 1) If the AVL is the result of a previous vsetvli which has
-	    //    the same AVL and VLMAX as our current state, we can reuse
-	    //    the AVL from the current state for the new one.  This
-	    //    allows us to generate 'vsetvli x0, x0, vtype" or possibly
-	    //    skip the transition entirely.
-	    // 2) If AVL is defined by a vsetvli with the same VLMAX, we can
-	    //    replace the AVL operand with the AVL of the defining
-	    //    vsetvli.  We avoid general register AVLs to avoid extending
-	    //    live ranges without being sure we can kill the original
-	    //    source reg entirely.
-	    if (require.avl_reg_p ()
-		&& REGNO (require.get_avl ()) >= FIRST_PSEUDO_REGISTER)
-	      {
-		rtx_insn *def_rtl = fetch_def_insn (insn, require);
+      if (use_vtype_p (insn))
+	{
+	  if (use_vl_p (insn))
+	    {
+	      const auto require = compute_info_for_instr (insn, curr_info);
+	      // Two cases involving an AVL resulting from a previous vsetvli.
+	      // 1) If the AVL is the result of a previous vsetvli which
+	      //    has the same AVL and VLMAX as our current state, we can
+	      //    reuse the AVL from the current state for the new one.
+	      //    This allows us to generate 'vsetvli x0, x0, vtype"
+	      //    or possibly skip the transition entirely.
+	      // 2) If AVL is defined by a vsetvli with the same VLMAX,
+	      //    we can replace the AVL operand with the AVL of the
+	      //    defining vsetvli.  We avoid general register AVLs to
+	      //    avoid extending live ranges without being sure we can
+	      //    kill the original source reg entirely.
+	      if (require.avl_reg_p ()
+		  && REGNO (require.get_avl ()) >= FIRST_PSEUDO_REGISTER)
+		{
+		  rtx_insn *def_rtl = fetch_def_insn (insn, require);
 
-		if (def_rtl != NULL)
-		  {
-		    if (vector_config_instr_p (def_rtl))
-		      {
-			vinfo def_info = get_info_for_vsetvli (def_rtl,
-							       curr_info);
-			// case 1
-			if (!curr_info.unknown_p ()
-			    && def_info.avl_equal_p (curr_info)
-			    && def_info.vlmax_equal_p (curr_info))
-			  {
-			    replace_op (insn, curr_info.get_avl (),
-					REPLACE_VL);
-			    curr_info = compute_info_for_instr (insn,
-								curr_info);
-			    continue;
-			  }
+		  if (def_rtl != NULL)
+		    {
+		      if (vector_config_instr_p (def_rtl))
+			{
+			  vinfo def_info
+			    = get_info_for_vsetvli (def_rtl, curr_info);
+			  // case 1
+			  if (!curr_info.unknown_p ()
+			      && def_info.avl_equal_p (curr_info)
+			      && def_info.vlmax_equal_p (curr_info))
+			    {
+			      replace_op (insn, curr_info.get_avl (),
+					  REPLACE_VL);
+			      curr_info
+				= compute_info_for_instr (insn, curr_info);
+			      continue;
+			    }
 
-			// case 2
-			if (def_info.vlmax_equal_p (require)
-			    && def_info.get_avl ()
-			    && (def_info.avl_const_p ()
-				|| rtx_equal_p (def_info.get_avl (),
-						gen_rtx_REG (Pmode,
-							     X0_REGNUM))))
-			  {
-			    replace_op (insn, def_info.get_avl (), REPLACE_VL);
-			    curr_info = compute_info_for_instr (insn,
-								curr_info);
-			    continue;
-			  }
-		      }
-		  }
-	      }
-	  }
-	curr_info = compute_info_for_instr (insn, curr_info);
-	continue;
-      }
+			  // case 2
+			  if (def_info.vlmax_equal_p (require)
+			      && def_info.get_avl ()
+			      && (def_info.avl_const_p ()
+				  || rtx_equal_p (def_info.get_avl (),
+						  gen_rtx_REG (Pmode,
+							       X0_REGNUM))))
+			    {
+			      replace_op (insn, def_info.get_avl (),
+					  REPLACE_VL);
+			      curr_info
+				= compute_info_for_instr (insn, curr_info);
+			      continue;
+			    }
+			}
+		    }
+		}
+	    }
+	  curr_info = compute_info_for_instr (insn, curr_info);
+	  continue;
+	}
 
-    transfer_after (curr_info, insn);
-  }
+      transfer_after (curr_info, insn);
+    }
 }
 
 // Return true if we can mutate PrevMI's VTYPE to match MI's
@@ -2240,7 +2178,6 @@ has_fixed_result (const vinfo &info)
 /// of its predecessors.  Specifically, this is geared to catch
 /// the common case of a fixed length vsetvl in a single block
 /// loop when it could execute once in the preheader instead.
-
 static void
 dopre (const basic_block bb)
 {
@@ -2293,9 +2230,9 @@ dopre (const basic_block bb)
       if (use_vtype_p (insn))
 	{
 	  if (available_info != compute_info_for_instr (insn, curr_info))
-	      return;
-	    found = true;
-	    break;
+	    return;
+	  found = true;
+	  break;
 	}
     }
 
@@ -2345,10 +2282,10 @@ rest_of_handle_insert_vsetvli (function *fn)
 
   /* Initialize Basic Block Map */
   FOR_ALL_BB_FN (bb, fn)
-  {
-    bb_vinfo bb_init;
-    bb_vinfo_map.insert (std::pair<uint8_t, bb_vinfo> (bb->index, bb_init));
-  }
+    {
+      bb_vinfo bb_init;
+      bb_vinfo_map.insert (std::pair<uint8_t, bb_vinfo> (bb->index, bb_init));
+    }
 
   // Scan the block locally for cases where we can mutate the operands
   // of the instructions to reduce state transitions.  Critically, this
@@ -2367,16 +2304,16 @@ rest_of_handle_insert_vsetvli (function *fn)
 
   // Phase 1 - determine how VL/VTYPE are affected by the each block.
   FOR_ALL_BB_FN (bb, fn)
-  {
-    vector_p |= compute_vl_vtype_changes (bb);
-    bb_vinfo& info = bb_vinfo_map[bb->index];
-    info.exit = info.change;
-    if (dump_file)
-      {
-	fprintf (dump_file, "Initial exit state of bb %d\n", bb->index);
-	info.exit.print ();
-      }
-  }
+    {
+      vector_p |= compute_vl_vtype_changes (bb);
+      bb_vinfo &info = bb_vinfo_map[bb->index];
+      info.exit = info.change;
+      if (dump_file)
+	{
+	  fprintf (dump_file, "Initial exit state of bb %d\n", bb->index);
+	  info.exit.print ();
+	}
+    }
 
   if (!vector_p)
     {
@@ -2402,10 +2339,10 @@ rest_of_handle_insert_vsetvli (function *fn)
   // blocks to the list here, but will also add any that need to be
   // revisited during Phase 2 processing.
   FOR_ALL_BB_FN (bb, fn)
-  {
-    bb_queue.push_back (bb);
-    bb_vinfo_map[bb->index].inqueue = true;
-  }
+    {
+      bb_queue.push_back (bb);
+      bb_vinfo_map[bb->index].inqueue = true;
+    }
   while (!bb_queue.empty ())
     {
       bb = bb_queue.front ();
@@ -2434,7 +2371,7 @@ rest_of_handle_insert_vsetvli (function *fn)
   // demanded fields based mutation and non-local analysis in the
   // dataflow at the same time without introducing inconsistencies.
   FOR_ALL_BB_FN (bb, fn)
-    dolocalpostpass(bb);
+    dolocalpostpass (bb);
 
   // Once we're fully done rewriting all the instructions, do a final pass
   // through to check for VSETVLIs which write to an unused destination.
@@ -2503,18 +2440,12 @@ class pass_insert_vsetvli : public rtl_opt_pass
 {
 public:
   pass_insert_vsetvli (gcc::context *ctxt)
-      : rtl_opt_pass (pass_data_insert_vsetvli, ctxt)
-  {
-  }
+    : rtl_opt_pass (pass_data_insert_vsetvli, ctxt)
+  {}
 
   /* opt_pass methods: */
-  virtual bool
-  gate (function *)
-  {
-    return TARGET_VECTOR;
-  }
-  virtual unsigned int
-  execute (function *fn)
+  virtual bool gate (function *) { return TARGET_VECTOR; }
+  virtual unsigned int execute (function *fn)
   {
     return rest_of_handle_insert_vsetvli (fn);
   }
@@ -2543,18 +2474,12 @@ class pass_insert_vsetvli2 : public rtl_opt_pass
 {
 public:
   pass_insert_vsetvli2 (gcc::context *ctxt)
-      : rtl_opt_pass (pass_data_insert_vsetvli2, ctxt)
-  {
-  }
+    : rtl_opt_pass (pass_data_insert_vsetvli2, ctxt)
+  {}
 
   /* opt_pass methods: */
-  virtual bool
-  gate (function *)
-  {
-    return TARGET_VECTOR;
-  }
-  virtual unsigned int
-  execute (function *fn)
+  virtual bool gate (function *) { return TARGET_VECTOR; }
+  virtual unsigned int execute (function *fn)
   {
     return rest_of_handle_insert_vsetvli (fn);
   }
