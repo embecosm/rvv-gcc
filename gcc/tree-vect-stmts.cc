@@ -1723,6 +1723,7 @@ check_load_store_for_partial_vectors (loop_vec_info loop_vinfo, tree vectype,
     nvectors = vect_get_num_copies (loop_vinfo, vectype);
 
   vec_loop_masks *masks = &LOOP_VINFO_MASKS (loop_vinfo);
+  vec_loop_lens *lens = &LOOP_VINFO_LENS (loop_vinfo);
   machine_mode vecmode = TYPE_MODE (vectype);
   bool is_load = (vls_type == VLS_LOAD);
   if (memory_access_type == VMAT_LOAD_STORE_LANES)
@@ -1739,8 +1740,11 @@ check_load_store_for_partial_vectors (loop_vec_info loop_vinfo, tree vectype,
 	  LOOP_VINFO_CAN_USE_PARTIAL_VECTORS_P (loop_vinfo) = false;
 	  return;
 	}
-      vect_record_loop_mask (loop_vinfo, masks, nvectors, vectype,
-			     scalar_mask);
+      if (targetm.vectorize.loop_len_override_mask ())
+	vect_record_loop_len (loop_vinfo, lens, nvectors, vectype, 1);
+      else
+	vect_record_loop_mask (loop_vinfo, masks, nvectors, vectype,
+			       scalar_mask);
       return;
     }
 
@@ -1779,7 +1783,6 @@ check_load_store_for_partial_vectors (loop_vec_info loop_vinfo, tree vectype,
 	}
       if (len_p)
 	{
-	  vec_loop_lens *lens = &LOOP_VINFO_LENS (loop_vinfo);
 	  unsigned factor
 	    = vecmode == vmode ? 1 : GET_MODE_UNIT_SIZE (vecmode);
 	  vect_record_loop_len (loop_vinfo, lens, nvectors, vectype, factor);
@@ -1833,7 +1836,6 @@ check_load_store_for_partial_vectors (loop_vec_info loop_vinfo, tree vectype,
   if (get_len_load_store_mode (vecmode, is_load).exists (&vmode))
     {
       nvectors = group_memory_nvectors (group_size * vf, nunits);
-      vec_loop_lens *lens = &LOOP_VINFO_LENS (loop_vinfo);
       unsigned factor = (vecmode == vmode) ? 1 : GET_MODE_UNIT_SIZE (vecmode);
       vect_record_loop_len (loop_vinfo, lens, nvectors, vectype, factor);
       using_partial_vectors_p = true;
@@ -8523,12 +8525,17 @@ vectorizable_store (vec_info *vinfo,
 	    }
 
 	  tree final_mask = NULL;
+	  tree final_len = NULL;
 	  if (loop_masks)
 	    final_mask = vect_get_loop_mask (gsi, loop_masks, ncopies,
 					     vectype, j);
 	  if (vec_mask)
 	    final_mask = prepare_vec_mask (loop_vinfo, mask_vectype,
 					   final_mask, vec_mask, gsi);
+	  if (loop_lens)
+	    final_len
+	      = vect_get_loop_len (gsi, loop_vinfo, loop_lens,
+				   ncopies, vectype, j);
 
 	  gcall *call;
 	  if (final_mask)
@@ -8538,17 +8545,27 @@ vectorizable_store (vec_info *vinfo,
 				     VEC_ARRAY).  */
 	      unsigned int align = TYPE_ALIGN (TREE_TYPE (vectype));
 	      tree alias_ptr = build_int_cst (ref_type, align);
-	      call = gimple_build_call_internal (IFN_MASK_STORE_LANES, 4,
-						 dataref_ptr, alias_ptr,
-						 final_mask, vec_array);
+	      if (final_len)
+		call = gimple_build_call_internal (IFN_LEN_MASK_STORE_LANES, 5,
+						   dataref_ptr, alias_ptr,
+						   final_mask, vec_array,
+						   final_len);
+	      else
+		call = gimple_build_call_internal (IFN_MASK_STORE_LANES, 4,
+						   dataref_ptr, alias_ptr,
+						   final_mask, vec_array);
 	    }
 	  else
 	    {
 	      /* Emit:
 		   MEM_REF[...all elements...] = STORE_LANES (VEC_ARRAY).  */
 	      data_ref = create_array_ref (aggr_type, dataref_ptr, ref_type);
-	      call = gimple_build_call_internal (IFN_STORE_LANES, 1,
-						 vec_array);
+	      if (final_len)
+		call = gimple_build_call_internal (IFN_LEN_STORE_LANES, 2,
+						   vec_array, final_len);
+	      else
+		call
+		  = gimple_build_call_internal (IFN_STORE_LANES, 1, vec_array);
 	      gimple_call_set_lhs (call, data_ref);
 	    }
 	  gimple_call_set_nothrow (call, true);
@@ -9878,12 +9895,17 @@ vectorizable_load (vec_info *vinfo,
 	  vec_array = create_vector_array (vectype, vec_num);
 
 	  tree final_mask = NULL_TREE;
+	  tree final_len = NULL_TREE;
 	  if (loop_masks)
 	    final_mask = vect_get_loop_mask (gsi, loop_masks, ncopies,
 					     vectype, j);
 	  if (vec_mask)
 	    final_mask = prepare_vec_mask (loop_vinfo, mask_vectype,
 					   final_mask, vec_mask, gsi);
+	  if (loop_lens)
+	    final_len
+	      = vect_get_loop_len (gsi, loop_vinfo, loop_lens,
+				   ncopies, vectype, j);
 
 	  gcall *call;
 	  if (final_mask)
@@ -9893,16 +9915,26 @@ vectorizable_load (vec_info *vinfo,
 		                                VEC_MASK).  */
 	      unsigned int align = TYPE_ALIGN (TREE_TYPE (vectype));
 	      tree alias_ptr = build_int_cst (ref_type, align);
-	      call = gimple_build_call_internal (IFN_MASK_LOAD_LANES, 3,
-						 dataref_ptr, alias_ptr,
-						 final_mask);
+	      if (final_len)
+		call = gimple_build_call_internal (IFN_LEN_MASK_LOAD_LANES, 4,
+						   dataref_ptr, alias_ptr,
+						   final_mask, final_len);
+	      else
+		call = gimple_build_call_internal (IFN_MASK_LOAD_LANES, 3,
+						   dataref_ptr, alias_ptr,
+						   final_mask);
 	    }
 	  else
 	    {
 	      /* Emit:
 		   VEC_ARRAY = LOAD_LANES (MEM_REF[...all elements...]).  */
 	      data_ref = create_array_ref (aggr_type, dataref_ptr, ref_type);
-	      call = gimple_build_call_internal (IFN_LOAD_LANES, 1, data_ref);
+	      if (final_len)
+		call = gimple_build_call_internal (IFN_LEN_LOAD_LANES, 2,
+						   data_ref, final_len);
+	      else
+		call = gimple_build_call_internal (IFN_LOAD_LANES, 1,
+						   data_ref);
 	    }
 	  gimple_call_set_lhs (call, vec_array);
 	  gimple_call_set_nothrow (call, true);
