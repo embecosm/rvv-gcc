@@ -2143,23 +2143,100 @@
   [(set_attr "type" "branch")
    (set_attr "mode" "none")])
 
-;; Patterns for implementations that optimize short forward branches.
-
 (define_expand "mov<mode>cc"
   [(set (match_operand:GPR 0 "register_operand")
 	(if_then_else:GPR (match_operand 1 "comparison_operator")
 			  (match_operand:GPR 2 "register_operand")
-			  (match_operand:GPR 3 "sfb_alu_operand")))]
-  "TARGET_SFB_ALU"
+			  (match_operand:GPR 3 "movcc_operand")))]
+  "TARGET_SFB_ALU || TARGET_MOVCC"
 {
   rtx cmp = operands[1];
   /* We only handle word mode integer compares for now.  */
   if (GET_MODE (XEXP (cmp, 0)) != word_mode)
     FAIL;
-  riscv_expand_conditional_move (operands[0], operands[2], operands[3],
-				 GET_CODE (cmp), XEXP (cmp, 0), XEXP (cmp, 1));
+
+  if (TARGET_SFB_ALU && sfb_alu_operand (operands[3], <MODE>mode))
+    riscv_expand_conditional_move (operands[0], operands[2], operands[3],
+				   GET_CODE (cmp),
+				   XEXP (cmp, 0), XEXP (cmp, 1));
+  else
+    {
+      enum rtx_code code = GET_CODE (cmp);
+      rtx tmp0 = gen_reg_rtx (<MODE>mode);
+      rtx tmp1 = gen_reg_rtx (<MODE>mode);
+      rtx tmp2 = gen_reg_rtx (<MODE>mode);
+      rtx tmp3 = gen_reg_rtx (<MODE>mode);
+      rtx tmp4 = gen_reg_rtx (<MODE>mode);
+
+      if (!REG_P (operands[3])
+	  && !const_arith_operand (operands[3], <MODE>mode))
+	operands[3] = force_reg (<MODE>mode, operands[3]);
+
+      rtx op2 = operands[2];
+      rtx op3 = operands[3];
+      switch (code)
+	{
+	case GE:
+	case GEU:
+	case LE:
+	case LEU:
+	  code = reverse_condition (code);
+	  op2 = operands[3];
+	  op3 = operands[2];
+	  break;
+	default:
+	  break;
+	}
+
+      riscv_expand_int_scc (tmp0, code, XEXP (cmp, 0), XEXP (cmp, 1));
+      emit_insn (gen_rtx_SET (tmp1,
+			      gen_rtx_NEG (<MODE>mode, tmp0)));
+      emit_insn (gen_rtx_SET (tmp2,
+			      gen_rtx_AND (<MODE>mode, tmp1, op2)));
+      emit_insn (gen_rtx_SET (tmp3,
+			      gen_rtx_NOT (<MODE>mode, tmp1)));
+      emit_insn (gen_rtx_SET (tmp4,
+			      gen_rtx_AND (<MODE>mode, tmp3, op3)));
+      emit_insn (gen_rtx_SET (operands[0],
+			      gen_rtx_IOR (<MODE>mode, tmp2, tmp4)));
+    }
   DONE;
 })
+
+(define_expand "add<mode>cc"
+  [(match_operand:GPR 0 "register_operand")
+   (match_operand     1 "comparison_operator")
+   (match_operand:GPR 2 "register_operand")
+   (match_operand:GPR 3 "general_operand")]
+  "TARGET_MOVCC"
+{
+  rtx cmp = operands[1];
+  /* We only handle word mode integer compares for now.  */
+  if (GET_MODE (XEXP (cmp, 0)) != word_mode)
+    FAIL;
+
+    {
+      enum rtx_code code = GET_CODE (cmp);
+      rtx tmp0 = gen_reg_rtx (<MODE>mode);
+      rtx tmp1 = gen_reg_rtx (<MODE>mode);
+      rtx tmp2 = gen_reg_rtx (<MODE>mode);
+
+      if (!REG_P (operands[3])
+	  && !const_arith_operand (operands[3], <MODE>mode))
+	operands[3] = force_reg (<MODE>mode, operands[3]);
+
+      riscv_expand_int_scc (tmp0, code, XEXP (cmp, 0), XEXP (cmp, 1));
+      emit_insn (gen_rtx_SET (tmp1,
+			      gen_rtx_NEG (<MODE>mode, tmp0)));
+      emit_insn (gen_rtx_SET (tmp2,
+			      gen_rtx_AND (<MODE>mode, tmp1, operands[3])));
+      emit_insn (gen_rtx_SET (operands[0],
+			      gen_rtx_PLUS (<MODE>mode, operands[2], tmp2)));
+    }
+  DONE;
+})
+
+;; Patterns for implementations that optimize short forward branches.
 
 (define_insn "*mov<GPR:mode><X:mode>cc"
   [(set (match_operand:GPR 0 "register_operand" "=r,r")

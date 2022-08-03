@@ -230,6 +230,10 @@ misa-spec=
 Target RejectNegative Joined Enum(isa_spec_class) Var(riscv_isa_spec) Init(TARGET_DEFAULT_ISA_SPEC)
 Set the version of RISC-V ISA spec.
 
+mmovcc
+Target Var(TARGET_MOVCC)
+Enable conditional moves unconditionally.
+
 mcrc
 Target Bool Var(TARGET_CRC_OPT) Init(1)
 Recognize some crc calculations to make them into built-in functions.
