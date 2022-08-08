@@ -59,8 +59,8 @@ along with GCC; see the file COPYING3.  If not see
    ┌───────────┐         ┌──────────┐
    |   Build   | ──────> | Coalesce |
    └───────────┘         └────┬─────┘
-          ↑   any coalesce    |
-          └───────────────────┘
+	  ↑   any coalesce    |
+	  └───────────────────┘
 */
 
 static auto_vec<rtx_insn *> visitedlist;
@@ -101,6 +101,9 @@ legitimate_subreg_to_reg_copy_p (rtx_insn *copy, auto_vec<rtx> &chainlist)
   if (REG_ATTRS (dest) == NULL)
     return false;
   if (REG_ATTRS (SUBREG_REG (src)) == NULL)
+    return false;
+  if (bitmap_bit_p (DF_LIVE_IN (BLOCK_FOR_INSN (copy)),
+		    REGNO (SUBREG_REG (src))))
     return false;
 
   for (unsigned i = 0; i < visitedlist.length (); i++)
@@ -162,6 +165,8 @@ legitimate_reg_to_reg_copy_p (rtx_insn *copy)
 {
   rtx src = SET_SRC (single_set (copy));
   rtx dest = SET_DEST (single_set (copy));
+  if (bitmap_bit_p (DF_LIVE_IN (BLOCK_FOR_INSN (copy)), REGNO (src)))
+    return false;
   if (HARD_REGISTER_NUM_P (REGNO (dest)) || HARD_REGISTER_NUM_P (REGNO (src)))
     return false;
 
@@ -254,11 +259,16 @@ coalesce_subreg (rtx_insn *copy, auto_vec<rtx> &chainlist)
   rtx dest = SET_DEST (single_set (copy));
   FOR_EACH_BB_FN (bb, cfun)
     FOR_BB_INSNS (bb, insn)
-      if (INSN_P (insn) && single_set (insn))
+      if (INSN_P (insn) && PATTERN (insn))
 	{
 	  if (insn == copy)
 	    continue;
 	  extract_insn (insn);
+	  if (dump_file)
+	    {
+	      fprintf (dump_file, "Coalesced insn:\n\n");
+	      print_rtl_single (dump_file, insn);
+	    }
 	  for (int i = 0; i < recog_data.n_operands; i++)
 	    {
 	      if (REG_P (recog_data.operand[i])
@@ -271,9 +281,20 @@ coalesce_subreg (rtx_insn *copy, auto_vec<rtx> &chainlist)
 					  (recog_data.operand[i]))->insn ()
 			  == insn))
 		    reg_equiv_init (REGNO (recog_data.operand[i])) = NULL;
-		  rtx pat = simplify_replace_rtx (PATTERN (insn),
-						  recog_data.operand[i], src);
-		  validate_change (insn, &PATTERN (insn), pat, false);
+		  if (dump_file)
+		    {
+		      fprintf (dump_file, "Change insn:\n");
+		      print_rtl_single (dump_file, insn);
+		      fprintf (dump_file, "to:\n");
+		    }
+		  PATTERN (insn)
+		    = replace_rtx (copy_rtx (PATTERN (insn)),
+				   recog_data.operand[i], src, true);
+		  df_insn_rescan (insn);
+		  if (dump_file)
+		    print_rtl_single (dump_file, PATTERN (insn));
+		  validate_change (insn, &PATTERN (insn), PATTERN (insn),
+				   false);
 		  remove_note (insn,
 			       find_regno_note (insn, REG_DEAD,
 						REGNO (SUBREG_REG (src))));
@@ -291,7 +312,7 @@ coalesce_reg (rtx_insn *copy)
   rtx dest = SET_DEST (single_set (copy));
   FOR_EACH_BB_FN (bb, cfun)
     FOR_BB_INSNS (bb, insn)
-      if (INSN_P (insn) && single_set (insn))
+      if (INSN_P (insn) && PATTERN (insn))
 	{
 	  if (insn == copy)
 	    continue;
@@ -308,6 +329,13 @@ coalesce_reg (rtx_insn *copy)
 		    reg_equiv_init (REGNO (recog_data.operand[i])) = NULL;
 		  rtx pat = simplify_replace_rtx (PATTERN (insn),
 						  recog_data.operand[i], src);
+		  if (dump_file)
+		    {
+		      fprintf (dump_file, "Change insn:\n");
+		      print_rtl_single (dump_file, insn);
+		      fprintf (dump_file, "to:\n");
+		      print_rtl_single (dump_file, pat);
+		    }
 		  validate_change (insn, &PATTERN (insn), pat, false);
 		  remove_note (insn,
 			       find_regno_note (insn, REG_DEAD, REGNO (src)));
@@ -331,6 +359,13 @@ coalesce_reg (rtx_insn *copy)
 			 (GET_MODE (recog_data.operand[i]), src,
 			  GET_MODE (SUBREG_REG (recog_data.operand[i])),
 			  SUBREG_BYTE (recog_data.operand[i])))));
+		  if (dump_file)
+		    {
+		      fprintf (dump_file, "Change insn:\n");
+		      print_rtl_single (dump_file, insn);
+		      fprintf (dump_file, "to:\n");
+		      print_rtl_single (dump_file, pat);
+		    }
 		  validate_change (insn, &PATTERN (insn), pat, false);
 		  remove_note (insn,
 			       find_regno_note (insn, REG_DEAD, REGNO (src)));
@@ -349,8 +384,16 @@ aggressive_register_coalesce (void)
   if (worklist.is_empty ())
     return false;
 
+  if (dump_file)
+    fprintf (dump_file, "Entering register coalescing:\n\n");
+
   for (unsigned i = 0; i < worklist.length (); i++)
     {
+      if (dump_file)
+	{
+	  fprintf (dump_file, "Coalescing insn:\n\n");
+	  print_rtl_single (dump_file, worklist[i]);
+	}
       if (REG_P (SET_DEST (single_set (worklist[i])))
 	  && SUBREG_P (SET_SRC (single_set (worklist[i]))))
 	coalesce_subreg (worklist[i], chainlist);
@@ -575,6 +618,8 @@ ira_explicit_coalesce (void)
   bool coalesce_p = true;
   while (coalesce_p)
     {
+      df_live_add_problem ();
+      df_live_set_all_dirty ();
       ira_build (true);
       coalesce_p = aggressive_register_coalesce ();
       ira_destroy ();

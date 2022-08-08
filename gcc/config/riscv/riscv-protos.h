@@ -104,23 +104,24 @@ extern unsigned int get_vtype_for_mode (machine_mode);
 extern void emit_op5 (unsigned int unspec, machine_mode Vmode,
 		      machine_mode VSImode, machine_mode VMSImode,
 		      machine_mode VSUBmode, rtx *operands,
-		      rtx (*gen_vx) (rtx, rtx, rtx, rtx, rtx),
-		      rtx (*gen_vx_32bit) (rtx, rtx, rtx, rtx, rtx),
-		      rtx (*gen_vv) (rtx, rtx, rtx, rtx, rtx),
-		      bool (*imm_p) (rtx), int i, bool reverse);
-extern void emit_op6 (unsigned int unspec, machine_mode Vmode,
-		      machine_mode VSImode, machine_mode VMSImode,
-		      machine_mode VSUBmode, rtx *operands,
 		      rtx (*gen_vx) (rtx, rtx, rtx, rtx, rtx, rtx),
 		      rtx (*gen_vx_32bit) (rtx, rtx, rtx, rtx, rtx, rtx),
 		      rtx (*gen_vv) (rtx, rtx, rtx, rtx, rtx, rtx),
 		      bool (*imm_p) (rtx), int i, bool reverse);
-extern void emit_op7 (unsigned int unspec, machine_mode Vmode,
+extern void emit_op6 (unsigned int unspec, machine_mode Vmode,
 		      machine_mode VSImode, machine_mode VMSImode,
 		      machine_mode VSUBmode, rtx *operands,
 		      rtx (*gen_vx) (rtx, rtx, rtx, rtx, rtx, rtx, rtx),
 		      rtx (*gen_vx_32bit) (rtx, rtx, rtx, rtx, rtx, rtx, rtx),
 		      rtx (*gen_vv) (rtx, rtx, rtx, rtx, rtx, rtx, rtx),
+		      bool (*imm_p) (rtx), int i, bool reverse);
+extern void emit_op7 (unsigned int unspec, machine_mode Vmode,
+		      machine_mode VSImode, machine_mode VMSImode,
+		      machine_mode VSUBmode, rtx *operands,
+		      rtx (*gen_vx) (rtx, rtx, rtx, rtx, rtx, rtx, rtx, rtx),
+		      rtx (*gen_vx_32bit) (rtx, rtx, rtx, rtx, rtx, rtx, rtx,
+					   rtx),
+		      rtx (*gen_vv) (rtx, rtx, rtx, rtx, rtx, rtx, rtx, rtx),
 		      bool (*imm_p) (rtx), int i, bool reverse);
 extern void riscv_vector_expand_vector_init (rtx, rtx);
 extern bool riscv_vector_strided_const_vector_p (rtx);
@@ -143,6 +144,7 @@ extern bool riscv_vector_expand_const_vector (rtx, rtx);
 extern bool riscv_vector_expand_const_mask (rtx, rtx);
 extern void riscv_vector_expand_tuple (machine_mode, rtx *);
 extern void riscv_vector_expand_splat_vector (rtx *);
+extern rtx riscv_vector_gen_clobber_vl (rtx);
 
 /* Routines implemented in riscv-c.cc.  */
 void riscv_cpu_cpp_builtins (cpp_reader *);

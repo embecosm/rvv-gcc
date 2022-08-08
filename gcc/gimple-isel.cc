@@ -160,17 +160,13 @@ gimple_gen_inverse_mask (gimple_seq *stmts, location_t loc, tree op0)
 	}
     }
 
-  enum tree_code new_code
-    = (use_swap_comparison_p
-       ? invert_tree_comparison (tcode, HONOR_NANS (TREE_TYPE (op0a)))
-       : ERROR_MARK);
-  if (new_code == ERROR_MARK)
-    use_swap_comparison_p = false;
-
   if (!use_swap_comparison_p)
     {
-      if (op1 && direct_internal_fn_supported_p (IFN_LEN_NOT, TREE_TYPE (op0),
-						 OPTIMIZE_FOR_BOTH))
+      if (HONOR_NANS (TREE_TYPE (op0)))
+	return NULL_TREE;
+      if (op1
+	  && direct_internal_fn_supported_p (IFN_LEN_NOT, TREE_TYPE (op0),
+					     OPTIMIZE_FOR_BOTH))
 	tem = gimple_build (stmts, loc, as_combined_fn (IFN_LEN_NOT),
 			    TREE_TYPE (op0), op0, op1);
       else
@@ -178,6 +174,10 @@ gimple_gen_inverse_mask (gimple_seq *stmts, location_t loc, tree op0)
     }
   else
     {
+      enum tree_code new_code
+	= invert_tree_comparison (tcode, HONOR_NANS (TREE_TYPE (op0a)));
+      if (new_code == ERROR_MARK)
+	return NULL_TREE;
       if (is_gimple_assign (def_stmt))
 	tem = gimple_build (stmts, loc, new_code, TREE_TYPE (op0), op0a, op0b);
       else
@@ -234,13 +234,17 @@ gimple_gen_vcond_mask (gimple_stmt_iterator *gsi, location_t loc, tree op0,
 	{
 	  gimple_seq stmts = NULL;
 	  tree tem = gimple_gen_inverse_mask (&stmts, loc, op0);
-	  gsi_insert_seq_before (gsi, stmts, GSI_SAME_STMT);
-	  if (op3)
-	    return gimple_build_call_internal (IFN_LEN_VCOND_MASK_VS, 4, tem,
-					       splat_vector_p (op2), op1, op3);
-	  else
-	    return gimple_build_call_internal (IFN_VCOND_MASK_VS, 3, tem,
-					       splat_vector_p (op2), op1);
+	  if (tem)
+	    {
+	      gsi_insert_seq_before (gsi, stmts, GSI_SAME_STMT);
+	      if (op3)
+		return gimple_build_call_internal (IFN_LEN_VCOND_MASK_VS, 4,
+						   tem, splat_vector_p (op2),
+						   op1, op3);
+	      else
+		return gimple_build_call_internal (IFN_VCOND_MASK_VS, 3, tem,
+						   splat_vector_p (op2), op1);
+	    }
 	}
     }
 
@@ -690,8 +694,8 @@ gimple_expand_vec_cmp_expr (gimple_stmt_iterator *gsi)
   if (splat_vector_p (op0))
     return gimple_build_call_internal ((unsignedp
 					? IFN_VEC_CMPU_VS
-					: IFN_VEC_CMP_VS),
-				       3, op1, splat_vector_p (op0),
+					: IFN_VEC_CMP_VS), 3, op1,
+				       splat_vector_p (op0),
 				       build_int_cst (integer_type_node,
 						      new_code));
 
@@ -741,8 +745,8 @@ gimple_expand_len_vec_cmp_fn (gimple_stmt_iterator *gsi)
   if (splat_vector_p (op0))
     return gimple_build_call_internal ((unsignedp
 					? IFN_LEN_VEC_CMPU_VS
-					: IFN_LEN_VEC_CMP_VS),
-				       4, op1, splat_vector_p (op0), op2,
+					: IFN_LEN_VEC_CMP_VS), 4, op1,
+				       splat_vector_p (op0), op2,
 				       build_int_cst (integer_type_node,
 						      new_code));
 

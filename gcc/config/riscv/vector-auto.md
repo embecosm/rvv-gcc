@@ -36,9 +36,10 @@
    (match_operand:<VSUB> 1 "general_operand")]
   "TARGET_VECTOR"
 {
-  emit_insn (gen_vmv_v_x (<MODE>mode, operands[0], const0_rtx,
-			  operands[1], gen_rtx_REG (Pmode, X0_REGNUM),
-			  riscv_vector_gen_policy ()));
+  emit_insn (gen_vmv_v_x (<MODE>mode,
+	operands[0], const0_rtx, operands[1],
+	gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
+
   DONE;
 })
 
@@ -49,8 +50,9 @@
   "TARGET_VECTOR"
 {
   emit_insn (gen_vfmv_v_f (<MODE>mode, operands[0], const0_rtx,
-			   operands[1], gen_rtx_REG (Pmode, X0_REGNUM),
-			   riscv_vector_gen_policy ()));
+      operands[1], gen_rtx_REG (Pmode, X0_REGNUM),
+      riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
+
   DONE;
 })
 
@@ -70,7 +72,7 @@
   {
     emit_insn (gen_vslide1_vx (UNSPEC_SLIDE1UP, <MODE>mode,
 	operands[0], const0_rtx, const0_rtx, operands[1], operands[2],
-	gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy ()));
+	gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
     DONE;
   })
 
@@ -81,7 +83,8 @@
   "TARGET_VECTOR"
   {
     emit_insn (gen_vfslide1_vf (UNSPEC_SLIDE1UP, <MODE>mode,
-	operands[0], const0_rtx, const0_rtx, operands[1], operands[2], gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy ()));
+	operands[0], const0_rtx, const0_rtx, operands[1], operands[2], gen_rtx_REG (Pmode, X0_REGNUM),
+	riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
     DONE;
   })
 
@@ -101,7 +104,7 @@
   rtx duptmp = gen_reg_rtx (mode);
   emit_insn (gen_vec_duplicate (mode, duptmp, operands[1]));
   emit_insn (gen_vms_vx (NE, mode, operands[0], const0_rtx, const0_rtx, duptmp, const0_rtx,
-			 gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy ()));
+			 gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   DONE;
 })
 
@@ -140,7 +143,7 @@
     {
       emit_insn (gen_v_s_x (UNSPEC_VMVS, <MODE>mode,
 	  operands[0], operands[0], operands[1],
-	  GEN_INT (1), riscv_vector_gen_policy (RVV_POLICY_TU)));
+	  GEN_INT (1), riscv_vector_gen_policy (RVV_POLICY_TU), riscv_vector_gen_clobber_vl (GEN_INT (1))));
     }
   else
     {
@@ -156,7 +159,7 @@
       rtx val_in_vec = gen_reg_rtx (<MODE>mode);
       emit_insn (gen_v_s_x (UNSPEC_VMVS, <MODE>mode,
 	  val_in_vec, const0_rtx, operands[1],
-	  insertvl, riscv_vector_gen_policy ()));
+	  insertvl, riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (insertvl)));
 
       if (!satisfies_constraint_K (operands[2]))
 	operands[2] = force_reg (Pmode, operands[2]);
@@ -164,7 +167,7 @@
       emit_insn (gen_vslide_vx (UNSPEC_SLIDEUP,
 	  <MODE>mode, operands[0], const0_rtx, operands[0],
 	  val_in_vec, operands[2], insertvl,
-	  riscv_vector_gen_policy (RVV_POLICY_TU)));
+	  riscv_vector_gen_policy (RVV_POLICY_TU), riscv_vector_gen_clobber_vl (insertvl)));
     }
   DONE;
 })
@@ -179,7 +182,7 @@
     {
       emit_insn (gen_vfmv_s_f (<MODE>mode,
 	  operands[0], operands[0], operands[1],
-	  GEN_INT (1), riscv_vector_gen_policy (RVV_POLICY_TU)));
+	  GEN_INT (1), riscv_vector_gen_policy (RVV_POLICY_TU), riscv_vector_gen_clobber_vl (GEN_INT (1))));
     }
   else
     {
@@ -195,7 +198,7 @@
       rtx val_in_vec = gen_reg_rtx (<MODE>mode);
       emit_insn (gen_vfmv_s_f (<MODE>mode,
 	  val_in_vec, const0_rtx, operands[1],
-	  insertvl, riscv_vector_gen_policy (RVV_POLICY_TU)));
+	  insertvl, riscv_vector_gen_policy (RVV_POLICY_TU), riscv_vector_gen_clobber_vl (insertvl)));
 
       if (!satisfies_constraint_K (operands[2]))
 	operands[2] = force_reg (Pmode, operands[2]);
@@ -203,7 +206,7 @@
       emit_insn (gen_vslide_vx (UNSPEC_SLIDEUP,
 	  <MODE>mode, operands[0], const0_rtx, operands[0],
 	  val_in_vec, operands[2], insertvl,
-	  riscv_vector_gen_policy (RVV_POLICY_TU)));
+	  riscv_vector_gen_policy (RVV_POLICY_TU), riscv_vector_gen_clobber_vl (insertvl)));
     }
   DONE;
 })
@@ -224,14 +227,14 @@
   "TARGET_VECTOR"
 {
   emit_insn (gen_vid_v (<MODE>mode,
-      operands[0], const0_rtx, const0_rtx, gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy ()));
+      operands[0], const0_rtx, const0_rtx, gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   if (INTVAL (operands[2]) != 1)
     emit_insn (gen_vmul<mode>_vx (operands[0], const0_rtx, const0_rtx,
-	operands[0], operands[2], gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy ()));
+	operands[0], operands[2], gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
 
   if (!satisfies_constraint_J (operands[1]))
     emit_insn (gen_vadd<mode>_vx (operands[0], const0_rtx, const0_rtx,
-	operands[0], operands[1], gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy ()));
+	operands[0], operands[1], gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
 
   DONE;
 })
@@ -265,7 +268,7 @@
 	  <MODE>mode, slided_reg, const0_rtx, const0_rtx,
 	  operands[1], operands[2],
 	  gen_rtx_REG (Pmode, X0_REGNUM),
-	  riscv_vector_gen_policy ()));
+	  riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
       emit_insn (gen_vmv<mode>_x_s (operands[0], slided_reg));
     }
   DONE;
@@ -287,7 +290,7 @@
 	  <MODE>mode, slided_reg, const0_rtx, const0_rtx,
 	  operands[1], operands[2],
 	  gen_rtx_REG (Pmode, X0_REGNUM),
-	  riscv_vector_gen_policy ()));
+	  riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
       emit_insn (gen_vfmv<mode>_f_s (operands[0], slided_reg));
     }
   DONE;
@@ -323,12 +326,12 @@
     rtx pack = gen_reg_rtx (<MODE>mode);
     emit_insn (gen_vcompress_vm (<MODE>mode,
 	pack, operands[1], const0_rtx, operands[2],
-	gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy ()));
+	gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
 
     /* step2: Calculate index of the last element in packed vector.  */
     rtx index = gen_reg_rtx (Pmode);
     emit_insn (gen_vcpop_m (<VM>mode, Pmode, index, const0_rtx,
-	operands[1], gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy ()));
+	operands[1], gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
     emit_insn (gen_rtx_SET (index, gen_rtx_PLUS (Pmode, index, GEN_INT (-1))));
 
     /* step3: Extract the element.  */
@@ -352,7 +355,7 @@
 
     /* Calculate the number of 1-bit in mask.  */
     emit_insn (gen_vcpop_m (<VM>mode, Pmode, anchor, const0_rtx,
-	operands[2], gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy ()));
+	operands[2], gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
 
     riscv_expand_conditional_branch (else_label, EQ, anchor, const0_rtx);
     emit_insn (gen_extract_last_<mode> (dst, operands[2], vect));
@@ -390,7 +393,7 @@
   if (!CONST_SCALAR_INT_P (operands[2]) && GET_MODE (operands[2]) != Pmode)
     operands[2] = gen_lowpart (Pmode, operands[2]);
   emit_insn (gen_vle (<MODE>mode, operands[0], const0_rtx, const0_rtx,
-	XEXP (operands[1], 0), operands[2], riscv_vector_gen_policy ()));
+	XEXP (operands[1], 0), operands[2], riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[2])));
   DONE;
 })
 
@@ -403,7 +406,7 @@
   gcc_assert (REG_P (XEXP (operands[1], 0)));
   emit_insn (gen_vle (<MODE>mode, operands[0], operands[2], const0_rtx,
 	XEXP (operands[1], 0), gen_rtx_REG (Pmode, X0_REGNUM),
-	riscv_vector_gen_policy (RVV_POLICY_MU)));
+	riscv_vector_gen_policy (RVV_POLICY_MU), gen_reg_rtx (Pmode)));
   DONE;
 })
 
@@ -420,7 +423,7 @@
 
   emit_insn (gen_vle (<MODE>mode, operands[0], operands[2], const0_rtx,
 	XEXP (operands[1], 0), operands[3],
-	riscv_vector_gen_policy (RVV_POLICY_MU)));
+	riscv_vector_gen_policy (RVV_POLICY_MU), riscv_vector_gen_clobber_vl (operands[3])));
   DONE;
 })
 
@@ -467,7 +470,7 @@
   emit_insn (gen_vlseg (<MODE>mode,
       operands[0], const0_rtx, const0_rtx, XEXP (operands[1], 0),
       gen_rtx_REG (Pmode, X0_REGNUM),
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   DONE;
 })
 
@@ -481,7 +484,7 @@
       operands[0], operands[2], operands[0],
       XEXP (operands[1], 0),
       gen_rtx_REG (Pmode, X0_REGNUM),
-      riscv_vector_gen_policy (RVV_POLICY_MU)));
+      riscv_vector_gen_policy (RVV_POLICY_MU), gen_reg_rtx (Pmode)));
   DONE;
 })
 
@@ -495,7 +498,7 @@
     operands[2] = gen_lowpart (Pmode, operands[2]);
   emit_insn (gen_vlseg (<MODE>mode,
       operands[0], const0_rtx, const0_rtx, XEXP (operands[1], 0),
-      operands[2], riscv_vector_gen_policy ()));
+      operands[2], riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[2])));
   DONE;
 })
 
@@ -511,7 +514,7 @@
   emit_insn (gen_vlseg (<MODE>mode,
       operands[0], operands[2], operands[0],
       XEXP (operands[1], 0), operands[3],
-      riscv_vector_gen_policy (RVV_POLICY_MU)));
+      riscv_vector_gen_policy (RVV_POLICY_MU), riscv_vector_gen_clobber_vl (operands[3])));
   DONE;
 })
 
@@ -915,7 +918,7 @@
   if (!CONST_SCALAR_INT_P (operands[2]) && GET_MODE (operands[2]) != Pmode)
     operands[2] = gen_lowpart (Pmode, operands[2]);
   emit_insn (gen_vse (<MODE>mode, const0_rtx, XEXP (operands[0], 0), operands[1], operands[2],
-	     riscv_vector_gen_policy ()));
+	     riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[2])));
   DONE;
 })
 
@@ -927,7 +930,7 @@
 {
   gcc_assert (REG_P (XEXP (operands[0], 0)));
   emit_insn (gen_vse (<MODE>mode, operands[2], XEXP (operands[0], 0),
-	operands[1], gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy ()));
+	operands[1], gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   DONE;
 })
 
@@ -942,7 +945,7 @@
   if (!CONST_SCALAR_INT_P (operands[3]) && GET_MODE (operands[3]) != Pmode)
     operands[3] = gen_lowpart (Pmode, operands[3]);
   emit_insn (gen_vse (<MODE>mode, operands[2], XEXP (operands[0], 0),
-	operands[1], operands[3], riscv_vector_gen_policy ()));
+	operands[1], operands[3], riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[3])));
   DONE;
 })
 
@@ -987,7 +990,7 @@
 {
   emit_insn (gen_vsseg (<MODE>mode, const0_rtx,
       XEXP (operands[0], 0), operands[1],
-      gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy ()));
+      gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   DONE;
 })
 
@@ -999,7 +1002,7 @@
 {
   emit_insn (gen_vsseg (<MODE>mode,
       operands[2], XEXP (operands[0], 0),
-      operands[1], gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy ()));
+      operands[1], gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   DONE;
 })
 
@@ -1013,7 +1016,7 @@
     operands[2] = gen_lowpart (Pmode, operands[2]);
   emit_insn (gen_vsseg (<MODE>mode, const0_rtx,
       XEXP (operands[0], 0), operands[1],
-      operands[2], riscv_vector_gen_policy ()));
+      operands[2], riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[2])));
   DONE;
 })
 
@@ -1028,7 +1031,7 @@
     operands[3] = gen_lowpart (Pmode, operands[3]);
   emit_insn (gen_vsseg (<MODE>mode,
       operands[2], XEXP (operands[0], 0),
-      operands[1], operands[3], riscv_vector_gen_policy ()));
+      operands[1], operands[3], riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[3])));
   DONE;
 })
 
@@ -1427,7 +1430,7 @@
   emit_insn (gen_v<insn>_v (<MODE>mode, operands[0],
       const0_rtx, const0_rtx,
       operands[1], gen_rtx_REG (Pmode, X0_REGNUM),
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   DONE;
 })
 
@@ -1438,10 +1441,10 @@
 {
   rtx mask = gen_reg_rtx (<VM>mode);
   emit_insn (gen_vms_vx (LT, <MODE>mode, mask, const0_rtx, const0_rtx,
-      operands[1], const0_rtx, gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy ()));
+      operands[1], const0_rtx, gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   emit_insn (gen_vneg_v (<MODE>mode, operands[0], mask, operands[1],
       operands[1], gen_rtx_REG (Pmode, X0_REGNUM),
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   DONE;
 })
 
@@ -1455,7 +1458,7 @@
   emit_insn (gen_vneg_v (<MODE>mode, operands[0],
       operands[1], operands[3], operands[2],
       gen_rtx_REG (Pmode, X0_REGNUM),
-      riscv_vector_gen_policy (RVV_POLICY_MU)));
+      riscv_vector_gen_policy (RVV_POLICY_MU), gen_reg_rtx (Pmode)));
   DONE;
 })
 
@@ -1471,7 +1474,7 @@
     operands[4] = gen_lowpart (Pmode, operands[4]);
   emit_insn (gen_vneg_v (<MODE>mode, operands[0],
       operands[1], operands[3], operands[2],
-      operands[4], riscv_vector_gen_policy (RVV_POLICY_MU)));
+      operands[4], riscv_vector_gen_policy (RVV_POLICY_MU), riscv_vector_gen_clobber_vl (operands[4])));
   DONE;
 })
 
@@ -1487,7 +1490,7 @@
     operands[2] = gen_lowpart (Pmode, operands[2]);
   emit_insn (gen_v<insn>_v (<MODE>mode, operands[0],
       const0_rtx, const0_rtx, operands[1], operands[2],
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[2])));
   DONE;
 })
 
@@ -1500,7 +1503,7 @@
 {
   emit_insn (gen_vneg_v (<MODE>mode, operands[0],
       const0_rtx, operands[3], operands[2],
-      operands[1], riscv_vector_gen_policy (RVV_POLICY_TU)));
+      operands[1], riscv_vector_gen_policy (RVV_POLICY_TU), riscv_vector_gen_clobber_vl (operands[1])));
   DONE;
 })
 
@@ -1522,7 +1525,7 @@
   emit_insn (gen_vf<optab>_v (<MODE>mode, operands[0],
       const0_rtx, const0_rtx,
       operands[1], gen_rtx_REG (Pmode, X0_REGNUM),
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   DONE;
 })
 
@@ -1536,7 +1539,7 @@
   emit_insn (gen_vfneg_v (<MODE>mode, operands[0],
       operands[1], operands[3], operands[2],
       gen_rtx_REG (Pmode, X0_REGNUM),
-      riscv_vector_gen_policy (RVV_POLICY_MU)));
+      riscv_vector_gen_policy (RVV_POLICY_MU), gen_reg_rtx (Pmode)));
   DONE;
 })
 
@@ -1552,7 +1555,7 @@
     operands[4] = gen_lowpart (Pmode, operands[4]);
   emit_insn (gen_vfneg_v (<MODE>mode, operands[0],
       operands[1], operands[3], operands[2],
-      operands[4], riscv_vector_gen_policy (RVV_POLICY_MU)));
+      operands[4], riscv_vector_gen_policy (RVV_POLICY_MU), riscv_vector_gen_clobber_vl (operands[4])));
   DONE;
 })
 
@@ -1568,7 +1571,7 @@
     operands[2] = gen_lowpart (Pmode, operands[2]);
   emit_insn (gen_vfneg_v (<MODE>mode, operands[0], const0_rtx, const0_rtx,
       operands[1], operands[2],
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[2])));
   DONE;
 })
 
@@ -1581,7 +1584,7 @@
 {
   emit_insn (gen_vfneg_v (<MODE>mode, operands[0],
       const0_rtx, operands[3], operands[2],
-      operands[1], riscv_vector_gen_policy (RVV_POLICY_TU)));
+      operands[1], riscv_vector_gen_policy (RVV_POLICY_TU), riscv_vector_gen_clobber_vl (operands[1])));
   DONE;
 })
 
@@ -1598,7 +1601,7 @@
   "TARGET_VECTOR"
 {
   emit_insn (gen_vmnot_m (<MODE>mode,
-      operands[0], operands[1], gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy ()));
+      operands[0], operands[1], gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   DONE;
 })
 
@@ -1612,7 +1615,7 @@
     operands[2] = gen_lowpart (Pmode, operands[2]);
 
   emit_insn (gen_vmnot_m (<MODE>mode,
-      operands[0], operands[1], operands[2], riscv_vector_gen_policy ()));
+      operands[0], operands[1], operands[2], riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[2])));
   DONE;
 })
 
@@ -1636,7 +1639,7 @@
   emit_insn (gen_vext_vf2 (SIGN_EXTEND, <VN>mode,
 	operands[0], const0_rtx, const0_rtx, operands[1],
 	gen_rtx_REG (Pmode, X0_REGNUM),
-	riscv_vector_gen_policy ()));
+	riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   DONE;
 })
 
@@ -1648,7 +1651,7 @@
   emit_insn (gen_vext_vf2 (ZERO_EXTEND, <VN>mode,
 	operands[0], const0_rtx, const0_rtx,
 	operands[1], gen_rtx_REG (Pmode, X0_REGNUM),
-	riscv_vector_gen_policy ()));
+	riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   DONE;
 })
 
@@ -1660,7 +1663,7 @@
   emit_insn (gen_vext_vf4 (SIGN_EXTEND, <VQN>mode,
 	operands[0], const0_rtx, const0_rtx,
 	operands[1], gen_rtx_REG (Pmode, X0_REGNUM),
-	riscv_vector_gen_policy ()));
+	riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   DONE;
 })
 
@@ -1672,7 +1675,7 @@
   emit_insn (gen_vext_vf4 (ZERO_EXTEND, <VQN>mode,
 	operands[0], const0_rtx, const0_rtx, operands[1],
 	gen_rtx_REG (Pmode, X0_REGNUM),
-	riscv_vector_gen_policy ()));
+	riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   DONE;
 })
 
@@ -1684,7 +1687,7 @@
   emit_insn (gen_vext_vf8 (SIGN_EXTEND, <VON>mode,
 	operands[0], const0_rtx, const0_rtx, operands[1],
 	gen_rtx_REG (Pmode, X0_REGNUM),
-	riscv_vector_gen_policy ()));
+	riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   DONE;
 })
 
@@ -1696,7 +1699,7 @@
   emit_insn (gen_vext_vf8 (ZERO_EXTEND, <VON>mode,
 	operands[0], const0_rtx, const0_rtx, operands[1],
 	gen_rtx_REG (Pmode, X0_REGNUM),
-	riscv_vector_gen_policy ()));
+	riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   DONE;
 })
 
@@ -1710,7 +1713,7 @@
     operands[2] = gen_lowpart (Pmode, operands[2]);
   emit_insn (gen_vext_vf2 (SIGN_EXTEND, <VN>mode,
 	operands[0], const0_rtx, const0_rtx,
-	operands[1], operands[2], riscv_vector_gen_policy ()));
+	operands[1], operands[2], riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[2])));
   DONE;
 })
 
@@ -1724,7 +1727,7 @@
     operands[2] = gen_lowpart (Pmode, operands[2]);
   emit_insn (gen_vext_vf2 (ZERO_EXTEND, <VN>mode,
 	operands[0], const0_rtx, const0_rtx, operands[1], operands[2],
-	riscv_vector_gen_policy ()));
+	riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[2])));
   DONE;
 })
 
@@ -1739,7 +1742,7 @@
   emit_insn (gen_vext_vf4 (SIGN_EXTEND, <VQN>mode,
 	operands[0], const0_rtx, const0_rtx,
 	operands[1], operands[2],
-	riscv_vector_gen_policy ()));
+	riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[2])));
   DONE;
 })
 
@@ -1753,7 +1756,7 @@
     operands[2] = gen_lowpart (Pmode, operands[2]);
   emit_insn (gen_vext_vf4 (ZERO_EXTEND, <VQN>mode,
 	operands[0], const0_rtx, const0_rtx, operands[1], operands[2],
-	riscv_vector_gen_policy ()));
+	riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[2])));
   DONE;
 })
 
@@ -1767,7 +1770,7 @@
     operands[2] = gen_lowpart (Pmode, operands[2]);
   emit_insn (gen_vext_vf8 (SIGN_EXTEND, <VON>mode,
 	operands[0], const0_rtx, const0_rtx, operands[1], operands[2],
-	riscv_vector_gen_policy ()));
+	riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[2])));
   DONE;
 })
 
@@ -1781,7 +1784,7 @@
     operands[2] = gen_lowpart (Pmode, operands[2]);
   emit_insn (gen_vext_vf8 (ZERO_EXTEND, <VON>mode,
 	operands[0], const0_rtx, const0_rtx, operands[1], operands[2],
-	riscv_vector_gen_policy ()));
+	riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[2])));
   DONE;
 })
 
@@ -1800,7 +1803,7 @@
 {
   emit_insn (gen_vfwcvt_f_f_v (<VN>mode, operands[0], const0_rtx, const0_rtx,
       operands[1], gen_rtx_REG (Pmode, X0_REGNUM),
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   DONE;
 })
 
@@ -1813,10 +1816,10 @@
   rtx middle_reg = gen_reg_rtx (<VN>mode);
   emit_insn (gen_vfwcvt_f_f_v (<VQN>mode, middle_reg, const0_rtx, const0_rtx,
       operands[1], gen_rtx_REG (Pmode, X0_REGNUM),
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   emit_insn (gen_vfwcvt_f_f_v (<VN>mode, operands[0], const0_rtx, const0_rtx,
       middle_reg, gen_rtx_REG (Pmode, X0_REGNUM),
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   DONE;
 })
 
@@ -1831,7 +1834,7 @@
     operands[2] = gen_lowpart (Pmode, operands[2]);
   emit_insn (gen_vfwcvt_f_f_v (<VN>mode,
       operands[0], const0_rtx, const0_rtx, operands[1], operands[2],
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[2])));
   DONE;
 })
 
@@ -1847,10 +1850,10 @@
   rtx middle_reg = gen_reg_rtx (<VN>mode);
   emit_insn (gen_vfwcvt_f_f_v (<VQN>mode,
       middle_reg, const0_rtx, const0_rtx, operands[1], operands[2],
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[2])));
   emit_insn (gen_vfwcvt_f_f_v (<VN>mode,
       operands[0], const0_rtx, const0_rtx, middle_reg, operands[2],
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[2])));
   DONE;
 })
 
@@ -1869,7 +1872,7 @@
 {
   emit_insn (gen_vfwcvt_f_x_v (<VNDIFF>mode, FLOAT,
       operands[0], const0_rtx, const0_rtx, operands[1], gen_rtx_REG (Pmode, X0_REGNUM),
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   DONE;
 })
 
@@ -1880,7 +1883,7 @@
 {
   emit_insn (gen_vfwcvt_f_x_v (<VNDIFF>mode, UNSIGNED_FLOAT,
       operands[0], const0_rtx, const0_rtx, operands[1], gen_rtx_REG (Pmode, X0_REGNUM),
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   DONE;
 })
 
@@ -1893,10 +1896,10 @@
   rtx middle_reg = gen_reg_rtx (<VN>mode);
   emit_insn (gen_vfwcvt_f_x_v (<VQNDIFF>mode, FLOAT,
       middle_reg, const0_rtx, const0_rtx, operands[1], gen_rtx_REG (Pmode, X0_REGNUM),
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   emit_insn (gen_vfwcvt_f_f_v (<VN>mode,
       operands[0], const0_rtx, const0_rtx, middle_reg, gen_rtx_REG (Pmode, X0_REGNUM),
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   DONE;
 })
 
@@ -1909,10 +1912,10 @@
   rtx middle_reg = gen_reg_rtx (<VN>mode);
   emit_insn (gen_vfwcvt_f_x_v (<VQNDIFF>mode, UNSIGNED_FLOAT,
       middle_reg, const0_rtx, const0_rtx, operands[1], gen_rtx_REG (Pmode, X0_REGNUM),
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   emit_insn (gen_vfwcvt_f_f_v (<VN>mode,
       operands[0], const0_rtx, const0_rtx, middle_reg, gen_rtx_REG (Pmode, X0_REGNUM),
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   DONE;
 })
 
@@ -1927,13 +1930,13 @@
   rtx middle_reg2 = gen_reg_rtx (<VN>mode);
   emit_insn (gen_vfwcvt_f_x_v (<VONDIFF>mode, FLOAT,
       middle_reg1, const0_rtx, const0_rtx, operands[1], gen_rtx_REG (Pmode, X0_REGNUM),
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   emit_insn (gen_vfwcvt_f_f_v (<VQN>mode,
       middle_reg2, const0_rtx, const0_rtx, middle_reg1, gen_rtx_REG (Pmode, X0_REGNUM),
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   emit_insn (gen_vfwcvt_f_f_v (<VN>mode,
       operands[0], const0_rtx, const0_rtx, middle_reg2, gen_rtx_REG (Pmode, X0_REGNUM),
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   DONE;
 })
 
@@ -1948,13 +1951,13 @@
   rtx middle_reg2 = gen_reg_rtx (<VN>mode);
   emit_insn (gen_vfwcvt_f_x_v (<VONDIFF>mode, UNSIGNED_FLOAT,
       middle_reg1, const0_rtx, const0_rtx, operands[1], gen_rtx_REG (Pmode, X0_REGNUM),
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   emit_insn (gen_vfwcvt_f_f_v (<VQN>mode,
       middle_reg2, const0_rtx, const0_rtx, middle_reg1, gen_rtx_REG (Pmode, X0_REGNUM),
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   emit_insn (gen_vfwcvt_f_f_v (<VN>mode,
       operands[0], const0_rtx, const0_rtx, middle_reg2, gen_rtx_REG (Pmode, X0_REGNUM),
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   DONE;
 })
 
@@ -1968,7 +1971,7 @@
     operands[2] = gen_lowpart (Pmode, operands[2]);
   emit_insn (gen_vfwcvt_f_x_v (<VNDIFF>mode, FLOAT,
       operands[0], const0_rtx, const0_rtx, operands[1], operands[2],
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[2])));
   DONE;
 })
 
@@ -1982,7 +1985,7 @@
     operands[2] = gen_lowpart (Pmode, operands[2]);
   emit_insn (gen_vfwcvt_f_x_v (<VNDIFF>mode, UNSIGNED_FLOAT,
       operands[0], const0_rtx, const0_rtx, operands[1], operands[2],
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[2])));
   DONE;
 })
 
@@ -1998,10 +2001,10 @@
   rtx middle_reg = gen_reg_rtx (<VN>mode);
   emit_insn (gen_vfwcvt_f_x_v (<VQNDIFF>mode, FLOAT,
       middle_reg, const0_rtx, const0_rtx, operands[1], operands[2],
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[2])));
   emit_insn (gen_vfwcvt_f_f_v (<VN>mode,
       operands[0], const0_rtx, const0_rtx, middle_reg, operands[2],
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[2])));
   DONE;
 })
 
@@ -2017,10 +2020,10 @@
   rtx middle_reg = gen_reg_rtx (<VN>mode);
   emit_insn (gen_vfwcvt_f_x_v (<VQNDIFF>mode, UNSIGNED_FLOAT,
       middle_reg, const0_rtx, const0_rtx, operands[1], operands[2],
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[2])));
   emit_insn (gen_vfwcvt_f_f_v (<VN>mode,
       operands[0], const0_rtx, const0_rtx, middle_reg, operands[2],
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[2])));
   DONE;
 })
 
@@ -2038,13 +2041,13 @@
   rtx middle_reg2 = gen_reg_rtx (<VN>mode);
   emit_insn (gen_vfwcvt_f_x_v (<VONDIFF>mode, FLOAT,
       middle_reg1, const0_rtx, const0_rtx, operands[1], operands[2],
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[2])));
   emit_insn (gen_vfwcvt_f_f_v (<VQN>mode,
       middle_reg2, const0_rtx, const0_rtx, middle_reg1, operands[2],
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[2])));
   emit_insn (gen_vfwcvt_f_f_v (<VN>mode,
       operands[0], const0_rtx, const0_rtx, middle_reg2, operands[2],
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[2])));
   DONE;
 })
 
@@ -2062,13 +2065,13 @@
   rtx middle_reg2 = gen_reg_rtx (<VN>mode);
   emit_insn (gen_vfwcvt_f_x_v (<VONDIFF>mode, UNSIGNED_FLOAT,
       middle_reg1, const0_rtx, const0_rtx, operands[1], operands[2],
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[2])));
   emit_insn (gen_vfwcvt_f_f_v (<VQN>mode,
       middle_reg2, const0_rtx, const0_rtx, middle_reg1, operands[2],
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[2])));
   emit_insn (gen_vfwcvt_f_f_v (<VN>mode,
       operands[0], const0_rtx, const0_rtx, middle_reg2, operands[2],
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[2])));
   DONE;
 })
 
@@ -2088,7 +2091,7 @@
 {
   emit_insn (gen_vfwcvt_rtz_x_f_v (<VNDIFF>mode, FIX,
       operands[0], const0_rtx, const0_rtx, operands[1], gen_rtx_REG (Pmode, X0_REGNUM),
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   DONE;
 })
 
@@ -2100,7 +2103,7 @@
 {
   emit_insn (gen_vfwcvt_rtz_x_f_v (<VNDIFF>mode, UNSIGNED_FIX,
       operands[0], const0_rtx, const0_rtx, operands[1], gen_rtx_REG (Pmode, X0_REGNUM),
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   DONE;
 })
 
@@ -2113,10 +2116,10 @@
   rtx middle_reg = gen_reg_rtx (<VN>mode);
   emit_insn (gen_vfwcvt_rtz_x_f_v (<VQNDIFF>mode, FIX,
       middle_reg, const0_rtx, const0_rtx, operands[1],
-      gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy ()));
+      gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   emit_insn (gen_vext_vf2 (SIGN_EXTEND, <VN>mode,
       operands[0], const0_rtx, const0_rtx, middle_reg,
-      gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy ()));
+      gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   DONE;
 })
 
@@ -2129,10 +2132,10 @@
   rtx middle_reg = gen_reg_rtx (<VN>mode);
   emit_insn (gen_vfwcvt_rtz_x_f_v (<VQNDIFF>mode, UNSIGNED_FIX,
       middle_reg, const0_rtx, const0_rtx, operands[1],
-      gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy ()));
+      gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   emit_insn (gen_vext_vf2 (ZERO_EXTEND, <VN>mode,
       operands[0], const0_rtx, const0_rtx, middle_reg,
-      gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy ()));
+      gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   DONE;
 })
 
@@ -2147,7 +2150,7 @@
     operands[2] = gen_lowpart (Pmode, operands[2]);
   emit_insn (gen_vfwcvt_rtz_x_f_v (<VNDIFF>mode, FIX,
       operands[0], const0_rtx, const0_rtx, operands[1], operands[2],
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[2])));
   DONE;
 })
 
@@ -2162,7 +2165,7 @@
     operands[2] = gen_lowpart (Pmode, operands[2]);
   emit_insn (gen_vfwcvt_rtz_x_f_v (<VNDIFF>mode, UNSIGNED_FIX,
       operands[0], const0_rtx, const0_rtx, operands[1], operands[2],
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[2])));
   DONE;
 })
 
@@ -2178,11 +2181,11 @@
   rtx middle_reg = gen_reg_rtx (<VN>mode);
   emit_insn (gen_vfwcvt_rtz_x_f_v (<VQNDIFF>mode, FIX,
       middle_reg, const0_rtx, const0_rtx, operands[1], operands[2],
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[2])));
   emit_insn (gen_vext_vf2 (SIGN_EXTEND, <VN>mode,
       operands[0], const0_rtx, const0_rtx,
       middle_reg, operands[2],
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[2])));
   DONE;
 })
 
@@ -2198,11 +2201,11 @@
   rtx middle_reg = gen_reg_rtx (<VN>mode);
   emit_insn (gen_vfwcvt_rtz_x_f_v (<VQNDIFF>mode, UNSIGNED_FIX,
       middle_reg, const0_rtx, const0_rtx, operands[1], operands[2],
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[2])));
   emit_insn (gen_vext_vf2 (ZERO_EXTEND, <VN>mode,
       operands[0], const0_rtx, const0_rtx,
       middle_reg, operands[2],
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[2])));
   DONE;
 })
 
@@ -2221,7 +2224,7 @@
   emit_insn (gen_vncvt_x_x_w (<VN>mode, operands[0],
 	     const0_rtx, const0_rtx,
 	     operands[1], gen_rtx_REG (Pmode, X0_REGNUM),
-	     riscv_vector_gen_policy ()));
+	     riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   DONE;
 })
 
@@ -2232,9 +2235,9 @@
 {
   rtx middle_reg = gen_reg_rtx (<VN>mode);
   emit_insn (gen_vncvt_x_x_w (<VN>mode, middle_reg, const0_rtx, const0_rtx,
-	     operands[1], gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy ()));
+	     operands[1], gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   emit_insn (gen_vncvt_x_x_w (<VQN>mode, operands[0], const0_rtx, const0_rtx,
-	     middle_reg, gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy ()));
+	     middle_reg, gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   DONE;
 })
 
@@ -2246,11 +2249,11 @@
   rtx middle_reg1 = gen_reg_rtx (<VN>mode);
   rtx middle_reg2 = gen_reg_rtx (<VQN>mode);
   emit_insn (gen_vncvt_x_x_w (<VN>mode, middle_reg1, const0_rtx, const0_rtx,
-	     operands[1], gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy ()));
+	     operands[1], gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   emit_insn (gen_vncvt_x_x_w (<VQN>mode, middle_reg2, const0_rtx, const0_rtx,
-	     middle_reg1, gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy ()));
+	     middle_reg1, gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   emit_insn (gen_vncvt_x_x_w (<VON>mode, operands[0], const0_rtx, const0_rtx,
-	     middle_reg2, gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy ()));
+	     middle_reg2, gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   DONE;
 })
 
@@ -2263,7 +2266,7 @@
   if (!CONST_SCALAR_INT_P (operands[2]) && GET_MODE (operands[2]) != Pmode)
     operands[2] = gen_lowpart (Pmode, operands[2]);
   emit_insn (gen_vncvt_x_x_w (<VN>mode, operands[0], const0_rtx, const0_rtx,
-	     operands[1], operands[2], riscv_vector_gen_policy ()));
+	     operands[1], operands[2], riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[2])));
   DONE;
 })
 
@@ -2277,9 +2280,9 @@
     operands[2] = gen_lowpart (Pmode, operands[2]);
   rtx middle_reg = gen_reg_rtx (<VN>mode);
   emit_insn (gen_vncvt_x_x_w (<VN>mode, middle_reg, const0_rtx, const0_rtx,
-	     operands[1], operands[2], riscv_vector_gen_policy ()));
+	     operands[1], operands[2], riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[2])));
   emit_insn (gen_vncvt_x_x_w (<VQN>mode, operands[0], const0_rtx, const0_rtx,
-	     middle_reg, operands[2], riscv_vector_gen_policy ()));
+	     middle_reg, operands[2], riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[2])));
   DONE;
 })
 
@@ -2294,11 +2297,11 @@
   rtx middle_reg1 = gen_reg_rtx (<VN>mode);
   rtx middle_reg2 = gen_reg_rtx (<VQN>mode);
   emit_insn (gen_vncvt_x_x_w (<VN>mode, middle_reg1, const0_rtx, const0_rtx,
-	     operands[1], operands[2], riscv_vector_gen_policy ()));
+	     operands[1], operands[2], riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[2])));
   emit_insn (gen_vncvt_x_x_w (<VQN>mode, middle_reg2, const0_rtx, const0_rtx,
-	     middle_reg1, operands[2], riscv_vector_gen_policy ()));
+	     middle_reg1, operands[2], riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[2])));
   emit_insn (gen_vncvt_x_x_w (<VON>mode, operands[0], const0_rtx, const0_rtx,
-	     middle_reg2, operands[2], riscv_vector_gen_policy ()));
+	     middle_reg2, operands[2], riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[2])));
   DONE;
 })
 
@@ -2317,7 +2320,7 @@
 {
   emit_insn (gen_vfncvt_f_f_w (<VN>mode, operands[0], const0_rtx, const0_rtx,
 	     operands[1], gen_rtx_REG (Pmode, X0_REGNUM),
-	     riscv_vector_gen_policy ()));
+	     riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   DONE;
 })
 
@@ -2330,10 +2333,10 @@
   rtx middle_reg = gen_reg_rtx (<VN>mode);
   emit_insn (gen_vfncvt_f_f_w (<VN>mode,
       middle_reg, const0_rtx, const0_rtx, operands[1], gen_rtx_REG (Pmode, X0_REGNUM),
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   emit_insn (gen_vfncvt_f_f_w (<VQN>mode,
       operands[0], const0_rtx, const0_rtx, middle_reg, gen_rtx_REG (Pmode, X0_REGNUM),
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   DONE;
 })
 
@@ -2348,7 +2351,7 @@
     operands[2] = gen_lowpart (Pmode, operands[2]);
   emit_insn (gen_vfncvt_f_f_w (<VN>mode, operands[0], const0_rtx, const0_rtx,
 	     operands[1], operands[2],
-	     riscv_vector_gen_policy ()));
+	     riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[2])));
   DONE;
 })
 
@@ -2364,10 +2367,10 @@
   rtx middle_reg = gen_reg_rtx (<VN>mode);
   emit_insn (gen_vfncvt_f_f_w (<VN>mode,
       middle_reg, const0_rtx, const0_rtx, operands[1], operands[2],
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[2])));
   emit_insn (gen_vfncvt_f_f_w (<VQN>mode,
       operands[0], const0_rtx, const0_rtx, middle_reg, operands[2],
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[2])));
   DONE;
 })
 
@@ -2388,7 +2391,7 @@
   emit_insn (gen_vfncvt_rtz_x_f_w (<MODE>mode, FIX, operands[0],
 	     const0_rtx, const0_rtx,
 	     operands[1], gen_rtx_REG (Pmode, X0_REGNUM),
-	     riscv_vector_gen_policy ()));
+	     riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   DONE;
 })
 
@@ -2401,7 +2404,7 @@
   emit_insn (gen_vfncvt_rtz_x_f_w (<MODE>mode, UNSIGNED_FIX, operands[0],
 	     const0_rtx, const0_rtx,
 	     operands[1], gen_rtx_REG (Pmode, X0_REGNUM),
-	     riscv_vector_gen_policy ()));
+	     riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   DONE;
 })
 
@@ -2414,9 +2417,9 @@
   rtx middle_reg = gen_reg_rtx (<VW>mode);
   emit_insn (gen_vfncvt_rtz_x_f_w (<VW>mode, FIX, middle_reg, const0_rtx, const0_rtx,
 	     operands[1], gen_rtx_REG (Pmode, X0_REGNUM),
-	     riscv_vector_gen_policy ()));
+	     riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   emit_insn (gen_vncvt_x_x_w (<MODE>mode, operands[0], const0_rtx, const0_rtx,
-	     middle_reg, gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy ()));
+	     middle_reg, gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   DONE;
 })
 
@@ -2428,9 +2431,9 @@
 {
   rtx middle_reg = gen_reg_rtx (<VW>mode);
   emit_insn (gen_vfncvt_rtz_x_f_w (<VW>mode, UNSIGNED_FIX, middle_reg, const0_rtx, const0_rtx,
-	     operands[1], gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy ()));
+	     operands[1], gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   emit_insn (gen_vncvt_x_x_w (<MODE>mode, operands[0], const0_rtx, const0_rtx,
-	     middle_reg, gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy ()));
+	     middle_reg, gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   DONE;
 })
 
@@ -2443,11 +2446,11 @@
   rtx middle_reg1 = gen_reg_rtx (<VQW>mode);
   rtx middle_reg2 = gen_reg_rtx (<VW>mode);
   emit_insn (gen_vfncvt_rtz_x_f_w (<VQW>mode, FIX, middle_reg1, const0_rtx, const0_rtx,
-	     operands[1], gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy ()));
+	     operands[1], gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   emit_insn (gen_vncvt_x_x_w (<VW>mode, middle_reg2, const0_rtx, const0_rtx,
-	     middle_reg1, gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy ()));
+	     middle_reg1, gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   emit_insn (gen_vncvt_x_x_w (<MODE>mode, operands[0], const0_rtx, const0_rtx,
-	     middle_reg2, gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy ()));
+	     middle_reg2, gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   DONE;
 })
 
@@ -2460,11 +2463,11 @@
   rtx middle_reg1 = gen_reg_rtx (<VQW>mode);
   rtx middle_reg2 = gen_reg_rtx (<VW>mode);
   emit_insn (gen_vfncvt_rtz_x_f_w (<VQW>mode, UNSIGNED_FIX, middle_reg1, const0_rtx, const0_rtx,
-	     operands[1], gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy ()));
+	     operands[1], gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   emit_insn (gen_vncvt_x_x_w (<VW>mode, middle_reg2, const0_rtx, const0_rtx,
-	     middle_reg1, gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy ()));
+	     middle_reg1, gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   emit_insn (gen_vncvt_x_x_w (<MODE>mode, operands[0], const0_rtx, const0_rtx,
-	     middle_reg2, gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy ()));
+	     middle_reg2, gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   DONE;
 })
 
@@ -2478,7 +2481,7 @@
   if (!CONST_SCALAR_INT_P (operands[2]) && GET_MODE (operands[2]) != Pmode)
     operands[2] = gen_lowpart (Pmode, operands[2]);
   emit_insn (gen_vfncvt_rtz_x_f_w (<MODE>mode, FIX, operands[0], const0_rtx, const0_rtx,
-	     operands[1], operands[2], riscv_vector_gen_policy ()));
+	     operands[1], operands[2], riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[2])));
   DONE;
 })
 
@@ -2494,7 +2497,7 @@
   emit_insn (gen_vfncvt_rtz_x_f_w (<MODE>mode, UNSIGNED_FIX, operands[0],
 	     const0_rtx, const0_rtx,
 	     operands[1], operands[2],
-	     riscv_vector_gen_policy ()));
+	     riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[2])));
   DONE;
 })
 
@@ -2509,9 +2512,9 @@
     operands[2] = gen_lowpart (Pmode, operands[2]);
   rtx middle_reg = gen_reg_rtx (<VW>mode);
   emit_insn (gen_vfncvt_rtz_x_f_w (<VW>mode, FIX, middle_reg, const0_rtx, const0_rtx,
-	     operands[1], operands[2], riscv_vector_gen_policy ()));
+	     operands[1], operands[2], riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[2])));
   emit_insn (gen_vncvt_x_x_w (<MODE>mode, operands[0], const0_rtx, const0_rtx,
-	     middle_reg, operands[2], riscv_vector_gen_policy ()));
+	     middle_reg, operands[2], riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[2])));
   DONE;
 })
 
@@ -2526,9 +2529,9 @@
     operands[2] = gen_lowpart (Pmode, operands[2]);
   rtx middle_reg = gen_reg_rtx (<VW>mode);
   emit_insn (gen_vfncvt_rtz_x_f_w (<VW>mode, UNSIGNED_FIX, middle_reg, const0_rtx, const0_rtx,
-	     operands[1], operands[2], riscv_vector_gen_policy ()));
+	     operands[1], operands[2], riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[2])));
   emit_insn (gen_vncvt_x_x_w (<MODE>mode, operands[0], const0_rtx, const0_rtx,
-	     middle_reg, operands[2], riscv_vector_gen_policy ()));
+	     middle_reg, operands[2], riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[2])));
   DONE;
 })
 
@@ -2544,11 +2547,11 @@
   rtx middle_reg1 = gen_reg_rtx (<VQW>mode);
   rtx middle_reg2 = gen_reg_rtx (<VW>mode);
   emit_insn (gen_vfncvt_rtz_x_f_w (<VQW>mode, FIX, middle_reg1, const0_rtx, const0_rtx,
-	     operands[1], operands[2], riscv_vector_gen_policy ()));
+	     operands[1], operands[2], riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[2])));
   emit_insn (gen_vncvt_x_x_w (<VW>mode, middle_reg2, const0_rtx, const0_rtx,
-	     middle_reg1, operands[2], riscv_vector_gen_policy ()));
+	     middle_reg1, operands[2], riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[2])));
   emit_insn (gen_vncvt_x_x_w (<MODE>mode, operands[0], const0_rtx, const0_rtx,
-	     middle_reg2, operands[2], riscv_vector_gen_policy ()));
+	     middle_reg2, operands[2], riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[2])));
   DONE;
 })
 
@@ -2564,11 +2567,11 @@
   rtx middle_reg1 = gen_reg_rtx (<VQW>mode);
   rtx middle_reg2 = gen_reg_rtx (<VW>mode);
   emit_insn (gen_vfncvt_rtz_x_f_w (<VQW>mode, UNSIGNED_FIX, middle_reg1, const0_rtx, const0_rtx,
-	     operands[1], operands[2], riscv_vector_gen_policy ()));
+	     operands[1], operands[2], riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[2])));
   emit_insn (gen_vncvt_x_x_w (<VW>mode, middle_reg2, const0_rtx, const0_rtx,
-	     middle_reg1, operands[2], riscv_vector_gen_policy ()));
+	     middle_reg1, operands[2], riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[2])));
   emit_insn (gen_vncvt_x_x_w (<MODE>mode, operands[0], const0_rtx, const0_rtx,
-	     middle_reg2, operands[2], riscv_vector_gen_policy ()));
+	     middle_reg2, operands[2], riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[2])));
   DONE;
 })
 
@@ -2587,7 +2590,7 @@
    riscv_vector_check_supported_mode_p (<VWDIFF>mode)"
 {
   emit_insn (gen_vfncvt_f_x_w (<MODE>mode, FLOAT, operands[0], const0_rtx, const0_rtx,
-	     operands[1], gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy ()));
+	     operands[1], gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   DONE;
 })
 
@@ -2598,7 +2601,7 @@
    riscv_vector_check_supported_mode_p (<VWDIFF>mode)"
 {
   emit_insn (gen_vfncvt_f_x_w (<MODE>mode, UNSIGNED_FLOAT, operands[0],const0_rtx, const0_rtx,
-	     operands[1], gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy ()));
+	     operands[1], gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   DONE;
 })
 
@@ -2610,9 +2613,9 @@
 {
   rtx middle_reg = gen_reg_rtx (<VW>mode);
   emit_insn (gen_vfncvt_f_x_w (<VW>mode, FLOAT, middle_reg, const0_rtx, const0_rtx,
-	     operands[1], gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy ()));
+	     operands[1], gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   emit_insn (gen_vfncvt_f_f_w (<MODE>mode, operands[0], const0_rtx, const0_rtx,
-	     middle_reg, gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy ()));
+	     middle_reg, gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   DONE;
 })
 
@@ -2624,9 +2627,9 @@
 {
   rtx middle_reg = gen_reg_rtx (<VW>mode);
   emit_insn (gen_vfncvt_f_x_w (<VW>mode, UNSIGNED_FLOAT, middle_reg, const0_rtx, const0_rtx,
-	     operands[1], gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy ()));
+	     operands[1], gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   emit_insn (gen_vfncvt_f_f_w (<MODE>mode, operands[0], const0_rtx, const0_rtx,
-	     middle_reg, gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy ()));
+	     middle_reg, gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   DONE;
 })
 
@@ -2640,7 +2643,7 @@
   if (!CONST_SCALAR_INT_P (operands[2]) && GET_MODE (operands[2]) != Pmode)
     operands[2] = gen_lowpart (Pmode, operands[2]);
   emit_insn (gen_vfncvt_f_x_w (<MODE>mode, FLOAT, operands[0], const0_rtx, const0_rtx,
-	     operands[1], operands[2], riscv_vector_gen_policy ()));
+	     operands[1], operands[2], riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[2])));
   DONE;
 })
 
@@ -2654,7 +2657,7 @@
   if (!CONST_SCALAR_INT_P (operands[2]) && GET_MODE (operands[2]) != Pmode)
     operands[2] = gen_lowpart (Pmode, operands[2]);
   emit_insn (gen_vfncvt_f_x_w (<MODE>mode, UNSIGNED_FLOAT, operands[0], const0_rtx, const0_rtx,
-	     operands[1], operands[2], riscv_vector_gen_policy ()));
+	     operands[1], operands[2], riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[2])));
   DONE;
 })
 
@@ -2669,9 +2672,9 @@
     operands[2] = gen_lowpart (Pmode, operands[2]);
   rtx middle_reg = gen_reg_rtx (<VW>mode);
   emit_insn (gen_vfncvt_f_x_w (<VW>mode, FLOAT, middle_reg, const0_rtx, const0_rtx,
-	     operands[1], operands[2], riscv_vector_gen_policy ()));
+	     operands[1], operands[2], riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[2])));
   emit_insn (gen_vfncvt_f_f_w (<MODE>mode, operands[0], const0_rtx, const0_rtx,
-	     middle_reg, operands[2], riscv_vector_gen_policy ()));
+	     middle_reg, operands[2], riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[2])));
   DONE;
 })
 
@@ -2686,9 +2689,9 @@
     operands[2] = gen_lowpart (Pmode, operands[2]);
   rtx middle_reg = gen_reg_rtx (<VW>mode);
   emit_insn (gen_vfncvt_f_x_w (<VW>mode, UNSIGNED_FLOAT, middle_reg, const0_rtx, const0_rtx,
-	     operands[1], operands[2], riscv_vector_gen_policy ()));
+	     operands[1], operands[2], riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[2])));
   emit_insn (gen_vfncvt_f_f_w (<MODE>mode, operands[0], const0_rtx, const0_rtx,
-	     middle_reg, operands[2], riscv_vector_gen_policy ()));
+	     middle_reg, operands[2], riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[2])));
   DONE;
 })
 
@@ -2740,7 +2743,7 @@
     emit_insn (gen_v<optab><mode>_vv (operands[0],
 	    const0_rtx, const0_rtx, operands[1],
 	    operands[2], gen_rtx_REG (Pmode, X0_REGNUM),
-	    riscv_vector_gen_policy ()));
+	    riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   else
     {
       rtx x;
@@ -2748,7 +2751,7 @@
       emit_insn (gen_v<optab><mode>_vx (operands[0],
 	const0_rtx, const0_rtx, operands[1],
 	x, gen_rtx_REG (Pmode, X0_REGNUM),
-	riscv_vector_gen_policy ()));
+	riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
     }
   DONE;
 })
@@ -2765,14 +2768,14 @@
   if (register_operand (operands[3], <MODE>mode))
     emit_insn (gen_v<optab><mode>_vv (operands[0], operands[1], operands[4],
 	    operands[2], operands[3], gen_rtx_REG (Pmode, X0_REGNUM),
-	    riscv_vector_gen_policy (RVV_POLICY_MU)));
+	    riscv_vector_gen_policy (RVV_POLICY_MU), gen_reg_rtx (Pmode)));
   else
     {
       rtx x;
       gcc_assert (const_vec_duplicate_p(operands[3], &x));
       emit_insn (gen_v<optab><mode>_vx (operands[0], operands[1], operands[4],
 	    operands[2], x, gen_rtx_REG (Pmode, X0_REGNUM),
-	    riscv_vector_gen_policy (RVV_POLICY_MU)));
+	    riscv_vector_gen_policy (RVV_POLICY_MU), gen_reg_rtx (Pmode)));
     }
   DONE;
 })
@@ -2790,14 +2793,14 @@
   if (register_operand (operands[2], <MODE>mode))
     emit_insn (gen_v<optab><mode>_vv (operands[0],
 	    const0_rtx, const0_rtx, operands[1],
-	    operands[2], operands[3], riscv_vector_gen_policy ()));
+	    operands[2], operands[3], riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[3])));
   else
     {
       rtx x;
        gcc_assert (const_vec_duplicate_p(operands[2], &x));
        emit_insn (gen_v<optab><mode>_vx (operands[0],
 	    const0_rtx, const0_rtx, operands[1],
-	    x, operands[3], riscv_vector_gen_policy ()));
+	    x, operands[3], riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[3])));
     }
   DONE;
 })
@@ -2816,7 +2819,7 @@
     operands[5] = gen_lowpart (Pmode, operands[5]);
   emit_insn (gen_v<optab><mode>_vv (operands[0],
 	    operands[1], operands[4], operands[2],
-	    operands[3], operands[5], riscv_vector_gen_policy (RVV_POLICY_MU)));
+	    operands[3], operands[5], riscv_vector_gen_policy (RVV_POLICY_MU), riscv_vector_gen_clobber_vl (operands[5])));
   DONE;
 })
 
@@ -2831,7 +2834,7 @@
 {
   emit_insn (gen_v<optab><mode>_vv (operands[0],
 	    const0_rtx, operands[4], operands[2],
-	    operands[3], operands[1], riscv_vector_gen_policy (RVV_POLICY_TU)));
+	    operands[3], operands[1], riscv_vector_gen_policy (RVV_POLICY_TU), riscv_vector_gen_clobber_vl (operands[1])));
   DONE;
 })
 
@@ -2854,7 +2857,7 @@
     emit_insn (gen_vadd_vv (<MODE>mode, operands[0],
 	const0_rtx, const0_rtx, operands[1], operands[2],
 	gen_rtx_REG (Pmode, X0_REGNUM),
-	riscv_vector_gen_policy ()));
+	riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   else
     {
       rtx x;
@@ -2862,7 +2865,7 @@
       emit_insn (gen_v_vx (UNSPEC_VADD, <MODE>mode,
 	operands[0], const0_rtx, const0_rtx,
 	operands[1], x, gen_rtx_REG (Pmode, X0_REGNUM),
-	riscv_vector_gen_policy ()));
+	riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
     }
   DONE;
 })
@@ -2879,7 +2882,7 @@
     emit_insn (gen_vadd_vv (<MODE>mode,
 	operands[0], operands[1], operands[4],
 	operands[2], operands[3], gen_rtx_REG (Pmode, X0_REGNUM),
-	riscv_vector_gen_policy (RVV_POLICY_MU)));
+	riscv_vector_gen_policy (RVV_POLICY_MU), gen_reg_rtx (Pmode)));
   else
     {
       rtx x;
@@ -2887,7 +2890,7 @@
       emit_insn (gen_v_vx (UNSPEC_VADD, <MODE>mode,
 	  operands[0], operands[1], operands[4],
 	  operands[2], x, gen_rtx_REG (Pmode, X0_REGNUM),
-	  riscv_vector_gen_policy (RVV_POLICY_MU)));
+	  riscv_vector_gen_policy (RVV_POLICY_MU), gen_reg_rtx (Pmode)));
     }
   DONE;
 })
@@ -2904,14 +2907,14 @@
   if (register_operand (operands[2], <MODE>mode))
     emit_insn (gen_vadd_vv (<MODE>mode, operands[0],
 	const0_rtx, const0_rtx, operands[1], operands[2],
-	operands[3], riscv_vector_gen_policy ()));
+	operands[3], riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[3])));
   else
     {
       rtx x;
       gcc_assert (const_vec_duplicate_p(operands[2], &x));
       emit_insn (gen_v_vx (UNSPEC_VADD, <MODE>mode,
 	operands[0], const0_rtx, const0_rtx, operands[1], x, operands[3],
-	riscv_vector_gen_policy ()));
+	riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[3])));
     }
   DONE;
 })
@@ -2930,7 +2933,7 @@
   emit_insn (gen_vadd_vv (<MODE>mode,
 	operands[0], operands[1], operands[4],
 	operands[2], operands[3], operands[5],
-	riscv_vector_gen_policy (RVV_POLICY_MU)));
+	riscv_vector_gen_policy (RVV_POLICY_MU), riscv_vector_gen_clobber_vl (operands[5])));
   DONE;
 })
 
@@ -2946,7 +2949,7 @@
     emit_insn (gen_vadd_vv (<MODE>mode,
 	operands[0], const0_rtx, operands[4],
 	operands[2], operands[3], operands[1],
-	riscv_vector_gen_policy (RVV_POLICY_TU)));
+	riscv_vector_gen_policy (RVV_POLICY_TU), riscv_vector_gen_clobber_vl (operands[1])));
   else
     {
       rtx x;
@@ -2954,7 +2957,7 @@
       emit_insn (gen_v_vx (UNSPEC_VADD, <MODE>mode,
 	  operands[0], const0_rtx, operands[4],
 	  operands[2], x, operands[1],
-	  riscv_vector_gen_policy (RVV_POLICY_TU)));
+	  riscv_vector_gen_policy (RVV_POLICY_TU), riscv_vector_gen_clobber_vl (operands[1])));
     }
   DONE;
 })
@@ -2978,7 +2981,7 @@
 {
   emit_insn (gen_vsub_vv (<MODE>mode, operands[0],
       const0_rtx, const0_rtx, operands[1], operands[2],
-      gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy ()));
+      gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   DONE;
 })
 
@@ -2993,7 +2996,7 @@
   emit_insn (gen_vsub_vv (<MODE>mode,
 	operands[0], operands[1], operands[4],
 	operands[2], operands[3], gen_rtx_REG (Pmode, X0_REGNUM),
-	riscv_vector_gen_policy (RVV_POLICY_MU)));
+	riscv_vector_gen_policy (RVV_POLICY_MU), gen_reg_rtx (Pmode)));
   DONE;
 })
 
@@ -3008,7 +3011,7 @@
     operands[3] = gen_lowpart (Pmode, operands[3]);
   emit_insn (gen_vsub_vv (<MODE>mode, operands[0], const0_rtx, const0_rtx,
       operands[1], operands[2], operands[3],
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[3])));
   DONE;
 })
 
@@ -3026,7 +3029,7 @@
   emit_insn (gen_vsub_vv (<MODE>mode,
 	operands[0], operands[1], operands[4],
 	operands[2], operands[3], operands[5],
-	riscv_vector_gen_policy (RVV_POLICY_MU)));
+	riscv_vector_gen_policy (RVV_POLICY_MU), riscv_vector_gen_clobber_vl (operands[5])));
   DONE;
 })
 
@@ -3041,7 +3044,7 @@
   emit_insn (gen_vsub_vv (<MODE>mode,
 	operands[0], const0_rtx, operands[4],
 	operands[2], operands[3], operands[1],
-	riscv_vector_gen_policy (RVV_POLICY_TU)));
+	riscv_vector_gen_policy (RVV_POLICY_TU), riscv_vector_gen_clobber_vl (operands[1])));
   DONE;
 })
 
@@ -3072,7 +3075,7 @@
   emit_insn (gen_v<optab><mode>_vx (operands[0],
 	const0_rtx, const0_rtx, operands[1],
 	operands[2], gen_rtx_REG (Pmode, X0_REGNUM),
-	riscv_vector_gen_policy ()));
+	riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   DONE;
 })
 
@@ -3086,7 +3089,7 @@
   emit_insn (gen_v<optab><mode>_vv (operands[0],
 	const0_rtx, const0_rtx, operands[1],
 	operands[2], gen_rtx_REG (Pmode, X0_REGNUM),
-	riscv_vector_gen_policy ()));
+	riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   DONE;
 })
 
@@ -3103,7 +3106,7 @@
     emit_insn (gen_v<optab><mode>_vv (operands[0], operands[1],
 	    operands[4], operands[2], operands[3],
 	    gen_rtx_REG (Pmode, X0_REGNUM),
-	    riscv_vector_gen_policy (RVV_POLICY_MU)));
+	    riscv_vector_gen_policy (RVV_POLICY_MU), gen_reg_rtx (Pmode)));
   else
     {
       rtx x;
@@ -3113,7 +3116,7 @@
 
       emit_insn (gen_v<optab><mode>_vx (operands[0], operands[1], operands[4],
 	  operands[2], x, gen_rtx_REG (Pmode, X0_REGNUM),
-	  riscv_vector_gen_policy (RVV_POLICY_MU)));
+	  riscv_vector_gen_policy (RVV_POLICY_MU), gen_reg_rtx (Pmode)));
     }
   DONE;
 })
@@ -3133,7 +3136,7 @@
   emit_insn (gen_v<optab><mode>_vx (operands[0],
 	const0_rtx, const0_rtx, operands[1],
 	operands[2], operands[3],
-	riscv_vector_gen_policy ()));
+	riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[3])));
   DONE;
 })
 
@@ -3150,7 +3153,7 @@
   emit_insn (gen_v<optab><mode>_vv (operands[0],
 	const0_rtx, const0_rtx, operands[1],
 	operands[2], operands[3],
-	riscv_vector_gen_policy ()));
+	riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[3])));
   DONE;
 })
 
@@ -3167,7 +3170,8 @@
   if (!CONST_SCALAR_INT_P (operands[5]) && GET_MODE (operands[5]) != Pmode)
     operands[5] = gen_lowpart (Pmode, operands[5]);
   emit_insn (gen_v<optab><mode>_vx (operands[0], operands[1], operands[4],
-	  operands[2], operands[3], operands[5], riscv_vector_gen_policy (RVV_POLICY_MU)));
+	  operands[2], operands[3], operands[5], riscv_vector_gen_policy (RVV_POLICY_MU),
+	  riscv_vector_gen_clobber_vl (operands[5])));
   DONE;
 })
 
@@ -3185,7 +3189,8 @@
     operands[5] = gen_lowpart (Pmode, operands[5]);
   emit_insn (gen_v<optab><mode>_vv (operands[0], operands[1],
 	    operands[4], operands[2], operands[3],
-	    operands[5], riscv_vector_gen_policy (RVV_POLICY_MU)));
+	    operands[5], riscv_vector_gen_policy (RVV_POLICY_MU),
+	    riscv_vector_gen_clobber_vl (operands[5])));
   DONE;
 })
 
@@ -3199,7 +3204,8 @@
   "TARGET_VECTOR"
 {
   emit_insn (gen_v<optab><mode>_vx (operands[0], const0_rtx, operands[4],
-	  operands[2], operands[3], operands[1], riscv_vector_gen_policy (RVV_POLICY_TU)));
+	  operands[2], operands[3], operands[1], riscv_vector_gen_policy (RVV_POLICY_TU),
+	  riscv_vector_gen_clobber_vl (operands[1])));
   DONE;
 })
 
@@ -3214,7 +3220,8 @@
 {
   emit_insn (gen_v<optab><mode>_vv (operands[0], const0_rtx,
 	    operands[4], operands[2], operands[3],
-	    operands[1], riscv_vector_gen_policy (RVV_POLICY_TU)));
+	    operands[1], riscv_vector_gen_policy (RVV_POLICY_TU),
+	    riscv_vector_gen_clobber_vl (operands[1])));
   DONE;
 })
 
@@ -3241,7 +3248,7 @@
       emit_insn (gen_vmulh<u><mode>_vv (operands[0],
 	    const0_rtx, const0_rtx, operands[1],
 	    operands[2], gen_rtx_REG (Pmode, X0_REGNUM),
-	    riscv_vector_gen_policy ()));
+	    riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
     }
   else
     {
@@ -3250,7 +3257,7 @@
       emit_insn (gen_vmulh<u><mode>_vx (
 	operands[0], const0_rtx, const0_rtx,
 	operands[1], x, gen_rtx_REG (Pmode, X0_REGNUM),
-	riscv_vector_gen_policy ()));
+	riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
     }
   DONE;
 })
@@ -3280,7 +3287,7 @@
     emit_insn (gen_vf<optab><mode>_vv (operands[0],
 	    const0_rtx, const0_rtx, operands[1],
 	    operands[2], gen_rtx_REG (Pmode, X0_REGNUM),
-	    riscv_vector_gen_policy ()));
+	    riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   else
     {
       rtx f;
@@ -3288,7 +3295,7 @@
       emit_insn (gen_vf<optab><mode>_vf (operands[0],
 	    const0_rtx, const0_rtx, operands[1],
 	    force_reg (<VSUB>mode, f), gen_rtx_REG (Pmode, X0_REGNUM),
-	    riscv_vector_gen_policy ()));
+	    riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
     }
   DONE;
 })
@@ -3306,14 +3313,14 @@
     emit_insn (gen_vf<optab><mode>_vv (operands[0], operands[1],
 	    operands[4], operands[2], operands[3],
 	    gen_rtx_REG (Pmode, X0_REGNUM),
-	    riscv_vector_gen_policy (RVV_POLICY_MU)));
+	    riscv_vector_gen_policy (RVV_POLICY_MU), gen_reg_rtx (Pmode)));
   else
     {
       rtx f;
       gcc_assert (const_vec_duplicate_p(operands[3], &f));
       emit_insn (gen_vf<optab><mode>_vf (operands[0], operands[1], operands[4],
 	  operands[2], force_reg (<VSUB>mode, f), gen_rtx_REG (Pmode, X0_REGNUM),
-	  riscv_vector_gen_policy (RVV_POLICY_MU)));
+	  riscv_vector_gen_policy (RVV_POLICY_MU), gen_reg_rtx (Pmode)));
     }
   DONE;
 })
@@ -3331,7 +3338,7 @@
   if (register_operand (operands[2], <MODE>mode))
     emit_insn (gen_vf<optab><mode>_vv (operands[0],
       const0_rtx, const0_rtx, operands[1], operands[2], operands[3],
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[3])));
   else
     {
       rtx f;
@@ -3339,7 +3346,7 @@
       emit_insn (gen_vf<optab><mode>_vf (operands[0],
 	  const0_rtx, const0_rtx, operands[1],
 	  force_reg (<VSUB>mode, f), operands[3],
-	  riscv_vector_gen_policy ()));
+	  riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[3])));
     }
   DONE;
 })
@@ -3358,7 +3365,7 @@
     operands[5] = gen_lowpart (Pmode, operands[5]);
   emit_insn (gen_vf<optab><mode>_vv (operands[0],
       operands[1], operands[4], operands[2], operands[3], operands[5],
-      riscv_vector_gen_policy (RVV_POLICY_MU)));
+      riscv_vector_gen_policy (RVV_POLICY_MU), riscv_vector_gen_clobber_vl (operands[5])));
   DONE;
 })
 
@@ -3374,14 +3381,14 @@
   if (register_operand (operands[3], <MODE>mode))
     emit_insn (gen_vf<optab><mode>_vv (operands[0], const0_rtx,
 	    operands[4], operands[2], operands[3],
-	    operands[1], riscv_vector_gen_policy (RVV_POLICY_TU)));
+	    operands[1], riscv_vector_gen_policy (RVV_POLICY_TU), riscv_vector_gen_clobber_vl (operands[1])));
   else
     {
       rtx f;
       gcc_assert (const_vec_duplicate_p(operands[3], &f));
       emit_insn (gen_vf<optab><mode>_vf (operands[0], const0_rtx, operands[4],
 	  operands[2], force_reg (<VSUB>mode, f), operands[1],
-	  riscv_vector_gen_policy (RVV_POLICY_TU)));
+	  riscv_vector_gen_policy (RVV_POLICY_TU), riscv_vector_gen_clobber_vl (operands[1])));
     }
   DONE;
 })
@@ -3408,7 +3415,7 @@
   emit_insn (gen_vf<optab><mode>_vv (operands[0],
 	    const0_rtx, const0_rtx, operands[1],
 	    operands[2], gen_rtx_REG (Pmode, X0_REGNUM),
-	    riscv_vector_gen_policy ()));
+	    riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   DONE;
 })
 
@@ -3424,7 +3431,7 @@
   emit_insn (gen_vf<optab><mode>_vv (operands[0], operands[1],
 	    operands[4], operands[2], operands[3],
 	    gen_rtx_REG (Pmode, X0_REGNUM),
-	    riscv_vector_gen_policy (RVV_POLICY_MU)));
+	    riscv_vector_gen_policy (RVV_POLICY_MU), gen_reg_rtx (Pmode)));
   DONE;
 })
 
@@ -3441,7 +3448,7 @@
   emit_insn (gen_vf<optab><mode>_vv (operands[0],
 	    const0_rtx, const0_rtx, operands[1],
 	    operands[2], operands[3],
-	    riscv_vector_gen_policy ()));
+	    riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[3])));
   DONE;
 })
 
@@ -3459,7 +3466,8 @@
     operands[5] = gen_lowpart (Pmode, operands[5]);
   emit_insn (gen_vf<optab><mode>_vv (operands[0], operands[1],
 	    operands[4], operands[2], operands[3],
-	    operands[5], riscv_vector_gen_policy (RVV_POLICY_MU)));
+	    operands[5], riscv_vector_gen_policy (RVV_POLICY_MU),
+	    riscv_vector_gen_clobber_vl (operands[3])));
   DONE;
 })
 
@@ -3473,8 +3481,9 @@
   "TARGET_VECTOR"
 {
   emit_insn (gen_vf<optab><mode>_vv (operands[0], const0_rtx,
-	     operands[4], operands[2], operands[3],
-	     operands[1], riscv_vector_gen_policy (RVV_POLICY_TU)));
+	    operands[4], operands[2], operands[3],
+	    operands[1], riscv_vector_gen_policy (RVV_POLICY_TU),
+	    riscv_vector_gen_clobber_vl (operands[1])));
   DONE;
 })
 
@@ -3497,7 +3506,7 @@
       emit_insn (gen_vfsgnj_vv (UNSPEC_COPYSIGN,
 	  <MODE>mode, operands[0], const0_rtx, const0_rtx,
 	  operands[1], operands[2], gen_rtx_REG (Pmode, X0_REGNUM),
-	  riscv_vector_gen_policy ()));
+	  riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
     }
   else
     {
@@ -3506,7 +3515,7 @@
       emit_insn (gen_vfsgnj_vf (UNSPEC_COPYSIGN,
 	  <MODE>mode, operands[0], const0_rtx, const0_rtx, operands[1],
 	  force_reg (<VSUB>mode, f), gen_rtx_REG (Pmode, X0_REGNUM),
-	  riscv_vector_gen_policy ()));
+	  riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
     }
   DONE;
 })
@@ -3522,7 +3531,7 @@
       emit_insn (gen_vfsgnj_vv (UNSPEC_XORSIGN,
 	  <MODE>mode, operands[0], const0_rtx, const0_rtx,
 	  operands[1], operands[2], gen_rtx_REG (Pmode, X0_REGNUM),
-	  riscv_vector_gen_policy ()));
+	  riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
     }
   else
     {
@@ -3531,7 +3540,7 @@
       emit_insn (gen_vfsgnj_vf (UNSPEC_XORSIGN,
 	  <MODE>mode, operands[0], operands[1], const0_rtx, const0_rtx,
 	  force_reg (<VSUB>mode, f), gen_rtx_REG (Pmode, X0_REGNUM),
-	  riscv_vector_gen_policy ()));
+	  riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
     }
   DONE;
 })
@@ -3553,7 +3562,7 @@
   "TARGET_VECTOR"
 {
   emit_insn (gen_vm<optab><mode>_mm (operands[0],
-	operands[1], operands[2], gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy ()));
+	operands[1], operands[2], gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   DONE;
 })
 
@@ -3569,7 +3578,7 @@
     operands[3] = gen_lowpart (Pmode, operands[3]);
 
   emit_insn (gen_vm<optab><mode>_mm (operands[0],
-	operands[1], operands[2], operands[3], riscv_vector_gen_policy ()));
+	operands[1], operands[2], operands[3], riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[3])));
   DONE;
 })
 
@@ -3588,44 +3597,61 @@
 ;; -------------------------------------------------------------------------
 
 (define_expand "fma<mode>4"
-  [(set (match_operand:VI 0 "register_operand")
-    (unspec:VI
-      [(plus:VI
-	  (mult:VI
-	    (match_operand:VI 1 "register_operand")
-	    (match_operand:VI 2 "register_operand"))
-	  (match_operand:VI 3 "register_operand"))
-	(match_dup 4)
-	(match_dup 5)
-	(reg:SI VL_REGNUM)
-	(reg:SI VTYPE_REGNUM)] UNSPEC_RVV))]
+  [(match_operand:VI 0 "register_operand")
+   (match_operand:VI 1 "register_operand")
+   (match_operand:VI 2 "register_operand")
+   (match_operand:VI 3 "register_operand")]
   "TARGET_VECTOR"
   {
-    operands[4] = gen_rtx_REG (Pmode, X0_REGNUM);
-    operands[5] = riscv_vector_gen_policy ();
+    emit_insn (gen_fma_internal (<MODE>mode, operands[0], operands[1],
+	    operands[2], operands[3], gen_rtx_REG (Pmode, X0_REGNUM),
+	    riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
+    DONE;
   })
 
 (define_expand "fnma<mode>4"
-  [(set (match_operand:VI 0 "register_operand")
-    (unspec:VI
-      [(plus:VI
-	(mult:VI
-	  (neg:VI
-	    (match_operand:VI 1 "register_operand"))
-	  (match_operand:VI 2 "register_operand"))
-	(match_operand:VI 3 "register_operand"))
-	(match_dup 4)
-	(match_dup 5)
-	(reg:SI VL_REGNUM)
-	(reg:SI VTYPE_REGNUM)] UNSPEC_RVV))]
+  [(match_operand:VI 0 "register_operand")
+   (match_operand:VI 1 "register_operand")
+   (match_operand:VI 2 "register_operand")
+   (match_operand:VI 3 "register_operand")]
   "TARGET_VECTOR"
   {
-    operands[4] = gen_rtx_REG (Pmode, X0_REGNUM);
-    operands[5] = riscv_vector_gen_policy ();
+    emit_insn (gen_fnma_internal (<MODE>mode, operands[0], operands[1],
+	    operands[2], operands[3], gen_rtx_REG (Pmode, X0_REGNUM),
+	    riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
+    DONE;
   })
 
 (define_expand "len_fma<mode>"
-  [(set (match_operand:VI 0 "register_operand")
+  [(match_operand:VI 0 "register_operand")
+   (match_operand:VI 1 "register_operand")
+   (match_operand:VI 2 "register_operand")
+   (match_operand:VI 3 "register_operand")
+   (match_operand 4 "p_reg_or_const_csr_operand")]
+  "TARGET_VECTOR"
+  {
+    emit_insn (gen_fma_internal (<MODE>mode, operands[0], operands[1],
+	    operands[2], operands[3], operands[4],
+	    riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[4])));
+    DONE;
+  })
+
+(define_expand "len_fnma<mode>"
+  [(match_operand:VI 0 "register_operand")
+   (match_operand:VI 1 "register_operand")
+   (match_operand:VI 2 "register_operand")
+   (match_operand:VI 3 "register_operand")
+   (match_operand 4 "p_reg_or_const_csr_operand")]
+  "TARGET_VECTOR"
+  {
+    emit_insn (gen_fnma_internal (<MODE>mode, operands[0], operands[1],
+	    operands[2], operands[3], operands[4],
+	    riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[4])));
+    DONE;
+  })
+
+(define_expand "@fma<mode>_internal"
+  [(parallel [(set (match_operand:VI 0 "register_operand")
     (unspec:VI
       [(plus:VI
 	  (mult:VI
@@ -3633,33 +3659,14 @@
 	    (match_operand:VI 2 "register_operand"))
 	  (match_operand:VI 3 "register_operand"))
 	(match_operand 4 "p_reg_or_const_csr_operand")
-	(match_dup 5)
+	(match_operand 5 "const_int_operand")
 	(reg:SI VL_REGNUM)
-	(reg:SI VTYPE_REGNUM)] UNSPEC_RVV))]
+	(reg:SI VTYPE_REGNUM)] UNSPEC_RVV))
+    (clobber (match_operand 6 "pmode_register_operand"))])]
   "TARGET_VECTOR"
-  {
-    operands[5] = riscv_vector_gen_policy ();
-  })
+  {})
 
-(define_expand "len_fnma<mode>"
-  [(set (match_operand:VI 0 "register_operand")
-    (unspec:VI
-      [(plus:VI
-	(mult:VI
-	  (neg:VI
-	    (match_operand:VI 1 "register_operand"))
-	  (match_operand:VI 2 "register_operand"))
-	(match_operand:VI 3 "register_operand"))
-	(match_operand 4 "p_reg_or_const_csr_operand")
-	(match_dup 5)
-	(reg:SI VL_REGNUM)
-	(reg:SI VTYPE_REGNUM)] UNSPEC_RVV))]
-  "TARGET_VECTOR"
-  {
-    operands[5] = riscv_vector_gen_policy ();
-  })
-
-(define_insn "*len_fma<mode>"
+(define_insn "*fma<mode>_internal"
   [(set (match_operand:VI 0 "register_operand" "=vr,vr,?&vr")
     (unspec:VI
       [(plus:VI
@@ -3670,7 +3677,8 @@
 	(match_operand 4 "p_reg_or_const_csr_operand" "rK,rK,rK")
 	(match_operand 5 "const_int_operand")
 	(reg:SI VL_REGNUM)
-	(reg:SI VTYPE_REGNUM)] UNSPEC_RVV))]
+	(reg:SI VTYPE_REGNUM)] UNSPEC_RVV))
+    (clobber (match_operand 6 "pmode_register_operand" "=&r,&r,&r"))]
   "TARGET_VECTOR"
   "@
    vmadd.vv\t%0,%2,%3
@@ -3679,7 +3687,24 @@
   [(set_attr "type" "vmadd")
    (set_attr "mode" "<MODE>")])
 
-(define_insn "*len_fnma<mode>"
+(define_expand "@fnma<mode>_internal"
+  [(parallel [(set (match_operand:VI 0 "register_operand")
+    (unspec:VI
+      [(plus:VI
+	(mult:VI
+	  (neg:VI
+	    (match_operand:VI 1 "register_operand"))
+	  (match_operand:VI 2 "register_operand"))
+	(match_operand:VI 3 "register_operand"))
+	(match_operand 4 "p_reg_or_const_csr_operand")
+	(match_operand 5 "const_int_operand")
+	(reg:SI VL_REGNUM)
+	(reg:SI VTYPE_REGNUM)] UNSPEC_RVV))
+    (clobber (match_operand 6 "pmode_register_operand"))])]
+  "TARGET_VECTOR"
+  {})
+
+(define_insn "*fnma<mode>_internal"
   [(set (match_operand:VI 0 "register_operand" "=vr,vr,?&vr")
     (unspec:VI
       [(plus:VI
@@ -3691,7 +3716,8 @@
 	(match_operand 4 "p_reg_or_const_csr_operand" "rK,rK,rK")
 	(match_operand 5 "const_int_operand")
 	(reg:SI VL_REGNUM)
-	(reg:SI VTYPE_REGNUM)] UNSPEC_RVV))]
+	(reg:SI VTYPE_REGNUM)] UNSPEC_RVV))
+    (clobber (match_operand 6 "pmode_register_operand" "=&r,&r,&r"))]
   "TARGET_VECTOR"
   "@
    vnmsub.vv\t%0,%2,%3
@@ -3701,51 +3727,62 @@
    (set_attr "mode" "<MODE>")])
 
 (define_expand "cond_fma<mode>"
-  [(set (match_operand:VI 0 "register_operand")
-	  (unspec:VI
-      [(unspec:VI
-	[(match_operand:<VM> 1 "register_operand")
-	(plus:VI
-	  (mult:VI
-	    (match_operand:VI 2 "register_operand")
-	    (match_operand:VI 3 "register_operand"))
-	  (match_operand:VI 4 "register_operand"))
-	(match_operand:VI 5 "register_operand")] UNSPEC_SELECT)
-      (match_dup 6)
-      (match_dup 7)
-      (reg:SI VL_REGNUM)
-      (reg:SI VTYPE_REGNUM)] UNSPEC_RVV))]
+  [(match_operand:VI 0 "register_operand")
+   (match_operand:<VM> 1 "register_operand")
+   (match_operand:VI 2 "register_operand")
+   (match_operand:VI 3 "register_operand")
+   (match_operand:VI 4 "register_operand")
+   (match_operand:VI 5 "register_operand")]
   "TARGET_VECTOR"
 {
-  operands[6] = gen_rtx_REG (Pmode, X0_REGNUM);
-  operands[7] = riscv_vector_gen_policy ();
   if (rtx_equal_p (operands[3], operands[5]))
     std::swap (operands[2], operands[3]);
+  emit_insn (gen_cond_fma_internal (<MODE>mode, operands[0], operands[1],
+	     operands[2], operands[3], operands[4], operands[5],
+	     gen_rtx_REG (Pmode, X0_REGNUM),
+	     riscv_vector_gen_policy (RVV_POLICY_MU), gen_reg_rtx (Pmode)));
+  DONE;
 })
 
 (define_expand "len_cond_fma<mode>"
-  [(set (match_operand:V 0 "register_operand")
-	  (unspec:V
-      [(unspec:V
-	[(match_operand:<VM> 1 "register_operand")
-	(plus:V
-	  (mult:V
-	    (match_operand:V 2 "register_operand")
-	    (match_operand:V 3 "register_operand"))
-	  (match_operand:V 4 "register_operand"))
-	(match_operand:V 5 "register_operand")] UNSPEC_SELECT)
-      (match_operand 6 "p_reg_or_const_csr_operand")
-      (match_dup 7)
-      (reg:SI VL_REGNUM)
-      (reg:SI VTYPE_REGNUM)] UNSPEC_RVV))]
+  [(match_operand:VI 0 "register_operand")
+   (match_operand:<VM> 1 "register_operand")
+   (match_operand:VI 2 "register_operand")
+   (match_operand:VI 3 "register_operand")
+   (match_operand:VI 4 "register_operand")
+   (match_operand:VI 5 "register_operand")
+   (match_operand 6 "p_reg_or_const_csr_operand")]
   "TARGET_VECTOR"
 {
-  operands[7] = riscv_vector_gen_policy (RVV_POLICY_MU);
   if (rtx_equal_p (operands[3], operands[5]))
     std::swap (operands[2], operands[3]);
+  emit_insn (gen_cond_fma_internal (<MODE>mode, operands[0], operands[1],
+	     operands[2], operands[3], operands[4], operands[5],
+	     operands[6], riscv_vector_gen_policy (RVV_POLICY_MU),
+	     riscv_vector_gen_clobber_vl (operands[6])));
+  DONE;
 })
 
-(define_insn "*cond_fma<mode>_2"
+(define_expand "@cond_fma<mode>_internal"
+  [(parallel [(set (match_operand:VI 0 "register_operand")
+	  (unspec:VI
+      [(unspec:VI
+	[(match_operand:<VM> 1 "register_operand")
+	  (plus:VI
+	    (mult:VI
+	      (match_operand:VI 2 "register_operand")
+	      (match_operand:VI 3 "register_operand"))
+	    (match_operand:VI 4 "register_operand"))
+	  (match_operand:VI 5 "register_operand")] UNSPEC_SELECT)
+      (match_operand 6 "p_reg_or_const_csr_operand")
+      (match_operand 7 "const_int_operand")
+      (reg:SI VL_REGNUM)
+      (reg:SI VTYPE_REGNUM)] UNSPEC_RVV))
+    (clobber (match_operand 8 "pmode_register_operand"))])]
+  "TARGET_VECTOR"
+  {})
+
+(define_insn "*cond_fma<mode>_2_internal"
   [(set (match_operand:VI 0 "register_operand" "=vr,?&vr")
 	  (unspec:VI
       [(unspec:VI
@@ -3759,7 +3796,8 @@
       (match_operand 5 "p_reg_or_const_csr_operand" "rK,rK")
       (match_operand 6 "const_int_operand")
       (reg:SI VL_REGNUM)
-      (reg:SI VTYPE_REGNUM)] UNSPEC_RVV))]
+      (reg:SI VTYPE_REGNUM)] UNSPEC_RVV))
+    (clobber (match_operand 7 "pmode_register_operand" "=&r,&r"))]
   "TARGET_VECTOR"
   "@
    vmadd.vv\t%0,%3,%4,%1.t
@@ -3767,7 +3805,7 @@
   [(set_attr "type" "vmadd")
    (set_attr "mode" "<MODE>")])
 
-(define_insn "*cond_fma<mode>_4"
+(define_insn "*cond_fma<mode>_4_internal"
   [(set (match_operand:VI 0 "register_operand" "=vr,?&vr")
 	  (unspec:VI
       [(unspec:VI
@@ -3781,7 +3819,8 @@
       (match_operand 5 "p_reg_or_const_csr_operand" "rK,rK")
       (match_operand 6 "const_int_operand")
       (reg:SI VL_REGNUM)
-      (reg:SI VTYPE_REGNUM)] UNSPEC_RVV))]
+      (reg:SI VTYPE_REGNUM)] UNSPEC_RVV))
+      (clobber (match_operand 7 "pmode_register_operand" "=&r,&r"))]
   "TARGET_VECTOR"
   "@
    vmacc.vv\t%0,%2,%3,%1.t
@@ -3789,7 +3828,7 @@
   [(set_attr "type" "vmadd")
    (set_attr "mode" "<MODE>")])
 
-(define_insn_and_rewrite "*cond_fma<mode>_any"
+(define_insn_and_rewrite "*cond_fma<mode>_any_internal"
   [(set (match_operand:VI 0 "register_operand" "=&vr")
 	  (unspec:VI
       [(unspec:VI
@@ -3803,7 +3842,8 @@
       (match_operand 6 "p_reg_or_const_csr_operand")
       (match_operand 7 "const_int_operand")
       (reg:SI VL_REGNUM)
-      (reg:SI VTYPE_REGNUM)] UNSPEC_RVV))]
+      (reg:SI VTYPE_REGNUM)] UNSPEC_RVV))
+      (clobber (match_operand 8 "pmode_register_operand" "=&r"))]
   "TARGET_VECTOR
    && !rtx_equal_p (operands[2], operands[5])
    && !rtx_equal_p (operands[3], operands[5])
@@ -3811,61 +3851,72 @@
   "#"
   "&& reload_completed"
   {
-    emit_insn (gen_vcond_mask_<mode><vm> (operands[0], operands[4],
-					     operands[5], operands[1]));
+    emit_insn (gen_vmerge_vvm (<MODE>mode, operands[0],
+	  operands[1], const0_rtx, operands[5], operands[4],
+	  operands[6], operands[7], operands[8]));
     operands[5] = operands[4] = operands[0];
   }
   [(set_attr "type" "vmadd")
    (set_attr "mode" "<MODE>")])
 
 (define_expand "cond_fnma<mode>"
-  [(set (match_operand:VI 0 "register_operand")
+  [(match_operand:VI 0 "register_operand")
+   (match_operand:<VM> 1 "register_operand")
+   (match_operand:VI 2 "register_operand")
+   (match_operand:VI 3 "register_operand")
+   (match_operand:VI 4 "register_operand")
+   (match_operand:VI 5 "register_operand")]
+  "TARGET_VECTOR"
+{
+  if (rtx_equal_p (operands[3], operands[5]))
+    std::swap (operands[2], operands[3]);
+  emit_insn (gen_cond_fnma_internal (<MODE>mode, operands[0], operands[1],
+	     operands[2], operands[3], operands[4], operands[5],
+	     gen_rtx_REG (Pmode, X0_REGNUM),
+	     riscv_vector_gen_policy (RVV_POLICY_MU), gen_reg_rtx (Pmode)));
+  DONE;
+})
+
+(define_expand "len_cond_fnma<mode>"
+  [(match_operand:VI 0 "register_operand")
+   (match_operand:<VM> 1 "register_operand")
+   (match_operand:VI 2 "register_operand")
+   (match_operand:VI 3 "register_operand")
+   (match_operand:VI 4 "register_operand")
+   (match_operand:VI 5 "register_operand")
+   (match_operand 6 "p_reg_or_const_csr_operand")]
+  "TARGET_VECTOR"
+{
+  if (rtx_equal_p (operands[3], operands[5]))
+    std::swap (operands[2], operands[3]);
+  emit_insn (gen_cond_fnma_internal (<MODE>mode, operands[0], operands[1],
+	     operands[2], operands[3], operands[4], operands[5],
+	     operands[6], riscv_vector_gen_policy (RVV_POLICY_MU),
+	     riscv_vector_gen_clobber_vl (operands[6])));
+  DONE;
+})
+
+(define_expand "@cond_fnma<mode>_internal"
+  [(parallel [(set (match_operand:VI 0 "register_operand")
 	  (unspec:VI
       [(unspec:VI
 	[(match_operand:<VM> 1 "register_operand")
 	(plus:VI
-	  (mult:VI
+		(mult:VI
 	    (neg:VI
 	      (match_operand:VI 2 "register_operand"))
-	    (match_operand:VI 3 "register_operand"))
-	  (match_operand:VI 4 "register_operand"))
+		  (match_operand:VI 3 "register_operand"))
+		(match_operand:VI 4 "register_operand"))
 	(match_operand:VI 5 "register_operand")] UNSPEC_SELECT)
-      (match_dup 6)
-      (match_dup 7)
-      (reg:SI VL_REGNUM)
-      (reg:SI VTYPE_REGNUM)] UNSPEC_RVV))]
-  "TARGET_VECTOR"
-{
-  operands[6] = gen_rtx_REG (Pmode, X0_REGNUM);
-  operands[7] = riscv_vector_gen_policy ();
-  if (rtx_equal_p (operands[3], operands[5]))
-    std::swap (operands[2], operands[3]);
-})
-
-(define_expand "len_cond_fnma<mode>"
-  [(set (match_operand:V 0 "register_operand")
-	  (unspec:V
-      [(unspec:V
-	[(match_operand:<VM> 1 "register_operand")
-	(plus:V
-	  (mult:V
-	    (neg:V
-	      (match_operand:V 2 "register_operand"))
-	    (match_operand:V 3 "register_operand"))
-	  (match_operand:V 4 "register_operand"))
-	(match_operand:V 5 "register_operand")] UNSPEC_SELECT)
       (match_operand 6 "p_reg_or_const_csr_operand")
-      (match_dup 7)
+      (match_operand 7 "const_int_operand")
       (reg:SI VL_REGNUM)
-      (reg:SI VTYPE_REGNUM)] UNSPEC_RVV))]
+      (reg:SI VTYPE_REGNUM)] UNSPEC_RVV))
+    (clobber (match_operand 8 "pmode_register_operand"))])]
   "TARGET_VECTOR"
-{
-  operands[7] = riscv_vector_gen_policy (RVV_POLICY_MU);
-  if (rtx_equal_p (operands[3], operands[5]))
-    std::swap (operands[2], operands[3]);
-})
+  {})
 
-(define_insn "*cond_fnma<mode>_2"
+(define_insn "*cond_fnma<mode>_2_internal"
   [(set (match_operand:VI 0 "register_operand" "=vr,?&vr")
 	  (unspec:VI
       [(unspec:VI
@@ -3880,7 +3931,8 @@
       (match_operand 5 "p_reg_or_const_csr_operand" "rK,rK")
       (match_operand 6 "const_int_operand")
       (reg:SI VL_REGNUM)
-      (reg:SI VTYPE_REGNUM)] UNSPEC_RVV))]
+      (reg:SI VTYPE_REGNUM)] UNSPEC_RVV))
+    (clobber (match_operand 7 "pmode_register_operand" "=&r,&r"))]
   "TARGET_VECTOR"
   "@
    vnmsub.vv\t%0,%3,%4,%1.t
@@ -3888,7 +3940,7 @@
   [(set_attr "type" "vmadd")
    (set_attr "mode" "<MODE>")])
 
-(define_insn "*cond_fnma<mode>_4"
+(define_insn "*cond_fnma<mode>_4_internal"
   [(set (match_operand:VI 0 "register_operand" "=vr,?&vr")
 	  (unspec:VI
       [(unspec:VI
@@ -3903,7 +3955,8 @@
       (match_operand 5 "p_reg_or_const_csr_operand" "rK,rK")
       (match_operand 6 "const_int_operand")
       (reg:SI VL_REGNUM)
-      (reg:SI VTYPE_REGNUM)] UNSPEC_RVV))]
+      (reg:SI VTYPE_REGNUM)] UNSPEC_RVV))
+    (clobber (match_operand 7 "pmode_register_operand" "=&r,&r"))]
   "TARGET_VECTOR"
   "@
    vnmsac.vv\t%0,%2,%3,%1.t
@@ -3911,7 +3964,7 @@
   [(set_attr "type" "vmadd")
    (set_attr "mode" "<MODE>")])
 
-(define_insn_and_rewrite "*cond_fnma<mode>_any"
+(define_insn_and_rewrite "*cond_fnma<mode>_any_internal"
   [(set (match_operand:VI 0 "register_operand" "=&vr")
 	  (unspec:VI
       [(unspec:VI
@@ -3926,7 +3979,8 @@
       (match_operand 6 "p_reg_or_const_csr_operand")
       (match_operand 7 "const_int_operand")
       (reg:SI VL_REGNUM)
-      (reg:SI VTYPE_REGNUM)] UNSPEC_RVV))]
+      (reg:SI VTYPE_REGNUM)] UNSPEC_RVV))
+    (clobber (match_operand 8 "pmode_register_operand" "=&r"))]
   "TARGET_VECTOR
    && !rtx_equal_p (operands[2], operands[5])
    && !rtx_equal_p (operands[3], operands[5])
@@ -3934,8 +3988,9 @@
   "#"
   "&& reload_completed"
   {
-    emit_insn (gen_vcond_mask_<mode><vm> (operands[0], operands[4],
-					     operands[5], operands[1]));
+    emit_insn (gen_vmerge_vvm (<MODE>mode, operands[0],
+	  operands[1], const0_rtx, operands[5], operands[4],
+	  operands[6], operands[7], operands[8]));
     operands[5] = operands[4] = operands[0];
   }
   [(set_attr "type" "vmadd")
@@ -3952,81 +4007,115 @@
 ;; -------------------------------------------------------------------------
 
 (define_expand "fma<mode>4"
-  [(set (match_operand:VF 0 "register_operand")
-    (unspec:VF
-      [(plus:VF
-	  (mult:VF
-	    (match_operand:VF 1 "register_operand")
-	    (match_operand:VF 2 "register_operand"))
-	  (match_operand:VF 3 "register_operand"))
-	(match_dup 4)
-	(match_dup 5)
-	(reg:SI VL_REGNUM)
-	(reg:SI VTYPE_REGNUM)] UNSPEC_RVV))]
+  [(match_operand:VF 0 "register_operand")
+   (match_operand:VF 1 "register_operand")
+   (match_operand:VF 2 "register_operand")
+   (match_operand:VF 3 "register_operand")]
   "TARGET_VECTOR"
   {
-    operands[4] = gen_rtx_REG (Pmode, X0_REGNUM);
-    operands[5] = riscv_vector_gen_policy ();
+    emit_insn (gen_fma_internal (<MODE>mode, operands[0], operands[1],
+	    operands[2], operands[3], gen_rtx_REG (Pmode, X0_REGNUM),
+	    riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
+    DONE;
   })
 
 (define_expand "fms<mode>4"
-  [(set (match_operand:VF 0 "register_operand")
-    (unspec:VF
-      [(minus:VF
-	(mult:VF
-	  (match_operand:VF 1 "register_operand")
-	  (match_operand:VF 2 "register_operand"))
-	(match_operand:VF 3 "register_operand"))
-	(match_dup 4)
-	(match_dup 5)
-	(reg:SI VL_REGNUM)
-	(reg:SI VTYPE_REGNUM)] UNSPEC_RVV))]
+  [(match_operand:VF 0 "register_operand")
+   (match_operand:VF 1 "register_operand")
+   (match_operand:VF 2 "register_operand")
+   (match_operand:VF 3 "register_operand")]
   "TARGET_VECTOR"
   {
-    operands[4] = gen_rtx_REG (Pmode, X0_REGNUM);
-    operands[5] = riscv_vector_gen_policy ();
+    emit_insn (gen_fms_internal (<MODE>mode, operands[0], operands[1],
+	    operands[2], operands[3], gen_rtx_REG (Pmode, X0_REGNUM),
+	    riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
+    DONE;
   })
 
 (define_expand "fnma<mode>4"
-  [(set (match_operand:VF 0 "register_operand")
-    (unspec:VF
-      [(plus:VF
-	  (mult:VF
-	    (neg:VF
-	      (match_operand:VF 1 "register_operand"))
-	    (match_operand:VF 2 "register_operand"))
-	  (match_operand:VF 3 "register_operand"))
-	(match_dup 4)
-	(match_dup 5)
-	(reg:SI VL_REGNUM)
-	(reg:SI VTYPE_REGNUM)] UNSPEC_RVV))]
+  [(match_operand:VF 0 "register_operand")
+   (match_operand:VF 1 "register_operand")
+   (match_operand:VF 2 "register_operand")
+   (match_operand:VF 3 "register_operand")]
   "TARGET_VECTOR"
   {
-    operands[4] = gen_rtx_REG (Pmode, X0_REGNUM);
-    operands[5] = riscv_vector_gen_policy ();
+    emit_insn (gen_fnma_internal (<MODE>mode, operands[0], operands[1],
+	    operands[2], operands[3], gen_rtx_REG (Pmode, X0_REGNUM),
+	    riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
+    DONE;
   })
 
 (define_expand "fnms<mode>4"
-  [(set (match_operand:VF 0 "register_operand")
-    (unspec:VF
-      [(minus:VF
-	(mult:VF
-	  (neg:VF
-	    (match_operand:VF 1 "register_operand"))
-	  (match_operand:VF 2 "register_operand"))
-	(match_operand:VF 3 "register_operand"))
-	(match_dup 4)
-	(match_dup 5)
-	(reg:SI VL_REGNUM)
-	(reg:SI VTYPE_REGNUM)] UNSPEC_RVV))]
+  [(match_operand:VF 0 "register_operand")
+   (match_operand:VF 1 "register_operand")
+   (match_operand:VF 2 "register_operand")
+   (match_operand:VF 3 "register_operand")]
   "TARGET_VECTOR"
   {
-    operands[4] = gen_rtx_REG (Pmode, X0_REGNUM);
-    operands[5] = riscv_vector_gen_policy ();
+    emit_insn (gen_fnms_internal (<MODE>mode, operands[0], operands[1],
+	    operands[2], operands[3], gen_rtx_REG (Pmode, X0_REGNUM),
+	    riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
+    DONE;
   })
 
 (define_expand "len_fma<mode>"
-  [(set (match_operand:VF 0 "register_operand")
+  [(match_operand:VF 0 "register_operand")
+   (match_operand:VF 1 "register_operand")
+   (match_operand:VF 2 "register_operand")
+   (match_operand:VF 3 "register_operand")
+   (match_operand 4 "p_reg_or_const_csr_operand")]
+  "TARGET_VECTOR"
+  {
+    emit_insn (gen_fma_internal (<MODE>mode, operands[0], operands[1],
+	    operands[2], operands[3], operands[4],
+	    riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[4])));
+    DONE;
+  })
+
+(define_expand "len_fms<mode>"
+  [(match_operand:VF 0 "register_operand")
+   (match_operand:VF 1 "register_operand")
+   (match_operand:VF 2 "register_operand")
+   (match_operand:VF 3 "register_operand")
+   (match_operand 4 "p_reg_or_const_csr_operand")]
+  "TARGET_VECTOR"
+  {
+    emit_insn (gen_fms_internal (<MODE>mode, operands[0], operands[1],
+	    operands[2], operands[3], operands[4],
+	    riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[4])));
+    DONE;
+  })
+
+(define_expand "len_fnma<mode>"
+  [(match_operand:VF 0 "register_operand")
+   (match_operand:VF 1 "register_operand")
+   (match_operand:VF 2 "register_operand")
+   (match_operand:VF 3 "register_operand")
+   (match_operand 4 "p_reg_or_const_csr_operand")]
+  "TARGET_VECTOR"
+  {
+    emit_insn (gen_fnma_internal (<MODE>mode, operands[0], operands[1],
+	    operands[2], operands[3], operands[4],
+	    riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[4])));
+    DONE;
+  })
+
+(define_expand "len_fnms<mode>"
+  [(match_operand:VF 0 "register_operand")
+   (match_operand:VF 1 "register_operand")
+   (match_operand:VF 2 "register_operand")
+   (match_operand:VF 3 "register_operand")
+   (match_operand 4 "p_reg_or_const_csr_operand")]
+  "TARGET_VECTOR"
+  {
+    emit_insn (gen_fnms_internal (<MODE>mode, operands[0], operands[1],
+	    operands[2], operands[3], operands[4],
+	    riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[4])));
+    DONE;
+  })
+
+(define_expand "@fma<mode>_internal"
+  [(parallel [(set (match_operand:VF 0 "register_operand")
     (unspec:VF
       [(plus:VF
 	  (mult:VF
@@ -4034,16 +4123,15 @@
 	    (match_operand:VF 2 "register_operand"))
 	  (match_operand:VF 3 "register_operand"))
 	(match_operand 4 "p_reg_or_const_csr_operand")
-	(match_dup 5)
+	(match_operand 5 "const_int_operand")
 	(reg:SI VL_REGNUM)
-	(reg:SI VTYPE_REGNUM)] UNSPEC_RVV))]
+	(reg:SI VTYPE_REGNUM)] UNSPEC_RVV))
+    (clobber (match_operand 6 "pmode_register_operand"))])]
   "TARGET_VECTOR"
-  {
-    operands[5] = riscv_vector_gen_policy ();
-  })
+  {})
 
-(define_expand "len_fms<mode>"
-  [(set (match_operand:VF 0 "register_operand")
+(define_expand "@fms<mode>_internal"
+  [(parallel [(set (match_operand:VF 0 "register_operand")
     (unspec:VF
       [(minus:VF
 	(mult:VF
@@ -4051,16 +4139,15 @@
 	  (match_operand:VF 2 "register_operand"))
 	(match_operand:VF 3 "register_operand"))
 	(match_operand 4 "p_reg_or_const_csr_operand")
-	(match_dup 5)
+	(match_operand 5 "const_int_operand")
 	(reg:SI VL_REGNUM)
-	(reg:SI VTYPE_REGNUM)] UNSPEC_RVV))]
+	(reg:SI VTYPE_REGNUM)] UNSPEC_RVV))
+    (clobber (match_operand 6 "pmode_register_operand"))])]
   "TARGET_VECTOR"
-  {
-    operands[5] = riscv_vector_gen_policy ();
-  })
+  {})
 
-(define_expand "len_fnma<mode>"
-  [(set (match_operand:VF 0 "register_operand")
+(define_expand "@fnma<mode>_internal"
+  [(parallel [(set (match_operand:VF 0 "register_operand")
     (unspec:VF
       [(plus:VF
 	  (mult:VF
@@ -4069,16 +4156,15 @@
 	    (match_operand:VF 2 "register_operand"))
 	  (match_operand:VF 3 "register_operand"))
 	(match_operand 4 "p_reg_or_const_csr_operand")
-	(match_dup 5)
+	(match_operand 5 "const_int_operand")
 	(reg:SI VL_REGNUM)
-	(reg:SI VTYPE_REGNUM)] UNSPEC_RVV))]
+	(reg:SI VTYPE_REGNUM)] UNSPEC_RVV))
+  (clobber (match_operand 6 "pmode_register_operand"))])]
   "TARGET_VECTOR"
-  {
-    operands[5] = riscv_vector_gen_policy ();
-  })
+  {})
 
-(define_expand "len_fnms<mode>"
-  [(set (match_operand:VF 0 "register_operand")
+(define_expand "@fnms<mode>_internal"
+  [(parallel [(set (match_operand:VF 0 "register_operand")
     (unspec:VF
       [(minus:VF
 	(mult:VF
@@ -4087,15 +4173,14 @@
 	  (match_operand:VF 2 "register_operand"))
 	(match_operand:VF 3 "register_operand"))
 	(match_operand 4 "p_reg_or_const_csr_operand")
-	(match_dup 5)
+	(match_operand 5 "const_int_operand")
 	(reg:SI VL_REGNUM)
-	(reg:SI VTYPE_REGNUM)] UNSPEC_RVV))]
+	(reg:SI VTYPE_REGNUM)] UNSPEC_RVV))
+    (clobber (match_operand 6 "pmode_register_operand"))])]
   "TARGET_VECTOR"
-  {
-    operands[5] = riscv_vector_gen_policy ();
-  })
+  {})
 
-(define_insn "*len_fma<mode>"
+(define_insn "*len_fma<mode>_internal"
   [(set (match_operand:VF 0 "register_operand" "=vr,vr,?&vr")
     (unspec:VF
       [(plus:VF
@@ -4106,7 +4191,8 @@
 	(match_operand 4 "p_reg_or_const_csr_operand" "rK,rK,rK")
 	(match_operand 5 "const_int_operand")
 	(reg:SI VL_REGNUM)
-	(reg:SI VTYPE_REGNUM)] UNSPEC_RVV))]
+	(reg:SI VTYPE_REGNUM)] UNSPEC_RVV))
+    (clobber (match_operand 6 "pmode_register_operand" "=&r,&r,&r"))]
   "TARGET_VECTOR"
   "@
    vfmadd.vv\t%0,%2,%3
@@ -4115,7 +4201,7 @@
   [(set_attr "type" "vmadd")
    (set_attr "mode" "<MODE>")])
 
-(define_insn "*len_fms<mode>"
+(define_insn "*len_fms<mode>_internal"
   [(set (match_operand:VF 0 "register_operand" "=vr,vr,?&vr")
     (unspec:VF
       [(minus:VF
@@ -4126,7 +4212,8 @@
 	(match_operand 4 "p_reg_or_const_csr_operand" "rK,rK,rK")
 	(match_operand 5 "const_int_operand")
 	(reg:SI VL_REGNUM)
-	(reg:SI VTYPE_REGNUM)] UNSPEC_RVV))]
+	(reg:SI VTYPE_REGNUM)] UNSPEC_RVV))
+    (clobber (match_operand 6 "pmode_register_operand" "=&r,&r,&r"))]
   "TARGET_VECTOR"
   "@
    vfmsub.vv\t%0,%2,%3
@@ -4135,7 +4222,7 @@
   [(set_attr "type" "vmadd")
    (set_attr "mode" "<MODE>")])
 
-(define_insn "*len_fnma<mode>"
+(define_insn "*len_fnma<mode>_internal"
   [(set (match_operand:VF 0 "register_operand" "=vr,vr,?&vr")
     (unspec:VF
       [(plus:VF
@@ -4147,7 +4234,8 @@
 	(match_operand 4 "p_reg_or_const_csr_operand" "rK,rK,rK")
 	(match_operand 5 "const_int_operand")
 	(reg:SI VL_REGNUM)
-	(reg:SI VTYPE_REGNUM)] UNSPEC_RVV))]
+	(reg:SI VTYPE_REGNUM)] UNSPEC_RVV))
+  (clobber (match_operand 6 "pmode_register_operand" "=&r,&r,&r"))]
   "TARGET_VECTOR"
   "@
    vfnmsub.vv\t%0,%2,%3
@@ -4156,7 +4244,7 @@
   [(set_attr "type" "vmadd")
    (set_attr "mode" "<MODE>")])
 
-(define_insn "*len_fnms<mode>"
+(define_insn "*len_fnms<mode>_internal"
   [(set (match_operand:VF 0 "register_operand" "=vr,vr,?&vr")
     (unspec:VF
       [(minus:VF
@@ -4168,7 +4256,8 @@
 	(match_operand 4 "p_reg_or_const_csr_operand" "rK,rK,rK")
 	(match_operand 5 "const_int_operand")
 	(reg:SI VL_REGNUM)
-	(reg:SI VTYPE_REGNUM)] UNSPEC_RVV))]
+	(reg:SI VTYPE_REGNUM)] UNSPEC_RVV))
+    (clobber (match_operand 6 "pmode_register_operand" "=&r,&r,&r"))]
   "TARGET_VECTOR"
   "@
    vfnmadd.vv\t%0,%2,%3
@@ -4178,27 +4267,60 @@
    (set_attr "mode" "<MODE>")])
 
 (define_expand "cond_fma<mode>"
-  [(set (match_operand:VF 0 "register_operand")
-    (unspec:VF
-      [(unspec:VF
-	[(match_operand:<VM> 1 "register_operand")
-	(plus:VF
-	  (mult:VF
-	    (match_operand:VF 2 "register_operand")
-	    (match_operand:VF 3 "register_operand"))
-	  (match_operand:VF 4 "register_operand"))
-	(match_operand:VF 5 "register_operand")] UNSPEC_SELECT)
-      (match_dup 6)
-      (match_dup 7)
-      (reg:SI VL_REGNUM)
-      (reg:SI VTYPE_REGNUM)] UNSPEC_RVV))]
+  [(match_operand:VF 0 "register_operand")
+   (match_operand:<VM> 1 "register_operand")
+   (match_operand:VF 2 "register_operand")
+   (match_operand:VF 3 "register_operand")
+   (match_operand:VF 4 "register_operand")
+   (match_operand:VF 5 "register_operand")]
   "TARGET_VECTOR"
 {
-  operands[6] = gen_rtx_REG (Pmode, X0_REGNUM);
-  operands[7] = riscv_vector_gen_policy ();
   if (rtx_equal_p (operands[3], operands[5]))
     std::swap (operands[2], operands[3]);
+  emit_insn (gen_cond_fma_internal (<MODE>mode, operands[0], operands[1],
+	     operands[2], operands[3], operands[4], operands[5],
+	     gen_rtx_REG (Pmode, X0_REGNUM),
+	     riscv_vector_gen_policy (RVV_POLICY_MU), gen_reg_rtx (Pmode)));
+  DONE;
 })
+
+(define_expand "len_cond_fma<mode>"
+  [(match_operand:VF 0 "register_operand")
+   (match_operand:<VM> 1 "register_operand")
+   (match_operand:VF 2 "register_operand")
+   (match_operand:VF 3 "register_operand")
+   (match_operand:VF 4 "register_operand")
+   (match_operand:VF 5 "register_operand")
+   (match_operand 6 "p_reg_or_const_csr_operand")]
+  "TARGET_VECTOR"
+{
+  if (rtx_equal_p (operands[3], operands[5]))
+    std::swap (operands[2], operands[3]);
+  emit_insn (gen_cond_fma_internal (<MODE>mode, operands[0], operands[1],
+	     operands[2], operands[3], operands[4], operands[5],
+	     operands[6], riscv_vector_gen_policy (RVV_POLICY_MU),
+	     riscv_vector_gen_clobber_vl (operands[6])));
+  DONE;
+})
+
+(define_expand "@cond_fma<mode>_internal"
+  [(parallel [(set (match_operand:VF 0 "register_operand")
+	  (unspec:VF
+      [(unspec:VF
+	[(match_operand:<VM> 1 "register_operand")
+	  (plus:VF
+	    (mult:VF
+	      (match_operand:VF 2 "register_operand")
+	      (match_operand:VF 3 "register_operand"))
+	    (match_operand:VF 4 "register_operand"))
+	  (match_operand:VF 5 "register_operand")] UNSPEC_SELECT)
+      (match_operand 6 "p_reg_or_const_csr_operand")
+      (match_operand 7 "const_int_operand")
+      (reg:SI VL_REGNUM)
+      (reg:SI VTYPE_REGNUM)] UNSPEC_RVV))
+    (clobber (match_operand 8 "pmode_register_operand"))])]
+  "TARGET_VECTOR"
+  {})
 
 (define_insn "*cond_fma<mode>_2"
   [(set (match_operand:VF 0 "register_operand" "=vr,?&vr")
@@ -4214,7 +4336,8 @@
       (match_operand 5 "p_reg_or_const_csr_operand" "rK,rK")
       (match_operand 6 "const_int_operand")
       (reg:SI VL_REGNUM)
-      (reg:SI VTYPE_REGNUM)] UNSPEC_RVV))]
+      (reg:SI VTYPE_REGNUM)] UNSPEC_RVV))
+    (clobber (match_operand 7 "pmode_register_operand" "=&r,&r"))]
   "TARGET_VECTOR"
   "@
    vfmadd.vv\t%0,%3,%4,%1.t
@@ -4236,7 +4359,8 @@
       (match_operand 5 "p_reg_or_const_csr_operand" "rK,rK")
       (match_operand 6 "const_int_operand")
       (reg:SI VL_REGNUM)
-      (reg:SI VTYPE_REGNUM)] UNSPEC_RVV))]
+      (reg:SI VTYPE_REGNUM)] UNSPEC_RVV))
+    (clobber (match_operand 7 "pmode_register_operand" "=&r,&r"))]
   "TARGET_VECTOR"
   "@
    vfmacc.vv\t%0,%2,%3,%1.t
@@ -4258,7 +4382,8 @@
       (match_operand 6 "p_reg_or_const_csr_operand")
       (match_operand 7 "const_int_operand")
       (reg:SI VL_REGNUM)
-      (reg:SI VTYPE_REGNUM)] UNSPEC_RVV))]
+      (reg:SI VTYPE_REGNUM)] UNSPEC_RVV))
+    (clobber (match_operand 8 "pmode_register_operand" "=&r"))]
   "TARGET_VECTOR
    && !rtx_equal_p (operands[2], operands[5])
    && !rtx_equal_p (operands[3], operands[5])
@@ -4266,57 +4391,69 @@
   "#"
   "&& reload_completed"
   {
-    emit_insn (gen_vcond_mask_<mode><vm> (operands[0], operands[4],
-	       operands[5], operands[1]));
+    emit_insn (gen_vmerge_vvm (<MODE>mode, operands[0],
+	  operands[1], const0_rtx, operands[5], operands[4],
+	  operands[6], operands[7], operands[8]));
     operands[5] = operands[4] = operands[0];
   }
   [(set_attr "type" "vmadd")
    (set_attr "mode" "<MODE>")])
 
 (define_expand "cond_fms<mode>"
-  [(set (match_operand:VF 0 "register_operand")
-    (unspec:VF
-      [(unspec:VF
-	[(match_operand:<VM> 1 "register_operand")
-	(minus:VF
-	  (mult:VF
-	    (match_operand:VF 2 "register_operand")
-	    (match_operand:VF 3 "register_operand"))
-	  (match_operand:VF 4 "register_operand"))
-	(match_operand:VF 5 "register_operand")] UNSPEC_SELECT)
-      (match_dup 6)
-      (match_dup 7)
-      (reg:SI VL_REGNUM)
-      (reg:SI VTYPE_REGNUM)] UNSPEC_RVV))]
+  [(match_operand:VF 0 "register_operand")
+   (match_operand:<VM> 1 "register_operand")
+   (match_operand:VF 2 "register_operand")
+   (match_operand:VF 3 "register_operand")
+   (match_operand:VF 4 "register_operand")
+   (match_operand:VF 5 "register_operand")]
   "TARGET_VECTOR"
 {
-  operands[6] = gen_rtx_REG (Pmode, X0_REGNUM);
-  operands[7] = riscv_vector_gen_policy ();
   if (rtx_equal_p (operands[3], operands[5]))
     std::swap (operands[2], operands[3]);
+  emit_insn (gen_cond_fms_internal (<MODE>mode, operands[0], operands[1],
+	     operands[2], operands[3], operands[4], operands[5],
+	     gen_rtx_REG (Pmode, X0_REGNUM),
+	     riscv_vector_gen_policy (RVV_POLICY_MU), gen_reg_rtx (Pmode)));
+  DONE;
 })
 
 (define_expand "len_cond_fms<mode>"
-  [(set (match_operand:VF 0 "register_operand")
+  [(match_operand:VF 0 "register_operand")
+   (match_operand:<VM> 1 "register_operand")
+   (match_operand:VF 2 "register_operand")
+   (match_operand:VF 3 "register_operand")
+   (match_operand:VF 4 "register_operand")
+   (match_operand:VF 5 "register_operand")
+   (match_operand 6 "p_reg_or_const_csr_operand")]
+  "TARGET_VECTOR"
+{
+  if (rtx_equal_p (operands[3], operands[5]))
+    std::swap (operands[2], operands[3]);
+  emit_insn (gen_cond_fms_internal (<MODE>mode, operands[0], operands[1],
+	     operands[2], operands[3], operands[4], operands[5],
+	     operands[6], riscv_vector_gen_policy (RVV_POLICY_MU),
+	     riscv_vector_gen_clobber_vl (operands[6])));
+  DONE;
+})
+
+(define_expand "@cond_fms<mode>_internal"
+  [(parallel [(set (match_operand:VF 0 "register_operand")
 	  (unspec:VF
       [(unspec:VF
 	[(match_operand:<VM> 1 "register_operand")
 	(minus:VF
-	  (mult:VF
-	    (match_operand:VF 2 "register_operand")
-	    (match_operand:VF 3 "register_operand"))
-	  (match_operand:VF 4 "register_operand"))
+		(mult:VF
+		  (match_operand:VF 2 "register_operand")
+		  (match_operand:VF 3 "register_operand"))
+		(match_operand:VF 4 "register_operand"))
 	(match_operand:VF 5 "register_operand")] UNSPEC_SELECT)
       (match_operand 6 "p_reg_or_const_csr_operand")
-      (match_dup 7)
+      (match_operand 7 "const_int_operand")
       (reg:SI VL_REGNUM)
-      (reg:SI VTYPE_REGNUM)] UNSPEC_RVV))]
+      (reg:SI VTYPE_REGNUM)] UNSPEC_RVV))
+    (clobber (match_operand 8 "pmode_register_operand"))])]
   "TARGET_VECTOR"
-{
-  operands[7] = riscv_vector_gen_policy (RVV_POLICY_MU);
-  if (rtx_equal_p (operands[3], operands[5]))
-    std::swap (operands[2], operands[3]);
-})
+  {})
 
 (define_insn "*cond_fms<mode>_2"
   [(set (match_operand:VF 0 "register_operand" "=vr,?&vr")
@@ -4332,7 +4469,8 @@
       (match_operand 5 "p_reg_or_const_csr_operand" "rK,rK")
       (match_operand 6 "const_int_operand")
       (reg:SI VL_REGNUM)
-      (reg:SI VTYPE_REGNUM)] UNSPEC_RVV))]
+      (reg:SI VTYPE_REGNUM)] UNSPEC_RVV))
+    (clobber (match_operand 7 "pmode_register_operand" "=&r,&r"))]
   "TARGET_VECTOR"
   "@
    vfmsub.vv\t%0,%3,%4,%1.t
@@ -4354,7 +4492,8 @@
       (match_operand 5 "p_reg_or_const_csr_operand" "rK,rK")
       (match_operand 6 "const_int_operand")
       (reg:SI VL_REGNUM)
-      (reg:SI VTYPE_REGNUM)] UNSPEC_RVV))]
+      (reg:SI VTYPE_REGNUM)] UNSPEC_RVV))
+    (clobber (match_operand 7 "pmode_register_operand" "=&r,&r"))]
   "TARGET_VECTOR"
   "@
    vfmsac.vv\t%0,%2,%3,%1.t
@@ -4376,7 +4515,8 @@
       (match_operand 6 "p_reg_or_const_csr_operand")
       (match_operand 7 "const_int_operand")
       (reg:SI VL_REGNUM)
-      (reg:SI VTYPE_REGNUM)] UNSPEC_RVV))]
+      (reg:SI VTYPE_REGNUM)] UNSPEC_RVV))
+    (clobber (match_operand 8 "pmode_register_operand" "=&r"))]
   "TARGET_VECTOR
    && !rtx_equal_p (operands[2], operands[5])
    && !rtx_equal_p (operands[3], operands[5])
@@ -4384,36 +4524,70 @@
   "#"
   "&& reload_completed"
   {
-    emit_insn (gen_vcond_mask_<mode><vm> (operands[0], operands[4],
-					     operands[5], operands[1]));
+    emit_insn (gen_vmerge_vvm (<MODE>mode, operands[0],
+	  operands[1], const0_rtx, operands[5], operands[4],
+	  operands[6], operands[7], operands[8]));
     operands[5] = operands[4] = operands[0];
   }
   [(set_attr "type" "vmadd")
    (set_attr "mode" "<MODE>")])
 
 (define_expand "cond_fnma<mode>"
-  [(set (match_operand:VF 0 "register_operand")
+  [(match_operand:VF 0 "register_operand")
+   (match_operand:<VM> 1 "register_operand")
+   (match_operand:VF 2 "register_operand")
+   (match_operand:VF 3 "register_operand")
+   (match_operand:VF 4 "register_operand")
+   (match_operand:VF 5 "register_operand")]
+  "TARGET_VECTOR"
+{
+  if (rtx_equal_p (operands[3], operands[5]))
+    std::swap (operands[2], operands[3]);
+  emit_insn (gen_cond_fnma_internal (<MODE>mode, operands[0], operands[1],
+	     operands[2], operands[3], operands[4], operands[5],
+	     gen_rtx_REG (Pmode, X0_REGNUM),
+	     riscv_vector_gen_policy (RVV_POLICY_MU), gen_reg_rtx (Pmode)));
+  DONE;
+})
+
+(define_expand "len_cond_fnma<mode>"
+  [(match_operand:VF 0 "register_operand")
+   (match_operand:<VM> 1 "register_operand")
+   (match_operand:VF 2 "register_operand")
+   (match_operand:VF 3 "register_operand")
+   (match_operand:VF 4 "register_operand")
+   (match_operand:VF 5 "register_operand")
+   (match_operand 6 "p_reg_or_const_csr_operand")]
+  "TARGET_VECTOR"
+{
+  if (rtx_equal_p (operands[3], operands[5]))
+    std::swap (operands[2], operands[3]);
+  emit_insn (gen_cond_fnma_internal (<MODE>mode, operands[0], operands[1],
+	     operands[2], operands[3], operands[4], operands[5],
+	     operands[6], riscv_vector_gen_policy (RVV_POLICY_MU),
+	     riscv_vector_gen_clobber_vl (operands[6])));
+  DONE;
+})
+
+(define_expand "@cond_fnma<mode>_internal"
+  [(parallel [(set (match_operand:VF 0 "register_operand")
 	  (unspec:VF
       [(unspec:VF
 	[(match_operand:<VM> 1 "register_operand")
 	(plus:VF
-	  (mult:VF
+		(mult:VF
 	    (neg:VF
 	      (match_operand:VF 2 "register_operand"))
-	    (match_operand:VF 3 "register_operand"))
-	  (match_operand:VF 4 "register_operand"))
+		  (match_operand:VF 3 "register_operand"))
+		(match_operand:VF 4 "register_operand"))
 	(match_operand:VF 5 "register_operand")] UNSPEC_SELECT)
-      (match_dup 6)
-      (match_dup 7)
+      (match_operand 6 "p_reg_or_const_csr_operand")
+      (match_operand 7 "const_int_operand")
       (reg:SI VL_REGNUM)
-      (reg:SI VTYPE_REGNUM)] UNSPEC_RVV))]
+      (reg:SI VTYPE_REGNUM)] UNSPEC_RVV))
+    (clobber (match_operand 8 "pmode_register_operand"))])]
   "TARGET_VECTOR"
-{
-  operands[6] = gen_rtx_REG (Pmode, X0_REGNUM);
-  operands[7] = riscv_vector_gen_policy ();
-  if (rtx_equal_p (operands[3], operands[5]))
-    std::swap (operands[2], operands[3]);
-})
+  {})
 
 (define_insn "*cond_fnma<mode>_2"
   [(set (match_operand:VF 0 "register_operand" "=vr,?&vr")
@@ -4430,7 +4604,8 @@
       (match_operand 5 "p_reg_or_const_csr_operand" "rK,rK")
       (match_operand 6 "const_int_operand")
       (reg:SI VL_REGNUM)
-      (reg:SI VTYPE_REGNUM)] UNSPEC_RVV))]
+      (reg:SI VTYPE_REGNUM)] UNSPEC_RVV))
+    (clobber (match_operand 7 "pmode_register_operand" "=&r,&r"))]
   "TARGET_VECTOR"
   "@
    vfnmsub.vv\t%0,%3,%4,%1.t
@@ -4453,7 +4628,8 @@
       (match_operand 5 "p_reg_or_const_csr_operand" "rK,rK")
       (match_operand 6 "const_int_operand")
       (reg:SI VL_REGNUM)
-      (reg:SI VTYPE_REGNUM)] UNSPEC_RVV))]
+      (reg:SI VTYPE_REGNUM)] UNSPEC_RVV))
+    (clobber (match_operand 7 "pmode_register_operand" "=&r,&r"))]
   "TARGET_VECTOR"
   "@
    vfnmsac.vv\t%0,%2,%3,%1.t
@@ -4476,7 +4652,8 @@
       (match_operand 6 "p_reg_or_const_csr_operand")
       (match_operand 7 "const_int_operand")
       (reg:SI VL_REGNUM)
-      (reg:SI VTYPE_REGNUM)] UNSPEC_RVV))]
+      (reg:SI VTYPE_REGNUM)] UNSPEC_RVV))
+    (clobber (match_operand 8 "pmode_register_operand" "=&r"))]
   "TARGET_VECTOR
    && !rtx_equal_p (operands[2], operands[5])
    && !rtx_equal_p (operands[3], operands[5])
@@ -4484,39 +4661,35 @@
   "#"
   "&& reload_completed"
   {
-    emit_insn (gen_vcond_mask_<mode><vm> (operands[0], operands[4],
-					     operands[5], operands[1]));
+    emit_insn (gen_vmerge_vvm (<MODE>mode, operands[0],
+	  operands[1], const0_rtx, operands[5], operands[4],
+	  operands[6], operands[7], operands[8]));
     operands[5] = operands[4] = operands[0];
   }
   [(set_attr "type" "vmadd")
    (set_attr "mode" "<MODE>")])
 
-(define_expand "cond_fnms<mode>"
-  [(set (match_operand:VF 0 "register_operand")
-	  (unspec:VF
-      [(unspec:VF
-	[(match_operand:<VM> 1 "register_operand")
-	(minus:VF
-	  (mult:VF
-	    (neg:VF
-	      (match_operand:VF 2 "register_operand"))
-	    (match_operand:VF 3 "register_operand"))
-	  (match_operand:VF 4 "register_operand"))
-	(match_operand:VF 5 "register_operand")] UNSPEC_SELECT)
-      (match_dup 6)
-      (match_dup 7)
-      (reg:SI VL_REGNUM)
-      (reg:SI VTYPE_REGNUM)] UNSPEC_RVV))]
+(define_expand "@len_cond_fnms<mode>"
+  [(match_operand:VF 0 "register_operand")
+   (match_operand:<VM> 1 "register_operand")
+   (match_operand:VF 2 "register_operand")
+   (match_operand:VF 3 "register_operand")
+   (match_operand:VF 4 "register_operand")
+   (match_operand:VF 5 "register_operand")
+   (match_operand 6 "p_reg_or_const_csr_operand")]
   "TARGET_VECTOR"
 {
-  operands[6] = gen_rtx_REG (Pmode, X0_REGNUM);
-  operands[7] = riscv_vector_gen_policy ();
   if (rtx_equal_p (operands[3], operands[5]))
     std::swap (operands[2], operands[3]);
+  emit_insn (gen_cond_fnms_internal (<MODE>mode, operands[0], operands[1],
+	     operands[2], operands[3], operands[4], operands[5],
+	     operands[6], riscv_vector_gen_policy (RVV_POLICY_MU),
+	     riscv_vector_gen_clobber_vl (operands[6])));
+  DONE;
 })
 
-(define_expand "len_cond_fnms<mode>"
-  [(set (match_operand:VF 0 "register_operand")
+(define_expand "@cond_fnms<mode>_internal"
+  [(parallel [(set (match_operand:VF 0 "register_operand")
 	  (unspec:VF
       [(unspec:VF
 	[(match_operand:<VM> 1 "register_operand")
@@ -4528,15 +4701,12 @@
 	  (match_operand:VF 4 "register_operand"))
 	(match_operand:VF 5 "register_operand")] UNSPEC_SELECT)
       (match_operand 6 "p_reg_or_const_csr_operand")
-      (match_dup 7)
+      (match_operand 7 "const_int_operand")
       (reg:SI VL_REGNUM)
-      (reg:SI VTYPE_REGNUM)] UNSPEC_RVV))]
+      (reg:SI VTYPE_REGNUM)] UNSPEC_RVV))
+    (clobber (match_operand 8 "pmode_register_operand"))])]
   "TARGET_VECTOR"
-{
-  operands[7] = riscv_vector_gen_policy ();
-  if (rtx_equal_p (operands[3], operands[5]))
-    std::swap (operands[2], operands[3]);
-})
+  {})
 
 (define_insn "*cond_fnms<mode>_2"
   [(set (match_operand:VF 0 "register_operand" "=vr,?&vr")
@@ -4553,7 +4723,8 @@
       (match_operand 5 "p_reg_or_const_csr_operand" "rK,rK")
       (match_operand 6 "const_int_operand")
       (reg:SI VL_REGNUM)
-      (reg:SI VTYPE_REGNUM)] UNSPEC_RVV))]
+      (reg:SI VTYPE_REGNUM)] UNSPEC_RVV))
+    (clobber (match_operand 7 "pmode_register_operand" "=&r,&r"))]
   "TARGET_VECTOR"
   "@
    vfnmadd.vv\t%0,%3,%4,%1.t
@@ -4576,7 +4747,8 @@
       (match_operand 5 "p_reg_or_const_csr_operand" "rK,rK")
       (match_operand 6 "const_int_operand")
       (reg:SI VL_REGNUM)
-      (reg:SI VTYPE_REGNUM)] UNSPEC_RVV))]
+      (reg:SI VTYPE_REGNUM)] UNSPEC_RVV))
+    (clobber (match_operand 7 "pmode_register_operand" "=&r,&r"))]
   "TARGET_VECTOR"
   "@
    vfnmacc.vv\t%0,%2,%3,%1.t
@@ -4599,7 +4771,8 @@
       (match_operand 6 "p_reg_or_const_csr_operand")
       (match_operand 7 "const_int_operand")
       (reg:SI VL_REGNUM)
-      (reg:SI VTYPE_REGNUM)] UNSPEC_RVV))]
+      (reg:SI VTYPE_REGNUM)] UNSPEC_RVV))
+    (clobber (match_operand 8 "pmode_register_operand" "=&r"))]
   "TARGET_VECTOR
    && !rtx_equal_p (operands[2], operands[5])
    && !rtx_equal_p (operands[3], operands[5])
@@ -4607,8 +4780,9 @@
   "#"
   "&& reload_completed"
   {
-    emit_insn (gen_vcond_mask_<mode><vm> (operands[0], operands[4],
-					     operands[5], operands[1]));
+    emit_insn (gen_vmerge_vvm (<MODE>mode, operands[0],
+	  operands[1], const0_rtx, operands[5], operands[4],
+	  operands[6], operands[7], operands[8]));
     operands[5] = operands[4] = operands[0];
   }
   [(set_attr "type" "vmadd")
@@ -4640,9 +4814,9 @@
   rtx accum = gen_reg_rtx (<VLMUL1>mode);
   rtx zero = gen_rtx_REG (Pmode, X0_REGNUM);
   emit_insn (gen_v_s_x (UNSPEC_VMVS, <VLMUL1>mode, accum,
-	     const0_rtx, GEN_INT (0), zero, riscv_vector_gen_policy ()));
+	     const0_rtx, GEN_INT (0), zero, riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   emit_insn (gen_vredsum<mode>_vs (accum, const0_rtx, const0_rtx,
-	operands[1], accum, zero, riscv_vector_gen_policy ()));
+	operands[1], accum, zero, riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   emit_insn (gen_vmv_x_s (<VLMUL1>mode, operands[0], accum));
   DONE;
 })
@@ -4658,9 +4832,9 @@
   rtx x = gen_reg_rtx (<VSUB>mode);
   emit_insn (gen_vmv_x_s (<MODE>mode, x, operands[1]));
   emit_insn (gen_v_s_x (UNSPEC_VMVS, <VLMUL1>mode, accum,
-	     const0_rtx, x, zero, riscv_vector_gen_policy ()));
+	     const0_rtx, x, zero, riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   emit_insn (gen_vred<reduc><mode>_vs (accum, const0_rtx, const0_rtx,
-	operands[1], accum, zero, riscv_vector_gen_policy ()));
+	operands[1], accum, zero, riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   emit_insn (gen_vmv_x_s (<VLMUL1>mode, operands[0], accum));
   DONE;
 })
@@ -4672,11 +4846,11 @@
 {
   rtx accum = gen_reg_rtx (<VLMUL1>mode);
   rtx zero = gen_rtx_REG (Pmode, X0_REGNUM);
-  emit_insn (gen_vmv_v_x (<VLMUL1>mode, accum, const0_rtx,
-			  GEN_INT (-1), gen_rtx_REG (Pmode, X0_REGNUM),
-			  riscv_vector_gen_policy ()));
+  emit_insn (gen_vmv_v_x (<VLMUL1>mode,
+      accum, const0_rtx, GEN_INT (-1),
+      gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   emit_insn (gen_vredand<mode>_vs (accum, const0_rtx, const0_rtx,
-	operands[1], accum, zero, riscv_vector_gen_policy ()));
+	operands[1], accum, zero, riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   emit_insn (gen_vmv_x_s (<VLMUL1>mode, operands[0], accum));
   DONE;
 })
@@ -4689,9 +4863,9 @@
   rtx accum = gen_reg_rtx (<VLMUL1>mode);
   rtx zero = gen_rtx_REG (Pmode, X0_REGNUM);
   emit_insn (gen_v_s_x (UNSPEC_VMVS, <VLMUL1>mode, accum,
-	     const0_rtx, GEN_INT (0), zero, riscv_vector_gen_policy ()));
+	     const0_rtx, GEN_INT (0), zero, riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   emit_insn (gen_vredor<mode>_vs (accum, const0_rtx, const0_rtx,
-	operands[1], accum, zero, riscv_vector_gen_policy ()));
+	operands[1], accum, zero, riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   emit_insn (gen_vmv_x_s (<VLMUL1>mode, operands[0], accum));
   DONE;
 })
@@ -4704,9 +4878,9 @@
   rtx accum = gen_reg_rtx (<VLMUL1>mode);
   rtx zero = gen_rtx_REG (Pmode, X0_REGNUM);
   emit_insn (gen_v_s_x (UNSPEC_VMVS, <VLMUL1>mode, accum,
-	     const0_rtx, GEN_INT (0), zero, riscv_vector_gen_policy ()));
+	     const0_rtx, GEN_INT (0), zero, riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   emit_insn (gen_vredxor<mode>_vs (accum, const0_rtx, const0_rtx,
-	operands[1], accum, zero, riscv_vector_gen_policy ()));
+	operands[1], accum, zero, riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   emit_insn (gen_vmv_x_s (<VLMUL1>mode, operands[0], accum));
   DONE;
 })
@@ -4727,10 +4901,10 @@
 {
   rtx accum = gen_reg_rtx (<VLMUL1>mode);
   rtx zero = gen_rtx_REG (Pmode, X0_REGNUM);
-  emit_insn (gen_vmv_s_x_internal (<VLMUL1>mode, accum, zero,
-	riscv_vector_gen_policy ()));
+  emit_insn (gen_vfmv_s_f (<VLMUL1>mode, accum, const0_rtx, CONST0_RTX (<VSUB>mode),
+	gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   emit_insn (gen_vfredusum<mode>_vs (accum, const0_rtx, const0_rtx,
-	operands[1], accum, zero, riscv_vector_gen_policy ()));
+	operands[1], accum, zero, riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   emit_insn (gen_vfmv_f_s (<VLMUL1>mode, operands[0], accum));
   DONE;
 })
@@ -4745,9 +4919,9 @@
   rtx f = gen_reg_rtx (<VSUB>mode);
   emit_insn (gen_vfmv_f_s (<MODE>mode, f, operands[1]));
   emit_insn (gen_vfmv_s_f (<VLMUL1>mode, accum,
-	     const0_rtx, f, zero, riscv_vector_gen_policy ()));
+	     const0_rtx, f, zero, riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   emit_insn (gen_vfredmin<mode>_vs (accum, const0_rtx, const0_rtx,
-	operands[1], accum, zero, riscv_vector_gen_policy ()));
+	operands[1], accum, zero, riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   emit_insn (gen_vfmv_f_s (<VLMUL1>mode, operands[0], accum));
   DONE;
 })
@@ -4762,9 +4936,9 @@
   rtx f = gen_reg_rtx (<VSUB>mode);
   emit_insn (gen_vfmv_f_s (<MODE>mode, f, operands[1]));
   emit_insn (gen_vfmv_s_f (<VLMUL1>mode, accum,
-	     const0_rtx, f, zero, riscv_vector_gen_policy ()));
+	     const0_rtx, f, zero, riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   emit_insn (gen_vfredmax<mode>_vs (accum, const0_rtx, const0_rtx,
-	operands[1], accum, zero, riscv_vector_gen_policy ()));
+	operands[1], accum, zero, riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   emit_insn (gen_vfmv_f_s (<VLMUL1>mode, operands[0], accum));
   DONE;
 })
@@ -4785,9 +4959,9 @@
   rtx accum = gen_reg_rtx (<VLMUL1>mode);
   rtx zero = gen_rtx_REG (Pmode, X0_REGNUM);
   emit_insn (gen_vfmv_s_f (<VLMUL1>mode, accum,
-	     const0_rtx, operands[1], zero, riscv_vector_gen_policy ()));
+	     const0_rtx, operands[1], zero, riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   emit_insn (gen_vfredosum<mode>_vs (accum, const0_rtx, const0_rtx,
-	operands[2], accum, zero, riscv_vector_gen_policy ()));
+	operands[2], accum, zero, riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   emit_insn (gen_vfmv_f_s (<VLMUL1>mode, operands[0], accum));
   DONE;
 })
@@ -4802,9 +4976,9 @@
   rtx accum = gen_reg_rtx (<VLMUL1>mode);
   rtx zero = gen_rtx_REG (Pmode, X0_REGNUM);
   emit_insn (gen_vfmv_s_f (<VLMUL1>mode, accum,
-	     const0_rtx, operands[1], zero, riscv_vector_gen_policy ()));
+	     const0_rtx, operands[1], zero, riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   emit_insn (gen_vfredosum<mode>_vs (accum, operands[3], const0_rtx,
-	operands[2], accum, zero, riscv_vector_gen_policy ()));
+	operands[2], accum, zero, riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   emit_insn (gen_vfmv_f_s (<VLMUL1>mode, operands[0], accum));
   DONE;
 })
@@ -4816,11 +4990,17 @@
    (match_operand 3 "p_reg_or_const_csr_operand")]
   "TARGET_VECTOR"
 {
+  if (rtx_equal_p (operands[3], const0_rtx))
+    {
+      riscv_emit_move (operands[0], operands[1]);
+      DONE;
+    }
   rtx accum = gen_reg_rtx (<VLMUL1>mode);
   emit_insn (gen_vfmv_s_f (<VLMUL1>mode, accum,
-	     const0_rtx, operands[1], operands[3], riscv_vector_gen_policy ()));
-  emit_insn (gen_vfredosum<mode>_vs (accum, const0_rtx, const0_rtx,
-	operands[2], accum, operands[3], riscv_vector_gen_policy ()));
+	     const0_rtx, operands[1], operands[3],
+	     riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[3])));
+  emit_insn (gen_vfredosum<mode>_vs (accum, const0_rtx, accum,
+	operands[2], accum, operands[3], riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[3])));
   emit_insn (gen_vfmv_f_s (<VLMUL1>mode, operands[0], accum));
   DONE;
 })
@@ -4854,14 +5034,14 @@
 	  emit_insn (gen_vfmerge_vfm (<MODE>mode, operands[0],
 	      operands[3], const0_rtx, operands[2], force_reg (<VSUB>mode, x),
 	      gen_rtx_REG (Pmode, X0_REGNUM),
-	      riscv_vector_gen_policy ()));
+	      riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
 	}
       else
 	{
 	  emit_insn (gen_v_vxm (UNSPEC_VMERGE, <MODE>mode, operands[0],
 	      operands[3], const0_rtx, operands[2], x,
 	      gen_rtx_REG (Pmode, X0_REGNUM),
-	      riscv_vector_gen_policy ()));
+	      riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
 	}
     }
   else
@@ -4870,7 +5050,7 @@
       emit_insn (gen_vmerge_vvm (<MODE>mode, operands[0],
 	  operands[3], const0_rtx, operands[2], operands[1],
 	  gen_rtx_REG (Pmode, X0_REGNUM),
-	  riscv_vector_gen_policy ()));
+	  riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
     }
   DONE;
 })
@@ -4893,13 +5073,13 @@
 	{
 	  emit_insn (gen_vfmerge_vfm (<MODE>mode, operands[0],
 	      operands[3], const0_rtx, operands[2], force_reg (<VSUB>mode, x),
-	      operands[4], riscv_vector_gen_policy ()));
+	      operands[4], riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[4])));
 	}
       else
 	{
 	  emit_insn (gen_v_vxm (UNSPEC_VMERGE, <MODE>mode, operands[0],
 	      operands[3], const0_rtx, operands[2], x,
-	      operands[4], riscv_vector_gen_policy ()));
+	      operands[4], riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[4])));
 	}
     }
   else
@@ -4907,7 +5087,7 @@
       operands[1] = force_reg (<MODE>mode, operands[1]);
       emit_insn (gen_vmerge_vvm (<MODE>mode, operands[0],
 	  operands[3], const0_rtx, operands[2], operands[1],
-	  operands[4], riscv_vector_gen_policy ()));
+	  operands[4], riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[4])));
     }
   DONE;
 })
@@ -4924,14 +5104,14 @@
       emit_insn (gen_vfmerge_vfm (<MODE>mode, operands[0],
 	  operands[3], const0_rtx, operands[2], operands[1],
 	  gen_rtx_REG (Pmode, X0_REGNUM),
-	  riscv_vector_gen_policy ()));
+	  riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
     }
   else
     {
       emit_insn (gen_v_vxm (UNSPEC_VMERGE, <MODE>mode, operands[0],
 	  operands[3], const0_rtx, operands[2], operands[1],
 	  gen_rtx_REG (Pmode, X0_REGNUM),
-	  riscv_vector_gen_policy ()));
+	  riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
     }
   DONE;
 })
@@ -4951,13 +5131,13 @@
     {
       emit_insn (gen_vfmerge_vfm (<MODE>mode, operands[0],
 	  operands[3], const0_rtx, operands[2], operands[1],
-	  operands[4], riscv_vector_gen_policy ()));
+	  operands[4], riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[4])));
     }
   else
     {
       emit_insn (gen_v_vxm (UNSPEC_VMERGE, <MODE>mode, operands[0],
 	  operands[3], const0_rtx, operands[2], operands[1],
-	  operands[4], riscv_vector_gen_policy ()));
+	  operands[4], riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[4])));
     }
   DONE;
 })
@@ -6479,7 +6659,7 @@
 ;; be used. This pattern expect the result of the counter not to
 ;; overflow after added by operands[0] generated by this pattern.
 (define_insn_and_split "while_len<mode><mode>"
-  [(set (match_operand:X 0 "register_operand" "=r")
+  [(set (match_operand:X 0 "register_operand" "=&r")
     (unspec:X
       [(match_operand:X 1 "p_reg_or_const_csr_operand" "rK")
        (match_operand:X 2 "const_int_operand" "i")
@@ -6512,23 +6692,20 @@
   "TARGET_VECTOR"
   {
     machine_mode data_mode;
-    gcc_assert (riscv_vector_data_mode
-		(Pmode, GET_MODE_NUNITS (<VB:MODE>mode)).exists (&data_mode));
+    gcc_assert (riscv_vector_data_mode (Pmode, GET_MODE_NUNITS (<VB:MODE>mode))
+	   .exists (&data_mode));
 
     rtx index = gen_reg_rtx (data_mode);
-    emit_insn (gen_vid_v (data_mode, index, const0_rtx, const0_rtx,
-			  gen_rtx_REG (Pmode, X0_REGNUM),
-			  riscv_vector_gen_policy ()));
+    emit_insn (gen_vid_v (data_mode,
+      index, const0_rtx, const0_rtx, gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
 
     if (!rtx_equal_p (operands[1], CONST0_RTX (Pmode)))
       emit_insn (gen_v_vx (UNSPEC_VADD, data_mode, index, const0_rtx,
-			   const0_rtx, index, operands[1],
-			   gen_rtx_REG (Pmode, X0_REGNUM),
-			   riscv_vector_gen_policy ()));
+			   const0_rtx, index, operands[1], gen_rtx_REG (Pmode, X0_REGNUM),
+			   riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
 
-    emit_insn (gen_vms_vx (LTU, data_mode, operands[0], const0_rtx, const0_rtx,
-			   index, operands[2], gen_rtx_REG (Pmode, X0_REGNUM),
-			   riscv_vector_gen_policy ()));
+    emit_insn (gen_vms_vx (LTU, data_mode, operands[0], const0_rtx, const0_rtx, index,
+			   operands[2], gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
     DONE;
   })
 
@@ -6544,22 +6721,23 @@
 	(if_then_else
 	  (match_operator 0 "vector_equality_operator"
 	    [(match_operand:VB 1 "register_operand")
-	     (match_operand:VB 2 "vector_reg_or_const_vector_0_operand")])
-	  (label_ref (match_operand 3 ""))
+	     (match_operand:VB 2 "general_operand")])
+	  (label_ref (match_operand 3 "pmode_register_operand"))
 	  (pc)))]
   "TARGET_VECTOR"
   {
     rtx mask = gen_reg_rtx (<MODE>mode);
     rtx count = gen_reg_rtx (Pmode);
-    if (GET_CODE (operands[2]) == CONST_VECTOR)
+    if (rtx_equal_p (operands[2], CONST0_RTX (<MODE>mode)))
       mask = operands[1];
     else
-      emit_insn (gen_vm_mm (XOR, <MODE>mode, mask, operands[1], operands[2],
-			    gen_rtx_REG (Pmode, X0_REGNUM),
-			    riscv_vector_gen_policy ()));
-    emit_insn (gen_vcpop_m (<MODE>mode, Pmode, count, const0_rtx, mask,
-			    gen_rtx_REG (Pmode, X0_REGNUM),
-			    riscv_vector_gen_policy ()));
+      {
+	operands[2] = force_reg (<MODE>mode, operands[2]);
+	emit_insn (gen_vm_mm (XOR, <MODE>mode, mask, operands[1], operands[2],
+		   gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
+      }
+    emit_insn (gen_vcpop_m (<MODE>mode, Pmode, count, const0_rtx,
+	mask, gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
     operands[1] = count;
     operands[2] = const0_rtx;
   }
@@ -6584,7 +6762,7 @@
   "TARGET_VECTOR"
 {
   emit_insn (gen_vfcvt<vmap>_rtz_x<u>_f_v (operands[0], const0_rtx, const0_rtx, operands[1],
-	gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy ()));
+	gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   DONE;
 })
 
@@ -6599,7 +6777,7 @@
   if (!CONST_SCALAR_INT_P (operands[2]) && GET_MODE (operands[2]) != Pmode)
     operands[2] = gen_lowpart (Pmode, operands[2]);
   emit_insn (gen_vfcvt<vmap>_rtz_x<u>_f_v (operands[0], const0_rtx, const0_rtx, operands[1],
-	operands[2], riscv_vector_gen_policy ()));
+	operands[2], riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[2])));
   DONE;
 })
 
@@ -6618,7 +6796,7 @@
   "TARGET_VECTOR"
 {
   emit_insn (gen_vfcvt<mode>_f_x<u>_v (operands[0], const0_rtx, const0_rtx,
-	operands[1], gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy ()));
+	operands[1], gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   DONE;
 })
 
@@ -6633,7 +6811,7 @@
   if (!CONST_SCALAR_INT_P (operands[2]) && GET_MODE (operands[2]) != Pmode)
     operands[2] = gen_lowpart (Pmode, operands[2]);
   emit_insn (gen_vfcvt<mode>_f_x<u>_v (operands[0], const0_rtx, const0_rtx,
-	operands[1], operands[2], riscv_vector_gen_policy ()));
+	operands[1], operands[2], riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[2])));
   DONE;
 })
 
@@ -6721,7 +6899,7 @@
   emit_insn (gen_vw<plus_minus_mult:optab><u><vw>_vv (operands[0],
       const0_rtx, const0_rtx, operands[1],
       operands[2], gen_rtx_REG (Pmode, X0_REGNUM),
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   DONE;
 })
 
@@ -6739,15 +6917,15 @@
   emit_insn (gen_v<sz>ext<vn>_vf2 (wide1,
 	const0_rtx, const0_rtx, operands[1],
 	gen_rtx_REG (Pmode, X0_REGNUM),
-	riscv_vector_gen_policy ()));
+	riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   emit_insn (gen_v<sz>ext<vn>_vf2 (wide2,
 	const0_rtx, const0_rtx, operands[2],
 	gen_rtx_REG (Pmode, X0_REGNUM),
-	riscv_vector_gen_policy ()));
+	riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   emit_insn (gen_vw<plus_minus_mult:optab><u><mode>_vv (operands[0],
       const0_rtx, const0_rtx, wide1,
       wide2, gen_rtx_REG (Pmode, X0_REGNUM),
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   DONE;
 })
 
@@ -6765,15 +6943,15 @@
   emit_insn (gen_v<sz>ext<vn>_vf4 (wide1,
 	const0_rtx, const0_rtx, operands[1],
 	gen_rtx_REG (Pmode, X0_REGNUM),
-	riscv_vector_gen_policy ()));
+	riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   emit_insn (gen_v<sz>ext<vn>_vf4 (wide2,
 	const0_rtx, const0_rtx, operands[2],
 	gen_rtx_REG (Pmode, X0_REGNUM),
-	riscv_vector_gen_policy ()));
+	riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   emit_insn (gen_vw<plus_minus_mult:optab><u><mode>_vv (operands[0],
       const0_rtx, const0_rtx, wide1, wide2,
       gen_rtx_REG (Pmode, X0_REGNUM),
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   DONE;
 })
 
@@ -6791,7 +6969,7 @@
   emit_insn (gen_vw<plus_minus_mult:optab><u><vw>_vx (operands[0],
       const0_rtx, const0_rtx, operands[1],
       operands[2], gen_rtx_REG (Pmode, X0_REGNUM),
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   DONE;
 })
 
@@ -6810,12 +6988,12 @@
   emit_insn (gen_v<sz>ext<vn>_vf2 (wide1,
 	const0_rtx, const0_rtx, operands[1],
 	gen_rtx_REG (Pmode, X0_REGNUM),
-	riscv_vector_gen_policy ()));
+	riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   emit_insn (gen_<any_extend:optab><vqnsub><vnsub>2 (wide2, operands[2]));
   emit_insn (gen_vw<plus_minus_mult:optab><u><mode>_vx (operands[0],
       const0_rtx, const0_rtx, wide1, wide2,
       gen_rtx_REG (Pmode, X0_REGNUM),
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   DONE;
 })
 
@@ -6834,12 +7012,12 @@
   emit_insn (gen_v<sz>ext<vn>_vf4 (wide1,
 	const0_rtx, const0_rtx, operands[1],
 	gen_rtx_REG (Pmode, X0_REGNUM),
-	riscv_vector_gen_policy ()));
+	riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   emit_insn (gen_<any_extend:optab><vonsub><vnsub>2 (wide2, operands[2]));
   emit_insn (gen_vw<plus_minus_mult:optab><u><mode>_vx (operands[0],
       const0_rtx, const0_rtx, wide1, wide2,
       gen_rtx_REG (Pmode, X0_REGNUM),
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   DONE;
 })
 
@@ -6852,7 +7030,7 @@
   emit_insn (gen_vwmulsu<vw>_vv (operands[0],
       const0_rtx, const0_rtx, operands[1],
       operands[2], gen_rtx_REG (Pmode, X0_REGNUM),
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   DONE;
 })
 
@@ -6867,15 +7045,15 @@
   emit_insn (gen_vsext<vn>_vf2 (wide1,
 	const0_rtx, const0_rtx, operands[1],
 	gen_rtx_REG (Pmode, X0_REGNUM),
-	riscv_vector_gen_policy ()));
+	riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   emit_insn (gen_vzext<vn>_vf2 (wide2,
 	const0_rtx, const0_rtx, operands[2],
 	gen_rtx_REG (Pmode, X0_REGNUM),
-	riscv_vector_gen_policy ()));
+	riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   emit_insn (gen_vwmulsu<mode>_vv (operands[0],
       const0_rtx, const0_rtx, wide1, wide2,
       gen_rtx_REG (Pmode, X0_REGNUM),
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   DONE;
 })
 
@@ -6890,15 +7068,15 @@
   emit_insn (gen_vsext<vn>_vf4 (wide1,
 	const0_rtx, const0_rtx, operands[1],
 	gen_rtx_REG (Pmode, X0_REGNUM),
-	riscv_vector_gen_policy ()));
+	riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   emit_insn (gen_vzext<vn>_vf4 (wide2,
 	const0_rtx, const0_rtx, operands[2],
 	gen_rtx_REG (Pmode, X0_REGNUM),
-	riscv_vector_gen_policy ()));
+	riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   emit_insn (gen_vwmulsu<mode>_vv (operands[0],
       const0_rtx, const0_rtx, wide1,
       wide2, gen_rtx_REG (Pmode, X0_REGNUM),
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   DONE;
 })
 
@@ -6911,7 +7089,7 @@
   emit_insn (gen_vwmulsu<vw>_vx (operands[0],
       const0_rtx, const0_rtx, operands[1],
       operands[2], gen_rtx_REG (Pmode, X0_REGNUM),
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   DONE;
 })
 
@@ -6926,12 +7104,12 @@
   emit_insn (gen_vsext<vn>_vf2 (wide1,
 	const0_rtx, const0_rtx, operands[1],
 	gen_rtx_REG (Pmode, X0_REGNUM),
-	riscv_vector_gen_policy ()));
+	riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   emit_insn (gen_zero_extend<vqnsub><vnsub>2 (wide2, operands[2]));
   emit_insn (gen_vwmulsu<mode>_vx (operands[0],
       const0_rtx, const0_rtx, wide1, wide2,
       gen_rtx_REG (Pmode, X0_REGNUM),
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   DONE;
 })
 
@@ -6946,12 +7124,12 @@
   emit_insn (gen_vsext<vn>_vf4 (wide1,
 	const0_rtx, const0_rtx, operands[1],
 	gen_rtx_REG (Pmode, X0_REGNUM),
-	riscv_vector_gen_policy ()));
+	riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   emit_insn (gen_rtx_SET (wide2, gen_rtx_ZERO_EXTEND (<VNSUB>mode, operands[2])));
   emit_insn (gen_vwmulsu<mode>_vx (operands[0],
       const0_rtx, const0_rtx, wide1, wide2,
       gen_rtx_REG (Pmode, X0_REGNUM),
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   DONE;
 })
 
@@ -6963,11 +7141,11 @@
 {
   rtx reg = gen_reg_rtx (<MODE>mode);
   emit_insn (gen_vmv<mode>_v_x (reg, const0_rtx, operands[2],
-				gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy ()));
+				gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   emit_insn (gen_vwmulsu<vw>_vv (operands[0],
       const0_rtx, const0_rtx, reg,
       operands[1], gen_rtx_REG (Pmode, X0_REGNUM),
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   DONE;
 })
 
@@ -6983,14 +7161,14 @@
   emit_insn (gen_vzext<vn>_vf2 (wide1,
 	const0_rtx, const0_rtx, operands[1],
 	gen_rtx_REG (Pmode, X0_REGNUM),
-	riscv_vector_gen_policy ()));
+	riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   emit_insn (gen_rtx_SET (wide2sub, gen_rtx_SIGN_EXTEND (<VNSUB>mode, operands[2])));
   emit_insn (gen_vmv<vn>_v_x (wide2, const0_rtx, wide2sub,
-			      gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy ()));
+			      gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   emit_insn (gen_vwmulsu<mode>_vv (operands[0],
       const0_rtx, const0_rtx, wide2,
       wide1, gen_rtx_REG (Pmode, X0_REGNUM),
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   DONE;
 })
 
@@ -7006,14 +7184,14 @@
   emit_insn (gen_vzext<vn>_vf4 (wide1,
 	const0_rtx, const0_rtx, operands[1],
 	gen_rtx_REG (Pmode, X0_REGNUM),
-	riscv_vector_gen_policy ()));
+	riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   emit_insn (gen_rtx_SET (wide2sub, gen_rtx_SIGN_EXTEND (<VNSUB>mode, operands[2])));
   emit_insn (gen_vmv<vn>_v_x (wide2, const0_rtx, wide2sub,
-			      gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy ()));
+			      gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   emit_insn (gen_vwmulsu<mode>_vv (operands[0],
       const0_rtx, const0_rtx, wide2,
       wide1, gen_rtx_REG (Pmode, X0_REGNUM),
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   DONE;
 })
 
@@ -7029,7 +7207,7 @@
   emit_insn (gen_vfw<plus_minus_mult:optab><vw>_vv (operands[0],
       const0_rtx, const0_rtx, operands[1],
       operands[2], gen_rtx_REG (Pmode, X0_REGNUM),
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   DONE;
 })
 
@@ -7046,14 +7224,14 @@
   rtx wide2 = gen_reg_rtx (<VN>mode);
   emit_insn (gen_vfwcvt_f_f_v (<VQN>mode, wide1, const0_rtx, const0_rtx,
       operands[1], gen_rtx_REG (Pmode, X0_REGNUM),
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   emit_insn (gen_vfwcvt_f_f_v (<VQN>mode, wide2, const0_rtx, const0_rtx,
       operands[2], gen_rtx_REG (Pmode, X0_REGNUM),
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   emit_insn (gen_vfw<optab><mode>_vv (operands[0],
       const0_rtx, const0_rtx, wide1, wide2,
       gen_rtx_REG (Pmode, X0_REGNUM),
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   DONE;
 })
 
@@ -7070,7 +7248,7 @@
   emit_insn (gen_vfw<optab><vw>_vf (operands[0],
       const0_rtx, const0_rtx, operands[1],
       operands[2], gen_rtx_REG (Pmode, X0_REGNUM),
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   DONE;
 })
 
@@ -7088,12 +7266,12 @@
   rtx wide2 = gen_reg_rtx (<VNSUB>mode);
   emit_insn (gen_vfwcvt_f_f_v (<VQN>mode, wide1, const0_rtx, const0_rtx,
       operands[1], gen_rtx_REG (Pmode, X0_REGNUM),
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   emit_insn (gen_rtx_SET (wide2, gen_rtx_FLOAT_EXTEND (<VNSUB>mode, operands[2])));
   emit_insn (gen_vfw<optab><mode>_vf (operands[0],
       const0_rtx, const0_rtx, wide1, wide2,
       gen_rtx_REG (Pmode, X0_REGNUM),
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   DONE;
 })
 
@@ -7108,7 +7286,7 @@
   emit_insn (gen_vw<plus_minus:optab><u><vw>_wv (operands[0],
       const0_rtx, const0_rtx, operands[1],
       operands[2], gen_rtx_REG (Pmode, X0_REGNUM),
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   DONE;
 })
 
@@ -7123,7 +7301,7 @@
   emit_insn (gen_vfw<optab><vw>_wv (operands[0],
       const0_rtx, const0_rtx, operands[1],
       operands[2], gen_rtx_REG (Pmode, X0_REGNUM),
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   DONE;
 })
 
@@ -7138,11 +7316,11 @@
   rtx wide = gen_reg_rtx (<VN>mode);
   emit_insn (gen_vfwcvt_f_f_v (<VQN>mode, wide, const0_rtx, const0_rtx,
       operands[2], gen_rtx_REG (Pmode, X0_REGNUM),
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   emit_insn (gen_vfw<optab><mode>_wv (operands[0],
       const0_rtx, const0_rtx, operands[1],
       wide, gen_rtx_REG (Pmode, X0_REGNUM),
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   DONE;
 })
 
@@ -7158,7 +7336,7 @@
   emit_insn (gen_vw<plus_minus:optab><u><vw>_wx (operands[0],
       const0_rtx, const0_rtx, operands[1],
       operands[2], gen_rtx_REG (Pmode, X0_REGNUM),
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   DONE;
 })
 
@@ -7174,7 +7352,7 @@
   emit_insn (gen_vfw<optab><vw>_wf (operands[0],
       const0_rtx, const0_rtx, operands[1],
       operands[2], gen_rtx_REG (Pmode, X0_REGNUM),
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   DONE;
 })
 
@@ -7194,7 +7372,7 @@
   emit_insn (gen_vw<plus_minus_mult:optab><u><vw>_vv (operands[0],
       const0_rtx, const0_rtx, operands[1],
       operands[2], operands[3],
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[3])));
   DONE;
 })
 
@@ -7216,13 +7394,13 @@
   rtx wide2 = gen_reg_rtx (<VN>mode);
   emit_insn (gen_v<sz>ext<vn>_vf2 (wide1,
 	const0_rtx, const0_rtx, operands[1],
-	operands[3], riscv_vector_gen_policy ()));
+	operands[3], riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[3])));
   emit_insn (gen_v<sz>ext<vn>_vf2 (wide2,
 	const0_rtx, const0_rtx, operands[2],
-	operands[3], riscv_vector_gen_policy ()));
+	operands[3], riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[3])));
   emit_insn (gen_vw<plus_minus_mult:optab><u><mode>_vv (operands[0],
       const0_rtx, const0_rtx, wide1, wide2,
-      operands[3], riscv_vector_gen_policy ()));
+      operands[3], riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[3])));
   DONE;
 })
 
@@ -7244,13 +7422,13 @@
   rtx wide2 = gen_reg_rtx (<VN>mode);
   emit_insn (gen_v<sz>ext<vn>_vf4 (wide1,
 	const0_rtx, const0_rtx, operands[1],
-	operands[3], riscv_vector_gen_policy ()));
+	operands[3], riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[3])));
   emit_insn (gen_v<sz>ext<vn>_vf4 (wide2,
 	const0_rtx, const0_rtx, operands[2],
-	operands[3], riscv_vector_gen_policy ()));
+	operands[3], riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[3])));
   emit_insn (gen_vw<plus_minus_mult:optab><u><mode>_vv (operands[0],
       const0_rtx, const0_rtx, wide1, wide2,
-      operands[3], riscv_vector_gen_policy ()));
+      operands[3], riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[3])));
   DONE;
 })
 
@@ -7271,7 +7449,7 @@
   emit_insn (gen_vw<plus_minus_mult:optab><u><vw>_vx (operands[0],
       const0_rtx, const0_rtx, operands[1],
       operands[2], operands[3],
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[3])));
   DONE;
 })
 
@@ -7294,14 +7472,14 @@
   rtx wide2 = gen_reg_rtx (<VNSUB>mode);
   emit_insn (gen_v<sz>ext<vn>_vf2 (wide1,
 	const0_rtx, const0_rtx, operands[1],
-	operands[3], riscv_vector_gen_policy ()));
+	operands[3], riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[3])));
   emit_insn (gen_<any_extend:optab><vqnsub><vnsub>2 (wide2, operands[2]));
   emit_insn (gen_vw<plus_minus_mult:optab><u><mode>_vx (operands[0],
       const0_rtx, const0_rtx, wide1, wide2,
-      operands[3], riscv_vector_gen_policy ()));
+      operands[3], riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[3])));
   emit_insn (gen_vw<plus_minus_mult:optab><u><mode>_vx (operands[0],
       const0_rtx, const0_rtx, wide1, wide2, operands[3],
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[3])));
   DONE;
 })
 
@@ -7324,14 +7502,14 @@
   rtx wide2 = gen_reg_rtx (<VNSUB>mode);
   emit_insn (gen_v<sz>ext<vn>_vf4 (wide1,
 	const0_rtx, const0_rtx, operands[1],
-	operands[3], riscv_vector_gen_policy ()));
+	operands[3], riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[3])));
   emit_insn (gen_<any_extend:optab><vqnsub><vnsub>2 (wide2, operands[2]));
   emit_insn (gen_vw<plus_minus_mult:optab><u><mode>_vx (operands[0],
       const0_rtx, const0_rtx, wide1, wide2,
-      operands[3], riscv_vector_gen_policy ()));
+      operands[3], riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[3])));
   emit_insn (gen_vw<plus_minus_mult:optab><u><mode>_vx (operands[0],
       const0_rtx, const0_rtx, wide1, wide2, operands[3],
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[3])));
   DONE;
 })
 
@@ -7347,7 +7525,7 @@
   emit_insn (gen_vwmulsu<vw>_vv (operands[0],
       const0_rtx, const0_rtx, operands[1],
       operands[2], operands[3],
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[3])));
   DONE;
 })
 
@@ -7365,13 +7543,13 @@
   rtx wide2 = gen_reg_rtx (<VN>mode);
   emit_insn (gen_vsext<vn>_vf2 (wide1,
 	const0_rtx, const0_rtx, operands[1],
-	operands[3], riscv_vector_gen_policy ()));
+	operands[3], riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[3])));
   emit_insn (gen_vzext<vn>_vf2 (wide2,
 	const0_rtx, const0_rtx, operands[2],
-	operands[3], riscv_vector_gen_policy ()));
+	operands[3], riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[3])));
   emit_insn (gen_vwmulsu<mode>_vv (operands[0],
       const0_rtx, const0_rtx, wide1,
-      wide2, operands[3], riscv_vector_gen_policy ()));
+      wide2, operands[3], riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[3])));
   DONE;
 })
 
@@ -7389,13 +7567,13 @@
   rtx wide2 = gen_reg_rtx (<VN>mode);
   emit_insn (gen_vsext<vn>_vf4 (wide1,
 	const0_rtx, const0_rtx, operands[1],
-	operands[3], riscv_vector_gen_policy ()));
+	operands[3], riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[3])));
   emit_insn (gen_vzext<vn>_vf4 (wide2,
 	const0_rtx, const0_rtx, operands[2],
-	operands[3], riscv_vector_gen_policy ()));
+	operands[3], riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[3])));
   emit_insn (gen_vwmulsu<mode>_vv (operands[0],
       const0_rtx, const0_rtx, wide1,
-      wide2, operands[3], riscv_vector_gen_policy ()));
+      wide2, operands[3], riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[3])));
   DONE;
 })
 
@@ -7411,7 +7589,7 @@
   emit_insn (gen_vwmulsu<vw>_vx (operands[0],
       const0_rtx, const0_rtx, operands[1],
       operands[2], operands[3],
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[3])));
   DONE;
 })
 
@@ -7429,13 +7607,13 @@
   rtx wide2 = gen_reg_rtx (<VNSUB>mode);
   emit_insn (gen_vsext<vn>_vf2 (wide1,
 	const0_rtx, const0_rtx, operands[1],
-	operands[3], riscv_vector_gen_policy ()));
+	operands[3], riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[3])));
   emit_insn (gen_zero_extend<vqnsub><vnsub>2 (wide2, operands[2]));
 
   emit_insn (gen_vwmulsu<mode>_vx (operands[0],
       const0_rtx, const0_rtx, wide1,
       wide2, operands[3],
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[3])));
   DONE;
 })
 
@@ -7453,11 +7631,11 @@
   rtx wide2 = gen_reg_rtx (<VNSUB>mode);
   emit_insn (gen_vsext<vn>_vf4 (wide1,
 	const0_rtx, const0_rtx, operands[1],
-	operands[3], riscv_vector_gen_policy ()));
+	operands[3], riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[3])));
   emit_insn (gen_rtx_SET (wide2, gen_rtx_ZERO_EXTEND (<VNSUB>mode, operands[2])));
   emit_insn (gen_vwmulsu<mode>_vx (operands[0],
       const0_rtx, const0_rtx, wide1, wide2,
-      operands[3], riscv_vector_gen_policy ()));
+      operands[3], riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[3])));
   DONE;
 })
 
@@ -7472,11 +7650,11 @@
     operands[3] = gen_lowpart (Pmode, operands[3]);
   rtx reg = gen_reg_rtx (<MODE>mode);
   emit_insn (gen_vmv<mode>_v_x (reg, const0_rtx, operands[2],
-				operands[3], riscv_vector_gen_policy ()));
+				operands[3], riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[3])));
   emit_insn (gen_vwmulsu<vw>_vv (operands[0],
       const0_rtx, const0_rtx, reg,
       operands[1], operands[3],
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[3])));
   DONE;
 })
 
@@ -7495,14 +7673,14 @@
   rtx wide2sub = gen_reg_rtx (<VNSUB>mode);
   emit_insn (gen_vzext<vn>_vf2 (wide1,
 	const0_rtx, const0_rtx, operands[1],
-	operands[3], riscv_vector_gen_policy ()));
+	operands[3], riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[3])));
   emit_insn (gen_rtx_SET (wide2sub, gen_rtx_SIGN_EXTEND (<VNSUB>mode, operands[2])));
   emit_insn (gen_vmv<vn>_v_x (wide2, const0_rtx, wide2sub,
-			      operands[3], riscv_vector_gen_policy ()));
+			      operands[3], riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[3])));
   emit_insn (gen_vwmulsu<mode>_vv (operands[0],
       const0_rtx, const0_rtx, wide2,
       wide1, operands[3],
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[3])));
   DONE;
 })
 
@@ -7521,14 +7699,14 @@
   rtx wide2sub = gen_reg_rtx (<VNSUB>mode);
   emit_insn (gen_vzext<vn>_vf4 (wide1,
 	const0_rtx, const0_rtx, operands[1],
-	operands[3], riscv_vector_gen_policy ()));
+	operands[3], riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[3])));
   emit_insn (gen_rtx_SET (wide2sub, gen_rtx_SIGN_EXTEND (<VNSUB>mode, operands[2])));
   emit_insn (gen_vmv<vn>_v_x (wide2, const0_rtx, wide2sub,
-			      operands[3], riscv_vector_gen_policy ()));
+			      operands[3], riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[3])));
   emit_insn (gen_vwmulsu<mode>_vv (operands[0],
       const0_rtx, const0_rtx, wide2,
       wide1, operands[3],
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[3])));
   DONE;
 })
 
@@ -7548,7 +7726,7 @@
   emit_insn (gen_vfw<plus_minus_mult:optab><vw>_vv (operands[0],
       const0_rtx, const0_rtx, operands[1],
       operands[2], operands[3],
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[3])));
   DONE;
 })
 
@@ -7567,13 +7745,13 @@
   rtx wide2 = gen_reg_rtx (<VN>mode);
   emit_insn (gen_vfwcvt_f_f_v (<VQN>mode, wide1, const0_rtx, const0_rtx,
       operands[1], operands[3],
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[3])));
   emit_insn (gen_vfwcvt_f_f_v (<VQN>mode, wide2, const0_rtx, const0_rtx,
       operands[2], operands[3],
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[3])));
   emit_insn (gen_vfw<optab><mode>_vv (operands[0],
       const0_rtx, const0_rtx, wide1, wide2,
-      operands[3], riscv_vector_gen_policy ()));
+      operands[3], riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[3])));
   DONE;
 })
 
@@ -7594,7 +7772,7 @@
   emit_insn (gen_vfw<plus_minus_mult:optab><vw>_vf (operands[0],
       const0_rtx, const0_rtx, operands[1],
       operands[2], operands[3],
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[3])));
   DONE;
 })
 
@@ -7614,11 +7792,11 @@
   rtx wide2 = gen_reg_rtx (<VNSUB>mode);
   emit_insn (gen_vfwcvt_f_f_v (<VQN>mode, wide1, const0_rtx, const0_rtx,
       operands[1], operands[3],
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[3])));
   emit_insn (gen_rtx_SET (wide2, gen_rtx_FLOAT_EXTEND (<VNSUB>mode, operands[2])));
   emit_insn (gen_vfw<optab><mode>_vf (operands[0],
       const0_rtx, const0_rtx, wide1, wide2,
-      operands[3], riscv_vector_gen_policy ()));
+      operands[3], riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[3])));
   DONE;
 })
 
@@ -7637,7 +7815,7 @@
   emit_insn (gen_vw<plus_minus:optab><u><vw>_wv (operands[0],
       const0_rtx, const0_rtx, operands[1],
       operands[2], operands[3],
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[3])));
   DONE;
 })
 
@@ -7656,7 +7834,7 @@
   emit_insn (gen_vfw<plus_minus:optab><vw>_wv (operands[0],
       const0_rtx, const0_rtx, operands[1],
       operands[2], operands[3],
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[3])));
   DONE;
 })
 
@@ -7676,7 +7854,7 @@
   emit_insn (gen_vw<plus_minus:optab><u><vw>_wx (operands[0],
       const0_rtx, const0_rtx, operands[1],
       operands[2], operands[3],
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[3])));
   DONE;
 })
 
@@ -7696,7 +7874,7 @@
   emit_insn (gen_vfw<plus_minus:optab><vw>_wf (operands[0],
       const0_rtx, const0_rtx, operands[1],
       operands[2], operands[3],
-      riscv_vector_gen_policy ()));
+      riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[3])));
   DONE;
 })
 
@@ -7732,7 +7910,7 @@
   "TARGET_VECTOR"
 {
   emit_insn (gen_vwmacc<u><vw>_vv (operands[0], const0_rtx, operands[3], operands[1], operands[2],
-	     gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy ()));
+	     gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   DONE;
 })
 
@@ -7748,7 +7926,7 @@
   "TARGET_VECTOR"
 {
   emit_insn (gen_vfwmacc<vw>_vv (operands[0], const0_rtx, operands[3], operands[1], operands[2],
-	     gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy ()));
+	     gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   DONE;
 })
 
@@ -7760,7 +7938,7 @@
   "TARGET_VECTOR"
 {
   emit_insn (gen_vwmaccsu<vw>_vv (operands[0], const0_rtx, operands[3], operands[1], operands[2],
-	     gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy ()));
+	     gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   DONE;
 })
 
@@ -7780,7 +7958,7 @@
   if (!CONST_SCALAR_INT_P (operands[4]) && GET_MODE (operands[4]) != Pmode)
     operands[4] = gen_lowpart (Pmode, operands[4]);
   emit_insn (gen_vwmacc<u><vw>_vv (operands[0], const0_rtx, operands[3], operands[1], operands[2],
-	     operands[4], riscv_vector_gen_policy ()));
+	     operands[4], riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[4])));
   DONE;
 })
 
@@ -7800,7 +7978,7 @@
   if (!CONST_SCALAR_INT_P (operands[4]) && GET_MODE (operands[4]) != Pmode)
     operands[4] = gen_lowpart (Pmode, operands[4]);
   emit_insn (gen_vfwmacc<vw>_vv (operands[0], const0_rtx, operands[3], operands[1], operands[2],
-	     operands[4], riscv_vector_gen_policy ()));
+	     operands[4], riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[4])));
   DONE;
 })
 
@@ -7815,7 +7993,7 @@
   if (!CONST_SCALAR_INT_P (operands[4]) && GET_MODE (operands[4]) != Pmode)
     operands[4] = gen_lowpart (Pmode, operands[4]);
   emit_insn (gen_vwmaccsu<vw>_vv (operands[0], const0_rtx, operands[3], operands[1], operands[2],
-	     operands[4], riscv_vector_gen_policy ()));
+	     operands[4], riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[4])));
   DONE;
 })
 
@@ -7833,7 +8011,7 @@
 {
   emit_insn (gen_vwmacc<u><vw>_vx (
 	     operands[0], const0_rtx, operands[3], operands[2], operands[1],
-	     gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy ()));
+	     gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   DONE;
 })
 
@@ -7850,7 +8028,7 @@
   "TARGET_VECTOR"
 {
   emit_insn (gen_vfwmacc<vw>_vf (operands[0], const0_rtx, operands[3], operands[2], operands[1],
-	     gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy ()));
+	     gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   DONE;
 })
 
@@ -7863,7 +8041,7 @@
 {
   emit_insn (gen_vwmaccsu<vw>_vx (
 	     operands[0], const0_rtx, operands[3], operands[2], operands[1],
-	     gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy ()));
+	     gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   DONE;
 })
 
@@ -7876,7 +8054,7 @@
 {
   emit_insn (gen_vwmaccus<vw>_vx (
 	     operands[0], const0_rtx, operands[3], operands[2], operands[1],
-	     gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy ()));
+	     gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   DONE;
 })
 
@@ -7898,7 +8076,7 @@
     operands[4] = gen_lowpart (Pmode, operands[4]);
   emit_insn (gen_vwmacc<u><vw>_vx (
 	     operands[0], const0_rtx, operands[3], operands[2], operands[1],
-	     operands[4], riscv_vector_gen_policy ()));
+	     operands[4], riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[4])));
   DONE;
 })
 
@@ -7919,7 +8097,7 @@
   if (!CONST_SCALAR_INT_P (operands[4]) && GET_MODE (operands[4]) != Pmode)
     operands[4] = gen_lowpart (Pmode, operands[4]);
   emit_insn (gen_vfwmacc<vw>_vf (operands[0], const0_rtx, operands[3], operands[2], operands[1],
-	     operands[4], riscv_vector_gen_policy ()));
+	     operands[4], riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[4])));
   DONE;
 })
 
@@ -7935,7 +8113,7 @@
     operands[4] = gen_lowpart (Pmode, operands[4]);
   emit_insn (gen_vwmaccsu<vw>_vx (
 	     operands[0], const0_rtx, operands[3], operands[2], operands[1],
-	     operands[4], riscv_vector_gen_policy ()));
+	     operands[4], riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[4])));
   DONE;
 })
 
@@ -7951,7 +8129,7 @@
     operands[4] = gen_lowpart (Pmode, operands[4]);
   emit_insn (gen_vwmaccus<vw>_vx (
 	     operands[0], const0_rtx, operands[3], operands[2], operands[1],
-	     operands[4], riscv_vector_gen_policy ()));
+	     operands[4], riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[4])));
   DONE;
 })
 
@@ -7967,7 +8145,7 @@
   "TARGET_VECTOR"
 {
   emit_insn (gen_vfwmsac<vw>_vv (operands[0], const0_rtx, operands[3], operands[1], operands[2],
-	     gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy ()));
+	     gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   DONE;
 })
 
@@ -7987,7 +8165,7 @@
   if (!CONST_SCALAR_INT_P (operands[4]) && GET_MODE (operands[4]) != Pmode)
     operands[4] = gen_lowpart (Pmode, operands[4]);
   emit_insn (gen_vfwmsac<vw>_vv (operands[0], const0_rtx, operands[3], operands[1], operands[2],
-	     operands[4], riscv_vector_gen_policy ()));
+	     operands[4], riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[4])));
   DONE;
 })
 
@@ -8004,7 +8182,7 @@
   "TARGET_VECTOR"
 {
   emit_insn (gen_vfwmsac<vw>_vf (operands[0], const0_rtx, operands[3], operands[2], operands[1],
-	     gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy ()));
+	     gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   DONE;
 })
 
@@ -8025,7 +8203,7 @@
   if (!CONST_SCALAR_INT_P (operands[4]) && GET_MODE (operands[4]) != Pmode)
     operands[4] = gen_lowpart (Pmode, operands[4]);
   emit_insn (gen_vfwmsac<vw>_vf (operands[0], const0_rtx, operands[3], operands[2], operands[1],
-	     operands[4], riscv_vector_gen_policy ()));
+	     operands[4], riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[4])));
   DONE;
 })
 
@@ -8041,7 +8219,7 @@
   "TARGET_VECTOR"
 {
   emit_insn (gen_vfwnmsac<vw>_vv (operands[0], const0_rtx, operands[3], operands[1], operands[2],
-	     gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy ()));
+	     gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   DONE;
 })
 
@@ -8061,7 +8239,7 @@
   if (!CONST_SCALAR_INT_P (operands[4]) && GET_MODE (operands[4]) != Pmode)
     operands[4] = gen_lowpart (Pmode, operands[4]);
   emit_insn (gen_vfwnmsac<vw>_vv (operands[0], const0_rtx, operands[3], operands[1], operands[2],
-	     operands[4], riscv_vector_gen_policy ()));
+	     operands[4], riscv_vector_gen_policy (), gen_rtx_REG (Pmode, X0_REGNUM)));
   DONE;
 })
 
@@ -8078,7 +8256,7 @@
   "TARGET_VECTOR"
 {
   emit_insn (gen_vfwnmsac<vw>_vf (operands[0], const0_rtx, operands[3], operands[2], operands[1],
-	     gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy ()));
+	     gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   DONE;
 })
 
@@ -8099,7 +8277,7 @@
   if (!CONST_SCALAR_INT_P (operands[4]) && GET_MODE (operands[4]) != Pmode)
     operands[4] = gen_lowpart (Pmode, operands[4]);
   emit_insn (gen_vfwnmsac<vw>_vf (operands[0], const0_rtx, operands[3], operands[2], operands[1],
-	     operands[4], riscv_vector_gen_policy ()));
+	     operands[4], riscv_vector_gen_policy (), gen_rtx_REG (Pmode, X0_REGNUM)));
   DONE;
 })
 
@@ -8116,7 +8294,7 @@
   "TARGET_VECTOR"
 {
   emit_insn (gen_vfwnmacc<vw>_vv (operands[0], const0_rtx, operands[3], operands[1], operands[2],
-	     gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy ()));
+	     gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   DONE;
 })
 
@@ -8137,7 +8315,7 @@
   if (!CONST_SCALAR_INT_P (operands[4]) && GET_MODE (operands[4]) != Pmode)
     operands[4] = gen_lowpart (Pmode, operands[4]);
   emit_insn (gen_vfwnmacc<vw>_vv (operands[0], const0_rtx, operands[3], operands[1], operands[2],
-	     operands[4], riscv_vector_gen_policy ()));
+	     operands[4], riscv_vector_gen_policy (), gen_rtx_REG (Pmode, X0_REGNUM)));
   DONE;
 })
 
@@ -8155,7 +8333,7 @@
   "TARGET_VECTOR"
 {
   emit_insn (gen_vfwnmacc<vw>_vf (operands[0], const0_rtx, operands[3], operands[2], operands[1],
-	     gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy ()));
+	     gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
   DONE;
 })
 
@@ -8177,7 +8355,7 @@
   if (!CONST_SCALAR_INT_P (operands[4]) && GET_MODE (operands[4]) != Pmode)
     operands[4] = gen_lowpart (Pmode, operands[4]);
   emit_insn (gen_vfwnmacc<vw>_vf (operands[0], const0_rtx, operands[3], operands[2], operands[1],
-	     operands[4], riscv_vector_gen_policy ()));
+	     operands[4], riscv_vector_gen_policy (), gen_rtx_REG (Pmode, X0_REGNUM)));
   DONE;
 })
 
@@ -8196,7 +8374,7 @@
     emit_insn (gen_v<optab><mode>_vx (operands[0],
 	const0_rtx, const0_rtx, operands[1],
 	operands[2], gen_rtx_REG (Pmode, X0_REGNUM),
-	riscv_vector_gen_policy ()));
+	riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
     DONE;
   })
 
@@ -8212,7 +8390,7 @@
 	  operands[0], const0_rtx, const0_rtx,
 	  operands[1], operands[2],
 	  gen_rtx_REG (Pmode, X0_REGNUM),
-	  riscv_vector_gen_policy ()));
+	  riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
     DONE;
   })
 
@@ -8227,7 +8405,7 @@
     emit_insn (gen_v_vx (UNSPEC_VSUB, <MODE>mode,
 	  operands[0], const0_rtx, const0_rtx,
 	  operands[1], operands[2], gen_rtx_REG (Pmode, X0_REGNUM),
-	  riscv_vector_gen_policy ()));
+	  riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
     DONE;
   })
 
@@ -8243,7 +8421,7 @@
 	  operands[0], const0_rtx, const0_rtx,
 	  operands[1], operands[2],
 	  gen_rtx_REG (Pmode, X0_REGNUM),
-	  riscv_vector_gen_policy ()));
+	  riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
     DONE;
   })
 
@@ -8258,7 +8436,7 @@
     emit_insn (gen_vf<optab><mode>_vf (operands[0],
 	const0_rtx, const0_rtx, operands[1],
 	operands[2], gen_rtx_REG (Pmode, X0_REGNUM),
-	riscv_vector_gen_policy ()));
+	riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
     DONE;
   })
 
@@ -8273,7 +8451,7 @@
     emit_insn (gen_vf<optab><mode>_vf (operands[0],
 	const0_rtx, const0_rtx, operands[1],
 	operands[2], gen_rtx_REG (Pmode, X0_REGNUM),
-	riscv_vector_gen_policy ()));
+	riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
     DONE;
   })
 
@@ -8288,151 +8466,110 @@
     emit_insn (gen_vfr<optab><mode>_vf (operands[0],
 	const0_rtx, const0_rtx, operands[1],
 	operands[2], gen_rtx_REG (Pmode, X0_REGNUM),
-	riscv_vector_gen_policy ()));
+	riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
     DONE;
   })
 
 (define_expand "fma_vs<mode>"
-  [(set (match_operand:VI 0 "register_operand")
-    (unspec:VI
-      [(plus:VI
-	  (mult:VI
-	    (match_operand:VI 1 "register_operand")
-	    (vec_duplicate:VI
-	      (match_operand:<VSUB> 2 "reg_or_const_int_operand")))
-	  (match_operand:VI 3 "register_operand"))
-	(match_dup 4)
-	(match_dup 5)
-	(reg:SI VL_REGNUM)
-	(reg:SI VTYPE_REGNUM)] UNSPEC_RVV))]
+  [(match_operand:VI 0 "register_operand")
+   (match_operand:VI 1 "register_operand")
+   (match_operand:<VSUB> 2 "reg_or_const_int_operand")
+   (match_operand:VI 3 "register_operand")]
   "TARGET_VECTOR"
   {
     if (!TARGET_64BIT && <VSUB>mode == DImode && !imm32_p (operands[2]))
       {
 	rtx reg = gen_reg_rtx (<MODE>mode);
 	emit_insn (gen_vmv_v_x (<MODE>mode, reg, const0_rtx, operands[2],
-				gen_rtx_REG (Pmode, X0_REGNUM),
-				riscv_vector_gen_policy ()));
+		   gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
 	emit_insn (gen_fma<mode>4 (operands[0], operands[1], reg, operands[3]));
-	DONE;
       }
-    operands[2] = force_reg (<VSUB>mode, operands[2]);
-    if (!TARGET_64BIT && <VSUB>mode == DImode)
-      operands[2] = gen_rtx_SIGN_EXTEND (<VSUB>mode, gen_lowpart (Pmode, operands[2]));
-    operands[4] = gen_rtx_REG (Pmode, X0_REGNUM);
-    operands[5] = riscv_vector_gen_policy ();
+    else if (!TARGET_64BIT && <VSUB>mode == DImode)
+      emit_insn (gen_fma_vs_32bit_internal (<MODE>mode, operands[0], operands[1],
+		  gen_lowpart (Pmode, force_reg (<VSUB>mode, operands[2])), operands[3], gen_rtx_REG (Pmode, X0_REGNUM),
+		  riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
+    else
+      emit_insn (gen_fma_vs_internal (<MODE>mode, operands[0], operands[1],
+		  force_reg (<VSUB>mode, operands[2]), operands[3], gen_rtx_REG (Pmode, X0_REGNUM),
+		  riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
+    DONE;
   })
 
 (define_expand "fnma_vs<mode>"
-  [(set (match_operand:VI 0 "register_operand")
-    (unspec:VI
-      [(plus:VI
-	(mult:VI
-	  (neg:VI
-	    (match_operand:VI 1 "register_operand"))
-	  (vec_duplicate:VI
-	    (match_operand:<VSUB> 2 "reg_or_const_int_operand")))
-	(match_operand:VI 3 "register_operand"))
-	(match_dup 4)
-	(match_dup 5)
-	(reg:SI VL_REGNUM)
-	(reg:SI VTYPE_REGNUM)] UNSPEC_RVV))]
+  [(match_operand:VI 0 "register_operand")
+   (match_operand:VI 1 "register_operand")
+   (match_operand:<VSUB> 2 "reg_or_const_int_operand")
+   (match_operand:VI 3 "register_operand")]
   "TARGET_VECTOR"
   {
     if (!TARGET_64BIT && <VSUB>mode == DImode && !imm32_p (operands[2]))
       {
 	rtx reg = gen_reg_rtx (<MODE>mode);
 	emit_insn (gen_vmv_v_x (<MODE>mode, reg, const0_rtx, operands[2],
-				gen_rtx_REG (Pmode, X0_REGNUM),
-				riscv_vector_gen_policy ()));
-	emit_insn (gen_fnma<mode>4 (operands[0], operands[1], reg,
-				    operands[3]));
-	DONE;
+		   gen_rtx_REG (Pmode, X0_REGNUM), riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
+	emit_insn (gen_fnma<mode>4 (operands[0], operands[1], reg, operands[3]));
       }
-    operands[2] = force_reg (<VSUB>mode, operands[2]);
-    if (!TARGET_64BIT && <VSUB>mode == DImode)
-      operands[2] = gen_rtx_SIGN_EXTEND (<VSUB>mode,
-					 gen_lowpart (Pmode, operands[2]));
-    operands[4] = gen_rtx_REG (Pmode, X0_REGNUM);
-    operands[5] = riscv_vector_gen_policy ();
+    else if (!TARGET_64BIT && <VSUB>mode == DImode)
+      emit_insn (gen_fnma_vs_32bit_internal (<MODE>mode, operands[0], operands[1],
+		  gen_lowpart (Pmode, force_reg (<VSUB>mode, operands[2])), operands[3], gen_rtx_REG (Pmode, X0_REGNUM),
+		  riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
+    else
+      emit_insn (gen_fnma_vs_internal (<MODE>mode, operands[0], operands[1],
+		  force_reg (<VSUB>mode, operands[2]), operands[3], gen_rtx_REG (Pmode, X0_REGNUM),
+		  riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
+    DONE;
   })
 
 (define_expand "fma_vs<mode>"
-  [(set (match_operand:VF 0 "register_operand")
-    (unspec:VF
-      [(plus:VF
-	  (mult:VF
-	    (match_operand:VF 1 "register_operand")
-	    (vec_duplicate:VF
-	      (match_operand:<VSUB> 2 "register_operand")))
-	  (match_operand:VF 3 "register_operand"))
-	(match_dup 4)
-	(match_dup 5)
-	(reg:SI VL_REGNUM)
-	(reg:SI VTYPE_REGNUM)] UNSPEC_RVV))]
+  [(match_operand:VF 0 "register_operand")
+   (match_operand:VF 1 "register_operand")
+   (match_operand:<VSUB> 2 "register_operand")
+   (match_operand:VF 3 "register_operand")]
   "TARGET_VECTOR"
   {
-    operands[4] = gen_rtx_REG (Pmode, X0_REGNUM);
-    operands[5] = riscv_vector_gen_policy ();
+    emit_insn (gen_fma_vs_internal (<MODE>mode, operands[0], operands[1],
+		operands[2], operands[3], gen_rtx_REG (Pmode, X0_REGNUM),
+		riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
+    DONE;
   })
 
 (define_expand "fms_vs<mode>"
-  [(set (match_operand:VF 0 "register_operand")
-    (unspec:VF
-      [(minus:VF
-	(mult:VF
-	  (match_operand:VF 1 "register_operand")
-	  (vec_duplicate:VF
-	    (match_operand:<VSUB> 2 "register_operand")))
-	(match_operand:VF 3 "register_operand"))
-	(match_dup 4)
-	(match_dup 5)
-	(reg:SI VL_REGNUM)
-	(reg:SI VTYPE_REGNUM)] UNSPEC_RVV))]
+  [(match_operand:VF 0 "register_operand")
+   (match_operand:VF 1 "register_operand")
+   (match_operand:<VSUB> 2 "register_operand")
+   (match_operand:VF 3 "register_operand")]
   "TARGET_VECTOR"
   {
-    operands[4] = gen_rtx_REG (Pmode, X0_REGNUM);
-    operands[5] = riscv_vector_gen_policy ();
+    emit_insn (gen_fms_vs_internal (<MODE>mode, operands[0], operands[1],
+		operands[2], operands[3], gen_rtx_REG (Pmode, X0_REGNUM),
+		riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
+    DONE;
   })
 
 (define_expand "fnma_vs<mode>"
-  [(set (match_operand:VF 0 "register_operand")
-    (unspec:VF
-      [(plus:VF
-	  (mult:VF
-	    (neg:VF
-	      (match_operand:VF 1 "register_operand"))
-	    (vec_duplicate:VF
-	      (match_operand:<VSUB> 2 "register_operand")))
-	  (match_operand:VF 3 "register_operand"))
-	(match_dup 4)
-	(match_dup 5)
-	(reg:SI VL_REGNUM)
-	(reg:SI VTYPE_REGNUM)] UNSPEC_RVV))]
+  [(match_operand:VF 0 "register_operand")
+   (match_operand:VF 1 "register_operand")
+   (match_operand:<VSUB> 2 "register_operand")
+   (match_operand:VF 3 "register_operand")]
   "TARGET_VECTOR"
   {
-    operands[4] = gen_rtx_REG (Pmode, X0_REGNUM);
-    operands[5] = riscv_vector_gen_policy ();
+    emit_insn (gen_fnma_vs_internal (<MODE>mode, operands[0], operands[1],
+		operands[2], operands[3], gen_rtx_REG (Pmode, X0_REGNUM),
+		riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
+    DONE;
   })
 
 (define_expand "fnms_vs<mode>"
-  [(set (match_operand:VF 0 "register_operand")
-    (unspec:VF
-      [(minus:VF
-	(mult:VF
-	  (neg:VF
-	    (match_operand:VF 1 "register_operand"))
-	  (vec_duplicate:VF
-	    (match_operand:<VSUB> 2 "register_operand")))
-	(match_operand:VF 3 "register_operand"))
-	(match_dup 4)
-	(match_dup 5)
-	(reg:SI VL_REGNUM)
-	(reg:SI VTYPE_REGNUM)] UNSPEC_RVV))]
+  [(match_operand:VF 0 "register_operand")
+   (match_operand:VF 1 "register_operand")
+   (match_operand:<VSUB> 2 "register_operand")
+   (match_operand:VF 3 "register_operand")]
   "TARGET_VECTOR"
   {
-    operands[4] = gen_rtx_REG (Pmode, X0_REGNUM);
-    operands[5] = riscv_vector_gen_policy ();
+    emit_insn (gen_fnms_vs_internal (<MODE>mode, operands[0], operands[1],
+		operands[2], operands[3], gen_rtx_REG (Pmode, X0_REGNUM),
+		riscv_vector_gen_policy (), gen_reg_rtx (Pmode)));
+    DONE;
   })
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -8454,7 +8591,7 @@
     emit_insn (gen_v<optab><mode>_vx (operands[0],
 	const0_rtx, const0_rtx, operands[1],
 	operands[2], operands[3],
-	riscv_vector_gen_policy ()));
+	riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[3])));
     DONE;
   })
 
@@ -8471,9 +8608,10 @@
     if (!CONST_SCALAR_INT_P (operands[3]))
       operands[3] = gen_lowpart (Pmode, operands[3]);
 
-    emit_insn (gen_v_vx (UNSPEC_VADD, <MODE>mode, operands[0], const0_rtx,
-			 const0_rtx, operands[1], operands[2], operands[3],
-			 riscv_vector_gen_policy ()));
+    emit_insn (gen_v_vx (UNSPEC_VADD, <MODE>mode,
+	    operands[0], const0_rtx, const0_rtx,
+	    operands[1], operands[2], operands[3],
+	    riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[3])));
     DONE;
   })
 
@@ -8492,7 +8630,7 @@
     emit_insn (gen_v_vx (UNSPEC_VSUB, <MODE>mode,
 	  operands[0], const0_rtx, const0_rtx,
 	  operands[1], operands[2], operands[3],
-	  riscv_vector_gen_policy ()));
+	  riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[3])));
     DONE;
   })
 
@@ -8511,7 +8649,7 @@
     emit_insn (gen_v_vx (UNSPEC_VRSUB, <MODE>mode,
 	  operands[0], const0_rtx, const0_rtx, operands[1],
 	  operands[2], operands[3],
-	  riscv_vector_gen_policy ()));
+	  riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[3])));
     DONE;
   })
 
@@ -8529,7 +8667,7 @@
       operands[3] = gen_lowpart (Pmode, operands[3]);
     emit_insn (gen_vf<optab><mode>_vf (operands[0], const0_rtx, const0_rtx,
 	operands[1], operands[2], operands[3],
-	riscv_vector_gen_policy ()));
+	riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[3])));
     DONE;
   })
 
@@ -8547,7 +8685,7 @@
       operands[3] = gen_lowpart (Pmode, operands[3]);
     emit_insn (gen_vf<optab><mode>_vf (operands[0], const0_rtx, const0_rtx,
 	operands[1], operands[2], operands[3],
-	riscv_vector_gen_policy ()));
+	riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[3])));
     DONE;
   })
 
@@ -8565,148 +8703,259 @@
       operands[3] = gen_lowpart (Pmode, operands[3]);
     emit_insn (gen_vfr<optab><mode>_vf (operands[0], const0_rtx, const0_rtx,
 	operands[1], operands[2], operands[3],
-	riscv_vector_gen_policy ()));
+	riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[3])));
     DONE;
   })
 
 (define_expand "len_fma_vs<mode>"
-  [(set (match_operand:VI 0 "register_operand")
-    (unspec:VI
-      [(plus:VI
-	  (mult:VI
-	    (match_operand:VI 1 "register_operand")
-	    (vec_duplicate:VI
-	      (match_operand:<VSUB> 2 "reg_or_const_int_operand")))
-	  (match_operand:VI 3 "register_operand"))
-	(match_operand 4 "p_reg_or_const_csr_operand")
-	(match_dup 5)
-	(reg:SI VL_REGNUM)
-	(reg:SI VTYPE_REGNUM)] UNSPEC_RVV))]
+  [(match_operand:VI 0 "register_operand")
+   (match_operand:VI 1 "register_operand")
+   (match_operand:<VSUB> 2 "reg_or_const_int_operand")
+   (match_operand:VI 3 "register_operand")
+   (match_operand 4 "p_reg_or_const_csr_operand")]
   "TARGET_VECTOR"
   {
     if (!TARGET_64BIT && <VSUB>mode == DImode && !imm32_p (operands[2]))
       {
 	rtx reg = gen_reg_rtx (<MODE>mode);
 	emit_insn (gen_vmv_v_x (<MODE>mode, reg, const0_rtx, operands[2],
-				gen_rtx_REG (Pmode, X0_REGNUM),
-				riscv_vector_gen_policy ()));
-	emit_insn (gen_len_fma<mode> (operands[0], operands[1], reg,
-				      operands[3], operands[4]));
-	DONE;
+		   operands[4], riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[4])));
+	emit_insn (gen_len_fma<mode> (operands[0], operands[1], reg, operands[3], operands[4]));
       }
-    operands[2] = force_reg (<VSUB>mode, operands[2]);
-    if (!TARGET_64BIT && <VSUB>mode == DImode)
-      operands[2] = gen_rtx_SIGN_EXTEND (<VSUB>mode,
-					 gen_lowpart (Pmode, operands[2]));
-    operands[5] = riscv_vector_gen_policy ();
+    else if (!TARGET_64BIT && <VSUB>mode == DImode)
+      emit_insn (gen_fma_vs_32bit_internal (<MODE>mode, operands[0], operands[1],
+		  gen_lowpart (Pmode, force_reg (<VSUB>mode, operands[2])), operands[3], operands[4],
+		  riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[4])));
+    else
+      emit_insn (gen_fma_vs_internal (<MODE>mode, operands[0], operands[1],
+		  force_reg (<VSUB>mode, operands[2]), operands[3], operands[4],
+		  riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[4])));
+    DONE;
   })
 
 (define_expand "len_fnma_vs<mode>"
-  [(set (match_operand:VI 0 "register_operand")
+  [(match_operand:VI 0 "register_operand")
+   (match_operand:VI 1 "register_operand")
+   (match_operand:<VSUB> 2 "reg_or_const_int_operand")
+   (match_operand:VI 3 "register_operand")
+   (match_operand 4 "p_reg_or_const_csr_operand")]
+  "TARGET_VECTOR"
+  {
+    if (!TARGET_64BIT && <VSUB>mode == DImode && !imm32_p (operands[2]))
+      {
+	rtx reg = gen_reg_rtx (<MODE>mode);
+	emit_insn (gen_vmv_v_x (<MODE>mode, reg, const0_rtx, operands[2],
+		   operands[4], riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[4])));
+	emit_insn (gen_len_fnma<mode> (operands[0], operands[1], reg, operands[3], operands[4]));
+      }
+    else if (!TARGET_64BIT && <VSUB>mode == DImode)
+      emit_insn (gen_fnma_vs_32bit_internal (<MODE>mode, operands[0], operands[1],
+		  gen_lowpart (Pmode, force_reg (<VSUB>mode, operands[2])), operands[3], operands[4],
+		  riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[4])));
+    else
+      emit_insn (gen_fnma_vs_internal (<MODE>mode, operands[0], operands[1],
+		  force_reg (<VSUB>mode, operands[2]), operands[3], operands[4],
+		  riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[4])));
+    DONE;
+  })
+
+(define_expand "len_fma_vs<mode>"
+  [(match_operand:VF 0 "register_operand")
+   (match_operand:VF 1 "register_operand")
+   (match_operand:<VSUB> 2 "reg_or_const_int_operand")
+   (match_operand:VF 3 "register_operand")
+   (match_operand 4 "p_reg_or_const_csr_operand")]
+  "TARGET_VECTOR"
+  {
+    emit_insn (gen_fma_vs_internal (<MODE>mode, operands[0], operands[1],
+		operands[2], operands[3], operands[4],
+		riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[4])));
+    DONE;
+  })
+
+(define_expand "len_fms_vs<mode>"
+  [(match_operand:VF 0 "register_operand")
+   (match_operand:VF 1 "register_operand")
+   (match_operand:<VSUB> 2 "reg_or_const_int_operand")
+   (match_operand:VF 3 "register_operand")
+   (match_operand 4 "p_reg_or_const_csr_operand")]
+  "TARGET_VECTOR"
+  {
+    emit_insn (gen_fms_vs_internal (<MODE>mode, operands[0], operands[1],
+		operands[2], operands[3], operands[4],
+		riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[4])));
+    DONE;
+  })
+
+(define_expand "len_fnma_vs<mode>"
+  [(match_operand:VF 0 "register_operand")
+   (match_operand:VF 1 "register_operand")
+   (match_operand:<VSUB> 2 "reg_or_const_int_operand")
+   (match_operand:VF 3 "register_operand")
+   (match_operand 4 "p_reg_or_const_csr_operand")]
+  "TARGET_VECTOR"
+  {
+    emit_insn (gen_fnma_vs_internal (<MODE>mode, operands[0], operands[1],
+		operands[2], operands[3], operands[4],
+		riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[4])));
+    DONE;
+  })
+
+(define_expand "len_fnms_vs<mode>"
+  [(match_operand:VF 0 "register_operand")
+   (match_operand:VF 1 "register_operand")
+   (match_operand:<VSUB> 2 "reg_or_const_int_operand")
+   (match_operand:VF 3 "register_operand")
+   (match_operand 4 "p_reg_or_const_csr_operand")]
+  "TARGET_VECTOR"
+  {
+    emit_insn (gen_fnms_vs_internal (<MODE>mode, operands[0], operands[1],
+		operands[2], operands[3], operands[4],
+		riscv_vector_gen_policy (), riscv_vector_gen_clobber_vl (operands[4])));
+    DONE;
+  })
+
+(define_expand "@fma_vs<mode>_internal"
+  [(parallel [(set (match_operand:VI 0 "register_operand")
+    (unspec:VI
+      [(plus:VI
+	  (mult:VI
+	    (match_operand:VI 1 "register_operand")
+	    (vec_duplicate:VI
+	      (match_operand:<VSUB> 2 "register_operand")))
+	  (match_operand:VI 3 "register_operand"))
+	(match_operand 4 "p_reg_or_const_csr_operand")
+	(match_operand 5 "const_int_operand")
+	(reg:SI VL_REGNUM)
+	(reg:SI VTYPE_REGNUM)] UNSPEC_RVV))
+    (clobber (match_operand 6 "pmode_register_operand"))])]
+  "TARGET_VECTOR"
+  {})
+
+(define_expand "@fma_vs<mode>_32bit_internal"
+  [(parallel [(set (match_operand:V64BITI 0 "register_operand")
+    (unspec:V64BITI
+      [(plus:V64BITI
+	  (mult:V64BITI
+	    (match_operand:V64BITI 1 "register_operand")
+	    (vec_duplicate:V64BITI
+	      (sign_extend:DI
+		(match_operand:SI 2 "register_operand"))))
+	  (match_operand:V64BITI 3 "register_operand"))
+	(match_operand 4 "p_reg_or_const_csr_operand")
+	(match_operand 5 "const_int_operand")
+	(reg:SI VL_REGNUM)
+	(reg:SI VTYPE_REGNUM)] UNSPEC_RVV))
+    (clobber (match_operand 6 "pmode_register_operand"))])]
+  "TARGET_VECTOR"
+  {})
+
+(define_expand "@fnma_vs<mode>_internal"
+  [(parallel [(set (match_operand:VI 0 "register_operand")
     (unspec:VI
       [(plus:VI
 	(mult:VI
 	  (neg:VI
 	    (match_operand:VI 1 "register_operand"))
 	  (vec_duplicate:VI
-	    (match_operand:<VSUB> 2 "reg_or_const_int_operand")))
+	    (match_operand:<VSUB> 2 "register_operand")))
 	(match_operand:VI 3 "register_operand"))
 	(match_operand 4 "p_reg_or_const_csr_operand")
-	(match_dup 5)
+	(match_operand 5 "const_int_operand")
 	(reg:SI VL_REGNUM)
-	(reg:SI VTYPE_REGNUM)] UNSPEC_RVV))]
+	(reg:SI VTYPE_REGNUM)] UNSPEC_RVV))
+    (clobber (match_operand 6 "pmode_register_operand"))])]
   "TARGET_VECTOR"
-  {
-    if (!TARGET_64BIT && <VSUB>mode == DImode && !imm32_p (operands[2]))
-      {
-	rtx reg = gen_reg_rtx (<MODE>mode);
-	emit_insn (gen_vmv_v_x (<MODE>mode, reg, const0_rtx, operands[2],
-				gen_rtx_REG (Pmode, X0_REGNUM),
-				riscv_vector_gen_policy ()));
-	emit_insn (gen_len_fnma<mode> (operands[0], operands[1], reg,
-				       operands[3], operands[4]));
-	DONE;
-      }
-    operands[2] = force_reg (<VSUB>mode, operands[2]);
-    if (!TARGET_64BIT && <VSUB>mode == DImode)
-      operands[2] = gen_rtx_SIGN_EXTEND (<VSUB>mode,
-					 gen_lowpart (Pmode, operands[2]));
-    operands[5] = riscv_vector_gen_policy ();
-  })
+  {})
 
-(define_expand "len_fma_vs<mode>"
-  [(set (match_operand:VF 0 "register_operand")
+(define_expand "@fnma_vs<mode>_32bit_internal"
+  [(parallel [(set (match_operand:V64BITI 0 "register_operand")
+    (unspec:V64BITI
+      [(plus:V64BITI
+	(mult:V64BITI
+	  (neg:V64BITI
+	    (match_operand:V64BITI 1 "register_operand"))
+	  (vec_duplicate:V64BITI
+	    (sign_extend:DI
+	      (match_operand:SI 2 "register_operand"))))
+	(match_operand:V64BITI 3 "register_operand"))
+	(match_operand 4 "p_reg_or_const_csr_operand")
+	(match_operand 5 "const_int_operand")
+	(reg:SI VL_REGNUM)
+	(reg:SI VTYPE_REGNUM)] UNSPEC_RVV))
+    (clobber (match_operand 6 "pmode_register_operand"))])]
+  "TARGET_VECTOR"
+  {})
+
+(define_expand "@fma_vs<mode>_internal"
+  [(parallel [(set (match_operand:VF 0 "register_operand")
     (unspec:VF
       [(plus:VF
 	  (mult:VF
 	    (match_operand:VF 1 "register_operand")
 	    (vec_duplicate:VF
-	      (match_operand:<VSUB> 2 "register_operand")))
+	      (match_operand:<VSUB> 2 "register_operand" "f,f,f")))
 	  (match_operand:VF 3 "register_operand"))
 	(match_operand 4 "p_reg_or_const_csr_operand")
-	(match_dup 5)
+	(match_operand 5 "const_int_operand")
 	(reg:SI VL_REGNUM)
-	(reg:SI VTYPE_REGNUM)] UNSPEC_RVV))]
+	(reg:SI VTYPE_REGNUM)] UNSPEC_RVV))
+    (clobber (match_operand 6 "pmode_register_operand"))])]
   "TARGET_VECTOR"
-  {
-    operands[5] = riscv_vector_gen_policy ();
-  })
+  {})
 
-(define_expand "len_fms_vs<mode>"
-  [(set (match_operand:VF 0 "register_operand")
+(define_expand "@fms_vs<mode>_internal"
+  [(parallel [(set (match_operand:VF 0 "register_operand")
     (unspec:VF
       [(minus:VF
 	(mult:VF
 	  (match_operand:VF 1 "register_operand")
 	  (vec_duplicate:VF
-	    (match_operand:<VSUB> 2 "register_operand")))
+	    (match_operand:<VSUB> 2 "register_operand" "f,f,f")))
 	(match_operand:VF 3 "register_operand"))
 	(match_operand 4 "p_reg_or_const_csr_operand")
-	(match_dup 5)
+	(match_operand 5 "const_int_operand")
 	(reg:SI VL_REGNUM)
-	(reg:SI VTYPE_REGNUM)] UNSPEC_RVV))]
+	(reg:SI VTYPE_REGNUM)] UNSPEC_RVV))
+    (clobber (match_operand 6 "pmode_register_operand"))])]
   "TARGET_VECTOR"
-  {
-    operands[5] = riscv_vector_gen_policy ();
-  })
+  {})
 
-(define_expand "len_fnma_vs<mode>"
-  [(set (match_operand:VF 0 "register_operand")
+(define_expand "@fnma_vs<mode>_internal"
+  [(parallel [(set (match_operand:VF 0 "register_operand")
     (unspec:VF
       [(plus:VF
 	  (mult:VF
 	    (neg:VF
 	      (match_operand:VF 1 "register_operand"))
 	    (vec_duplicate:VF
-	      (match_operand:<VSUB> 2 "register_operand")))
+	      (match_operand:<VSUB> 2 "register_operand" "f,f,f")))
 	  (match_operand:VF 3 "register_operand"))
 	(match_operand 4 "p_reg_or_const_csr_operand")
-	(match_dup 5)
+	(match_operand 5 "const_int_operand")
 	(reg:SI VL_REGNUM)
-	(reg:SI VTYPE_REGNUM)] UNSPEC_RVV))]
+	(reg:SI VTYPE_REGNUM)] UNSPEC_RVV))
+    (clobber (match_operand 6 "pmode_register_operand"))])]
   "TARGET_VECTOR"
-  {
-    operands[5] = riscv_vector_gen_policy ();
-  })
+  {})
 
-(define_expand "len_fnms_vs<mode>"
-  [(set (match_operand:VF 0 "register_operand")
+(define_expand "@fnms_vs<mode>_internal"
+  [(parallel [(set (match_operand:VF 0 "register_operand")
     (unspec:VF
       [(minus:VF
 	(mult:VF
 	  (neg:VF
 	    (match_operand:VF 1 "register_operand"))
 	  (vec_duplicate:VF
-	    (match_operand:<VSUB> 2 "register_operand")))
+	    (match_operand:<VSUB> 2 "register_operand" "f,f,f")))
 	(match_operand:VF 3 "register_operand"))
 	(match_operand 4 "p_reg_or_const_csr_operand")
-	(match_dup 5)
+	(match_operand 5 "const_int_operand")
 	(reg:SI VL_REGNUM)
-	(reg:SI VTYPE_REGNUM)] UNSPEC_RVV))]
+	(reg:SI VTYPE_REGNUM)] UNSPEC_RVV))
+    (clobber (match_operand 6 "pmode_register_operand"))])]
   "TARGET_VECTOR"
-  {
-    operands[5] = riscv_vector_gen_policy ();
-  })
+  {})
 
 (define_insn "*len_fma_vs<mode>"
   [(set (match_operand:VI 0 "register_operand" "=vr,vr,?&vr")
@@ -8720,7 +8969,8 @@
 	(match_operand 4 "p_reg_or_const_csr_operand" "rK,rK,rK")
 	(match_operand 5 "const_int_operand")
 	(reg:SI VL_REGNUM)
-	(reg:SI VTYPE_REGNUM)] UNSPEC_RVV))]
+	(reg:SI VTYPE_REGNUM)] UNSPEC_RVV))
+    (clobber (match_operand 6 "pmode_register_operand" "=&r,&r,&r"))]
   "TARGET_VECTOR"
   "@
    vmadd.vx\t%0,%2,%3
@@ -8729,7 +8979,7 @@
   [(set_attr "type" "vmadd")
    (set_attr "mode" "<MODE>")])
 
-(define_insn "*len_fma_vs<mode>_rv32"
+(define_insn "*len_fma_vs<mode>_32bit"
   [(set (match_operand:V64BITI 0 "register_operand" "=vr,vr,?&vr")
     (unspec:V64BITI
       [(plus:V64BITI
@@ -8742,7 +8992,8 @@
 	(match_operand 4 "p_reg_or_const_csr_operand" "rK,rK,rK")
 	(match_operand 5 "const_int_operand")
 	(reg:SI VL_REGNUM)
-	(reg:SI VTYPE_REGNUM)] UNSPEC_RVV))]
+	(reg:SI VTYPE_REGNUM)] UNSPEC_RVV))
+    (clobber (match_operand 6 "pmode_register_operand" "=&r,&r,&r"))]
   "TARGET_VECTOR"
   "@
    vmadd.vx\t%0,%2,%3
@@ -8764,7 +9015,8 @@
 	(match_operand 4 "p_reg_or_const_csr_operand" "rK,rK,rK")
 	(match_operand 5 "const_int_operand")
 	(reg:SI VL_REGNUM)
-	(reg:SI VTYPE_REGNUM)] UNSPEC_RVV))]
+	(reg:SI VTYPE_REGNUM)] UNSPEC_RVV))
+    (clobber (match_operand 6 "pmode_register_operand" "=&r,&r,&r"))]
   "TARGET_VECTOR"
   "@
    vnmsub.vx\t%0,%2,%3
@@ -8773,7 +9025,7 @@
   [(set_attr "type" "vmadd")
    (set_attr "mode" "<MODE>")])
 
-(define_insn "*len_fnma_vs<mode>_rv32"
+(define_insn "*len_fnma_vs<mode>_32bit"
   [(set (match_operand:V64BITI 0 "register_operand" "=vr,vr,?&vr")
     (unspec:V64BITI
       [(plus:V64BITI
@@ -8787,7 +9039,8 @@
 	(match_operand 4 "p_reg_or_const_csr_operand" "rK,rK,rK")
 	(match_operand 5 "const_int_operand")
 	(reg:SI VL_REGNUM)
-	(reg:SI VTYPE_REGNUM)] UNSPEC_RVV))]
+	(reg:SI VTYPE_REGNUM)] UNSPEC_RVV))
+    (clobber (match_operand 6 "pmode_register_operand" "=&r,&r,&r"))]
   "TARGET_VECTOR"
   "@
    vnmsub.vx\t%0,%2,%3
@@ -8808,7 +9061,8 @@
 	(match_operand 4 "p_reg_or_const_csr_operand" "rK,rK,rK")
 	(match_operand 5 "const_int_operand")
 	(reg:SI VL_REGNUM)
-	(reg:SI VTYPE_REGNUM)] UNSPEC_RVV))]
+	(reg:SI VTYPE_REGNUM)] UNSPEC_RVV))
+    (clobber (match_operand 6 "pmode_register_operand" "=&r,&r,&r"))]
   "TARGET_VECTOR"
   "@
    vfmadd.vf\t%0,%2,%3
@@ -8829,7 +9083,8 @@
 	(match_operand 4 "p_reg_or_const_csr_operand" "rK,rK,rK")
 	(match_operand 5 "const_int_operand")
 	(reg:SI VL_REGNUM)
-	(reg:SI VTYPE_REGNUM)] UNSPEC_RVV))]
+	(reg:SI VTYPE_REGNUM)] UNSPEC_RVV))
+    (clobber (match_operand 6 "pmode_register_operand" "=&r,&r,&r"))]
   "TARGET_VECTOR"
   "@
    vfmsub.vf\t%0,%2,%3
@@ -8851,7 +9106,8 @@
 	(match_operand 4 "p_reg_or_const_csr_operand" "rK,rK,rK")
 	(match_operand 5 "const_int_operand")
 	(reg:SI VL_REGNUM)
-	(reg:SI VTYPE_REGNUM)] UNSPEC_RVV))]
+	(reg:SI VTYPE_REGNUM)] UNSPEC_RVV))
+    (clobber (match_operand 6 "pmode_register_operand" "=&r,&r,&r"))]
   "TARGET_VECTOR"
   "@
    vfnmsub.vf\t%0,%2,%3
@@ -8873,7 +9129,8 @@
 	(match_operand 4 "p_reg_or_const_csr_operand" "rK,rK,rK")
 	(match_operand 5 "const_int_operand")
 	(reg:SI VL_REGNUM)
-	(reg:SI VTYPE_REGNUM)] UNSPEC_RVV))]
+	(reg:SI VTYPE_REGNUM)] UNSPEC_RVV))
+    (clobber (match_operand 6 "pmode_register_operand" "=&r,&r,&r"))]
   "TARGET_VECTOR"
   "@
    vfnmadd.vf\t%0,%2,%3

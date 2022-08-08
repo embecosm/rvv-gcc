@@ -63,6 +63,8 @@ along with GCC; see the file COPYING3.  If not see
 #include "gimple.h"
 #include "cfghooks.h"
 #include "cfgloop.h"
+#include "cfgrtl.h"
+#include "sel-sched.h"
 #include "fold-const.h"
 #include "gimple-iterator.h"
 #include "tree-vectorizer.h"
@@ -1261,7 +1263,9 @@ riscv_const_insns (rtx x)
 	machine_mode mode = GET_MODE (x);
 	/* For the mode which is not RVV mode, we use
 	   default configuration.  */
-	if (!riscv_vector_mode_p (mode))
+	/* For tuple mode, we don't allow non-zero const vector.
+	   Because it makes insert vsetvli too complicated.  */
+	if (!riscv_vector_mode_p (mode) || riscv_tuple_mode_p (mode))
 	  return x == CONST0_RTX (GET_MODE (x)) ? 1 : 0;
 
 	unsigned int factor = 0;
@@ -1324,10 +1328,7 @@ riscv_const_insns (rtx x)
 		  factor = 1 + riscv_integer_cost (INTVAL (elt));
 	      }
 	  }
-	if (riscv_tuple_mode_p (mode))
-	  return factor * riscv_classify_nf (mode);
-	else
-	  return factor;
+	return factor * riscv_classify_nf (mode);
       }
 
     case CONST:
@@ -5553,10 +5554,10 @@ riscv_class_max_nregs (reg_class_t rclass, machine_mode mode)
   if (reg_class_subset_p (rclass, V_REGS))
     return riscv_hard_regno_nregs (V_REG_FIRST, mode);
 
-  if (reg_class_subset_p (rclass, VL_REGS))
+  if (reg_class_subset_p (rclass, VL_REGS) && mode == SImode)
     return 1;
 
-  if (reg_class_subset_p (rclass, VTYPE_REGS))
+  if (reg_class_subset_p (rclass, VTYPE_REGS) && mode == SImode)
     return 1;
 
   return 0;
