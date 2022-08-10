@@ -383,6 +383,7 @@ bool directly_supported_p (code_helper, tree, optab_subtype = optab_default);
 #endif
 
 internal_fn get_conditional_internal_fn (code_helper, tree);
+internal_fn get_length_conditional_internal_fn (code_helper, tree);
 
 extern tree gimple_build (gimple_seq *, location_t,
 			  code_helper, tree, tree);

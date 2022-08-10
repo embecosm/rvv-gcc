@@ -1410,3 +1410,17 @@ get_conditional_internal_fn (code_helper code, tree type)
   auto cfn = combined_fn (code);
   return get_conditional_internal_fn (associated_internal_fn (cfn, type));
 }
+
+/* A wrapper around the internal-fn.cc versions of
+   get_length_conditional_internal_fn for a code_helper CODE operating
+   on type TYPE.  */
+
+internal_fn
+get_length_conditional_internal_fn (code_helper code, tree type)
+{
+  if (code.is_tree_code ())
+    return get_length_conditional_internal_fn (tree_code (code));
+  auto cfn = combined_fn (code);
+  return get_length_conditional_internal_fn (associated_internal_fn (cfn,
+								     type));
+}
