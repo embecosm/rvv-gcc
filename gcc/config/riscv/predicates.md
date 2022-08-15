@@ -368,11 +368,11 @@
 ;; Predicates for the ZBS extension.
 (define_predicate "single_bit_mask_operand"
   (and (match_code "const_int")
-       (match_test "pow2p_hwi (INTVAL (op))")))
+       (match_test "SINGLE_BIT_MASK_OPERAND (UINTVAL (op))")))
 
 (define_predicate "not_single_bit_mask_operand"
   (and (match_code "const_int")
-       (match_test "pow2p_hwi (~INTVAL (op))")))
+       (match_test "SINGLE_BIT_MASK_OPERAND (~UINTVAL (op))")))
 
 (define_predicate "const31_operand"
   (and (match_code "const_int")
