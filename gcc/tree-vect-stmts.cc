@@ -11178,7 +11178,7 @@ vectorizable_condition (vec_info *vinfo,
 	  new_temp = make_ssa_name (vec_dest);
 	  if (len
 	      && (get_len_vcond_mask_icode
-		  (TYPE_MODE (TREE_TYPE (vec_cond_lhs)),
+		  (TYPE_MODE (TREE_TYPE (vec_dest)),
 		   TYPE_MODE (TREE_TYPE (vec_compare)))))
 	    {
 	      new_stmt = gimple_build_call_internal (IFN_LEN_VCOND, 4,

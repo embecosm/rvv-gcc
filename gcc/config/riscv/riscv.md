@@ -2101,7 +2101,7 @@
    (match_operand:SI  3 "immediate_operand" "")] ; known alignment
   ""
 {
-  if (riscv_vector_expand_strlen (operands))
+  if (flag_tree_vectorize && riscv_vector_expand_strlen (operands))
     DONE;
   else
     FAIL;
@@ -2113,7 +2113,7 @@
    (match_operand 2 "memory_operand" "")]
   ""
 {
-  if (riscv_vector_expand_strcpy (operands))
+  if (flag_tree_vectorize && riscv_vector_expand_strcpy (operands))
     DONE;
   else
     FAIL;
@@ -2137,7 +2137,7 @@
    (match_operand:SI    3 "immediate_operand")] ;; Known Align
   ""
 {
-  if (riscv_vector_expand_strcmp (operands))
+  if (flag_tree_vectorize && riscv_vector_expand_strcmp (operands))
     DONE;
   else
     FAIL;

@@ -430,6 +430,8 @@ get_insns (void)
   return get_current_sequence ()->first;
 }
 
+extern rtx_insn *get_insn (int uid);
+
 /* Specify a new insn as the first in the chain.  */
 
 static inline void

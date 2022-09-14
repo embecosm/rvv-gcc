@@ -2126,15 +2126,15 @@ emit_op5_vmv_s_x (machine_mode Vmode, machine_mode VSImode,
 	  emit_insn (gen_vslide_vx (UNSPEC_SLIDEDOWN, VSImode, vd_si,
 				    const0_rtx, vd_si, vd_si, const2_rtx, vlx2,
 				    operands[4],
-				    gen_rtx_REG (Pmode, X0_REGNUM)));
+				    gen_reg_rtx (Pmode)));
 	  emit_insn (gen_vslide1_vx_internal (UNSPEC_SLIDE1UP, VSImode, vd_si,
 					      const0_rtx, vd_si, vd_si, hi,
 					      vlx2, operands[4],
-					      gen_rtx_REG (Pmode, X0_REGNUM)));
+					      gen_reg_rtx (Pmode)));
 	  emit_insn (gen_vslide1_vx_internal (UNSPEC_SLIDE1UP, VSImode, vd_si,
 					      const0_rtx, vd_si, vd_si, lo,
 					      vlx2, operands[4],
-					      gen_rtx_REG (Pmode, X0_REGNUM)));
+					      gen_reg_rtx (Pmode)));
 
 	  emit_insn (gen_rtx_SET (vret, gen_lowpart (Vmode, vd_si)));
 
@@ -2232,12 +2232,12 @@ emit_op7_slide1 (unsigned int unspec, machine_mode Vmode, machine_mode VSImode,
 		(gen_vslide1_vx_internal (UNSPEC_SLIDE1UP, VSImode, v1,
 					  const0_rtx, const0_rtx, vs_si, hi,
 					  vlx2, operands[6],
-					  gen_rtx_REG (Pmode, X0_REGNUM)));
+					  gen_reg_rtx (Pmode)));
 	      emit_insn
 		(gen_vslide1_vx_internal (UNSPEC_SLIDE1UP, VSImode, vtemp,
 					  const0_rtx, const0_rtx, v1, lo,
 					  vlx2, operands[6],
-					  gen_rtx_REG (Pmode, X0_REGNUM)));
+					  gen_reg_rtx (Pmode)));
 	    }
 	  else
 	    {
@@ -2246,13 +2246,13 @@ emit_op7_slide1 (unsigned int unspec, machine_mode Vmode, machine_mode VSImode,
 					  const0_rtx, const0_rtx, vs_si,
 					  force_reg (GET_MODE (lo), lo),
 					  vlx2, operands[6],
-					  gen_rtx_REG (Pmode, X0_REGNUM)));
+					  gen_reg_rtx (Pmode)));
 	      emit_insn
 		(gen_vslide1_vx_internal (UNSPEC_SLIDE1DOWN, VSImode, vtemp,
 					  const0_rtx, const0_rtx, vtemp,
 					  force_reg (GET_MODE (hi), hi),
 					  vlx2, operands[6],
-					  gen_rtx_REG (Pmode, X0_REGNUM)));
+					  gen_reg_rtx (Pmode)));
 	    }
 
 	  if (rtx_equal_p (mask, const0_rtx))
@@ -3046,7 +3046,7 @@ riscv_vector_expand_strided_init (rtx target,
 	      all_same_stride_p = false;
 	      break;
 	    }
-	  if (i != 1 && rhs2 != gimple_assign_rhs2 (stmts[i - 1]))
+	  if (rhs2 != gimple_assign_rhs2 (stmts[i - 1]))
 	    {
 	      all_same_stride_p = false;
 	      break;
@@ -3103,6 +3103,9 @@ riscv_vector_expand_strided_init (rtx target,
       int start = i * nelts_reqd / 2;
       int end = nelts_reqd / (2 - i);
       tree offset = TREE_OPERAND (vars[start], 1);
+      if (!(is_a<gassign *> (SSA_NAME_DEF_STMT
+			     (TREE_OPERAND (vars[start], 0)))))
+	break;
       gassign *assign
 	= as_a<gassign *> (SSA_NAME_DEF_STMT (TREE_OPERAND (vars[start], 0)));
       if (!assign)
@@ -3115,6 +3118,12 @@ riscv_vector_expand_strided_init (rtx target,
       for (int j = start + 1; j < end; j++)
 	{
 	  if (TREE_OPERAND (vars[j], 1) != offset)
+	    {
+	      all_same_stride_p = false;
+	      break;
+	    }
+	  if (!(is_a<gassign *> (SSA_NAME_DEF_STMT
+				 (TREE_OPERAND (vars[j], 0)))))
 	    {
 	      all_same_stride_p = false;
 	      break;
@@ -3132,6 +3141,12 @@ riscv_vector_expand_strided_init (rtx target,
 	      break;
 	    }
 
+	  if (!(is_a<gassign *> (SSA_NAME_DEF_STMT
+				 (gimple_assign_rhs1 (assign2)))))
+	    {
+	      all_same_stride_p = false;
+	      break;
+	    }
 	  gassign *assign3 = as_a<gassign *> (SSA_NAME_DEF_STMT
 					      (gimple_assign_rhs1 (assign2)));
 
@@ -3322,8 +3337,10 @@ riscv_vector_expand_vector_init (rtx target, rtx vals)
   if (riscv_vector_expand_strided_init (target, v, nelts))
     return;
 
+#if 0
   if (riscv_vector_expand_indexed_init (target, v, nelts))
     return;
+#endif
 
   if (nelts < 4
       || !riscv_vector_expand_vector_handle_dup_and_const (target, v, nelts))
@@ -3419,26 +3436,19 @@ emit_extend (rtx offset, rtx new_offset, rtx vl, bool unsigned_p)
     emit_insn (gen_vext_vf2 (code, offset_mode, new_offset, const0_rtx,
 			     const0_rtx, offset, vl,
 			     riscv_vector::gen_ta_policy (),
-			     (rtx_equal_p (vl, gen_rtx_REG (Pmode, X0_REGNUM))
-			      ? gen_rtx_REG (Pmode, X0_REGNUM)
-			      : gen_reg_rtx (Pmode))));
+			     gen_reg_rtx (Pmode)));
   else if (factor == 4)
     emit_insn (gen_vext_vf4 (code, offset_mode, new_offset, const0_rtx,
 			     const0_rtx, offset, vl,
 			     riscv_vector::gen_ta_policy (),
-			     (rtx_equal_p (vl, gen_rtx_REG (Pmode, X0_REGNUM))
-			      ? gen_rtx_REG (Pmode, X0_REGNUM)
-			      : gen_reg_rtx (Pmode))));
+			     gen_reg_rtx (Pmode)));
   else
     {
       gcc_assert (factor == 8);
       emit_insn (gen_vext_vf8 (code, offset_mode, new_offset, const0_rtx,
 			       const0_rtx, offset, vl,
 			       riscv_vector::gen_ta_policy (),
-			       (rtx_equal_p (vl,
-					     gen_rtx_REG (Pmode, X0_REGNUM))
-				? gen_rtx_REG (Pmode, X0_REGNUM)
-				: gen_reg_rtx (Pmode))));
+			       gen_reg_rtx (Pmode)));
     }
 }
 
@@ -4291,11 +4301,8 @@ riscv_vector_expand_const_vector (rtx target, rtx src)
   /* Case 3: Handle fixed-size const vector.  */
   if (GET_MODE_SIZE (mode).is_constant ())
     {
-      src = force_const_mem (mode, src);
-      rtx base = gen_reg_rtx (Pmode);
-      riscv_emit_move (base, XEXP (src, 0));
-      src = replace_equiv_address (src, base, false);
-      riscv_emit_move (target, src);
+      rtx mem = validize_mem (force_const_mem (mode, src));
+      emit_move_insn (target, mem);
       return true;
     }
 
@@ -4590,7 +4597,7 @@ riscv_vector_expand_const_vector (rtx target, rtx src)
 
       emit_insn (gen_vmv_v_x (m1_mode, mask, const0_rtx, GEN_INT (mask_sum), vl,
 			      riscv_vector_gen_policy (),
-			      gen_rtx_REG (Pmode, X0_REGNUM)));
+			      gen_reg_rtx (Pmode)));
       emit_insn (gen_v_vx (UNSPEC_VADD, sel_mode, pat_idx2, const0_rtx,
 			   const0_rtx, pat_idx, GEN_INT (i), vl,
 			   riscv_vector_gen_policy (),

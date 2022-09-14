@@ -41,8 +41,8 @@
   TEST_TYPE_1 (T, double)			
 
 TEST_ALL (TEST_LOOP)
-
-/* { dg-final { scan-assembler-times "\tvmsne\.vi" 242 {target riscv32-*-*} } } */
+        
+/* { dg-final { scan-assembler-times "\tvmsne\.vi" 264 {target riscv32-*-*} } } */
 /* { dg-final { scan-assembler-times "\tvmsge\.vx" 24 {target riscv32-*-*} } } */
 
 

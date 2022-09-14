@@ -338,16 +338,18 @@
   [(parallel
     [(set (match_operand:X 0 "register_operand" "=r")
       (unspec:X
-	[(match_operand:X 1 "csr_operand" "rK")] UNSPEC_VSETVLI))
+	[(match_operand:X 1 "csr_operand" "rK")
+	 (match_operand 2 "const_int_operand" "i")] UNSPEC_VSETVLI))
      (set (reg:SI VL_REGNUM)
        (unspec:SI
-	[(match_dup 1)] UNSPEC_VSETVLI))
+	[(match_dup 1)
+	 (match_dup 2)] UNSPEC_VSETVLI))
      (set (reg:SI VTYPE_REGNUM)
        (unspec:SI
-	[(match_operand 2 "const_int_operand" "i")] UNSPEC_VSETVLI))])]
+	[(match_dup 2)] UNSPEC_VSETVLI))])]
   "TARGET_VECTOR"
   {
-    char buf[64];
+    char buf[64] = {0};
     gcc_assert (CONST_INT_P (operands[2]));
     const char *insn = satisfies_constraint_K (operands[1]) ? "vsetivli\t%0,%1"
 	: "vsetvli\t%0,%1";
@@ -376,7 +378,7 @@
        (match_operand:X 1 "csr_operand" "rK")] UNSPEC_VSETVLI))]
   "TARGET_VECTOR"
   {
-    char buf[64];
+    char buf[64] = {0};
     gcc_assert (CONST_INT_P (operands[0]));
     const char *insn = "vsetvli\tzero,zero";
     unsigned int vsew = riscv_parse_vsew_field (INTVAL (operands[0]));
@@ -401,13 +403,14 @@
   [(parallel
     [(set (reg:SI VL_REGNUM)
        (unspec:SI
-	[(match_operand:X 0 "csr_operand" "rK")] UNSPEC_VSETVLI))
+	[(match_operand:X 0 "csr_operand" "rK")
+	 (match_operand 1 "const_int_operand" "i")] UNSPEC_VSETVLI))
      (set (reg:SI VTYPE_REGNUM)
        (unspec:SI
-	[(match_operand 1 "const_int_operand" "i")] UNSPEC_VSETVLI))])]
+	[(match_dup 1)] UNSPEC_VSETVLI))])]
   "TARGET_VECTOR"
   {
-    char buf[64];
+    char buf[64] = {0};
     gcc_assert (CONST_INT_P (operands[1]));
     const char *insn = satisfies_constraint_K (operands[0]) ? "vsetivli\tzero,%0"
 	: "vsetvli\tzero,%0";

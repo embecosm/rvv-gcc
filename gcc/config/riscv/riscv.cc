@@ -458,6 +458,11 @@ static const struct attribute_spec riscv_attribute_table[] =
   { "interrupt", 0, 1, false, true, true, false,
     riscv_handle_type_attribute, NULL },
 
+  /* The following two are used for the built-in properties of the Vector type
+     and are not used externally.  */
+  {"RVV sizeless type", 4, 4, false, true, false, true, NULL, NULL},
+  {"RVV type", 0, 0, false, true, false, true, NULL, NULL},
+
   /* The last attribute spec is set to be NULL.  */
   { NULL,	0,  0, false, false, false, false, NULL, NULL }
 };
@@ -1918,9 +1923,7 @@ riscv_legitimize_const_move (machine_mode mode, rtx dest, rtx src)
 bool
 riscv_legitimize_move (machine_mode mode, rtx dest, rtx src)
 {
-  scalar_int_mode int_mode;
-  if (CONST_POLY_INT_P (src)
-      && is_a <scalar_int_mode> (mode, &int_mode))
+  if (CONST_POLY_INT_P (src))
     {
       poly_int64 value = rtx_to_poly_int64 (src);
       if (!value.is_constant () && !TARGET_VECTOR)

@@ -547,43 +547,54 @@ gimple_expand_len_vcond_fn (
 	}
 
       gcall *def_stmt = dyn_cast<gcall *> (SSA_NAME_DEF_STMT (op0));
-      internal_fn def_fn = (gimple_call_internal_p (def_stmt)
-			    ? gimple_call_internal_fn (def_stmt)
-			    : IFN_LAST);
-      if (def_stmt && def_fn != IFN_LAST
-	  && (def_fn == IFN_LEN_VEC_CMP_VS || def_fn == IFN_LEN_VEC_CMPU_VS
-	      || def_fn == IFN_LEN_VEC_CMP || def_fn == IFN_LEN_VEC_CMPU))
+      if (def_stmt)
 	{
-	  op0a = gimple_call_arg (def_stmt, 0);
-	  op0b = gimple_call_arg (def_stmt, 1);
-	  tcode
-	    = (enum tree_code) int_cst_value (gimple_call_arg (def_stmt, 3));
-	  gcc_assert (gimple_call_arg (def_stmt, 2) == op3);
-
-	  tree op0_type = TREE_TYPE (op0);
-
-	  /* Try to fold x CMP y ? -1 : 0 to x CMP y.  */
-
-	  if (integer_minus_onep (op1) && integer_zerop (op2)
-	      && TYPE_MODE (TREE_TYPE (lhs)) == TYPE_MODE (TREE_TYPE (op0)))
+	  internal_fn def_fn = (gimple_call_internal_p (def_stmt)
+				? gimple_call_internal_fn (def_stmt)
+				: IFN_LAST);
+	  if (def_fn != IFN_LAST
+	      && (def_fn == IFN_LEN_VEC_CMP_VS
+		  || def_fn == IFN_LEN_VEC_CMPU_VS
+		  || def_fn == IFN_LEN_VEC_CMP
+		  || def_fn == IFN_LEN_VEC_CMPU))
 	    {
-	      tree conv_op = build1 (VIEW_CONVERT_EXPR, TREE_TYPE (lhs), op0);
-	      gassign *new_stmt = gimple_build_assign (lhs, conv_op);
-	      gsi_replace (gsi, new_stmt, true);
-	      return new_stmt;
+	      op0a = gimple_call_arg (def_stmt, 0);
+	      op0b = gimple_call_arg (def_stmt, 1);
+	      tcode
+		= (enum tree_code) int_cst_value (gimple_call_arg (def_stmt,
+								   3));
+	      gcc_assert (gimple_call_arg (def_stmt, 2) == op3);
+
+	      tree op0_type = TREE_TYPE (op0);
+
+	      /* Try to fold x CMP y ? -1 : 0 to x CMP y.  */
+
+	      if (integer_minus_onep (op1) && integer_zerop (op2)
+		  && (TYPE_MODE (TREE_TYPE (lhs))
+		      == TYPE_MODE (TREE_TYPE (op0))))
+		{
+		  tree conv_op = build1 (VIEW_CONVERT_EXPR, TREE_TYPE (lhs),
+					 op0);
+		  gassign *new_stmt = gimple_build_assign (lhs, conv_op);
+		  gsi_replace (gsi, new_stmt, true);
+		  return new_stmt;
+		}
+
+	      /* When the compare has EH we do not want to forward it
+		 when it has multiple uses and in general because of
+		 the complication with EH redirection.  */
+	      if (stmt_can_throw_internal (fun, def_stmt))
+		tcode = TREE_CODE (op0);
+
+	      /* If we can compute op0 and have multiple uses, keep the SSA
+		 name and use len_vcond_mask.  */
+	      else if (used_vec_cond_exprs >= 2
+		       && (get_len_vcond_mask_icode (mode,
+						     TYPE_MODE (op0_type))
+			   != CODE_FOR_nothing))
+		tcode = TREE_CODE (op0);
 	    }
-
-	  /* When the compare has EH we do not want to forward it when
-	     it has multiple uses and in general because of the complication
-	     with EH redirection.  */
-	  if (stmt_can_throw_internal (fun, def_stmt))
-	    tcode = TREE_CODE (op0);
-
-	  /* If we can compute op0 and have multiple uses, keep the SSA
-	     name and use len_vcond_mask.  */
-	  else if (used_vec_cond_exprs >= 2
-		   && (get_len_vcond_mask_icode (mode, TYPE_MODE (op0_type))
-		       != CODE_FOR_nothing))
+	  else
 	    tcode = TREE_CODE (op0);
 	}
       else
