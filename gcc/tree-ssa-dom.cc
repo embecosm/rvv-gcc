@@ -390,7 +390,8 @@ edge_info::record_simple_equiv (tree lhs, tree rhs)
     simple_equivalences.safe_push (equiv_pair (lhs, rhs));
 }
 
-/* Free the edge_info data attached to E, if it exists.  */
+/* Free the edge_info data attached to E, if it exists and
+   clear e->aux.  */
 
 void
 free_dom_edge_info (edge e)
@@ -399,6 +400,7 @@ free_dom_edge_info (edge e)
 
   if (edge_info)
     delete edge_info;
+  e->aux = NULL;
 }
 
 /* Free all EDGE_INFO structures associated with edges in the CFG.
@@ -417,10 +419,7 @@ free_all_edge_infos (void)
   FOR_EACH_BB_FN (bb, cfun)
     {
       FOR_EACH_EDGE (e, ei, bb->preds)
-        {
-	  free_dom_edge_info (e);
-	  e->aux = NULL;
-	}
+	free_dom_edge_info (e);
     }
 }
 
