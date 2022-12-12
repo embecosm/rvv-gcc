@@ -24,9 +24,12 @@ if ![istarget riscv*-*-*] then {
 # Load support procs.
 load_lib gcc-dg.exp
 
-set gcc_march "rv64gcv_zfh"
-if [istarget riscv32-*-*] then {
+if { [check_effective_target_rv32] } {
   set gcc_march "rv32gcv_zfh"
+} elseif { [check_effective_target_rv64] } {
+  set gcc_march "rv64gcv_zfh"
+} else {
+  set gcc_march ""
 }
 
 # Initialize `dg'.

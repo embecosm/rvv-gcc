@@ -30,9 +30,12 @@ if ![info exists DEFAULT_CFLAGS] then {
     set DEFAULT_CFLAGS ""
 }
 
-set gcc_march "rv64gcv"
-if [istarget riscv32-*-*] then {
+if { [check_effective_target_rv32] } {
   set gcc_march "rv32gcv"
+} elseif { [check_effective_target_rv64] } {
+  set gcc_march "rv64gcv"
+} else {
+  set gcc_march ""
 }
 
 # Initialize `dg'.
