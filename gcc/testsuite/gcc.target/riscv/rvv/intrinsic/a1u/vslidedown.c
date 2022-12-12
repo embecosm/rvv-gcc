@@ -3403,9 +3403,9 @@ test_vslidedown_vx_i64m8_m_vl32_31(vbool8_t mask, vint64m8_t maskedoff, vint64m8
 **  ret
 */
 vint8mf8_t 
-test_vslidedown_vx_i8mf8_ta_0(vint8mf8_t op1, size_t vl)
+test_vslidedown_vx_i8mf8_ta_0(vint8mf8_t dest, vint8mf8_t op1, size_t vl)
 {
-  return vslidedown_vx_i8mf8_ta(op1, 0, vl);
+  return vslidedown_vx_i8mf8_ta(dest, op1, 0, vl);
 }
 
 /*
@@ -3418,9 +3418,9 @@ test_vslidedown_vx_i8mf8_ta_0(vint8mf8_t op1, size_t vl)
 **  ret
 */
 vint8mf8_t 
-test_vslidedown_vx_i8mf8_ta_31(vint8mf8_t op1, size_t vl)
+test_vslidedown_vx_i8mf8_ta_31(vint8mf8_t dest, vint8mf8_t op1, size_t vl)
 {
-  return vslidedown_vx_i8mf8_ta(op1, 31, vl);
+  return vslidedown_vx_i8mf8_ta(dest, op1, 31, vl);
 }
 
 /*
@@ -3433,9 +3433,9 @@ test_vslidedown_vx_i8mf8_ta_31(vint8mf8_t op1, size_t vl)
 **  ret
 */
 vint8mf8_t 
-test_vslidedown_vx_i8mf8_ta_vl31_0(vint8mf8_t op1)
+test_vslidedown_vx_i8mf8_ta_vl31_0(vint8mf8_t dest, vint8mf8_t op1)
 {
-  return vslidedown_vx_i8mf8_ta(op1, 0, 31);
+  return vslidedown_vx_i8mf8_ta(dest, op1, 0, 31);
 }
 
 /*
@@ -3448,9 +3448,9 @@ test_vslidedown_vx_i8mf8_ta_vl31_0(vint8mf8_t op1)
 **  ret
 */
 vint8mf8_t 
-test_vslidedown_vx_i8mf8_ta_vl31_31(vint8mf8_t op1)
+test_vslidedown_vx_i8mf8_ta_vl31_31(vint8mf8_t dest, vint8mf8_t op1)
 {
-  return vslidedown_vx_i8mf8_ta(op1, 31, 31);
+  return vslidedown_vx_i8mf8_ta(dest, op1, 31, 31);
 }
 
 /*
@@ -3463,9 +3463,9 @@ test_vslidedown_vx_i8mf8_ta_vl31_31(vint8mf8_t op1)
 **  ret
 */
 vint8mf4_t 
-test_vslidedown_vx_i8mf4_ta_0(vint8mf4_t op1, size_t vl)
+test_vslidedown_vx_i8mf4_ta_0(vint8mf4_t dest, vint8mf4_t op1, size_t vl)
 {
-  return vslidedown_vx_i8mf4_ta(op1, 0, vl);
+  return vslidedown_vx_i8mf4_ta(dest, op1, 0, vl);
 }
 
 /*
@@ -3478,9 +3478,9 @@ test_vslidedown_vx_i8mf4_ta_0(vint8mf4_t op1, size_t vl)
 **  ret
 */
 vint8mf4_t 
-test_vslidedown_vx_i8mf4_ta_31(vint8mf4_t op1, size_t vl)
+test_vslidedown_vx_i8mf4_ta_31(vint8mf4_t dest, vint8mf4_t op1, size_t vl)
 {
-  return vslidedown_vx_i8mf4_ta(op1, 31, vl);
+  return vslidedown_vx_i8mf4_ta(dest, op1, 31, vl);
 }
 
 /*
@@ -3493,9 +3493,9 @@ test_vslidedown_vx_i8mf4_ta_31(vint8mf4_t op1, size_t vl)
 **  ret
 */
 vint8mf4_t 
-test_vslidedown_vx_i8mf4_ta_vl31_0(vint8mf4_t op1)
+test_vslidedown_vx_i8mf4_ta_vl31_0(vint8mf4_t dest, vint8mf4_t op1)
 {
-  return vslidedown_vx_i8mf4_ta(op1, 0, 31);
+  return vslidedown_vx_i8mf4_ta(dest, op1, 0, 31);
 }
 
 /*
@@ -3508,9 +3508,9 @@ test_vslidedown_vx_i8mf4_ta_vl31_0(vint8mf4_t op1)
 **  ret
 */
 vint8mf4_t 
-test_vslidedown_vx_i8mf4_ta_vl31_31(vint8mf4_t op1)
+test_vslidedown_vx_i8mf4_ta_vl31_31(vint8mf4_t dest, vint8mf4_t op1)
 {
-  return vslidedown_vx_i8mf4_ta(op1, 31, 31);
+  return vslidedown_vx_i8mf4_ta(dest, op1, 31, 31);
 }
 
 /*
@@ -3523,9 +3523,9 @@ test_vslidedown_vx_i8mf4_ta_vl31_31(vint8mf4_t op1)
 **  ret
 */
 vint8mf2_t 
-test_vslidedown_vx_i8mf2_ta_0(vint8mf2_t op1, size_t vl)
+test_vslidedown_vx_i8mf2_ta_0(vint8mf2_t dest, vint8mf2_t op1, size_t vl)
 {
-  return vslidedown_vx_i8mf2_ta(op1, 0, vl);
+  return vslidedown_vx_i8mf2_ta(dest, op1, 0, vl);
 }
 
 /*
@@ -3538,9 +3538,9 @@ test_vslidedown_vx_i8mf2_ta_0(vint8mf2_t op1, size_t vl)
 **  ret
 */
 vint8mf2_t 
-test_vslidedown_vx_i8mf2_ta_31(vint8mf2_t op1, size_t vl)
+test_vslidedown_vx_i8mf2_ta_31(vint8mf2_t dest, vint8mf2_t op1, size_t vl)
 {
-  return vslidedown_vx_i8mf2_ta(op1, 31, vl);
+  return vslidedown_vx_i8mf2_ta(dest, op1, 31, vl);
 }
 
 /*
@@ -3553,9 +3553,9 @@ test_vslidedown_vx_i8mf2_ta_31(vint8mf2_t op1, size_t vl)
 **  ret
 */
 vint8mf2_t 
-test_vslidedown_vx_i8mf2_ta_vl31_0(vint8mf2_t op1)
+test_vslidedown_vx_i8mf2_ta_vl31_0(vint8mf2_t dest, vint8mf2_t op1)
 {
-  return vslidedown_vx_i8mf2_ta(op1, 0, 31);
+  return vslidedown_vx_i8mf2_ta(dest, op1, 0, 31);
 }
 
 /*
@@ -3568,9 +3568,9 @@ test_vslidedown_vx_i8mf2_ta_vl31_0(vint8mf2_t op1)
 **  ret
 */
 vint8mf2_t 
-test_vslidedown_vx_i8mf2_ta_vl31_31(vint8mf2_t op1)
+test_vslidedown_vx_i8mf2_ta_vl31_31(vint8mf2_t dest, vint8mf2_t op1)
 {
-  return vslidedown_vx_i8mf2_ta(op1, 31, 31);
+  return vslidedown_vx_i8mf2_ta(dest, op1, 31, 31);
 }
 
 /*
@@ -3583,9 +3583,9 @@ test_vslidedown_vx_i8mf2_ta_vl31_31(vint8mf2_t op1)
 **  ret
 */
 vint8m1_t 
-test_vslidedown_vx_i8m1_ta_0(vint8m1_t op1, size_t vl)
+test_vslidedown_vx_i8m1_ta_0(vint8m1_t dest, vint8m1_t op1, size_t vl)
 {
-  return vslidedown_vx_i8m1_ta(op1, 0, vl);
+  return vslidedown_vx_i8m1_ta(dest, op1, 0, vl);
 }
 
 /*
@@ -3598,9 +3598,9 @@ test_vslidedown_vx_i8m1_ta_0(vint8m1_t op1, size_t vl)
 **  ret
 */
 vint8m1_t 
-test_vslidedown_vx_i8m1_ta_31(vint8m1_t op1, size_t vl)
+test_vslidedown_vx_i8m1_ta_31(vint8m1_t dest, vint8m1_t op1, size_t vl)
 {
-  return vslidedown_vx_i8m1_ta(op1, 31, vl);
+  return vslidedown_vx_i8m1_ta(dest, op1, 31, vl);
 }
 
 /*
@@ -3613,9 +3613,9 @@ test_vslidedown_vx_i8m1_ta_31(vint8m1_t op1, size_t vl)
 **  ret
 */
 vint8m1_t 
-test_vslidedown_vx_i8m1_ta_vl31_0(vint8m1_t op1)
+test_vslidedown_vx_i8m1_ta_vl31_0(vint8m1_t dest, vint8m1_t op1)
 {
-  return vslidedown_vx_i8m1_ta(op1, 0, 31);
+  return vslidedown_vx_i8m1_ta(dest, op1, 0, 31);
 }
 
 /*
@@ -3628,9 +3628,9 @@ test_vslidedown_vx_i8m1_ta_vl31_0(vint8m1_t op1)
 **  ret
 */
 vint8m1_t 
-test_vslidedown_vx_i8m1_ta_vl31_31(vint8m1_t op1)
+test_vslidedown_vx_i8m1_ta_vl31_31(vint8m1_t dest, vint8m1_t op1)
 {
-  return vslidedown_vx_i8m1_ta(op1, 31, 31);
+  return vslidedown_vx_i8m1_ta(dest, op1, 31, 31);
 }
 
 /*
@@ -3643,9 +3643,9 @@ test_vslidedown_vx_i8m1_ta_vl31_31(vint8m1_t op1)
 **  ret
 */
 vint8m2_t 
-test_vslidedown_vx_i8m2_ta_0(vint8m2_t op1, size_t vl)
+test_vslidedown_vx_i8m2_ta_0(vint8m2_t dest, vint8m2_t op1, size_t vl)
 {
-  return vslidedown_vx_i8m2_ta(op1, 0, vl);
+  return vslidedown_vx_i8m2_ta(dest, op1, 0, vl);
 }
 
 /*
@@ -3658,9 +3658,9 @@ test_vslidedown_vx_i8m2_ta_0(vint8m2_t op1, size_t vl)
 **  ret
 */
 vint8m2_t 
-test_vslidedown_vx_i8m2_ta_31(vint8m2_t op1, size_t vl)
+test_vslidedown_vx_i8m2_ta_31(vint8m2_t dest, vint8m2_t op1, size_t vl)
 {
-  return vslidedown_vx_i8m2_ta(op1, 31, vl);
+  return vslidedown_vx_i8m2_ta(dest, op1, 31, vl);
 }
 
 /*
@@ -3673,9 +3673,9 @@ test_vslidedown_vx_i8m2_ta_31(vint8m2_t op1, size_t vl)
 **  ret
 */
 vint8m2_t 
-test_vslidedown_vx_i8m2_ta_vl31_0(vint8m2_t op1)
+test_vslidedown_vx_i8m2_ta_vl31_0(vint8m2_t dest, vint8m2_t op1)
 {
-  return vslidedown_vx_i8m2_ta(op1, 0, 31);
+  return vslidedown_vx_i8m2_ta(dest, op1, 0, 31);
 }
 
 /*
@@ -3688,9 +3688,9 @@ test_vslidedown_vx_i8m2_ta_vl31_0(vint8m2_t op1)
 **  ret
 */
 vint8m2_t 
-test_vslidedown_vx_i8m2_ta_vl31_31(vint8m2_t op1)
+test_vslidedown_vx_i8m2_ta_vl31_31(vint8m2_t dest, vint8m2_t op1)
 {
-  return vslidedown_vx_i8m2_ta(op1, 31, 31);
+  return vslidedown_vx_i8m2_ta(dest, op1, 31, 31);
 }
 
 /*
@@ -3703,9 +3703,9 @@ test_vslidedown_vx_i8m2_ta_vl31_31(vint8m2_t op1)
 **  ret
 */
 vint8m4_t 
-test_vslidedown_vx_i8m4_ta_0(vint8m4_t op1, size_t vl)
+test_vslidedown_vx_i8m4_ta_0(vint8m4_t dest, vint8m4_t op1, size_t vl)
 {
-  return vslidedown_vx_i8m4_ta(op1, 0, vl);
+  return vslidedown_vx_i8m4_ta(dest, op1, 0, vl);
 }
 
 /*
@@ -3718,9 +3718,9 @@ test_vslidedown_vx_i8m4_ta_0(vint8m4_t op1, size_t vl)
 **  ret
 */
 vint8m4_t 
-test_vslidedown_vx_i8m4_ta_31(vint8m4_t op1, size_t vl)
+test_vslidedown_vx_i8m4_ta_31(vint8m4_t dest, vint8m4_t op1, size_t vl)
 {
-  return vslidedown_vx_i8m4_ta(op1, 31, vl);
+  return vslidedown_vx_i8m4_ta(dest, op1, 31, vl);
 }
 
 /*
@@ -3733,9 +3733,9 @@ test_vslidedown_vx_i8m4_ta_31(vint8m4_t op1, size_t vl)
 **  ret
 */
 vint8m4_t 
-test_vslidedown_vx_i8m4_ta_vl31_0(vint8m4_t op1)
+test_vslidedown_vx_i8m4_ta_vl31_0(vint8m4_t dest, vint8m4_t op1)
 {
-  return vslidedown_vx_i8m4_ta(op1, 0, 31);
+  return vslidedown_vx_i8m4_ta(dest, op1, 0, 31);
 }
 
 /*
@@ -3748,9 +3748,9 @@ test_vslidedown_vx_i8m4_ta_vl31_0(vint8m4_t op1)
 **  ret
 */
 vint8m4_t 
-test_vslidedown_vx_i8m4_ta_vl31_31(vint8m4_t op1)
+test_vslidedown_vx_i8m4_ta_vl31_31(vint8m4_t dest, vint8m4_t op1)
 {
-  return vslidedown_vx_i8m4_ta(op1, 31, 31);
+  return vslidedown_vx_i8m4_ta(dest, op1, 31, 31);
 }
 
 /*
@@ -3763,9 +3763,9 @@ test_vslidedown_vx_i8m4_ta_vl31_31(vint8m4_t op1)
 **  ret
 */
 vint8m8_t 
-test_vslidedown_vx_i8m8_ta_0(vint8m8_t op1, size_t vl)
+test_vslidedown_vx_i8m8_ta_0(vint8m8_t dest, vint8m8_t op1, size_t vl)
 {
-  return vslidedown_vx_i8m8_ta(op1, 0, vl);
+  return vslidedown_vx_i8m8_ta(dest, op1, 0, vl);
 }
 
 /*
@@ -3778,9 +3778,9 @@ test_vslidedown_vx_i8m8_ta_0(vint8m8_t op1, size_t vl)
 **  ret
 */
 vint8m8_t 
-test_vslidedown_vx_i8m8_ta_31(vint8m8_t op1, size_t vl)
+test_vslidedown_vx_i8m8_ta_31(vint8m8_t dest, vint8m8_t op1, size_t vl)
 {
-  return vslidedown_vx_i8m8_ta(op1, 31, vl);
+  return vslidedown_vx_i8m8_ta(dest, op1, 31, vl);
 }
 
 /*
@@ -3793,9 +3793,9 @@ test_vslidedown_vx_i8m8_ta_31(vint8m8_t op1, size_t vl)
 **  ret
 */
 vint8m8_t 
-test_vslidedown_vx_i8m8_ta_vl31_0(vint8m8_t op1)
+test_vslidedown_vx_i8m8_ta_vl31_0(vint8m8_t dest, vint8m8_t op1)
 {
-  return vslidedown_vx_i8m8_ta(op1, 0, 31);
+  return vslidedown_vx_i8m8_ta(dest, op1, 0, 31);
 }
 
 /*
@@ -3808,9 +3808,9 @@ test_vslidedown_vx_i8m8_ta_vl31_0(vint8m8_t op1)
 **  ret
 */
 vint8m8_t 
-test_vslidedown_vx_i8m8_ta_vl31_31(vint8m8_t op1)
+test_vslidedown_vx_i8m8_ta_vl31_31(vint8m8_t dest, vint8m8_t op1)
 {
-  return vslidedown_vx_i8m8_ta(op1, 31, 31);
+  return vslidedown_vx_i8m8_ta(dest, op1, 31, 31);
 }
 
 /*
@@ -3823,9 +3823,9 @@ test_vslidedown_vx_i8m8_ta_vl31_31(vint8m8_t op1)
 **  ret
 */
 vint16mf4_t 
-test_vslidedown_vx_i16mf4_ta_0(vint16mf4_t op1, size_t vl)
+test_vslidedown_vx_i16mf4_ta_0(vint16mf4_t dest, vint16mf4_t op1, size_t vl)
 {
-  return vslidedown_vx_i16mf4_ta(op1, 0, vl);
+  return vslidedown_vx_i16mf4_ta(dest, op1, 0, vl);
 }
 
 /*
@@ -3838,9 +3838,9 @@ test_vslidedown_vx_i16mf4_ta_0(vint16mf4_t op1, size_t vl)
 **  ret
 */
 vint16mf4_t 
-test_vslidedown_vx_i16mf4_ta_31(vint16mf4_t op1, size_t vl)
+test_vslidedown_vx_i16mf4_ta_31(vint16mf4_t dest, vint16mf4_t op1, size_t vl)
 {
-  return vslidedown_vx_i16mf4_ta(op1, 31, vl);
+  return vslidedown_vx_i16mf4_ta(dest, op1, 31, vl);
 }
 
 /*
@@ -3853,9 +3853,9 @@ test_vslidedown_vx_i16mf4_ta_31(vint16mf4_t op1, size_t vl)
 **  ret
 */
 vint16mf4_t 
-test_vslidedown_vx_i16mf4_ta_vl31_0(vint16mf4_t op1)
+test_vslidedown_vx_i16mf4_ta_vl31_0(vint16mf4_t dest, vint16mf4_t op1)
 {
-  return vslidedown_vx_i16mf4_ta(op1, 0, 31);
+  return vslidedown_vx_i16mf4_ta(dest, op1, 0, 31);
 }
 
 /*
@@ -3868,9 +3868,9 @@ test_vslidedown_vx_i16mf4_ta_vl31_0(vint16mf4_t op1)
 **  ret
 */
 vint16mf4_t 
-test_vslidedown_vx_i16mf4_ta_vl31_31(vint16mf4_t op1)
+test_vslidedown_vx_i16mf4_ta_vl31_31(vint16mf4_t dest, vint16mf4_t op1)
 {
-  return vslidedown_vx_i16mf4_ta(op1, 31, 31);
+  return vslidedown_vx_i16mf4_ta(dest, op1, 31, 31);
 }
 
 /*
@@ -3883,9 +3883,9 @@ test_vslidedown_vx_i16mf4_ta_vl31_31(vint16mf4_t op1)
 **  ret
 */
 vint16mf2_t 
-test_vslidedown_vx_i16mf2_ta_0(vint16mf2_t op1, size_t vl)
+test_vslidedown_vx_i16mf2_ta_0(vint16mf2_t dest, vint16mf2_t op1, size_t vl)
 {
-  return vslidedown_vx_i16mf2_ta(op1, 0, vl);
+  return vslidedown_vx_i16mf2_ta(dest, op1, 0, vl);
 }
 
 /*
@@ -3898,9 +3898,9 @@ test_vslidedown_vx_i16mf2_ta_0(vint16mf2_t op1, size_t vl)
 **  ret
 */
 vint16mf2_t 
-test_vslidedown_vx_i16mf2_ta_31(vint16mf2_t op1, size_t vl)
+test_vslidedown_vx_i16mf2_ta_31(vint16mf2_t dest, vint16mf2_t op1, size_t vl)
 {
-  return vslidedown_vx_i16mf2_ta(op1, 31, vl);
+  return vslidedown_vx_i16mf2_ta(dest, op1, 31, vl);
 }
 
 /*
@@ -3913,9 +3913,9 @@ test_vslidedown_vx_i16mf2_ta_31(vint16mf2_t op1, size_t vl)
 **  ret
 */
 vint16mf2_t 
-test_vslidedown_vx_i16mf2_ta_vl31_0(vint16mf2_t op1)
+test_vslidedown_vx_i16mf2_ta_vl31_0(vint16mf2_t dest, vint16mf2_t op1)
 {
-  return vslidedown_vx_i16mf2_ta(op1, 0, 31);
+  return vslidedown_vx_i16mf2_ta(dest, op1, 0, 31);
 }
 
 /*
@@ -3928,9 +3928,9 @@ test_vslidedown_vx_i16mf2_ta_vl31_0(vint16mf2_t op1)
 **  ret
 */
 vint16mf2_t 
-test_vslidedown_vx_i16mf2_ta_vl31_31(vint16mf2_t op1)
+test_vslidedown_vx_i16mf2_ta_vl31_31(vint16mf2_t dest, vint16mf2_t op1)
 {
-  return vslidedown_vx_i16mf2_ta(op1, 31, 31);
+  return vslidedown_vx_i16mf2_ta(dest, op1, 31, 31);
 }
 
 /*
@@ -3943,9 +3943,9 @@ test_vslidedown_vx_i16mf2_ta_vl31_31(vint16mf2_t op1)
 **  ret
 */
 vint16m1_t 
-test_vslidedown_vx_i16m1_ta_0(vint16m1_t op1, size_t vl)
+test_vslidedown_vx_i16m1_ta_0(vint16m1_t dest, vint16m1_t op1, size_t vl)
 {
-  return vslidedown_vx_i16m1_ta(op1, 0, vl);
+  return vslidedown_vx_i16m1_ta(dest, op1, 0, vl);
 }
 
 /*
@@ -3958,9 +3958,9 @@ test_vslidedown_vx_i16m1_ta_0(vint16m1_t op1, size_t vl)
 **  ret
 */
 vint16m1_t 
-test_vslidedown_vx_i16m1_ta_31(vint16m1_t op1, size_t vl)
+test_vslidedown_vx_i16m1_ta_31(vint16m1_t dest, vint16m1_t op1, size_t vl)
 {
-  return vslidedown_vx_i16m1_ta(op1, 31, vl);
+  return vslidedown_vx_i16m1_ta(dest, op1, 31, vl);
 }
 
 /*
@@ -3973,9 +3973,9 @@ test_vslidedown_vx_i16m1_ta_31(vint16m1_t op1, size_t vl)
 **  ret
 */
 vint16m1_t 
-test_vslidedown_vx_i16m1_ta_vl31_0(vint16m1_t op1)
+test_vslidedown_vx_i16m1_ta_vl31_0(vint16m1_t dest, vint16m1_t op1)
 {
-  return vslidedown_vx_i16m1_ta(op1, 0, 31);
+  return vslidedown_vx_i16m1_ta(dest, op1, 0, 31);
 }
 
 /*
@@ -3988,9 +3988,9 @@ test_vslidedown_vx_i16m1_ta_vl31_0(vint16m1_t op1)
 **  ret
 */
 vint16m1_t 
-test_vslidedown_vx_i16m1_ta_vl31_31(vint16m1_t op1)
+test_vslidedown_vx_i16m1_ta_vl31_31(vint16m1_t dest, vint16m1_t op1)
 {
-  return vslidedown_vx_i16m1_ta(op1, 31, 31);
+  return vslidedown_vx_i16m1_ta(dest, op1, 31, 31);
 }
 
 /*
@@ -4003,9 +4003,9 @@ test_vslidedown_vx_i16m1_ta_vl31_31(vint16m1_t op1)
 **  ret
 */
 vint16m2_t 
-test_vslidedown_vx_i16m2_ta_0(vint16m2_t op1, size_t vl)
+test_vslidedown_vx_i16m2_ta_0(vint16m2_t dest, vint16m2_t op1, size_t vl)
 {
-  return vslidedown_vx_i16m2_ta(op1, 0, vl);
+  return vslidedown_vx_i16m2_ta(dest, op1, 0, vl);
 }
 
 /*
@@ -4018,9 +4018,9 @@ test_vslidedown_vx_i16m2_ta_0(vint16m2_t op1, size_t vl)
 **  ret
 */
 vint16m2_t 
-test_vslidedown_vx_i16m2_ta_31(vint16m2_t op1, size_t vl)
+test_vslidedown_vx_i16m2_ta_31(vint16m2_t dest, vint16m2_t op1, size_t vl)
 {
-  return vslidedown_vx_i16m2_ta(op1, 31, vl);
+  return vslidedown_vx_i16m2_ta(dest, op1, 31, vl);
 }
 
 /*
@@ -4033,9 +4033,9 @@ test_vslidedown_vx_i16m2_ta_31(vint16m2_t op1, size_t vl)
 **  ret
 */
 vint16m2_t 
-test_vslidedown_vx_i16m2_ta_vl31_0(vint16m2_t op1)
+test_vslidedown_vx_i16m2_ta_vl31_0(vint16m2_t dest, vint16m2_t op1)
 {
-  return vslidedown_vx_i16m2_ta(op1, 0, 31);
+  return vslidedown_vx_i16m2_ta(dest, op1, 0, 31);
 }
 
 /*
@@ -4048,9 +4048,9 @@ test_vslidedown_vx_i16m2_ta_vl31_0(vint16m2_t op1)
 **  ret
 */
 vint16m2_t 
-test_vslidedown_vx_i16m2_ta_vl31_31(vint16m2_t op1)
+test_vslidedown_vx_i16m2_ta_vl31_31(vint16m2_t dest, vint16m2_t op1)
 {
-  return vslidedown_vx_i16m2_ta(op1, 31, 31);
+  return vslidedown_vx_i16m2_ta(dest, op1, 31, 31);
 }
 
 /*
@@ -4063,9 +4063,9 @@ test_vslidedown_vx_i16m2_ta_vl31_31(vint16m2_t op1)
 **  ret
 */
 vint16m4_t 
-test_vslidedown_vx_i16m4_ta_0(vint16m4_t op1, size_t vl)
+test_vslidedown_vx_i16m4_ta_0(vint16m4_t dest, vint16m4_t op1, size_t vl)
 {
-  return vslidedown_vx_i16m4_ta(op1, 0, vl);
+  return vslidedown_vx_i16m4_ta(dest, op1, 0, vl);
 }
 
 /*
@@ -4078,9 +4078,9 @@ test_vslidedown_vx_i16m4_ta_0(vint16m4_t op1, size_t vl)
 **  ret
 */
 vint16m4_t 
-test_vslidedown_vx_i16m4_ta_31(vint16m4_t op1, size_t vl)
+test_vslidedown_vx_i16m4_ta_31(vint16m4_t dest, vint16m4_t op1, size_t vl)
 {
-  return vslidedown_vx_i16m4_ta(op1, 31, vl);
+  return vslidedown_vx_i16m4_ta(dest, op1, 31, vl);
 }
 
 /*
@@ -4093,9 +4093,9 @@ test_vslidedown_vx_i16m4_ta_31(vint16m4_t op1, size_t vl)
 **  ret
 */
 vint16m4_t 
-test_vslidedown_vx_i16m4_ta_vl31_0(vint16m4_t op1)
+test_vslidedown_vx_i16m4_ta_vl31_0(vint16m4_t dest, vint16m4_t op1)
 {
-  return vslidedown_vx_i16m4_ta(op1, 0, 31);
+  return vslidedown_vx_i16m4_ta(dest, op1, 0, 31);
 }
 
 /*
@@ -4108,9 +4108,9 @@ test_vslidedown_vx_i16m4_ta_vl31_0(vint16m4_t op1)
 **  ret
 */
 vint16m4_t 
-test_vslidedown_vx_i16m4_ta_vl31_31(vint16m4_t op1)
+test_vslidedown_vx_i16m4_ta_vl31_31(vint16m4_t dest, vint16m4_t op1)
 {
-  return vslidedown_vx_i16m4_ta(op1, 31, 31);
+  return vslidedown_vx_i16m4_ta(dest, op1, 31, 31);
 }
 
 /*
@@ -4123,9 +4123,9 @@ test_vslidedown_vx_i16m4_ta_vl31_31(vint16m4_t op1)
 **  ret
 */
 vint16m8_t 
-test_vslidedown_vx_i16m8_ta_0(vint16m8_t op1, size_t vl)
+test_vslidedown_vx_i16m8_ta_0(vint16m8_t dest, vint16m8_t op1, size_t vl)
 {
-  return vslidedown_vx_i16m8_ta(op1, 0, vl);
+  return vslidedown_vx_i16m8_ta(dest, op1, 0, vl);
 }
 
 /*
@@ -4138,9 +4138,9 @@ test_vslidedown_vx_i16m8_ta_0(vint16m8_t op1, size_t vl)
 **  ret
 */
 vint16m8_t 
-test_vslidedown_vx_i16m8_ta_31(vint16m8_t op1, size_t vl)
+test_vslidedown_vx_i16m8_ta_31(vint16m8_t dest, vint16m8_t op1, size_t vl)
 {
-  return vslidedown_vx_i16m8_ta(op1, 31, vl);
+  return vslidedown_vx_i16m8_ta(dest, op1, 31, vl);
 }
 
 /*
@@ -4153,9 +4153,9 @@ test_vslidedown_vx_i16m8_ta_31(vint16m8_t op1, size_t vl)
 **  ret
 */
 vint16m8_t 
-test_vslidedown_vx_i16m8_ta_vl31_0(vint16m8_t op1)
+test_vslidedown_vx_i16m8_ta_vl31_0(vint16m8_t dest, vint16m8_t op1)
 {
-  return vslidedown_vx_i16m8_ta(op1, 0, 31);
+  return vslidedown_vx_i16m8_ta(dest, op1, 0, 31);
 }
 
 /*
@@ -4168,9 +4168,9 @@ test_vslidedown_vx_i16m8_ta_vl31_0(vint16m8_t op1)
 **  ret
 */
 vint16m8_t 
-test_vslidedown_vx_i16m8_ta_vl31_31(vint16m8_t op1)
+test_vslidedown_vx_i16m8_ta_vl31_31(vint16m8_t dest, vint16m8_t op1)
 {
-  return vslidedown_vx_i16m8_ta(op1, 31, 31);
+  return vslidedown_vx_i16m8_ta(dest, op1, 31, 31);
 }
 
 /*
@@ -4183,9 +4183,9 @@ test_vslidedown_vx_i16m8_ta_vl31_31(vint16m8_t op1)
 **  ret
 */
 vint32mf2_t 
-test_vslidedown_vx_i32mf2_ta_0(vint32mf2_t op1, size_t vl)
+test_vslidedown_vx_i32mf2_ta_0(vint32mf2_t dest, vint32mf2_t op1, size_t vl)
 {
-  return vslidedown_vx_i32mf2_ta(op1, 0, vl);
+  return vslidedown_vx_i32mf2_ta(dest, op1, 0, vl);
 }
 
 /*
@@ -4198,9 +4198,9 @@ test_vslidedown_vx_i32mf2_ta_0(vint32mf2_t op1, size_t vl)
 **  ret
 */
 vint32mf2_t 
-test_vslidedown_vx_i32mf2_ta_31(vint32mf2_t op1, size_t vl)
+test_vslidedown_vx_i32mf2_ta_31(vint32mf2_t dest, vint32mf2_t op1, size_t vl)
 {
-  return vslidedown_vx_i32mf2_ta(op1, 31, vl);
+  return vslidedown_vx_i32mf2_ta(dest, op1, 31, vl);
 }
 
 /*
@@ -4213,9 +4213,9 @@ test_vslidedown_vx_i32mf2_ta_31(vint32mf2_t op1, size_t vl)
 **  ret
 */
 vint32mf2_t 
-test_vslidedown_vx_i32mf2_ta_vl31_0(vint32mf2_t op1)
+test_vslidedown_vx_i32mf2_ta_vl31_0(vint32mf2_t dest, vint32mf2_t op1)
 {
-  return vslidedown_vx_i32mf2_ta(op1, 0, 31);
+  return vslidedown_vx_i32mf2_ta(dest, op1, 0, 31);
 }
 
 /*
@@ -4228,9 +4228,9 @@ test_vslidedown_vx_i32mf2_ta_vl31_0(vint32mf2_t op1)
 **  ret
 */
 vint32mf2_t 
-test_vslidedown_vx_i32mf2_ta_vl31_31(vint32mf2_t op1)
+test_vslidedown_vx_i32mf2_ta_vl31_31(vint32mf2_t dest, vint32mf2_t op1)
 {
-  return vslidedown_vx_i32mf2_ta(op1, 31, 31);
+  return vslidedown_vx_i32mf2_ta(dest, op1, 31, 31);
 }
 
 /*
@@ -4243,9 +4243,9 @@ test_vslidedown_vx_i32mf2_ta_vl31_31(vint32mf2_t op1)
 **  ret
 */
 vint32m1_t 
-test_vslidedown_vx_i32m1_ta_0(vint32m1_t op1, size_t vl)
+test_vslidedown_vx_i32m1_ta_0(vint32m1_t dest, vint32m1_t op1, size_t vl)
 {
-  return vslidedown_vx_i32m1_ta(op1, 0, vl);
+  return vslidedown_vx_i32m1_ta(dest, op1, 0, vl);
 }
 
 /*
@@ -4258,9 +4258,9 @@ test_vslidedown_vx_i32m1_ta_0(vint32m1_t op1, size_t vl)
 **  ret
 */
 vint32m1_t 
-test_vslidedown_vx_i32m1_ta_31(vint32m1_t op1, size_t vl)
+test_vslidedown_vx_i32m1_ta_31(vint32m1_t dest, vint32m1_t op1, size_t vl)
 {
-  return vslidedown_vx_i32m1_ta(op1, 31, vl);
+  return vslidedown_vx_i32m1_ta(dest, op1, 31, vl);
 }
 
 /*
@@ -4273,9 +4273,9 @@ test_vslidedown_vx_i32m1_ta_31(vint32m1_t op1, size_t vl)
 **  ret
 */
 vint32m1_t 
-test_vslidedown_vx_i32m1_ta_vl31_0(vint32m1_t op1)
+test_vslidedown_vx_i32m1_ta_vl31_0(vint32m1_t dest, vint32m1_t op1)
 {
-  return vslidedown_vx_i32m1_ta(op1, 0, 31);
+  return vslidedown_vx_i32m1_ta(dest, op1, 0, 31);
 }
 
 /*
@@ -4288,9 +4288,9 @@ test_vslidedown_vx_i32m1_ta_vl31_0(vint32m1_t op1)
 **  ret
 */
 vint32m1_t 
-test_vslidedown_vx_i32m1_ta_vl31_31(vint32m1_t op1)
+test_vslidedown_vx_i32m1_ta_vl31_31(vint32m1_t dest, vint32m1_t op1)
 {
-  return vslidedown_vx_i32m1_ta(op1, 31, 31);
+  return vslidedown_vx_i32m1_ta(dest, op1, 31, 31);
 }
 
 /*
@@ -4303,9 +4303,9 @@ test_vslidedown_vx_i32m1_ta_vl31_31(vint32m1_t op1)
 **  ret
 */
 vint32m2_t 
-test_vslidedown_vx_i32m2_ta_0(vint32m2_t op1, size_t vl)
+test_vslidedown_vx_i32m2_ta_0(vint32m2_t dest, vint32m2_t op1, size_t vl)
 {
-  return vslidedown_vx_i32m2_ta(op1, 0, vl);
+  return vslidedown_vx_i32m2_ta(dest, op1, 0, vl);
 }
 
 /*
@@ -4318,9 +4318,9 @@ test_vslidedown_vx_i32m2_ta_0(vint32m2_t op1, size_t vl)
 **  ret
 */
 vint32m2_t 
-test_vslidedown_vx_i32m2_ta_31(vint32m2_t op1, size_t vl)
+test_vslidedown_vx_i32m2_ta_31(vint32m2_t dest, vint32m2_t op1, size_t vl)
 {
-  return vslidedown_vx_i32m2_ta(op1, 31, vl);
+  return vslidedown_vx_i32m2_ta(dest, op1, 31, vl);
 }
 
 /*
@@ -4333,9 +4333,9 @@ test_vslidedown_vx_i32m2_ta_31(vint32m2_t op1, size_t vl)
 **  ret
 */
 vint32m2_t 
-test_vslidedown_vx_i32m2_ta_vl31_0(vint32m2_t op1)
+test_vslidedown_vx_i32m2_ta_vl31_0(vint32m2_t dest, vint32m2_t op1)
 {
-  return vslidedown_vx_i32m2_ta(op1, 0, 31);
+  return vslidedown_vx_i32m2_ta(dest, op1, 0, 31);
 }
 
 /*
@@ -4348,9 +4348,9 @@ test_vslidedown_vx_i32m2_ta_vl31_0(vint32m2_t op1)
 **  ret
 */
 vint32m2_t 
-test_vslidedown_vx_i32m2_ta_vl31_31(vint32m2_t op1)
+test_vslidedown_vx_i32m2_ta_vl31_31(vint32m2_t dest, vint32m2_t op1)
 {
-  return vslidedown_vx_i32m2_ta(op1, 31, 31);
+  return vslidedown_vx_i32m2_ta(dest, op1, 31, 31);
 }
 
 /*
@@ -4363,9 +4363,9 @@ test_vslidedown_vx_i32m2_ta_vl31_31(vint32m2_t op1)
 **  ret
 */
 vint32m4_t 
-test_vslidedown_vx_i32m4_ta_0(vint32m4_t op1, size_t vl)
+test_vslidedown_vx_i32m4_ta_0(vint32m4_t dest, vint32m4_t op1, size_t vl)
 {
-  return vslidedown_vx_i32m4_ta(op1, 0, vl);
+  return vslidedown_vx_i32m4_ta(dest, op1, 0, vl);
 }
 
 /*
@@ -4378,9 +4378,9 @@ test_vslidedown_vx_i32m4_ta_0(vint32m4_t op1, size_t vl)
 **  ret
 */
 vint32m4_t 
-test_vslidedown_vx_i32m4_ta_31(vint32m4_t op1, size_t vl)
+test_vslidedown_vx_i32m4_ta_31(vint32m4_t dest, vint32m4_t op1, size_t vl)
 {
-  return vslidedown_vx_i32m4_ta(op1, 31, vl);
+  return vslidedown_vx_i32m4_ta(dest, op1, 31, vl);
 }
 
 /*
@@ -4393,9 +4393,9 @@ test_vslidedown_vx_i32m4_ta_31(vint32m4_t op1, size_t vl)
 **  ret
 */
 vint32m4_t 
-test_vslidedown_vx_i32m4_ta_vl31_0(vint32m4_t op1)
+test_vslidedown_vx_i32m4_ta_vl31_0(vint32m4_t dest, vint32m4_t op1)
 {
-  return vslidedown_vx_i32m4_ta(op1, 0, 31);
+  return vslidedown_vx_i32m4_ta(dest, op1, 0, 31);
 }
 
 /*
@@ -4408,9 +4408,9 @@ test_vslidedown_vx_i32m4_ta_vl31_0(vint32m4_t op1)
 **  ret
 */
 vint32m4_t 
-test_vslidedown_vx_i32m4_ta_vl31_31(vint32m4_t op1)
+test_vslidedown_vx_i32m4_ta_vl31_31(vint32m4_t dest, vint32m4_t op1)
 {
-  return vslidedown_vx_i32m4_ta(op1, 31, 31);
+  return vslidedown_vx_i32m4_ta(dest, op1, 31, 31);
 }
 
 /*
@@ -4423,9 +4423,9 @@ test_vslidedown_vx_i32m4_ta_vl31_31(vint32m4_t op1)
 **  ret
 */
 vint32m8_t 
-test_vslidedown_vx_i32m8_ta_0(vint32m8_t op1, size_t vl)
+test_vslidedown_vx_i32m8_ta_0(vint32m8_t dest, vint32m8_t op1, size_t vl)
 {
-  return vslidedown_vx_i32m8_ta(op1, 0, vl);
+  return vslidedown_vx_i32m8_ta(dest, op1, 0, vl);
 }
 
 /*
@@ -4438,9 +4438,9 @@ test_vslidedown_vx_i32m8_ta_0(vint32m8_t op1, size_t vl)
 **  ret
 */
 vint32m8_t 
-test_vslidedown_vx_i32m8_ta_31(vint32m8_t op1, size_t vl)
+test_vslidedown_vx_i32m8_ta_31(vint32m8_t dest, vint32m8_t op1, size_t vl)
 {
-  return vslidedown_vx_i32m8_ta(op1, 31, vl);
+  return vslidedown_vx_i32m8_ta(dest, op1, 31, vl);
 }
 
 /*
@@ -4453,9 +4453,9 @@ test_vslidedown_vx_i32m8_ta_31(vint32m8_t op1, size_t vl)
 **  ret
 */
 vint32m8_t 
-test_vslidedown_vx_i32m8_ta_vl31_0(vint32m8_t op1)
+test_vslidedown_vx_i32m8_ta_vl31_0(vint32m8_t dest, vint32m8_t op1)
 {
-  return vslidedown_vx_i32m8_ta(op1, 0, 31);
+  return vslidedown_vx_i32m8_ta(dest, op1, 0, 31);
 }
 
 /*
@@ -4468,9 +4468,9 @@ test_vslidedown_vx_i32m8_ta_vl31_0(vint32m8_t op1)
 **  ret
 */
 vint32m8_t 
-test_vslidedown_vx_i32m8_ta_vl31_31(vint32m8_t op1)
+test_vslidedown_vx_i32m8_ta_vl31_31(vint32m8_t dest, vint32m8_t op1)
 {
-  return vslidedown_vx_i32m8_ta(op1, 31, 31);
+  return vslidedown_vx_i32m8_ta(dest, op1, 31, 31);
 }
 
 /*
@@ -4483,9 +4483,9 @@ test_vslidedown_vx_i32m8_ta_vl31_31(vint32m8_t op1)
 **  ret
 */
 vint64m1_t 
-test_vslidedown_vx_i64m1_ta_0(vint64m1_t op1, size_t vl)
+test_vslidedown_vx_i64m1_ta_0(vint64m1_t dest, vint64m1_t op1, size_t vl)
 {
-  return vslidedown_vx_i64m1_ta(op1, 0, vl);
+  return vslidedown_vx_i64m1_ta(dest, op1, 0, vl);
 }
 
 /*
@@ -4498,9 +4498,9 @@ test_vslidedown_vx_i64m1_ta_0(vint64m1_t op1, size_t vl)
 **  ret
 */
 vint64m1_t 
-test_vslidedown_vx_i64m1_ta_31(vint64m1_t op1, size_t vl)
+test_vslidedown_vx_i64m1_ta_31(vint64m1_t dest, vint64m1_t op1, size_t vl)
 {
-  return vslidedown_vx_i64m1_ta(op1, 31, vl);
+  return vslidedown_vx_i64m1_ta(dest, op1, 31, vl);
 }
 
 /*
@@ -4513,9 +4513,9 @@ test_vslidedown_vx_i64m1_ta_31(vint64m1_t op1, size_t vl)
 **  ret
 */
 vint64m1_t 
-test_vslidedown_vx_i64m1_ta_vl31_0(vint64m1_t op1)
+test_vslidedown_vx_i64m1_ta_vl31_0(vint64m1_t dest, vint64m1_t op1)
 {
-  return vslidedown_vx_i64m1_ta(op1, 0, 31);
+  return vslidedown_vx_i64m1_ta(dest, op1, 0, 31);
 }
 
 /*
@@ -4528,9 +4528,9 @@ test_vslidedown_vx_i64m1_ta_vl31_0(vint64m1_t op1)
 **  ret
 */
 vint64m1_t 
-test_vslidedown_vx_i64m1_ta_vl31_31(vint64m1_t op1)
+test_vslidedown_vx_i64m1_ta_vl31_31(vint64m1_t dest, vint64m1_t op1)
 {
-  return vslidedown_vx_i64m1_ta(op1, 31, 31);
+  return vslidedown_vx_i64m1_ta(dest, op1, 31, 31);
 }
 
 /*
@@ -4543,9 +4543,9 @@ test_vslidedown_vx_i64m1_ta_vl31_31(vint64m1_t op1)
 **  ret
 */
 vint64m2_t 
-test_vslidedown_vx_i64m2_ta_0(vint64m2_t op1, size_t vl)
+test_vslidedown_vx_i64m2_ta_0(vint64m2_t dest, vint64m2_t op1, size_t vl)
 {
-  return vslidedown_vx_i64m2_ta(op1, 0, vl);
+  return vslidedown_vx_i64m2_ta(dest, op1, 0, vl);
 }
 
 /*
@@ -4558,9 +4558,9 @@ test_vslidedown_vx_i64m2_ta_0(vint64m2_t op1, size_t vl)
 **  ret
 */
 vint64m2_t 
-test_vslidedown_vx_i64m2_ta_31(vint64m2_t op1, size_t vl)
+test_vslidedown_vx_i64m2_ta_31(vint64m2_t dest, vint64m2_t op1, size_t vl)
 {
-  return vslidedown_vx_i64m2_ta(op1, 31, vl);
+  return vslidedown_vx_i64m2_ta(dest, op1, 31, vl);
 }
 
 /*
@@ -4573,9 +4573,9 @@ test_vslidedown_vx_i64m2_ta_31(vint64m2_t op1, size_t vl)
 **  ret
 */
 vint64m2_t 
-test_vslidedown_vx_i64m2_ta_vl31_0(vint64m2_t op1)
+test_vslidedown_vx_i64m2_ta_vl31_0(vint64m2_t dest, vint64m2_t op1)
 {
-  return vslidedown_vx_i64m2_ta(op1, 0, 31);
+  return vslidedown_vx_i64m2_ta(dest, op1, 0, 31);
 }
 
 /*
@@ -4588,9 +4588,9 @@ test_vslidedown_vx_i64m2_ta_vl31_0(vint64m2_t op1)
 **  ret
 */
 vint64m2_t 
-test_vslidedown_vx_i64m2_ta_vl31_31(vint64m2_t op1)
+test_vslidedown_vx_i64m2_ta_vl31_31(vint64m2_t dest, vint64m2_t op1)
 {
-  return vslidedown_vx_i64m2_ta(op1, 31, 31);
+  return vslidedown_vx_i64m2_ta(dest, op1, 31, 31);
 }
 
 /*
@@ -4603,9 +4603,9 @@ test_vslidedown_vx_i64m2_ta_vl31_31(vint64m2_t op1)
 **  ret
 */
 vint64m4_t 
-test_vslidedown_vx_i64m4_ta_0(vint64m4_t op1, size_t vl)
+test_vslidedown_vx_i64m4_ta_0(vint64m4_t dest, vint64m4_t op1, size_t vl)
 {
-  return vslidedown_vx_i64m4_ta(op1, 0, vl);
+  return vslidedown_vx_i64m4_ta(dest, op1, 0, vl);
 }
 
 /*
@@ -4618,9 +4618,9 @@ test_vslidedown_vx_i64m4_ta_0(vint64m4_t op1, size_t vl)
 **  ret
 */
 vint64m4_t 
-test_vslidedown_vx_i64m4_ta_31(vint64m4_t op1, size_t vl)
+test_vslidedown_vx_i64m4_ta_31(vint64m4_t dest, vint64m4_t op1, size_t vl)
 {
-  return vslidedown_vx_i64m4_ta(op1, 31, vl);
+  return vslidedown_vx_i64m4_ta(dest, op1, 31, vl);
 }
 
 /*
@@ -4633,9 +4633,9 @@ test_vslidedown_vx_i64m4_ta_31(vint64m4_t op1, size_t vl)
 **  ret
 */
 vint64m4_t 
-test_vslidedown_vx_i64m4_ta_vl31_0(vint64m4_t op1)
+test_vslidedown_vx_i64m4_ta_vl31_0(vint64m4_t dest, vint64m4_t op1)
 {
-  return vslidedown_vx_i64m4_ta(op1, 0, 31);
+  return vslidedown_vx_i64m4_ta(dest, op1, 0, 31);
 }
 
 /*
@@ -4648,9 +4648,9 @@ test_vslidedown_vx_i64m4_ta_vl31_0(vint64m4_t op1)
 **  ret
 */
 vint64m4_t 
-test_vslidedown_vx_i64m4_ta_vl31_31(vint64m4_t op1)
+test_vslidedown_vx_i64m4_ta_vl31_31(vint64m4_t dest, vint64m4_t op1)
 {
-  return vslidedown_vx_i64m4_ta(op1, 31, 31);
+  return vslidedown_vx_i64m4_ta(dest, op1, 31, 31);
 }
 
 /*
@@ -4663,9 +4663,9 @@ test_vslidedown_vx_i64m4_ta_vl31_31(vint64m4_t op1)
 **  ret
 */
 vint64m8_t 
-test_vslidedown_vx_i64m8_ta_0(vint64m8_t op1, size_t vl)
+test_vslidedown_vx_i64m8_ta_0(vint64m8_t dest, vint64m8_t op1, size_t vl)
 {
-  return vslidedown_vx_i64m8_ta(op1, 0, vl);
+  return vslidedown_vx_i64m8_ta(dest, op1, 0, vl);
 }
 
 /*
@@ -4678,9 +4678,9 @@ test_vslidedown_vx_i64m8_ta_0(vint64m8_t op1, size_t vl)
 **  ret
 */
 vint64m8_t 
-test_vslidedown_vx_i64m8_ta_31(vint64m8_t op1, size_t vl)
+test_vslidedown_vx_i64m8_ta_31(vint64m8_t dest, vint64m8_t op1, size_t vl)
 {
-  return vslidedown_vx_i64m8_ta(op1, 31, vl);
+  return vslidedown_vx_i64m8_ta(dest, op1, 31, vl);
 }
 
 /*
@@ -4693,9 +4693,9 @@ test_vslidedown_vx_i64m8_ta_31(vint64m8_t op1, size_t vl)
 **  ret
 */
 vint64m8_t 
-test_vslidedown_vx_i64m8_ta_vl31_0(vint64m8_t op1)
+test_vslidedown_vx_i64m8_ta_vl31_0(vint64m8_t dest, vint64m8_t op1)
 {
-  return vslidedown_vx_i64m8_ta(op1, 0, 31);
+  return vslidedown_vx_i64m8_ta(dest, op1, 0, 31);
 }
 
 /*
@@ -4708,9 +4708,9 @@ test_vslidedown_vx_i64m8_ta_vl31_0(vint64m8_t op1)
 **  ret
 */
 vint64m8_t 
-test_vslidedown_vx_i64m8_ta_vl31_31(vint64m8_t op1)
+test_vslidedown_vx_i64m8_ta_vl31_31(vint64m8_t dest, vint64m8_t op1)
 {
-  return vslidedown_vx_i64m8_ta(op1, 31, 31);
+  return vslidedown_vx_i64m8_ta(dest, op1, 31, 31);
 }
 
 /*
@@ -6133,7 +6133,7 @@ test_vslidedown_vx_i64m8_tu_vl31_31(vint64m8_t dest, vint64m8_t op1)
 vint8mf8_t 
 test_vslidedown_vx_i8mf8_tama_0(vbool64_t mask, vint8mf8_t maskedoff, vint8mf8_t op1, size_t vl)
 {
-  return vslidedown_vx_i8mf8_tama(mask, op1, 0, vl);
+  return vslidedown_vx_i8mf8_tama(mask, op1, op1, 0, vl);
 }
 
 /*
@@ -6148,7 +6148,7 @@ test_vslidedown_vx_i8mf8_tama_0(vbool64_t mask, vint8mf8_t maskedoff, vint8mf8_t
 vint8mf8_t 
 test_vslidedown_vx_i8mf8_tama_31(vbool64_t mask, vint8mf8_t maskedoff, vint8mf8_t op1, size_t vl)
 {
-  return vslidedown_vx_i8mf8_tama(mask, op1, 31, vl);
+  return vslidedown_vx_i8mf8_tama(mask, op1, op1, 31, vl);
 }
 
 /*
@@ -6163,7 +6163,7 @@ test_vslidedown_vx_i8mf8_tama_31(vbool64_t mask, vint8mf8_t maskedoff, vint8mf8_
 vint8mf8_t 
 test_vslidedown_vx_i8mf8_tama_vl31_0(vbool64_t mask, vint8mf8_t maskedoff, vint8mf8_t op1)
 {
-  return vslidedown_vx_i8mf8_tama(mask, op1, 0, 31);
+  return vslidedown_vx_i8mf8_tama(mask, op1, op1, 0, 31);
 }
 
 /*
@@ -6178,7 +6178,7 @@ test_vslidedown_vx_i8mf8_tama_vl31_0(vbool64_t mask, vint8mf8_t maskedoff, vint8
 vint8mf8_t 
 test_vslidedown_vx_i8mf8_tama_vl31_31(vbool64_t mask, vint8mf8_t maskedoff, vint8mf8_t op1)
 {
-  return vslidedown_vx_i8mf8_tama(mask, op1, 31, 31);
+  return vslidedown_vx_i8mf8_tama(mask, op1, op1, 31, 31);
 }
 
 /*
@@ -6193,7 +6193,7 @@ test_vslidedown_vx_i8mf8_tama_vl31_31(vbool64_t mask, vint8mf8_t maskedoff, vint
 vint8mf4_t 
 test_vslidedown_vx_i8mf4_tama_0(vbool32_t mask, vint8mf4_t maskedoff, vint8mf4_t op1, size_t vl)
 {
-  return vslidedown_vx_i8mf4_tama(mask, op1, 0, vl);
+  return vslidedown_vx_i8mf4_tama(mask, op1, op1, 0, vl);
 }
 
 /*
@@ -6208,7 +6208,7 @@ test_vslidedown_vx_i8mf4_tama_0(vbool32_t mask, vint8mf4_t maskedoff, vint8mf4_t
 vint8mf4_t 
 test_vslidedown_vx_i8mf4_tama_31(vbool32_t mask, vint8mf4_t maskedoff, vint8mf4_t op1, size_t vl)
 {
-  return vslidedown_vx_i8mf4_tama(mask, op1, 31, vl);
+  return vslidedown_vx_i8mf4_tama(mask, op1, op1, 31, vl);
 }
 
 /*
@@ -6223,7 +6223,7 @@ test_vslidedown_vx_i8mf4_tama_31(vbool32_t mask, vint8mf4_t maskedoff, vint8mf4_
 vint8mf4_t 
 test_vslidedown_vx_i8mf4_tama_vl31_0(vbool32_t mask, vint8mf4_t maskedoff, vint8mf4_t op1)
 {
-  return vslidedown_vx_i8mf4_tama(mask, op1, 0, 31);
+  return vslidedown_vx_i8mf4_tama(mask, op1, op1, 0, 31);
 }
 
 /*
@@ -6238,7 +6238,7 @@ test_vslidedown_vx_i8mf4_tama_vl31_0(vbool32_t mask, vint8mf4_t maskedoff, vint8
 vint8mf4_t 
 test_vslidedown_vx_i8mf4_tama_vl31_31(vbool32_t mask, vint8mf4_t maskedoff, vint8mf4_t op1)
 {
-  return vslidedown_vx_i8mf4_tama(mask, op1, 31, 31);
+  return vslidedown_vx_i8mf4_tama(mask, op1, op1, 31, 31);
 }
 
 /*
@@ -6253,7 +6253,7 @@ test_vslidedown_vx_i8mf4_tama_vl31_31(vbool32_t mask, vint8mf4_t maskedoff, vint
 vint8mf2_t 
 test_vslidedown_vx_i8mf2_tama_0(vbool16_t mask, vint8mf2_t maskedoff, vint8mf2_t op1, size_t vl)
 {
-  return vslidedown_vx_i8mf2_tama(mask, op1, 0, vl);
+  return vslidedown_vx_i8mf2_tama(mask, op1, op1, 0, vl);
 }
 
 /*
@@ -6268,7 +6268,7 @@ test_vslidedown_vx_i8mf2_tama_0(vbool16_t mask, vint8mf2_t maskedoff, vint8mf2_t
 vint8mf2_t 
 test_vslidedown_vx_i8mf2_tama_31(vbool16_t mask, vint8mf2_t maskedoff, vint8mf2_t op1, size_t vl)
 {
-  return vslidedown_vx_i8mf2_tama(mask, op1, 31, vl);
+  return vslidedown_vx_i8mf2_tama(mask, op1, op1, 31, vl);
 }
 
 /*
@@ -6283,7 +6283,7 @@ test_vslidedown_vx_i8mf2_tama_31(vbool16_t mask, vint8mf2_t maskedoff, vint8mf2_
 vint8mf2_t 
 test_vslidedown_vx_i8mf2_tama_vl31_0(vbool16_t mask, vint8mf2_t maskedoff, vint8mf2_t op1)
 {
-  return vslidedown_vx_i8mf2_tama(mask, op1, 0, 31);
+  return vslidedown_vx_i8mf2_tama(mask, op1, op1, 0, 31);
 }
 
 /*
@@ -6298,7 +6298,7 @@ test_vslidedown_vx_i8mf2_tama_vl31_0(vbool16_t mask, vint8mf2_t maskedoff, vint8
 vint8mf2_t 
 test_vslidedown_vx_i8mf2_tama_vl31_31(vbool16_t mask, vint8mf2_t maskedoff, vint8mf2_t op1)
 {
-  return vslidedown_vx_i8mf2_tama(mask, op1, 31, 31);
+  return vslidedown_vx_i8mf2_tama(mask, op1, op1, 31, 31);
 }
 
 /*
@@ -6313,7 +6313,7 @@ test_vslidedown_vx_i8mf2_tama_vl31_31(vbool16_t mask, vint8mf2_t maskedoff, vint
 vint8m1_t 
 test_vslidedown_vx_i8m1_tama_0(vbool8_t mask, vint8m1_t maskedoff, vint8m1_t op1, size_t vl)
 {
-  return vslidedown_vx_i8m1_tama(mask, op1, 0, vl);
+  return vslidedown_vx_i8m1_tama(mask, op1, op1, 0, vl);
 }
 
 /*
@@ -6328,7 +6328,7 @@ test_vslidedown_vx_i8m1_tama_0(vbool8_t mask, vint8m1_t maskedoff, vint8m1_t op1
 vint8m1_t 
 test_vslidedown_vx_i8m1_tama_31(vbool8_t mask, vint8m1_t maskedoff, vint8m1_t op1, size_t vl)
 {
-  return vslidedown_vx_i8m1_tama(mask, op1, 31, vl);
+  return vslidedown_vx_i8m1_tama(mask, op1, op1, 31, vl);
 }
 
 /*
@@ -6343,7 +6343,7 @@ test_vslidedown_vx_i8m1_tama_31(vbool8_t mask, vint8m1_t maskedoff, vint8m1_t op
 vint8m1_t 
 test_vslidedown_vx_i8m1_tama_vl31_0(vbool8_t mask, vint8m1_t maskedoff, vint8m1_t op1)
 {
-  return vslidedown_vx_i8m1_tama(mask, op1, 0, 31);
+  return vslidedown_vx_i8m1_tama(mask, op1, op1, 0, 31);
 }
 
 /*
@@ -6358,7 +6358,7 @@ test_vslidedown_vx_i8m1_tama_vl31_0(vbool8_t mask, vint8m1_t maskedoff, vint8m1_
 vint8m1_t 
 test_vslidedown_vx_i8m1_tama_vl31_31(vbool8_t mask, vint8m1_t maskedoff, vint8m1_t op1)
 {
-  return vslidedown_vx_i8m1_tama(mask, op1, 31, 31);
+  return vslidedown_vx_i8m1_tama(mask, op1, op1, 31, 31);
 }
 
 /*
@@ -6373,7 +6373,7 @@ test_vslidedown_vx_i8m1_tama_vl31_31(vbool8_t mask, vint8m1_t maskedoff, vint8m1
 vint8m2_t 
 test_vslidedown_vx_i8m2_tama_0(vbool4_t mask, vint8m2_t maskedoff, vint8m2_t op1, size_t vl)
 {
-  return vslidedown_vx_i8m2_tama(mask, op1, 0, vl);
+  return vslidedown_vx_i8m2_tama(mask, op1, op1, 0, vl);
 }
 
 /*
@@ -6388,7 +6388,7 @@ test_vslidedown_vx_i8m2_tama_0(vbool4_t mask, vint8m2_t maskedoff, vint8m2_t op1
 vint8m2_t 
 test_vslidedown_vx_i8m2_tama_31(vbool4_t mask, vint8m2_t maskedoff, vint8m2_t op1, size_t vl)
 {
-  return vslidedown_vx_i8m2_tama(mask, op1, 31, vl);
+  return vslidedown_vx_i8m2_tama(mask, op1, op1, 31, vl);
 }
 
 /*
@@ -6403,7 +6403,7 @@ test_vslidedown_vx_i8m2_tama_31(vbool4_t mask, vint8m2_t maskedoff, vint8m2_t op
 vint8m2_t 
 test_vslidedown_vx_i8m2_tama_vl31_0(vbool4_t mask, vint8m2_t maskedoff, vint8m2_t op1)
 {
-  return vslidedown_vx_i8m2_tama(mask, op1, 0, 31);
+  return vslidedown_vx_i8m2_tama(mask, op1, op1, 0, 31);
 }
 
 /*
@@ -6418,7 +6418,7 @@ test_vslidedown_vx_i8m2_tama_vl31_0(vbool4_t mask, vint8m2_t maskedoff, vint8m2_
 vint8m2_t 
 test_vslidedown_vx_i8m2_tama_vl31_31(vbool4_t mask, vint8m2_t maskedoff, vint8m2_t op1)
 {
-  return vslidedown_vx_i8m2_tama(mask, op1, 31, 31);
+  return vslidedown_vx_i8m2_tama(mask, op1, op1, 31, 31);
 }
 
 /*
@@ -6433,7 +6433,7 @@ test_vslidedown_vx_i8m2_tama_vl31_31(vbool4_t mask, vint8m2_t maskedoff, vint8m2
 vint8m4_t 
 test_vslidedown_vx_i8m4_tama_0(vbool2_t mask, vint8m4_t maskedoff, vint8m4_t op1, size_t vl)
 {
-  return vslidedown_vx_i8m4_tama(mask, op1, 0, vl);
+  return vslidedown_vx_i8m4_tama(mask, op1, op1, 0, vl);
 }
 
 /*
@@ -6448,7 +6448,7 @@ test_vslidedown_vx_i8m4_tama_0(vbool2_t mask, vint8m4_t maskedoff, vint8m4_t op1
 vint8m4_t 
 test_vslidedown_vx_i8m4_tama_31(vbool2_t mask, vint8m4_t maskedoff, vint8m4_t op1, size_t vl)
 {
-  return vslidedown_vx_i8m4_tama(mask, op1, 31, vl);
+  return vslidedown_vx_i8m4_tama(mask, op1, op1, 31, vl);
 }
 
 /*
@@ -6463,7 +6463,7 @@ test_vslidedown_vx_i8m4_tama_31(vbool2_t mask, vint8m4_t maskedoff, vint8m4_t op
 vint8m4_t 
 test_vslidedown_vx_i8m4_tama_vl31_0(vbool2_t mask, vint8m4_t maskedoff, vint8m4_t op1)
 {
-  return vslidedown_vx_i8m4_tama(mask, op1, 0, 31);
+  return vslidedown_vx_i8m4_tama(mask, op1, op1, 0, 31);
 }
 
 /*
@@ -6478,7 +6478,7 @@ test_vslidedown_vx_i8m4_tama_vl31_0(vbool2_t mask, vint8m4_t maskedoff, vint8m4_
 vint8m4_t 
 test_vslidedown_vx_i8m4_tama_vl31_31(vbool2_t mask, vint8m4_t maskedoff, vint8m4_t op1)
 {
-  return vslidedown_vx_i8m4_tama(mask, op1, 31, 31);
+  return vslidedown_vx_i8m4_tama(mask, op1, op1, 31, 31);
 }
 
 /*
@@ -6493,7 +6493,7 @@ test_vslidedown_vx_i8m4_tama_vl31_31(vbool2_t mask, vint8m4_t maskedoff, vint8m4
 vint8m8_t 
 test_vslidedown_vx_i8m8_tama_0(vbool1_t mask, vint8m8_t maskedoff, vint8m8_t op1, size_t vl)
 {
-  return vslidedown_vx_i8m8_tama(mask, op1, 0, vl);
+  return vslidedown_vx_i8m8_tama(mask, op1, op1, 0, vl);
 }
 
 /*
@@ -6508,7 +6508,7 @@ test_vslidedown_vx_i8m8_tama_0(vbool1_t mask, vint8m8_t maskedoff, vint8m8_t op1
 vint8m8_t 
 test_vslidedown_vx_i8m8_tama_31(vbool1_t mask, vint8m8_t maskedoff, vint8m8_t op1, size_t vl)
 {
-  return vslidedown_vx_i8m8_tama(mask, op1, 31, vl);
+  return vslidedown_vx_i8m8_tama(mask, op1, op1, 31, vl);
 }
 
 /*
@@ -6523,7 +6523,7 @@ test_vslidedown_vx_i8m8_tama_31(vbool1_t mask, vint8m8_t maskedoff, vint8m8_t op
 vint8m8_t 
 test_vslidedown_vx_i8m8_tama_vl31_0(vbool1_t mask, vint8m8_t maskedoff, vint8m8_t op1)
 {
-  return vslidedown_vx_i8m8_tama(mask, op1, 0, 31);
+  return vslidedown_vx_i8m8_tama(mask, op1, op1, 0, 31);
 }
 
 /*
@@ -6538,7 +6538,7 @@ test_vslidedown_vx_i8m8_tama_vl31_0(vbool1_t mask, vint8m8_t maskedoff, vint8m8_
 vint8m8_t 
 test_vslidedown_vx_i8m8_tama_vl31_31(vbool1_t mask, vint8m8_t maskedoff, vint8m8_t op1)
 {
-  return vslidedown_vx_i8m8_tama(mask, op1, 31, 31);
+  return vslidedown_vx_i8m8_tama(mask, op1, op1, 31, 31);
 }
 
 /*
@@ -6553,7 +6553,7 @@ test_vslidedown_vx_i8m8_tama_vl31_31(vbool1_t mask, vint8m8_t maskedoff, vint8m8
 vint16mf4_t 
 test_vslidedown_vx_i16mf4_tama_0(vbool64_t mask, vint16mf4_t maskedoff, vint16mf4_t op1, size_t vl)
 {
-  return vslidedown_vx_i16mf4_tama(mask, op1, 0, vl);
+  return vslidedown_vx_i16mf4_tama(mask, op1, op1, 0, vl);
 }
 
 /*
@@ -6568,7 +6568,7 @@ test_vslidedown_vx_i16mf4_tama_0(vbool64_t mask, vint16mf4_t maskedoff, vint16mf
 vint16mf4_t 
 test_vslidedown_vx_i16mf4_tama_31(vbool64_t mask, vint16mf4_t maskedoff, vint16mf4_t op1, size_t vl)
 {
-  return vslidedown_vx_i16mf4_tama(mask, op1, 31, vl);
+  return vslidedown_vx_i16mf4_tama(mask, op1, op1, 31, vl);
 }
 
 /*
@@ -6583,7 +6583,7 @@ test_vslidedown_vx_i16mf4_tama_31(vbool64_t mask, vint16mf4_t maskedoff, vint16m
 vint16mf4_t 
 test_vslidedown_vx_i16mf4_tama_vl31_0(vbool64_t mask, vint16mf4_t maskedoff, vint16mf4_t op1)
 {
-  return vslidedown_vx_i16mf4_tama(mask, op1, 0, 31);
+  return vslidedown_vx_i16mf4_tama(mask, op1, op1, 0, 31);
 }
 
 /*
@@ -6598,7 +6598,7 @@ test_vslidedown_vx_i16mf4_tama_vl31_0(vbool64_t mask, vint16mf4_t maskedoff, vin
 vint16mf4_t 
 test_vslidedown_vx_i16mf4_tama_vl31_31(vbool64_t mask, vint16mf4_t maskedoff, vint16mf4_t op1)
 {
-  return vslidedown_vx_i16mf4_tama(mask, op1, 31, 31);
+  return vslidedown_vx_i16mf4_tama(mask, op1, op1, 31, 31);
 }
 
 /*
@@ -6613,7 +6613,7 @@ test_vslidedown_vx_i16mf4_tama_vl31_31(vbool64_t mask, vint16mf4_t maskedoff, vi
 vint16mf2_t 
 test_vslidedown_vx_i16mf2_tama_0(vbool32_t mask, vint16mf2_t maskedoff, vint16mf2_t op1, size_t vl)
 {
-  return vslidedown_vx_i16mf2_tama(mask, op1, 0, vl);
+  return vslidedown_vx_i16mf2_tama(mask, op1, op1, 0, vl);
 }
 
 /*
@@ -6628,7 +6628,7 @@ test_vslidedown_vx_i16mf2_tama_0(vbool32_t mask, vint16mf2_t maskedoff, vint16mf
 vint16mf2_t 
 test_vslidedown_vx_i16mf2_tama_31(vbool32_t mask, vint16mf2_t maskedoff, vint16mf2_t op1, size_t vl)
 {
-  return vslidedown_vx_i16mf2_tama(mask, op1, 31, vl);
+  return vslidedown_vx_i16mf2_tama(mask, op1, op1, 31, vl);
 }
 
 /*
@@ -6643,7 +6643,7 @@ test_vslidedown_vx_i16mf2_tama_31(vbool32_t mask, vint16mf2_t maskedoff, vint16m
 vint16mf2_t 
 test_vslidedown_vx_i16mf2_tama_vl31_0(vbool32_t mask, vint16mf2_t maskedoff, vint16mf2_t op1)
 {
-  return vslidedown_vx_i16mf2_tama(mask, op1, 0, 31);
+  return vslidedown_vx_i16mf2_tama(mask, op1, op1, 0, 31);
 }
 
 /*
@@ -6658,7 +6658,7 @@ test_vslidedown_vx_i16mf2_tama_vl31_0(vbool32_t mask, vint16mf2_t maskedoff, vin
 vint16mf2_t 
 test_vslidedown_vx_i16mf2_tama_vl31_31(vbool32_t mask, vint16mf2_t maskedoff, vint16mf2_t op1)
 {
-  return vslidedown_vx_i16mf2_tama(mask, op1, 31, 31);
+  return vslidedown_vx_i16mf2_tama(mask, op1, op1, 31, 31);
 }
 
 /*
@@ -6673,7 +6673,7 @@ test_vslidedown_vx_i16mf2_tama_vl31_31(vbool32_t mask, vint16mf2_t maskedoff, vi
 vint16m1_t 
 test_vslidedown_vx_i16m1_tama_0(vbool16_t mask, vint16m1_t maskedoff, vint16m1_t op1, size_t vl)
 {
-  return vslidedown_vx_i16m1_tama(mask, op1, 0, vl);
+  return vslidedown_vx_i16m1_tama(mask, op1, op1, 0, vl);
 }
 
 /*
@@ -6688,7 +6688,7 @@ test_vslidedown_vx_i16m1_tama_0(vbool16_t mask, vint16m1_t maskedoff, vint16m1_t
 vint16m1_t 
 test_vslidedown_vx_i16m1_tama_31(vbool16_t mask, vint16m1_t maskedoff, vint16m1_t op1, size_t vl)
 {
-  return vslidedown_vx_i16m1_tama(mask, op1, 31, vl);
+  return vslidedown_vx_i16m1_tama(mask, op1, op1, 31, vl);
 }
 
 /*
@@ -6703,7 +6703,7 @@ test_vslidedown_vx_i16m1_tama_31(vbool16_t mask, vint16m1_t maskedoff, vint16m1_
 vint16m1_t 
 test_vslidedown_vx_i16m1_tama_vl31_0(vbool16_t mask, vint16m1_t maskedoff, vint16m1_t op1)
 {
-  return vslidedown_vx_i16m1_tama(mask, op1, 0, 31);
+  return vslidedown_vx_i16m1_tama(mask, op1, op1, 0, 31);
 }
 
 /*
@@ -6718,7 +6718,7 @@ test_vslidedown_vx_i16m1_tama_vl31_0(vbool16_t mask, vint16m1_t maskedoff, vint1
 vint16m1_t 
 test_vslidedown_vx_i16m1_tama_vl31_31(vbool16_t mask, vint16m1_t maskedoff, vint16m1_t op1)
 {
-  return vslidedown_vx_i16m1_tama(mask, op1, 31, 31);
+  return vslidedown_vx_i16m1_tama(mask, op1, op1, 31, 31);
 }
 
 /*
@@ -6733,7 +6733,7 @@ test_vslidedown_vx_i16m1_tama_vl31_31(vbool16_t mask, vint16m1_t maskedoff, vint
 vint16m2_t 
 test_vslidedown_vx_i16m2_tama_0(vbool8_t mask, vint16m2_t maskedoff, vint16m2_t op1, size_t vl)
 {
-  return vslidedown_vx_i16m2_tama(mask, op1, 0, vl);
+  return vslidedown_vx_i16m2_tama(mask, op1, op1, 0, vl);
 }
 
 /*
@@ -6748,7 +6748,7 @@ test_vslidedown_vx_i16m2_tama_0(vbool8_t mask, vint16m2_t maskedoff, vint16m2_t 
 vint16m2_t 
 test_vslidedown_vx_i16m2_tama_31(vbool8_t mask, vint16m2_t maskedoff, vint16m2_t op1, size_t vl)
 {
-  return vslidedown_vx_i16m2_tama(mask, op1, 31, vl);
+  return vslidedown_vx_i16m2_tama(mask, op1, op1, 31, vl);
 }
 
 /*
@@ -6763,7 +6763,7 @@ test_vslidedown_vx_i16m2_tama_31(vbool8_t mask, vint16m2_t maskedoff, vint16m2_t
 vint16m2_t 
 test_vslidedown_vx_i16m2_tama_vl31_0(vbool8_t mask, vint16m2_t maskedoff, vint16m2_t op1)
 {
-  return vslidedown_vx_i16m2_tama(mask, op1, 0, 31);
+  return vslidedown_vx_i16m2_tama(mask, op1, op1, 0, 31);
 }
 
 /*
@@ -6778,7 +6778,7 @@ test_vslidedown_vx_i16m2_tama_vl31_0(vbool8_t mask, vint16m2_t maskedoff, vint16
 vint16m2_t 
 test_vslidedown_vx_i16m2_tama_vl31_31(vbool8_t mask, vint16m2_t maskedoff, vint16m2_t op1)
 {
-  return vslidedown_vx_i16m2_tama(mask, op1, 31, 31);
+  return vslidedown_vx_i16m2_tama(mask, op1, op1, 31, 31);
 }
 
 /*
@@ -6793,7 +6793,7 @@ test_vslidedown_vx_i16m2_tama_vl31_31(vbool8_t mask, vint16m2_t maskedoff, vint1
 vint16m4_t 
 test_vslidedown_vx_i16m4_tama_0(vbool4_t mask, vint16m4_t maskedoff, vint16m4_t op1, size_t vl)
 {
-  return vslidedown_vx_i16m4_tama(mask, op1, 0, vl);
+  return vslidedown_vx_i16m4_tama(mask, op1, op1, 0, vl);
 }
 
 /*
@@ -6808,7 +6808,7 @@ test_vslidedown_vx_i16m4_tama_0(vbool4_t mask, vint16m4_t maskedoff, vint16m4_t 
 vint16m4_t 
 test_vslidedown_vx_i16m4_tama_31(vbool4_t mask, vint16m4_t maskedoff, vint16m4_t op1, size_t vl)
 {
-  return vslidedown_vx_i16m4_tama(mask, op1, 31, vl);
+  return vslidedown_vx_i16m4_tama(mask, op1, op1, 31, vl);
 }
 
 /*
@@ -6823,7 +6823,7 @@ test_vslidedown_vx_i16m4_tama_31(vbool4_t mask, vint16m4_t maskedoff, vint16m4_t
 vint16m4_t 
 test_vslidedown_vx_i16m4_tama_vl31_0(vbool4_t mask, vint16m4_t maskedoff, vint16m4_t op1)
 {
-  return vslidedown_vx_i16m4_tama(mask, op1, 0, 31);
+  return vslidedown_vx_i16m4_tama(mask, op1, op1, 0, 31);
 }
 
 /*
@@ -6838,7 +6838,7 @@ test_vslidedown_vx_i16m4_tama_vl31_0(vbool4_t mask, vint16m4_t maskedoff, vint16
 vint16m4_t 
 test_vslidedown_vx_i16m4_tama_vl31_31(vbool4_t mask, vint16m4_t maskedoff, vint16m4_t op1)
 {
-  return vslidedown_vx_i16m4_tama(mask, op1, 31, 31);
+  return vslidedown_vx_i16m4_tama(mask, op1, op1, 31, 31);
 }
 
 /*
@@ -6853,7 +6853,7 @@ test_vslidedown_vx_i16m4_tama_vl31_31(vbool4_t mask, vint16m4_t maskedoff, vint1
 vint16m8_t 
 test_vslidedown_vx_i16m8_tama_0(vbool2_t mask, vint16m8_t maskedoff, vint16m8_t op1, size_t vl)
 {
-  return vslidedown_vx_i16m8_tama(mask, op1, 0, vl);
+  return vslidedown_vx_i16m8_tama(mask, op1, op1, 0, vl);
 }
 
 /*
@@ -6868,7 +6868,7 @@ test_vslidedown_vx_i16m8_tama_0(vbool2_t mask, vint16m8_t maskedoff, vint16m8_t 
 vint16m8_t 
 test_vslidedown_vx_i16m8_tama_31(vbool2_t mask, vint16m8_t maskedoff, vint16m8_t op1, size_t vl)
 {
-  return vslidedown_vx_i16m8_tama(mask, op1, 31, vl);
+  return vslidedown_vx_i16m8_tama(mask, op1, op1, 31, vl);
 }
 
 /*
@@ -6883,7 +6883,7 @@ test_vslidedown_vx_i16m8_tama_31(vbool2_t mask, vint16m8_t maskedoff, vint16m8_t
 vint16m8_t 
 test_vslidedown_vx_i16m8_tama_vl31_0(vbool2_t mask, vint16m8_t maskedoff, vint16m8_t op1)
 {
-  return vslidedown_vx_i16m8_tama(mask, op1, 0, 31);
+  return vslidedown_vx_i16m8_tama(mask, op1, op1, 0, 31);
 }
 
 /*
@@ -6898,7 +6898,7 @@ test_vslidedown_vx_i16m8_tama_vl31_0(vbool2_t mask, vint16m8_t maskedoff, vint16
 vint16m8_t 
 test_vslidedown_vx_i16m8_tama_vl31_31(vbool2_t mask, vint16m8_t maskedoff, vint16m8_t op1)
 {
-  return vslidedown_vx_i16m8_tama(mask, op1, 31, 31);
+  return vslidedown_vx_i16m8_tama(mask, op1, op1, 31, 31);
 }
 
 /*
@@ -6913,7 +6913,7 @@ test_vslidedown_vx_i16m8_tama_vl31_31(vbool2_t mask, vint16m8_t maskedoff, vint1
 vint32mf2_t 
 test_vslidedown_vx_i32mf2_tama_0(vbool64_t mask, vint32mf2_t maskedoff, vint32mf2_t op1, size_t vl)
 {
-  return vslidedown_vx_i32mf2_tama(mask, op1, 0, vl);
+  return vslidedown_vx_i32mf2_tama(mask, op1, op1, 0, vl);
 }
 
 /*
@@ -6928,7 +6928,7 @@ test_vslidedown_vx_i32mf2_tama_0(vbool64_t mask, vint32mf2_t maskedoff, vint32mf
 vint32mf2_t 
 test_vslidedown_vx_i32mf2_tama_31(vbool64_t mask, vint32mf2_t maskedoff, vint32mf2_t op1, size_t vl)
 {
-  return vslidedown_vx_i32mf2_tama(mask, op1, 31, vl);
+  return vslidedown_vx_i32mf2_tama(mask, op1, op1, 31, vl);
 }
 
 /*
@@ -6943,7 +6943,7 @@ test_vslidedown_vx_i32mf2_tama_31(vbool64_t mask, vint32mf2_t maskedoff, vint32m
 vint32mf2_t 
 test_vslidedown_vx_i32mf2_tama_vl31_0(vbool64_t mask, vint32mf2_t maskedoff, vint32mf2_t op1)
 {
-  return vslidedown_vx_i32mf2_tama(mask, op1, 0, 31);
+  return vslidedown_vx_i32mf2_tama(mask, op1, op1, 0, 31);
 }
 
 /*
@@ -6958,7 +6958,7 @@ test_vslidedown_vx_i32mf2_tama_vl31_0(vbool64_t mask, vint32mf2_t maskedoff, vin
 vint32mf2_t 
 test_vslidedown_vx_i32mf2_tama_vl31_31(vbool64_t mask, vint32mf2_t maskedoff, vint32mf2_t op1)
 {
-  return vslidedown_vx_i32mf2_tama(mask, op1, 31, 31);
+  return vslidedown_vx_i32mf2_tama(mask, op1, op1, 31, 31);
 }
 
 /*
@@ -6973,7 +6973,7 @@ test_vslidedown_vx_i32mf2_tama_vl31_31(vbool64_t mask, vint32mf2_t maskedoff, vi
 vint32m1_t 
 test_vslidedown_vx_i32m1_tama_0(vbool32_t mask, vint32m1_t maskedoff, vint32m1_t op1, size_t vl)
 {
-  return vslidedown_vx_i32m1_tama(mask, op1, 0, vl);
+  return vslidedown_vx_i32m1_tama(mask, op1, op1, 0, vl);
 }
 
 /*
@@ -6988,7 +6988,7 @@ test_vslidedown_vx_i32m1_tama_0(vbool32_t mask, vint32m1_t maskedoff, vint32m1_t
 vint32m1_t 
 test_vslidedown_vx_i32m1_tama_31(vbool32_t mask, vint32m1_t maskedoff, vint32m1_t op1, size_t vl)
 {
-  return vslidedown_vx_i32m1_tama(mask, op1, 31, vl);
+  return vslidedown_vx_i32m1_tama(mask, op1, op1, 31, vl);
 }
 
 /*
@@ -7003,7 +7003,7 @@ test_vslidedown_vx_i32m1_tama_31(vbool32_t mask, vint32m1_t maskedoff, vint32m1_
 vint32m1_t 
 test_vslidedown_vx_i32m1_tama_vl31_0(vbool32_t mask, vint32m1_t maskedoff, vint32m1_t op1)
 {
-  return vslidedown_vx_i32m1_tama(mask, op1, 0, 31);
+  return vslidedown_vx_i32m1_tama(mask, op1, op1, 0, 31);
 }
 
 /*
@@ -7018,7 +7018,7 @@ test_vslidedown_vx_i32m1_tama_vl31_0(vbool32_t mask, vint32m1_t maskedoff, vint3
 vint32m1_t 
 test_vslidedown_vx_i32m1_tama_vl31_31(vbool32_t mask, vint32m1_t maskedoff, vint32m1_t op1)
 {
-  return vslidedown_vx_i32m1_tama(mask, op1, 31, 31);
+  return vslidedown_vx_i32m1_tama(mask, op1, op1, 31, 31);
 }
 
 /*
@@ -7033,7 +7033,7 @@ test_vslidedown_vx_i32m1_tama_vl31_31(vbool32_t mask, vint32m1_t maskedoff, vint
 vint32m2_t 
 test_vslidedown_vx_i32m2_tama_0(vbool16_t mask, vint32m2_t maskedoff, vint32m2_t op1, size_t vl)
 {
-  return vslidedown_vx_i32m2_tama(mask, op1, 0, vl);
+  return vslidedown_vx_i32m2_tama(mask, op1, op1, 0, vl);
 }
 
 /*
@@ -7048,7 +7048,7 @@ test_vslidedown_vx_i32m2_tama_0(vbool16_t mask, vint32m2_t maskedoff, vint32m2_t
 vint32m2_t 
 test_vslidedown_vx_i32m2_tama_31(vbool16_t mask, vint32m2_t maskedoff, vint32m2_t op1, size_t vl)
 {
-  return vslidedown_vx_i32m2_tama(mask, op1, 31, vl);
+  return vslidedown_vx_i32m2_tama(mask, op1, op1, 31, vl);
 }
 
 /*
@@ -7063,7 +7063,7 @@ test_vslidedown_vx_i32m2_tama_31(vbool16_t mask, vint32m2_t maskedoff, vint32m2_
 vint32m2_t 
 test_vslidedown_vx_i32m2_tama_vl31_0(vbool16_t mask, vint32m2_t maskedoff, vint32m2_t op1)
 {
-  return vslidedown_vx_i32m2_tama(mask, op1, 0, 31);
+  return vslidedown_vx_i32m2_tama(mask, op1, op1, 0, 31);
 }
 
 /*
@@ -7078,7 +7078,7 @@ test_vslidedown_vx_i32m2_tama_vl31_0(vbool16_t mask, vint32m2_t maskedoff, vint3
 vint32m2_t 
 test_vslidedown_vx_i32m2_tama_vl31_31(vbool16_t mask, vint32m2_t maskedoff, vint32m2_t op1)
 {
-  return vslidedown_vx_i32m2_tama(mask, op1, 31, 31);
+  return vslidedown_vx_i32m2_tama(mask, op1, op1, 31, 31);
 }
 
 /*
@@ -7093,7 +7093,7 @@ test_vslidedown_vx_i32m2_tama_vl31_31(vbool16_t mask, vint32m2_t maskedoff, vint
 vint32m4_t 
 test_vslidedown_vx_i32m4_tama_0(vbool8_t mask, vint32m4_t maskedoff, vint32m4_t op1, size_t vl)
 {
-  return vslidedown_vx_i32m4_tama(mask, op1, 0, vl);
+  return vslidedown_vx_i32m4_tama(mask, op1, op1, 0, vl);
 }
 
 /*
@@ -7108,7 +7108,7 @@ test_vslidedown_vx_i32m4_tama_0(vbool8_t mask, vint32m4_t maskedoff, vint32m4_t 
 vint32m4_t 
 test_vslidedown_vx_i32m4_tama_31(vbool8_t mask, vint32m4_t maskedoff, vint32m4_t op1, size_t vl)
 {
-  return vslidedown_vx_i32m4_tama(mask, op1, 31, vl);
+  return vslidedown_vx_i32m4_tama(mask, op1, op1, 31, vl);
 }
 
 /*
@@ -7123,7 +7123,7 @@ test_vslidedown_vx_i32m4_tama_31(vbool8_t mask, vint32m4_t maskedoff, vint32m4_t
 vint32m4_t 
 test_vslidedown_vx_i32m4_tama_vl31_0(vbool8_t mask, vint32m4_t maskedoff, vint32m4_t op1)
 {
-  return vslidedown_vx_i32m4_tama(mask, op1, 0, 31);
+  return vslidedown_vx_i32m4_tama(mask, op1, op1, 0, 31);
 }
 
 /*
@@ -7138,7 +7138,7 @@ test_vslidedown_vx_i32m4_tama_vl31_0(vbool8_t mask, vint32m4_t maskedoff, vint32
 vint32m4_t 
 test_vslidedown_vx_i32m4_tama_vl31_31(vbool8_t mask, vint32m4_t maskedoff, vint32m4_t op1)
 {
-  return vslidedown_vx_i32m4_tama(mask, op1, 31, 31);
+  return vslidedown_vx_i32m4_tama(mask, op1, op1, 31, 31);
 }
 
 /*
@@ -7153,7 +7153,7 @@ test_vslidedown_vx_i32m4_tama_vl31_31(vbool8_t mask, vint32m4_t maskedoff, vint3
 vint32m8_t 
 test_vslidedown_vx_i32m8_tama_0(vbool4_t mask, vint32m8_t maskedoff, vint32m8_t op1, size_t vl)
 {
-  return vslidedown_vx_i32m8_tama(mask, op1, 0, vl);
+  return vslidedown_vx_i32m8_tama(mask, op1, op1, 0, vl);
 }
 
 /*
@@ -7168,7 +7168,7 @@ test_vslidedown_vx_i32m8_tama_0(vbool4_t mask, vint32m8_t maskedoff, vint32m8_t 
 vint32m8_t 
 test_vslidedown_vx_i32m8_tama_31(vbool4_t mask, vint32m8_t maskedoff, vint32m8_t op1, size_t vl)
 {
-  return vslidedown_vx_i32m8_tama(mask, op1, 31, vl);
+  return vslidedown_vx_i32m8_tama(mask, op1, op1, 31, vl);
 }
 
 /*
@@ -7183,7 +7183,7 @@ test_vslidedown_vx_i32m8_tama_31(vbool4_t mask, vint32m8_t maskedoff, vint32m8_t
 vint32m8_t 
 test_vslidedown_vx_i32m8_tama_vl31_0(vbool4_t mask, vint32m8_t maskedoff, vint32m8_t op1)
 {
-  return vslidedown_vx_i32m8_tama(mask, op1, 0, 31);
+  return vslidedown_vx_i32m8_tama(mask, op1, op1, 0, 31);
 }
 
 /*
@@ -7198,7 +7198,7 @@ test_vslidedown_vx_i32m8_tama_vl31_0(vbool4_t mask, vint32m8_t maskedoff, vint32
 vint32m8_t 
 test_vslidedown_vx_i32m8_tama_vl31_31(vbool4_t mask, vint32m8_t maskedoff, vint32m8_t op1)
 {
-  return vslidedown_vx_i32m8_tama(mask, op1, 31, 31);
+  return vslidedown_vx_i32m8_tama(mask, op1, op1, 31, 31);
 }
 
 /*
@@ -7213,7 +7213,7 @@ test_vslidedown_vx_i32m8_tama_vl31_31(vbool4_t mask, vint32m8_t maskedoff, vint3
 vint64m1_t 
 test_vslidedown_vx_i64m1_tama_0(vbool64_t mask, vint64m1_t maskedoff, vint64m1_t op1, size_t vl)
 {
-  return vslidedown_vx_i64m1_tama(mask, op1, 0, vl);
+  return vslidedown_vx_i64m1_tama(mask, op1, op1, 0, vl);
 }
 
 /*
@@ -7228,7 +7228,7 @@ test_vslidedown_vx_i64m1_tama_0(vbool64_t mask, vint64m1_t maskedoff, vint64m1_t
 vint64m1_t 
 test_vslidedown_vx_i64m1_tama_31(vbool64_t mask, vint64m1_t maskedoff, vint64m1_t op1, size_t vl)
 {
-  return vslidedown_vx_i64m1_tama(mask, op1, 31, vl);
+  return vslidedown_vx_i64m1_tama(mask, op1, op1, 31, vl);
 }
 
 /*
@@ -7243,7 +7243,7 @@ test_vslidedown_vx_i64m1_tama_31(vbool64_t mask, vint64m1_t maskedoff, vint64m1_
 vint64m1_t 
 test_vslidedown_vx_i64m1_tama_vl31_0(vbool64_t mask, vint64m1_t maskedoff, vint64m1_t op1)
 {
-  return vslidedown_vx_i64m1_tama(mask, op1, 0, 31);
+  return vslidedown_vx_i64m1_tama(mask, op1, op1, 0, 31);
 }
 
 /*
@@ -7258,7 +7258,7 @@ test_vslidedown_vx_i64m1_tama_vl31_0(vbool64_t mask, vint64m1_t maskedoff, vint6
 vint64m1_t 
 test_vslidedown_vx_i64m1_tama_vl31_31(vbool64_t mask, vint64m1_t maskedoff, vint64m1_t op1)
 {
-  return vslidedown_vx_i64m1_tama(mask, op1, 31, 31);
+  return vslidedown_vx_i64m1_tama(mask, op1, op1, 31, 31);
 }
 
 /*
@@ -7273,7 +7273,7 @@ test_vslidedown_vx_i64m1_tama_vl31_31(vbool64_t mask, vint64m1_t maskedoff, vint
 vint64m2_t 
 test_vslidedown_vx_i64m2_tama_0(vbool32_t mask, vint64m2_t maskedoff, vint64m2_t op1, size_t vl)
 {
-  return vslidedown_vx_i64m2_tama(mask, op1, 0, vl);
+  return vslidedown_vx_i64m2_tama(mask, op1, op1, 0, vl);
 }
 
 /*
@@ -7288,7 +7288,7 @@ test_vslidedown_vx_i64m2_tama_0(vbool32_t mask, vint64m2_t maskedoff, vint64m2_t
 vint64m2_t 
 test_vslidedown_vx_i64m2_tama_31(vbool32_t mask, vint64m2_t maskedoff, vint64m2_t op1, size_t vl)
 {
-  return vslidedown_vx_i64m2_tama(mask, op1, 31, vl);
+  return vslidedown_vx_i64m2_tama(mask, op1, op1, 31, vl);
 }
 
 /*
@@ -7303,7 +7303,7 @@ test_vslidedown_vx_i64m2_tama_31(vbool32_t mask, vint64m2_t maskedoff, vint64m2_
 vint64m2_t 
 test_vslidedown_vx_i64m2_tama_vl31_0(vbool32_t mask, vint64m2_t maskedoff, vint64m2_t op1)
 {
-  return vslidedown_vx_i64m2_tama(mask, op1, 0, 31);
+  return vslidedown_vx_i64m2_tama(mask, op1, op1, 0, 31);
 }
 
 /*
@@ -7318,7 +7318,7 @@ test_vslidedown_vx_i64m2_tama_vl31_0(vbool32_t mask, vint64m2_t maskedoff, vint6
 vint64m2_t 
 test_vslidedown_vx_i64m2_tama_vl31_31(vbool32_t mask, vint64m2_t maskedoff, vint64m2_t op1)
 {
-  return vslidedown_vx_i64m2_tama(mask, op1, 31, 31);
+  return vslidedown_vx_i64m2_tama(mask, op1, op1, 31, 31);
 }
 
 /*
@@ -7333,7 +7333,7 @@ test_vslidedown_vx_i64m2_tama_vl31_31(vbool32_t mask, vint64m2_t maskedoff, vint
 vint64m4_t 
 test_vslidedown_vx_i64m4_tama_0(vbool16_t mask, vint64m4_t maskedoff, vint64m4_t op1, size_t vl)
 {
-  return vslidedown_vx_i64m4_tama(mask, op1, 0, vl);
+  return vslidedown_vx_i64m4_tama(mask, op1, op1, 0, vl);
 }
 
 /*
@@ -7348,7 +7348,7 @@ test_vslidedown_vx_i64m4_tama_0(vbool16_t mask, vint64m4_t maskedoff, vint64m4_t
 vint64m4_t 
 test_vslidedown_vx_i64m4_tama_31(vbool16_t mask, vint64m4_t maskedoff, vint64m4_t op1, size_t vl)
 {
-  return vslidedown_vx_i64m4_tama(mask, op1, 31, vl);
+  return vslidedown_vx_i64m4_tama(mask, op1, op1, 31, vl);
 }
 
 /*
@@ -7363,7 +7363,7 @@ test_vslidedown_vx_i64m4_tama_31(vbool16_t mask, vint64m4_t maskedoff, vint64m4_
 vint64m4_t 
 test_vslidedown_vx_i64m4_tama_vl31_0(vbool16_t mask, vint64m4_t maskedoff, vint64m4_t op1)
 {
-  return vslidedown_vx_i64m4_tama(mask, op1, 0, 31);
+  return vslidedown_vx_i64m4_tama(mask, op1, op1, 0, 31);
 }
 
 /*
@@ -7378,7 +7378,7 @@ test_vslidedown_vx_i64m4_tama_vl31_0(vbool16_t mask, vint64m4_t maskedoff, vint6
 vint64m4_t 
 test_vslidedown_vx_i64m4_tama_vl31_31(vbool16_t mask, vint64m4_t maskedoff, vint64m4_t op1)
 {
-  return vslidedown_vx_i64m4_tama(mask, op1, 31, 31);
+  return vslidedown_vx_i64m4_tama(mask, op1, op1, 31, 31);
 }
 
 /*
@@ -7393,7 +7393,7 @@ test_vslidedown_vx_i64m4_tama_vl31_31(vbool16_t mask, vint64m4_t maskedoff, vint
 vint64m8_t 
 test_vslidedown_vx_i64m8_tama_0(vbool8_t mask, vint64m8_t maskedoff, vint64m8_t op1, size_t vl)
 {
-  return vslidedown_vx_i64m8_tama(mask, op1, 0, vl);
+  return vslidedown_vx_i64m8_tama(mask, op1, op1, 0, vl);
 }
 
 /*
@@ -7408,7 +7408,7 @@ test_vslidedown_vx_i64m8_tama_0(vbool8_t mask, vint64m8_t maskedoff, vint64m8_t 
 vint64m8_t 
 test_vslidedown_vx_i64m8_tama_31(vbool8_t mask, vint64m8_t maskedoff, vint64m8_t op1, size_t vl)
 {
-  return vslidedown_vx_i64m8_tama(mask, op1, 31, vl);
+  return vslidedown_vx_i64m8_tama(mask, op1, op1, 31, vl);
 }
 
 /*
@@ -7423,7 +7423,7 @@ test_vslidedown_vx_i64m8_tama_31(vbool8_t mask, vint64m8_t maskedoff, vint64m8_t
 vint64m8_t 
 test_vslidedown_vx_i64m8_tama_vl31_0(vbool8_t mask, vint64m8_t maskedoff, vint64m8_t op1)
 {
-  return vslidedown_vx_i64m8_tama(mask, op1, 0, 31);
+  return vslidedown_vx_i64m8_tama(mask, op1, op1, 0, 31);
 }
 
 /*
@@ -7438,7 +7438,7 @@ test_vslidedown_vx_i64m8_tama_vl31_0(vbool8_t mask, vint64m8_t maskedoff, vint64
 vint64m8_t 
 test_vslidedown_vx_i64m8_tama_vl31_31(vbool8_t mask, vint64m8_t maskedoff, vint64m8_t op1)
 {
-  return vslidedown_vx_i64m8_tama(mask, op1, 31, 31);
+  return vslidedown_vx_i64m8_tama(mask, op1, op1, 31, 31);
 }
 
 /*
@@ -11413,7 +11413,7 @@ test_vslidedown_vx_i64m8_tumu_vl31_31(vbool8_t mask, vint64m8_t maskedoff, vint6
 vint8mf8_t 
 test_vslidedown_vx_i8mf8_tama_vl32_0(vbool64_t mask, vint8mf8_t maskedoff, vint8mf8_t op1)
 {
-  return vslidedown_vx_i8mf8_tama(mask, op1, 0, 32);
+  return vslidedown_vx_i8mf8_tama(mask, op1, op1, 0, 32);
 }
 
 /*
@@ -11428,7 +11428,7 @@ test_vslidedown_vx_i8mf8_tama_vl32_0(vbool64_t mask, vint8mf8_t maskedoff, vint8
 vint8mf8_t 
 test_vslidedown_vx_i8mf8_tama_vl32_31(vbool64_t mask, vint8mf8_t maskedoff, vint8mf8_t op1)
 {
-  return vslidedown_vx_i8mf8_tama(mask, op1, 31, 32);
+  return vslidedown_vx_i8mf8_tama(mask, op1, op1, 31, 32);
 }
 
 /*
@@ -11443,7 +11443,7 @@ test_vslidedown_vx_i8mf8_tama_vl32_31(vbool64_t mask, vint8mf8_t maskedoff, vint
 vint8mf4_t 
 test_vslidedown_vx_i8mf4_tama_vl32_0(vbool32_t mask, vint8mf4_t maskedoff, vint8mf4_t op1)
 {
-  return vslidedown_vx_i8mf4_tama(mask, op1, 0, 32);
+  return vslidedown_vx_i8mf4_tama(mask, op1, op1, 0, 32);
 }
 
 /*
@@ -11458,7 +11458,7 @@ test_vslidedown_vx_i8mf4_tama_vl32_0(vbool32_t mask, vint8mf4_t maskedoff, vint8
 vint8mf4_t 
 test_vslidedown_vx_i8mf4_tama_vl32_31(vbool32_t mask, vint8mf4_t maskedoff, vint8mf4_t op1)
 {
-  return vslidedown_vx_i8mf4_tama(mask, op1, 31, 32);
+  return vslidedown_vx_i8mf4_tama(mask, op1, op1, 31, 32);
 }
 
 /*
@@ -11473,7 +11473,7 @@ test_vslidedown_vx_i8mf4_tama_vl32_31(vbool32_t mask, vint8mf4_t maskedoff, vint
 vint8mf2_t 
 test_vslidedown_vx_i8mf2_tama_vl32_0(vbool16_t mask, vint8mf2_t maskedoff, vint8mf2_t op1)
 {
-  return vslidedown_vx_i8mf2_tama(mask, op1, 0, 32);
+  return vslidedown_vx_i8mf2_tama(mask, op1, op1, 0, 32);
 }
 
 /*
@@ -11488,7 +11488,7 @@ test_vslidedown_vx_i8mf2_tama_vl32_0(vbool16_t mask, vint8mf2_t maskedoff, vint8
 vint8mf2_t 
 test_vslidedown_vx_i8mf2_tama_vl32_31(vbool16_t mask, vint8mf2_t maskedoff, vint8mf2_t op1)
 {
-  return vslidedown_vx_i8mf2_tama(mask, op1, 31, 32);
+  return vslidedown_vx_i8mf2_tama(mask, op1, op1, 31, 32);
 }
 
 /*
@@ -11503,7 +11503,7 @@ test_vslidedown_vx_i8mf2_tama_vl32_31(vbool16_t mask, vint8mf2_t maskedoff, vint
 vint8m1_t 
 test_vslidedown_vx_i8m1_tama_vl32_0(vbool8_t mask, vint8m1_t maskedoff, vint8m1_t op1)
 {
-  return vslidedown_vx_i8m1_tama(mask, op1, 0, 32);
+  return vslidedown_vx_i8m1_tama(mask, op1, op1, 0, 32);
 }
 
 /*
@@ -11518,7 +11518,7 @@ test_vslidedown_vx_i8m1_tama_vl32_0(vbool8_t mask, vint8m1_t maskedoff, vint8m1_
 vint8m1_t 
 test_vslidedown_vx_i8m1_tama_vl32_31(vbool8_t mask, vint8m1_t maskedoff, vint8m1_t op1)
 {
-  return vslidedown_vx_i8m1_tama(mask, op1, 31, 32);
+  return vslidedown_vx_i8m1_tama(mask, op1, op1, 31, 32);
 }
 
 /*
@@ -11533,7 +11533,7 @@ test_vslidedown_vx_i8m1_tama_vl32_31(vbool8_t mask, vint8m1_t maskedoff, vint8m1
 vint8m2_t 
 test_vslidedown_vx_i8m2_tama_vl32_0(vbool4_t mask, vint8m2_t maskedoff, vint8m2_t op1)
 {
-  return vslidedown_vx_i8m2_tama(mask, op1, 0, 32);
+  return vslidedown_vx_i8m2_tama(mask, op1, op1, 0, 32);
 }
 
 /*
@@ -11548,7 +11548,7 @@ test_vslidedown_vx_i8m2_tama_vl32_0(vbool4_t mask, vint8m2_t maskedoff, vint8m2_
 vint8m2_t 
 test_vslidedown_vx_i8m2_tama_vl32_31(vbool4_t mask, vint8m2_t maskedoff, vint8m2_t op1)
 {
-  return vslidedown_vx_i8m2_tama(mask, op1, 31, 32);
+  return vslidedown_vx_i8m2_tama(mask, op1, op1, 31, 32);
 }
 
 /*
@@ -11563,7 +11563,7 @@ test_vslidedown_vx_i8m2_tama_vl32_31(vbool4_t mask, vint8m2_t maskedoff, vint8m2
 vint8m4_t 
 test_vslidedown_vx_i8m4_tama_vl32_0(vbool2_t mask, vint8m4_t maskedoff, vint8m4_t op1)
 {
-  return vslidedown_vx_i8m4_tama(mask, op1, 0, 32);
+  return vslidedown_vx_i8m4_tama(mask, op1, op1, 0, 32);
 }
 
 /*
@@ -11578,7 +11578,7 @@ test_vslidedown_vx_i8m4_tama_vl32_0(vbool2_t mask, vint8m4_t maskedoff, vint8m4_
 vint8m4_t 
 test_vslidedown_vx_i8m4_tama_vl32_31(vbool2_t mask, vint8m4_t maskedoff, vint8m4_t op1)
 {
-  return vslidedown_vx_i8m4_tama(mask, op1, 31, 32);
+  return vslidedown_vx_i8m4_tama(mask, op1, op1, 31, 32);
 }
 
 /*
@@ -11593,7 +11593,7 @@ test_vslidedown_vx_i8m4_tama_vl32_31(vbool2_t mask, vint8m4_t maskedoff, vint8m4
 vint8m8_t 
 test_vslidedown_vx_i8m8_tama_vl32_0(vbool1_t mask, vint8m8_t maskedoff, vint8m8_t op1)
 {
-  return vslidedown_vx_i8m8_tama(mask, op1, 0, 32);
+  return vslidedown_vx_i8m8_tama(mask, op1, op1, 0, 32);
 }
 
 /*
@@ -11608,7 +11608,7 @@ test_vslidedown_vx_i8m8_tama_vl32_0(vbool1_t mask, vint8m8_t maskedoff, vint8m8_
 vint8m8_t 
 test_vslidedown_vx_i8m8_tama_vl32_31(vbool1_t mask, vint8m8_t maskedoff, vint8m8_t op1)
 {
-  return vslidedown_vx_i8m8_tama(mask, op1, 31, 32);
+  return vslidedown_vx_i8m8_tama(mask, op1, op1, 31, 32);
 }
 
 /*
@@ -11623,7 +11623,7 @@ test_vslidedown_vx_i8m8_tama_vl32_31(vbool1_t mask, vint8m8_t maskedoff, vint8m8
 vint16mf4_t 
 test_vslidedown_vx_i16mf4_tama_vl32_0(vbool64_t mask, vint16mf4_t maskedoff, vint16mf4_t op1)
 {
-  return vslidedown_vx_i16mf4_tama(mask, op1, 0, 32);
+  return vslidedown_vx_i16mf4_tama(mask, op1, op1, 0, 32);
 }
 
 /*
@@ -11638,7 +11638,7 @@ test_vslidedown_vx_i16mf4_tama_vl32_0(vbool64_t mask, vint16mf4_t maskedoff, vin
 vint16mf4_t 
 test_vslidedown_vx_i16mf4_tama_vl32_31(vbool64_t mask, vint16mf4_t maskedoff, vint16mf4_t op1)
 {
-  return vslidedown_vx_i16mf4_tama(mask, op1, 31, 32);
+  return vslidedown_vx_i16mf4_tama(mask, op1, op1, 31, 32);
 }
 
 /*
@@ -11653,7 +11653,7 @@ test_vslidedown_vx_i16mf4_tama_vl32_31(vbool64_t mask, vint16mf4_t maskedoff, vi
 vint16mf2_t 
 test_vslidedown_vx_i16mf2_tama_vl32_0(vbool32_t mask, vint16mf2_t maskedoff, vint16mf2_t op1)
 {
-  return vslidedown_vx_i16mf2_tama(mask, op1, 0, 32);
+  return vslidedown_vx_i16mf2_tama(mask, op1, op1, 0, 32);
 }
 
 /*
@@ -11668,7 +11668,7 @@ test_vslidedown_vx_i16mf2_tama_vl32_0(vbool32_t mask, vint16mf2_t maskedoff, vin
 vint16mf2_t 
 test_vslidedown_vx_i16mf2_tama_vl32_31(vbool32_t mask, vint16mf2_t maskedoff, vint16mf2_t op1)
 {
-  return vslidedown_vx_i16mf2_tama(mask, op1, 31, 32);
+  return vslidedown_vx_i16mf2_tama(mask, op1, op1, 31, 32);
 }
 
 /*
@@ -11683,7 +11683,7 @@ test_vslidedown_vx_i16mf2_tama_vl32_31(vbool32_t mask, vint16mf2_t maskedoff, vi
 vint16m1_t 
 test_vslidedown_vx_i16m1_tama_vl32_0(vbool16_t mask, vint16m1_t maskedoff, vint16m1_t op1)
 {
-  return vslidedown_vx_i16m1_tama(mask, op1, 0, 32);
+  return vslidedown_vx_i16m1_tama(mask, op1, op1, 0, 32);
 }
 
 /*
@@ -11698,7 +11698,7 @@ test_vslidedown_vx_i16m1_tama_vl32_0(vbool16_t mask, vint16m1_t maskedoff, vint1
 vint16m1_t 
 test_vslidedown_vx_i16m1_tama_vl32_31(vbool16_t mask, vint16m1_t maskedoff, vint16m1_t op1)
 {
-  return vslidedown_vx_i16m1_tama(mask, op1, 31, 32);
+  return vslidedown_vx_i16m1_tama(mask, op1, op1, 31, 32);
 }
 
 /*
@@ -11713,7 +11713,7 @@ test_vslidedown_vx_i16m1_tama_vl32_31(vbool16_t mask, vint16m1_t maskedoff, vint
 vint16m2_t 
 test_vslidedown_vx_i16m2_tama_vl32_0(vbool8_t mask, vint16m2_t maskedoff, vint16m2_t op1)
 {
-  return vslidedown_vx_i16m2_tama(mask, op1, 0, 32);
+  return vslidedown_vx_i16m2_tama(mask, op1, op1, 0, 32);
 }
 
 /*
@@ -11728,7 +11728,7 @@ test_vslidedown_vx_i16m2_tama_vl32_0(vbool8_t mask, vint16m2_t maskedoff, vint16
 vint16m2_t 
 test_vslidedown_vx_i16m2_tama_vl32_31(vbool8_t mask, vint16m2_t maskedoff, vint16m2_t op1)
 {
-  return vslidedown_vx_i16m2_tama(mask, op1, 31, 32);
+  return vslidedown_vx_i16m2_tama(mask, op1, op1, 31, 32);
 }
 
 /*
@@ -11743,7 +11743,7 @@ test_vslidedown_vx_i16m2_tama_vl32_31(vbool8_t mask, vint16m2_t maskedoff, vint1
 vint16m4_t 
 test_vslidedown_vx_i16m4_tama_vl32_0(vbool4_t mask, vint16m4_t maskedoff, vint16m4_t op1)
 {
-  return vslidedown_vx_i16m4_tama(mask, op1, 0, 32);
+  return vslidedown_vx_i16m4_tama(mask, op1, op1, 0, 32);
 }
 
 /*
@@ -11758,7 +11758,7 @@ test_vslidedown_vx_i16m4_tama_vl32_0(vbool4_t mask, vint16m4_t maskedoff, vint16
 vint16m4_t 
 test_vslidedown_vx_i16m4_tama_vl32_31(vbool4_t mask, vint16m4_t maskedoff, vint16m4_t op1)
 {
-  return vslidedown_vx_i16m4_tama(mask, op1, 31, 32);
+  return vslidedown_vx_i16m4_tama(mask, op1, op1, 31, 32);
 }
 
 /*
@@ -11773,7 +11773,7 @@ test_vslidedown_vx_i16m4_tama_vl32_31(vbool4_t mask, vint16m4_t maskedoff, vint1
 vint16m8_t 
 test_vslidedown_vx_i16m8_tama_vl32_0(vbool2_t mask, vint16m8_t maskedoff, vint16m8_t op1)
 {
-  return vslidedown_vx_i16m8_tama(mask, op1, 0, 32);
+  return vslidedown_vx_i16m8_tama(mask, op1, op1, 0, 32);
 }
 
 /*
@@ -11788,7 +11788,7 @@ test_vslidedown_vx_i16m8_tama_vl32_0(vbool2_t mask, vint16m8_t maskedoff, vint16
 vint16m8_t 
 test_vslidedown_vx_i16m8_tama_vl32_31(vbool2_t mask, vint16m8_t maskedoff, vint16m8_t op1)
 {
-  return vslidedown_vx_i16m8_tama(mask, op1, 31, 32);
+  return vslidedown_vx_i16m8_tama(mask, op1, op1, 31, 32);
 }
 
 /*
@@ -11803,7 +11803,7 @@ test_vslidedown_vx_i16m8_tama_vl32_31(vbool2_t mask, vint16m8_t maskedoff, vint1
 vint32mf2_t 
 test_vslidedown_vx_i32mf2_tama_vl32_0(vbool64_t mask, vint32mf2_t maskedoff, vint32mf2_t op1)
 {
-  return vslidedown_vx_i32mf2_tama(mask, op1, 0, 32);
+  return vslidedown_vx_i32mf2_tama(mask, op1, op1, 0, 32);
 }
 
 /*
@@ -11818,7 +11818,7 @@ test_vslidedown_vx_i32mf2_tama_vl32_0(vbool64_t mask, vint32mf2_t maskedoff, vin
 vint32mf2_t 
 test_vslidedown_vx_i32mf2_tama_vl32_31(vbool64_t mask, vint32mf2_t maskedoff, vint32mf2_t op1)
 {
-  return vslidedown_vx_i32mf2_tama(mask, op1, 31, 32);
+  return vslidedown_vx_i32mf2_tama(mask, op1, op1, 31, 32);
 }
 
 /*
@@ -11833,7 +11833,7 @@ test_vslidedown_vx_i32mf2_tama_vl32_31(vbool64_t mask, vint32mf2_t maskedoff, vi
 vint32m1_t 
 test_vslidedown_vx_i32m1_tama_vl32_0(vbool32_t mask, vint32m1_t maskedoff, vint32m1_t op1)
 {
-  return vslidedown_vx_i32m1_tama(mask, op1, 0, 32);
+  return vslidedown_vx_i32m1_tama(mask, op1, op1, 0, 32);
 }
 
 /*
@@ -11848,7 +11848,7 @@ test_vslidedown_vx_i32m1_tama_vl32_0(vbool32_t mask, vint32m1_t maskedoff, vint3
 vint32m1_t 
 test_vslidedown_vx_i32m1_tama_vl32_31(vbool32_t mask, vint32m1_t maskedoff, vint32m1_t op1)
 {
-  return vslidedown_vx_i32m1_tama(mask, op1, 31, 32);
+  return vslidedown_vx_i32m1_tama(mask, op1, op1, 31, 32);
 }
 
 /*
@@ -11863,7 +11863,7 @@ test_vslidedown_vx_i32m1_tama_vl32_31(vbool32_t mask, vint32m1_t maskedoff, vint
 vint32m2_t 
 test_vslidedown_vx_i32m2_tama_vl32_0(vbool16_t mask, vint32m2_t maskedoff, vint32m2_t op1)
 {
-  return vslidedown_vx_i32m2_tama(mask, op1, 0, 32);
+  return vslidedown_vx_i32m2_tama(mask, op1, op1, 0, 32);
 }
 
 /*
@@ -11878,7 +11878,7 @@ test_vslidedown_vx_i32m2_tama_vl32_0(vbool16_t mask, vint32m2_t maskedoff, vint3
 vint32m2_t 
 test_vslidedown_vx_i32m2_tama_vl32_31(vbool16_t mask, vint32m2_t maskedoff, vint32m2_t op1)
 {
-  return vslidedown_vx_i32m2_tama(mask, op1, 31, 32);
+  return vslidedown_vx_i32m2_tama(mask, op1, op1, 31, 32);
 }
 
 /*
@@ -11893,7 +11893,7 @@ test_vslidedown_vx_i32m2_tama_vl32_31(vbool16_t mask, vint32m2_t maskedoff, vint
 vint32m4_t 
 test_vslidedown_vx_i32m4_tama_vl32_0(vbool8_t mask, vint32m4_t maskedoff, vint32m4_t op1)
 {
-  return vslidedown_vx_i32m4_tama(mask, op1, 0, 32);
+  return vslidedown_vx_i32m4_tama(mask, op1, op1, 0, 32);
 }
 
 /*
@@ -11908,7 +11908,7 @@ test_vslidedown_vx_i32m4_tama_vl32_0(vbool8_t mask, vint32m4_t maskedoff, vint32
 vint32m4_t 
 test_vslidedown_vx_i32m4_tama_vl32_31(vbool8_t mask, vint32m4_t maskedoff, vint32m4_t op1)
 {
-  return vslidedown_vx_i32m4_tama(mask, op1, 31, 32);
+  return vslidedown_vx_i32m4_tama(mask, op1, op1, 31, 32);
 }
 
 /*
@@ -11923,7 +11923,7 @@ test_vslidedown_vx_i32m4_tama_vl32_31(vbool8_t mask, vint32m4_t maskedoff, vint3
 vint32m8_t 
 test_vslidedown_vx_i32m8_tama_vl32_0(vbool4_t mask, vint32m8_t maskedoff, vint32m8_t op1)
 {
-  return vslidedown_vx_i32m8_tama(mask, op1, 0, 32);
+  return vslidedown_vx_i32m8_tama(mask, op1, op1, 0, 32);
 }
 
 /*
@@ -11938,7 +11938,7 @@ test_vslidedown_vx_i32m8_tama_vl32_0(vbool4_t mask, vint32m8_t maskedoff, vint32
 vint32m8_t 
 test_vslidedown_vx_i32m8_tama_vl32_31(vbool4_t mask, vint32m8_t maskedoff, vint32m8_t op1)
 {
-  return vslidedown_vx_i32m8_tama(mask, op1, 31, 32);
+  return vslidedown_vx_i32m8_tama(mask, op1, op1, 31, 32);
 }
 
 /*
@@ -11953,7 +11953,7 @@ test_vslidedown_vx_i32m8_tama_vl32_31(vbool4_t mask, vint32m8_t maskedoff, vint3
 vint64m1_t 
 test_vslidedown_vx_i64m1_tama_vl32_0(vbool64_t mask, vint64m1_t maskedoff, vint64m1_t op1)
 {
-  return vslidedown_vx_i64m1_tama(mask, op1, 0, 32);
+  return vslidedown_vx_i64m1_tama(mask, op1, op1, 0, 32);
 }
 
 /*
@@ -11968,7 +11968,7 @@ test_vslidedown_vx_i64m1_tama_vl32_0(vbool64_t mask, vint64m1_t maskedoff, vint6
 vint64m1_t 
 test_vslidedown_vx_i64m1_tama_vl32_31(vbool64_t mask, vint64m1_t maskedoff, vint64m1_t op1)
 {
-  return vslidedown_vx_i64m1_tama(mask, op1, 31, 32);
+  return vslidedown_vx_i64m1_tama(mask, op1, op1, 31, 32);
 }
 
 /*
@@ -11983,7 +11983,7 @@ test_vslidedown_vx_i64m1_tama_vl32_31(vbool64_t mask, vint64m1_t maskedoff, vint
 vint64m2_t 
 test_vslidedown_vx_i64m2_tama_vl32_0(vbool32_t mask, vint64m2_t maskedoff, vint64m2_t op1)
 {
-  return vslidedown_vx_i64m2_tama(mask, op1, 0, 32);
+  return vslidedown_vx_i64m2_tama(mask, op1, op1, 0, 32);
 }
 
 /*
@@ -11998,7 +11998,7 @@ test_vslidedown_vx_i64m2_tama_vl32_0(vbool32_t mask, vint64m2_t maskedoff, vint6
 vint64m2_t 
 test_vslidedown_vx_i64m2_tama_vl32_31(vbool32_t mask, vint64m2_t maskedoff, vint64m2_t op1)
 {
-  return vslidedown_vx_i64m2_tama(mask, op1, 31, 32);
+  return vslidedown_vx_i64m2_tama(mask, op1, op1, 31, 32);
 }
 
 /*
@@ -12013,7 +12013,7 @@ test_vslidedown_vx_i64m2_tama_vl32_31(vbool32_t mask, vint64m2_t maskedoff, vint
 vint64m4_t 
 test_vslidedown_vx_i64m4_tama_vl32_0(vbool16_t mask, vint64m4_t maskedoff, vint64m4_t op1)
 {
-  return vslidedown_vx_i64m4_tama(mask, op1, 0, 32);
+  return vslidedown_vx_i64m4_tama(mask, op1, op1, 0, 32);
 }
 
 /*
@@ -12028,7 +12028,7 @@ test_vslidedown_vx_i64m4_tama_vl32_0(vbool16_t mask, vint64m4_t maskedoff, vint6
 vint64m4_t 
 test_vslidedown_vx_i64m4_tama_vl32_31(vbool16_t mask, vint64m4_t maskedoff, vint64m4_t op1)
 {
-  return vslidedown_vx_i64m4_tama(mask, op1, 31, 32);
+  return vslidedown_vx_i64m4_tama(mask, op1, op1, 31, 32);
 }
 
 /*
@@ -12043,7 +12043,7 @@ test_vslidedown_vx_i64m4_tama_vl32_31(vbool16_t mask, vint64m4_t maskedoff, vint
 vint64m8_t 
 test_vslidedown_vx_i64m8_tama_vl32_0(vbool8_t mask, vint64m8_t maskedoff, vint64m8_t op1)
 {
-  return vslidedown_vx_i64m8_tama(mask, op1, 0, 32);
+  return vslidedown_vx_i64m8_tama(mask, op1, op1, 0, 32);
 }
 
 /*
@@ -12058,7 +12058,7 @@ test_vslidedown_vx_i64m8_tama_vl32_0(vbool8_t mask, vint64m8_t maskedoff, vint64
 vint64m8_t 
 test_vslidedown_vx_i64m8_tama_vl32_31(vbool8_t mask, vint64m8_t maskedoff, vint64m8_t op1)
 {
-  return vslidedown_vx_i64m8_tama(mask, op1, 31, 32);
+  return vslidedown_vx_i64m8_tama(mask, op1, op1, 31, 32);
 }
 
 /*
@@ -14051,9 +14051,9 @@ test_vslidedown_vx_i64m8_tumu_vl32_31(vbool8_t mask, vint64m8_t maskedoff, vint6
 **  ret
 */
 vint8mf8_t 
-test_vslidedown_vx_i8mf8_ta_vl32_0(vint8mf8_t op1)
+test_vslidedown_vx_i8mf8_ta_vl32_0(vint8mf8_t dest, vint8mf8_t op1)
 {
-  return vslidedown_vx_i8mf8_ta(op1, 0, 32);
+  return vslidedown_vx_i8mf8_ta(dest, op1, 0, 32);
 }
 
 /*
@@ -14066,9 +14066,9 @@ test_vslidedown_vx_i8mf8_ta_vl32_0(vint8mf8_t op1)
 **  ret
 */
 vint8mf8_t 
-test_vslidedown_vx_i8mf8_ta_vl32_31(vint8mf8_t op1)
+test_vslidedown_vx_i8mf8_ta_vl32_31(vint8mf8_t dest, vint8mf8_t op1)
 {
-  return vslidedown_vx_i8mf8_ta(op1, 31, 32);
+  return vslidedown_vx_i8mf8_ta(dest, op1, 31, 32);
 }
 
 /*
@@ -14081,9 +14081,9 @@ test_vslidedown_vx_i8mf8_ta_vl32_31(vint8mf8_t op1)
 **  ret
 */
 vint8mf4_t 
-test_vslidedown_vx_i8mf4_ta_vl32_0(vint8mf4_t op1)
+test_vslidedown_vx_i8mf4_ta_vl32_0(vint8mf4_t dest, vint8mf4_t op1)
 {
-  return vslidedown_vx_i8mf4_ta(op1, 0, 32);
+  return vslidedown_vx_i8mf4_ta(dest, op1, 0, 32);
 }
 
 /*
@@ -14096,9 +14096,9 @@ test_vslidedown_vx_i8mf4_ta_vl32_0(vint8mf4_t op1)
 **  ret
 */
 vint8mf4_t 
-test_vslidedown_vx_i8mf4_ta_vl32_31(vint8mf4_t op1)
+test_vslidedown_vx_i8mf4_ta_vl32_31(vint8mf4_t dest, vint8mf4_t op1)
 {
-  return vslidedown_vx_i8mf4_ta(op1, 31, 32);
+  return vslidedown_vx_i8mf4_ta(dest, op1, 31, 32);
 }
 
 /*
@@ -14111,9 +14111,9 @@ test_vslidedown_vx_i8mf4_ta_vl32_31(vint8mf4_t op1)
 **  ret
 */
 vint8mf2_t 
-test_vslidedown_vx_i8mf2_ta_vl32_0(vint8mf2_t op1)
+test_vslidedown_vx_i8mf2_ta_vl32_0(vint8mf2_t dest, vint8mf2_t op1)
 {
-  return vslidedown_vx_i8mf2_ta(op1, 0, 32);
+  return vslidedown_vx_i8mf2_ta(dest, op1, 0, 32);
 }
 
 /*
@@ -14126,9 +14126,9 @@ test_vslidedown_vx_i8mf2_ta_vl32_0(vint8mf2_t op1)
 **  ret
 */
 vint8mf2_t 
-test_vslidedown_vx_i8mf2_ta_vl32_31(vint8mf2_t op1)
+test_vslidedown_vx_i8mf2_ta_vl32_31(vint8mf2_t dest, vint8mf2_t op1)
 {
-  return vslidedown_vx_i8mf2_ta(op1, 31, 32);
+  return vslidedown_vx_i8mf2_ta(dest, op1, 31, 32);
 }
 
 /*
@@ -14141,9 +14141,9 @@ test_vslidedown_vx_i8mf2_ta_vl32_31(vint8mf2_t op1)
 **  ret
 */
 vint8m1_t 
-test_vslidedown_vx_i8m1_ta_vl32_0(vint8m1_t op1)
+test_vslidedown_vx_i8m1_ta_vl32_0(vint8m1_t dest, vint8m1_t op1)
 {
-  return vslidedown_vx_i8m1_ta(op1, 0, 32);
+  return vslidedown_vx_i8m1_ta(dest, op1, 0, 32);
 }
 
 /*
@@ -14156,9 +14156,9 @@ test_vslidedown_vx_i8m1_ta_vl32_0(vint8m1_t op1)
 **  ret
 */
 vint8m1_t 
-test_vslidedown_vx_i8m1_ta_vl32_31(vint8m1_t op1)
+test_vslidedown_vx_i8m1_ta_vl32_31(vint8m1_t dest, vint8m1_t op1)
 {
-  return vslidedown_vx_i8m1_ta(op1, 31, 32);
+  return vslidedown_vx_i8m1_ta(dest, op1, 31, 32);
 }
 
 /*
@@ -14171,9 +14171,9 @@ test_vslidedown_vx_i8m1_ta_vl32_31(vint8m1_t op1)
 **  ret
 */
 vint8m2_t 
-test_vslidedown_vx_i8m2_ta_vl32_0(vint8m2_t op1)
+test_vslidedown_vx_i8m2_ta_vl32_0(vint8m2_t dest, vint8m2_t op1)
 {
-  return vslidedown_vx_i8m2_ta(op1, 0, 32);
+  return vslidedown_vx_i8m2_ta(dest, op1, 0, 32);
 }
 
 /*
@@ -14186,9 +14186,9 @@ test_vslidedown_vx_i8m2_ta_vl32_0(vint8m2_t op1)
 **  ret
 */
 vint8m2_t 
-test_vslidedown_vx_i8m2_ta_vl32_31(vint8m2_t op1)
+test_vslidedown_vx_i8m2_ta_vl32_31(vint8m2_t dest, vint8m2_t op1)
 {
-  return vslidedown_vx_i8m2_ta(op1, 31, 32);
+  return vslidedown_vx_i8m2_ta(dest, op1, 31, 32);
 }
 
 /*
@@ -14201,9 +14201,9 @@ test_vslidedown_vx_i8m2_ta_vl32_31(vint8m2_t op1)
 **  ret
 */
 vint8m4_t 
-test_vslidedown_vx_i8m4_ta_vl32_0(vint8m4_t op1)
+test_vslidedown_vx_i8m4_ta_vl32_0(vint8m4_t dest, vint8m4_t op1)
 {
-  return vslidedown_vx_i8m4_ta(op1, 0, 32);
+  return vslidedown_vx_i8m4_ta(dest, op1, 0, 32);
 }
 
 /*
@@ -14216,9 +14216,9 @@ test_vslidedown_vx_i8m4_ta_vl32_0(vint8m4_t op1)
 **  ret
 */
 vint8m4_t 
-test_vslidedown_vx_i8m4_ta_vl32_31(vint8m4_t op1)
+test_vslidedown_vx_i8m4_ta_vl32_31(vint8m4_t dest, vint8m4_t op1)
 {
-  return vslidedown_vx_i8m4_ta(op1, 31, 32);
+  return vslidedown_vx_i8m4_ta(dest, op1, 31, 32);
 }
 
 /*
@@ -14231,9 +14231,9 @@ test_vslidedown_vx_i8m4_ta_vl32_31(vint8m4_t op1)
 **  ret
 */
 vint8m8_t 
-test_vslidedown_vx_i8m8_ta_vl32_0(vint8m8_t op1)
+test_vslidedown_vx_i8m8_ta_vl32_0(vint8m8_t dest, vint8m8_t op1)
 {
-  return vslidedown_vx_i8m8_ta(op1, 0, 32);
+  return vslidedown_vx_i8m8_ta(dest, op1, 0, 32);
 }
 
 /*
@@ -14246,9 +14246,9 @@ test_vslidedown_vx_i8m8_ta_vl32_0(vint8m8_t op1)
 **  ret
 */
 vint8m8_t 
-test_vslidedown_vx_i8m8_ta_vl32_31(vint8m8_t op1)
+test_vslidedown_vx_i8m8_ta_vl32_31(vint8m8_t dest, vint8m8_t op1)
 {
-  return vslidedown_vx_i8m8_ta(op1, 31, 32);
+  return vslidedown_vx_i8m8_ta(dest, op1, 31, 32);
 }
 
 /*
@@ -14261,9 +14261,9 @@ test_vslidedown_vx_i8m8_ta_vl32_31(vint8m8_t op1)
 **  ret
 */
 vint16mf4_t 
-test_vslidedown_vx_i16mf4_ta_vl32_0(vint16mf4_t op1)
+test_vslidedown_vx_i16mf4_ta_vl32_0(vint16mf4_t dest, vint16mf4_t op1)
 {
-  return vslidedown_vx_i16mf4_ta(op1, 0, 32);
+  return vslidedown_vx_i16mf4_ta(dest, op1, 0, 32);
 }
 
 /*
@@ -14276,9 +14276,9 @@ test_vslidedown_vx_i16mf4_ta_vl32_0(vint16mf4_t op1)
 **  ret
 */
 vint16mf4_t 
-test_vslidedown_vx_i16mf4_ta_vl32_31(vint16mf4_t op1)
+test_vslidedown_vx_i16mf4_ta_vl32_31(vint16mf4_t dest, vint16mf4_t op1)
 {
-  return vslidedown_vx_i16mf4_ta(op1, 31, 32);
+  return vslidedown_vx_i16mf4_ta(dest, op1, 31, 32);
 }
 
 /*
@@ -14291,9 +14291,9 @@ test_vslidedown_vx_i16mf4_ta_vl32_31(vint16mf4_t op1)
 **  ret
 */
 vint16mf2_t 
-test_vslidedown_vx_i16mf2_ta_vl32_0(vint16mf2_t op1)
+test_vslidedown_vx_i16mf2_ta_vl32_0(vint16mf2_t dest, vint16mf2_t op1)
 {
-  return vslidedown_vx_i16mf2_ta(op1, 0, 32);
+  return vslidedown_vx_i16mf2_ta(dest, op1, 0, 32);
 }
 
 /*
@@ -14306,9 +14306,9 @@ test_vslidedown_vx_i16mf2_ta_vl32_0(vint16mf2_t op1)
 **  ret
 */
 vint16mf2_t 
-test_vslidedown_vx_i16mf2_ta_vl32_31(vint16mf2_t op1)
+test_vslidedown_vx_i16mf2_ta_vl32_31(vint16mf2_t dest, vint16mf2_t op1)
 {
-  return vslidedown_vx_i16mf2_ta(op1, 31, 32);
+  return vslidedown_vx_i16mf2_ta(dest, op1, 31, 32);
 }
 
 /*
@@ -14321,9 +14321,9 @@ test_vslidedown_vx_i16mf2_ta_vl32_31(vint16mf2_t op1)
 **  ret
 */
 vint16m1_t 
-test_vslidedown_vx_i16m1_ta_vl32_0(vint16m1_t op1)
+test_vslidedown_vx_i16m1_ta_vl32_0(vint16m1_t dest, vint16m1_t op1)
 {
-  return vslidedown_vx_i16m1_ta(op1, 0, 32);
+  return vslidedown_vx_i16m1_ta(dest, op1, 0, 32);
 }
 
 /*
@@ -14336,9 +14336,9 @@ test_vslidedown_vx_i16m1_ta_vl32_0(vint16m1_t op1)
 **  ret
 */
 vint16m1_t 
-test_vslidedown_vx_i16m1_ta_vl32_31(vint16m1_t op1)
+test_vslidedown_vx_i16m1_ta_vl32_31(vint16m1_t dest, vint16m1_t op1)
 {
-  return vslidedown_vx_i16m1_ta(op1, 31, 32);
+  return vslidedown_vx_i16m1_ta(dest, op1, 31, 32);
 }
 
 /*
@@ -14351,9 +14351,9 @@ test_vslidedown_vx_i16m1_ta_vl32_31(vint16m1_t op1)
 **  ret
 */
 vint16m2_t 
-test_vslidedown_vx_i16m2_ta_vl32_0(vint16m2_t op1)
+test_vslidedown_vx_i16m2_ta_vl32_0(vint16m2_t dest, vint16m2_t op1)
 {
-  return vslidedown_vx_i16m2_ta(op1, 0, 32);
+  return vslidedown_vx_i16m2_ta(dest, op1, 0, 32);
 }
 
 /*
@@ -14366,9 +14366,9 @@ test_vslidedown_vx_i16m2_ta_vl32_0(vint16m2_t op1)
 **  ret
 */
 vint16m2_t 
-test_vslidedown_vx_i16m2_ta_vl32_31(vint16m2_t op1)
+test_vslidedown_vx_i16m2_ta_vl32_31(vint16m2_t dest, vint16m2_t op1)
 {
-  return vslidedown_vx_i16m2_ta(op1, 31, 32);
+  return vslidedown_vx_i16m2_ta(dest, op1, 31, 32);
 }
 
 /*
@@ -14381,9 +14381,9 @@ test_vslidedown_vx_i16m2_ta_vl32_31(vint16m2_t op1)
 **  ret
 */
 vint16m4_t 
-test_vslidedown_vx_i16m4_ta_vl32_0(vint16m4_t op1)
+test_vslidedown_vx_i16m4_ta_vl32_0(vint16m4_t dest, vint16m4_t op1)
 {
-  return vslidedown_vx_i16m4_ta(op1, 0, 32);
+  return vslidedown_vx_i16m4_ta(dest, op1, 0, 32);
 }
 
 /*
@@ -14396,9 +14396,9 @@ test_vslidedown_vx_i16m4_ta_vl32_0(vint16m4_t op1)
 **  ret
 */
 vint16m4_t 
-test_vslidedown_vx_i16m4_ta_vl32_31(vint16m4_t op1)
+test_vslidedown_vx_i16m4_ta_vl32_31(vint16m4_t dest, vint16m4_t op1)
 {
-  return vslidedown_vx_i16m4_ta(op1, 31, 32);
+  return vslidedown_vx_i16m4_ta(dest, op1, 31, 32);
 }
 
 /*
@@ -14411,9 +14411,9 @@ test_vslidedown_vx_i16m4_ta_vl32_31(vint16m4_t op1)
 **  ret
 */
 vint16m8_t 
-test_vslidedown_vx_i16m8_ta_vl32_0(vint16m8_t op1)
+test_vslidedown_vx_i16m8_ta_vl32_0(vint16m8_t dest, vint16m8_t op1)
 {
-  return vslidedown_vx_i16m8_ta(op1, 0, 32);
+  return vslidedown_vx_i16m8_ta(dest, op1, 0, 32);
 }
 
 /*
@@ -14426,9 +14426,9 @@ test_vslidedown_vx_i16m8_ta_vl32_0(vint16m8_t op1)
 **  ret
 */
 vint16m8_t 
-test_vslidedown_vx_i16m8_ta_vl32_31(vint16m8_t op1)
+test_vslidedown_vx_i16m8_ta_vl32_31(vint16m8_t dest, vint16m8_t op1)
 {
-  return vslidedown_vx_i16m8_ta(op1, 31, 32);
+  return vslidedown_vx_i16m8_ta(dest, op1, 31, 32);
 }
 
 /*
@@ -14441,9 +14441,9 @@ test_vslidedown_vx_i16m8_ta_vl32_31(vint16m8_t op1)
 **  ret
 */
 vint32mf2_t 
-test_vslidedown_vx_i32mf2_ta_vl32_0(vint32mf2_t op1)
+test_vslidedown_vx_i32mf2_ta_vl32_0(vint32mf2_t dest, vint32mf2_t op1)
 {
-  return vslidedown_vx_i32mf2_ta(op1, 0, 32);
+  return vslidedown_vx_i32mf2_ta(dest, op1, 0, 32);
 }
 
 /*
@@ -14456,9 +14456,9 @@ test_vslidedown_vx_i32mf2_ta_vl32_0(vint32mf2_t op1)
 **  ret
 */
 vint32mf2_t 
-test_vslidedown_vx_i32mf2_ta_vl32_31(vint32mf2_t op1)
+test_vslidedown_vx_i32mf2_ta_vl32_31(vint32mf2_t dest, vint32mf2_t op1)
 {
-  return vslidedown_vx_i32mf2_ta(op1, 31, 32);
+  return vslidedown_vx_i32mf2_ta(dest, op1, 31, 32);
 }
 
 /*
@@ -14471,9 +14471,9 @@ test_vslidedown_vx_i32mf2_ta_vl32_31(vint32mf2_t op1)
 **  ret
 */
 vint32m1_t 
-test_vslidedown_vx_i32m1_ta_vl32_0(vint32m1_t op1)
+test_vslidedown_vx_i32m1_ta_vl32_0(vint32m1_t dest, vint32m1_t op1)
 {
-  return vslidedown_vx_i32m1_ta(op1, 0, 32);
+  return vslidedown_vx_i32m1_ta(dest, op1, 0, 32);
 }
 
 /*
@@ -14486,9 +14486,9 @@ test_vslidedown_vx_i32m1_ta_vl32_0(vint32m1_t op1)
 **  ret
 */
 vint32m1_t 
-test_vslidedown_vx_i32m1_ta_vl32_31(vint32m1_t op1)
+test_vslidedown_vx_i32m1_ta_vl32_31(vint32m1_t dest, vint32m1_t op1)
 {
-  return vslidedown_vx_i32m1_ta(op1, 31, 32);
+  return vslidedown_vx_i32m1_ta(dest, op1, 31, 32);
 }
 
 /*
@@ -14501,9 +14501,9 @@ test_vslidedown_vx_i32m1_ta_vl32_31(vint32m1_t op1)
 **  ret
 */
 vint32m2_t 
-test_vslidedown_vx_i32m2_ta_vl32_0(vint32m2_t op1)
+test_vslidedown_vx_i32m2_ta_vl32_0(vint32m2_t dest, vint32m2_t op1)
 {
-  return vslidedown_vx_i32m2_ta(op1, 0, 32);
+  return vslidedown_vx_i32m2_ta(dest, op1, 0, 32);
 }
 
 /*
@@ -14516,9 +14516,9 @@ test_vslidedown_vx_i32m2_ta_vl32_0(vint32m2_t op1)
 **  ret
 */
 vint32m2_t 
-test_vslidedown_vx_i32m2_ta_vl32_31(vint32m2_t op1)
+test_vslidedown_vx_i32m2_ta_vl32_31(vint32m2_t dest, vint32m2_t op1)
 {
-  return vslidedown_vx_i32m2_ta(op1, 31, 32);
+  return vslidedown_vx_i32m2_ta(dest, op1, 31, 32);
 }
 
 /*
@@ -14531,9 +14531,9 @@ test_vslidedown_vx_i32m2_ta_vl32_31(vint32m2_t op1)
 **  ret
 */
 vint32m4_t 
-test_vslidedown_vx_i32m4_ta_vl32_0(vint32m4_t op1)
+test_vslidedown_vx_i32m4_ta_vl32_0(vint32m4_t dest, vint32m4_t op1)
 {
-  return vslidedown_vx_i32m4_ta(op1, 0, 32);
+  return vslidedown_vx_i32m4_ta(dest, op1, 0, 32);
 }
 
 /*
@@ -14546,9 +14546,9 @@ test_vslidedown_vx_i32m4_ta_vl32_0(vint32m4_t op1)
 **  ret
 */
 vint32m4_t 
-test_vslidedown_vx_i32m4_ta_vl32_31(vint32m4_t op1)
+test_vslidedown_vx_i32m4_ta_vl32_31(vint32m4_t dest, vint32m4_t op1)
 {
-  return vslidedown_vx_i32m4_ta(op1, 31, 32);
+  return vslidedown_vx_i32m4_ta(dest, op1, 31, 32);
 }
 
 /*
@@ -14561,9 +14561,9 @@ test_vslidedown_vx_i32m4_ta_vl32_31(vint32m4_t op1)
 **  ret
 */
 vint32m8_t 
-test_vslidedown_vx_i32m8_ta_vl32_0(vint32m8_t op1)
+test_vslidedown_vx_i32m8_ta_vl32_0(vint32m8_t dest, vint32m8_t op1)
 {
-  return vslidedown_vx_i32m8_ta(op1, 0, 32);
+  return vslidedown_vx_i32m8_ta(dest, op1, 0, 32);
 }
 
 /*
@@ -14576,9 +14576,9 @@ test_vslidedown_vx_i32m8_ta_vl32_0(vint32m8_t op1)
 **  ret
 */
 vint32m8_t 
-test_vslidedown_vx_i32m8_ta_vl32_31(vint32m8_t op1)
+test_vslidedown_vx_i32m8_ta_vl32_31(vint32m8_t dest, vint32m8_t op1)
 {
-  return vslidedown_vx_i32m8_ta(op1, 31, 32);
+  return vslidedown_vx_i32m8_ta(dest, op1, 31, 32);
 }
 
 /*
@@ -14591,9 +14591,9 @@ test_vslidedown_vx_i32m8_ta_vl32_31(vint32m8_t op1)
 **  ret
 */
 vint64m1_t 
-test_vslidedown_vx_i64m1_ta_vl32_0(vint64m1_t op1)
+test_vslidedown_vx_i64m1_ta_vl32_0(vint64m1_t dest, vint64m1_t op1)
 {
-  return vslidedown_vx_i64m1_ta(op1, 0, 32);
+  return vslidedown_vx_i64m1_ta(dest, op1, 0, 32);
 }
 
 /*
@@ -14606,9 +14606,9 @@ test_vslidedown_vx_i64m1_ta_vl32_0(vint64m1_t op1)
 **  ret
 */
 vint64m1_t 
-test_vslidedown_vx_i64m1_ta_vl32_31(vint64m1_t op1)
+test_vslidedown_vx_i64m1_ta_vl32_31(vint64m1_t dest, vint64m1_t op1)
 {
-  return vslidedown_vx_i64m1_ta(op1, 31, 32);
+  return vslidedown_vx_i64m1_ta(dest, op1, 31, 32);
 }
 
 /*
@@ -14621,9 +14621,9 @@ test_vslidedown_vx_i64m1_ta_vl32_31(vint64m1_t op1)
 **  ret
 */
 vint64m2_t 
-test_vslidedown_vx_i64m2_ta_vl32_0(vint64m2_t op1)
+test_vslidedown_vx_i64m2_ta_vl32_0(vint64m2_t dest, vint64m2_t op1)
 {
-  return vslidedown_vx_i64m2_ta(op1, 0, 32);
+  return vslidedown_vx_i64m2_ta(dest, op1, 0, 32);
 }
 
 /*
@@ -14636,9 +14636,9 @@ test_vslidedown_vx_i64m2_ta_vl32_0(vint64m2_t op1)
 **  ret
 */
 vint64m2_t 
-test_vslidedown_vx_i64m2_ta_vl32_31(vint64m2_t op1)
+test_vslidedown_vx_i64m2_ta_vl32_31(vint64m2_t dest, vint64m2_t op1)
 {
-  return vslidedown_vx_i64m2_ta(op1, 31, 32);
+  return vslidedown_vx_i64m2_ta(dest, op1, 31, 32);
 }
 
 /*
@@ -14651,9 +14651,9 @@ test_vslidedown_vx_i64m2_ta_vl32_31(vint64m2_t op1)
 **  ret
 */
 vint64m4_t 
-test_vslidedown_vx_i64m4_ta_vl32_0(vint64m4_t op1)
+test_vslidedown_vx_i64m4_ta_vl32_0(vint64m4_t dest, vint64m4_t op1)
 {
-  return vslidedown_vx_i64m4_ta(op1, 0, 32);
+  return vslidedown_vx_i64m4_ta(dest, op1, 0, 32);
 }
 
 /*
@@ -14666,9 +14666,9 @@ test_vslidedown_vx_i64m4_ta_vl32_0(vint64m4_t op1)
 **  ret
 */
 vint64m4_t 
-test_vslidedown_vx_i64m4_ta_vl32_31(vint64m4_t op1)
+test_vslidedown_vx_i64m4_ta_vl32_31(vint64m4_t dest, vint64m4_t op1)
 {
-  return vslidedown_vx_i64m4_ta(op1, 31, 32);
+  return vslidedown_vx_i64m4_ta(dest, op1, 31, 32);
 }
 
 /*
@@ -14681,9 +14681,9 @@ test_vslidedown_vx_i64m4_ta_vl32_31(vint64m4_t op1)
 **  ret
 */
 vint64m8_t 
-test_vslidedown_vx_i64m8_ta_vl32_0(vint64m8_t op1)
+test_vslidedown_vx_i64m8_ta_vl32_0(vint64m8_t dest, vint64m8_t op1)
 {
-  return vslidedown_vx_i64m8_ta(op1, 0, 32);
+  return vslidedown_vx_i64m8_ta(dest, op1, 0, 32);
 }
 
 /*
@@ -14696,9 +14696,9 @@ test_vslidedown_vx_i64m8_ta_vl32_0(vint64m8_t op1)
 **  ret
 */
 vint64m8_t 
-test_vslidedown_vx_i64m8_ta_vl32_31(vint64m8_t op1)
+test_vslidedown_vx_i64m8_ta_vl32_31(vint64m8_t dest, vint64m8_t op1)
 {
-  return vslidedown_vx_i64m8_ta(op1, 31, 32);
+  return vslidedown_vx_i64m8_ta(dest, op1, 31, 32);
 }
 
 /*
@@ -19507,9 +19507,9 @@ test_vslidedown_vx_u64m8_m_vl32_31(vbool8_t mask, vuint64m8_t maskedoff, vuint64
 **  ret
 */
 vuint8mf8_t 
-test_vslidedown_vx_u8mf8_ta_0(vuint8mf8_t op1, size_t vl)
+test_vslidedown_vx_u8mf8_ta_0(vuint8mf8_t dest, vuint8mf8_t op1, size_t vl)
 {
-  return vslidedown_vx_u8mf8_ta(op1, 0, vl);
+  return vslidedown_vx_u8mf8_ta(dest, op1, 0, vl);
 }
 
 /*
@@ -19522,9 +19522,9 @@ test_vslidedown_vx_u8mf8_ta_0(vuint8mf8_t op1, size_t vl)
 **  ret
 */
 vuint8mf8_t 
-test_vslidedown_vx_u8mf8_ta_31(vuint8mf8_t op1, size_t vl)
+test_vslidedown_vx_u8mf8_ta_31(vuint8mf8_t dest, vuint8mf8_t op1, size_t vl)
 {
-  return vslidedown_vx_u8mf8_ta(op1, 31, vl);
+  return vslidedown_vx_u8mf8_ta(dest, op1, 31, vl);
 }
 
 /*
@@ -19537,9 +19537,9 @@ test_vslidedown_vx_u8mf8_ta_31(vuint8mf8_t op1, size_t vl)
 **  ret
 */
 vuint8mf8_t 
-test_vslidedown_vx_u8mf8_ta_vl31_0(vuint8mf8_t op1)
+test_vslidedown_vx_u8mf8_ta_vl31_0(vuint8mf8_t dest, vuint8mf8_t op1)
 {
-  return vslidedown_vx_u8mf8_ta(op1, 0, 31);
+  return vslidedown_vx_u8mf8_ta(dest, op1, 0, 31);
 }
 
 /*
@@ -19552,9 +19552,9 @@ test_vslidedown_vx_u8mf8_ta_vl31_0(vuint8mf8_t op1)
 **  ret
 */
 vuint8mf8_t 
-test_vslidedown_vx_u8mf8_ta_vl31_31(vuint8mf8_t op1)
+test_vslidedown_vx_u8mf8_ta_vl31_31(vuint8mf8_t dest, vuint8mf8_t op1)
 {
-  return vslidedown_vx_u8mf8_ta(op1, 31, 31);
+  return vslidedown_vx_u8mf8_ta(dest, op1, 31, 31);
 }
 
 /*
@@ -19567,9 +19567,9 @@ test_vslidedown_vx_u8mf8_ta_vl31_31(vuint8mf8_t op1)
 **  ret
 */
 vuint8mf4_t 
-test_vslidedown_vx_u8mf4_ta_0(vuint8mf4_t op1, size_t vl)
+test_vslidedown_vx_u8mf4_ta_0(vuint8mf4_t dest, vuint8mf4_t op1, size_t vl)
 {
-  return vslidedown_vx_u8mf4_ta(op1, 0, vl);
+  return vslidedown_vx_u8mf4_ta(dest, op1, 0, vl);
 }
 
 /*
@@ -19582,9 +19582,9 @@ test_vslidedown_vx_u8mf4_ta_0(vuint8mf4_t op1, size_t vl)
 **  ret
 */
 vuint8mf4_t 
-test_vslidedown_vx_u8mf4_ta_31(vuint8mf4_t op1, size_t vl)
+test_vslidedown_vx_u8mf4_ta_31(vuint8mf4_t dest, vuint8mf4_t op1, size_t vl)
 {
-  return vslidedown_vx_u8mf4_ta(op1, 31, vl);
+  return vslidedown_vx_u8mf4_ta(dest, op1, 31, vl);
 }
 
 /*
@@ -19597,9 +19597,9 @@ test_vslidedown_vx_u8mf4_ta_31(vuint8mf4_t op1, size_t vl)
 **  ret
 */
 vuint8mf4_t 
-test_vslidedown_vx_u8mf4_ta_vl31_0(vuint8mf4_t op1)
+test_vslidedown_vx_u8mf4_ta_vl31_0(vuint8mf4_t dest, vuint8mf4_t op1)
 {
-  return vslidedown_vx_u8mf4_ta(op1, 0, 31);
+  return vslidedown_vx_u8mf4_ta(dest, op1, 0, 31);
 }
 
 /*
@@ -19612,9 +19612,9 @@ test_vslidedown_vx_u8mf4_ta_vl31_0(vuint8mf4_t op1)
 **  ret
 */
 vuint8mf4_t 
-test_vslidedown_vx_u8mf4_ta_vl31_31(vuint8mf4_t op1)
+test_vslidedown_vx_u8mf4_ta_vl31_31(vuint8mf4_t dest, vuint8mf4_t op1)
 {
-  return vslidedown_vx_u8mf4_ta(op1, 31, 31);
+  return vslidedown_vx_u8mf4_ta(dest, op1, 31, 31);
 }
 
 /*
@@ -19627,9 +19627,9 @@ test_vslidedown_vx_u8mf4_ta_vl31_31(vuint8mf4_t op1)
 **  ret
 */
 vuint8mf2_t 
-test_vslidedown_vx_u8mf2_ta_0(vuint8mf2_t op1, size_t vl)
+test_vslidedown_vx_u8mf2_ta_0(vuint8mf2_t dest, vuint8mf2_t op1, size_t vl)
 {
-  return vslidedown_vx_u8mf2_ta(op1, 0, vl);
+  return vslidedown_vx_u8mf2_ta(dest, op1, 0, vl);
 }
 
 /*
@@ -19642,9 +19642,9 @@ test_vslidedown_vx_u8mf2_ta_0(vuint8mf2_t op1, size_t vl)
 **  ret
 */
 vuint8mf2_t 
-test_vslidedown_vx_u8mf2_ta_31(vuint8mf2_t op1, size_t vl)
+test_vslidedown_vx_u8mf2_ta_31(vuint8mf2_t dest, vuint8mf2_t op1, size_t vl)
 {
-  return vslidedown_vx_u8mf2_ta(op1, 31, vl);
+  return vslidedown_vx_u8mf2_ta(dest, op1, 31, vl);
 }
 
 /*
@@ -19657,9 +19657,9 @@ test_vslidedown_vx_u8mf2_ta_31(vuint8mf2_t op1, size_t vl)
 **  ret
 */
 vuint8mf2_t 
-test_vslidedown_vx_u8mf2_ta_vl31_0(vuint8mf2_t op1)
+test_vslidedown_vx_u8mf2_ta_vl31_0(vuint8mf2_t dest, vuint8mf2_t op1)
 {
-  return vslidedown_vx_u8mf2_ta(op1, 0, 31);
+  return vslidedown_vx_u8mf2_ta(dest, op1, 0, 31);
 }
 
 /*
@@ -19672,9 +19672,9 @@ test_vslidedown_vx_u8mf2_ta_vl31_0(vuint8mf2_t op1)
 **  ret
 */
 vuint8mf2_t 
-test_vslidedown_vx_u8mf2_ta_vl31_31(vuint8mf2_t op1)
+test_vslidedown_vx_u8mf2_ta_vl31_31(vuint8mf2_t dest, vuint8mf2_t op1)
 {
-  return vslidedown_vx_u8mf2_ta(op1, 31, 31);
+  return vslidedown_vx_u8mf2_ta(dest, op1, 31, 31);
 }
 
 /*
@@ -19687,9 +19687,9 @@ test_vslidedown_vx_u8mf2_ta_vl31_31(vuint8mf2_t op1)
 **  ret
 */
 vuint8m1_t 
-test_vslidedown_vx_u8m1_ta_0(vuint8m1_t op1, size_t vl)
+test_vslidedown_vx_u8m1_ta_0(vuint8m1_t dest, vuint8m1_t op1, size_t vl)
 {
-  return vslidedown_vx_u8m1_ta(op1, 0, vl);
+  return vslidedown_vx_u8m1_ta(dest, op1, 0, vl);
 }
 
 /*
@@ -19702,9 +19702,9 @@ test_vslidedown_vx_u8m1_ta_0(vuint8m1_t op1, size_t vl)
 **  ret
 */
 vuint8m1_t 
-test_vslidedown_vx_u8m1_ta_31(vuint8m1_t op1, size_t vl)
+test_vslidedown_vx_u8m1_ta_31(vuint8m1_t dest, vuint8m1_t op1, size_t vl)
 {
-  return vslidedown_vx_u8m1_ta(op1, 31, vl);
+  return vslidedown_vx_u8m1_ta(dest, op1, 31, vl);
 }
 
 /*
@@ -19717,9 +19717,9 @@ test_vslidedown_vx_u8m1_ta_31(vuint8m1_t op1, size_t vl)
 **  ret
 */
 vuint8m1_t 
-test_vslidedown_vx_u8m1_ta_vl31_0(vuint8m1_t op1)
+test_vslidedown_vx_u8m1_ta_vl31_0(vuint8m1_t dest, vuint8m1_t op1)
 {
-  return vslidedown_vx_u8m1_ta(op1, 0, 31);
+  return vslidedown_vx_u8m1_ta(dest, op1, 0, 31);
 }
 
 /*
@@ -19732,9 +19732,9 @@ test_vslidedown_vx_u8m1_ta_vl31_0(vuint8m1_t op1)
 **  ret
 */
 vuint8m1_t 
-test_vslidedown_vx_u8m1_ta_vl31_31(vuint8m1_t op1)
+test_vslidedown_vx_u8m1_ta_vl31_31(vuint8m1_t dest, vuint8m1_t op1)
 {
-  return vslidedown_vx_u8m1_ta(op1, 31, 31);
+  return vslidedown_vx_u8m1_ta(dest, op1, 31, 31);
 }
 
 /*
@@ -19747,9 +19747,9 @@ test_vslidedown_vx_u8m1_ta_vl31_31(vuint8m1_t op1)
 **  ret
 */
 vuint8m2_t 
-test_vslidedown_vx_u8m2_ta_0(vuint8m2_t op1, size_t vl)
+test_vslidedown_vx_u8m2_ta_0(vuint8m2_t dest, vuint8m2_t op1, size_t vl)
 {
-  return vslidedown_vx_u8m2_ta(op1, 0, vl);
+  return vslidedown_vx_u8m2_ta(dest, op1, 0, vl);
 }
 
 /*
@@ -19762,9 +19762,9 @@ test_vslidedown_vx_u8m2_ta_0(vuint8m2_t op1, size_t vl)
 **  ret
 */
 vuint8m2_t 
-test_vslidedown_vx_u8m2_ta_31(vuint8m2_t op1, size_t vl)
+test_vslidedown_vx_u8m2_ta_31(vuint8m2_t dest, vuint8m2_t op1, size_t vl)
 {
-  return vslidedown_vx_u8m2_ta(op1, 31, vl);
+  return vslidedown_vx_u8m2_ta(dest, op1, 31, vl);
 }
 
 /*
@@ -19777,9 +19777,9 @@ test_vslidedown_vx_u8m2_ta_31(vuint8m2_t op1, size_t vl)
 **  ret
 */
 vuint8m2_t 
-test_vslidedown_vx_u8m2_ta_vl31_0(vuint8m2_t op1)
+test_vslidedown_vx_u8m2_ta_vl31_0(vuint8m2_t dest, vuint8m2_t op1)
 {
-  return vslidedown_vx_u8m2_ta(op1, 0, 31);
+  return vslidedown_vx_u8m2_ta(dest, op1, 0, 31);
 }
 
 /*
@@ -19792,9 +19792,9 @@ test_vslidedown_vx_u8m2_ta_vl31_0(vuint8m2_t op1)
 **  ret
 */
 vuint8m2_t 
-test_vslidedown_vx_u8m2_ta_vl31_31(vuint8m2_t op1)
+test_vslidedown_vx_u8m2_ta_vl31_31(vuint8m2_t dest, vuint8m2_t op1)
 {
-  return vslidedown_vx_u8m2_ta(op1, 31, 31);
+  return vslidedown_vx_u8m2_ta(dest, op1, 31, 31);
 }
 
 /*
@@ -19807,9 +19807,9 @@ test_vslidedown_vx_u8m2_ta_vl31_31(vuint8m2_t op1)
 **  ret
 */
 vuint8m4_t 
-test_vslidedown_vx_u8m4_ta_0(vuint8m4_t op1, size_t vl)
+test_vslidedown_vx_u8m4_ta_0(vuint8m4_t dest, vuint8m4_t op1, size_t vl)
 {
-  return vslidedown_vx_u8m4_ta(op1, 0, vl);
+  return vslidedown_vx_u8m4_ta(dest, op1, 0, vl);
 }
 
 /*
@@ -19822,9 +19822,9 @@ test_vslidedown_vx_u8m4_ta_0(vuint8m4_t op1, size_t vl)
 **  ret
 */
 vuint8m4_t 
-test_vslidedown_vx_u8m4_ta_31(vuint8m4_t op1, size_t vl)
+test_vslidedown_vx_u8m4_ta_31(vuint8m4_t dest, vuint8m4_t op1, size_t vl)
 {
-  return vslidedown_vx_u8m4_ta(op1, 31, vl);
+  return vslidedown_vx_u8m4_ta(dest, op1, 31, vl);
 }
 
 /*
@@ -19837,9 +19837,9 @@ test_vslidedown_vx_u8m4_ta_31(vuint8m4_t op1, size_t vl)
 **  ret
 */
 vuint8m4_t 
-test_vslidedown_vx_u8m4_ta_vl31_0(vuint8m4_t op1)
+test_vslidedown_vx_u8m4_ta_vl31_0(vuint8m4_t dest, vuint8m4_t op1)
 {
-  return vslidedown_vx_u8m4_ta(op1, 0, 31);
+  return vslidedown_vx_u8m4_ta(dest, op1, 0, 31);
 }
 
 /*
@@ -19852,9 +19852,9 @@ test_vslidedown_vx_u8m4_ta_vl31_0(vuint8m4_t op1)
 **  ret
 */
 vuint8m4_t 
-test_vslidedown_vx_u8m4_ta_vl31_31(vuint8m4_t op1)
+test_vslidedown_vx_u8m4_ta_vl31_31(vuint8m4_t dest, vuint8m4_t op1)
 {
-  return vslidedown_vx_u8m4_ta(op1, 31, 31);
+  return vslidedown_vx_u8m4_ta(dest, op1, 31, 31);
 }
 
 /*
@@ -19867,9 +19867,9 @@ test_vslidedown_vx_u8m4_ta_vl31_31(vuint8m4_t op1)
 **  ret
 */
 vuint8m8_t 
-test_vslidedown_vx_u8m8_ta_0(vuint8m8_t op1, size_t vl)
+test_vslidedown_vx_u8m8_ta_0(vuint8m8_t dest, vuint8m8_t op1, size_t vl)
 {
-  return vslidedown_vx_u8m8_ta(op1, 0, vl);
+  return vslidedown_vx_u8m8_ta(dest, op1, 0, vl);
 }
 
 /*
@@ -19882,9 +19882,9 @@ test_vslidedown_vx_u8m8_ta_0(vuint8m8_t op1, size_t vl)
 **  ret
 */
 vuint8m8_t 
-test_vslidedown_vx_u8m8_ta_31(vuint8m8_t op1, size_t vl)
+test_vslidedown_vx_u8m8_ta_31(vuint8m8_t dest, vuint8m8_t op1, size_t vl)
 {
-  return vslidedown_vx_u8m8_ta(op1, 31, vl);
+  return vslidedown_vx_u8m8_ta(dest, op1, 31, vl);
 }
 
 /*
@@ -19897,9 +19897,9 @@ test_vslidedown_vx_u8m8_ta_31(vuint8m8_t op1, size_t vl)
 **  ret
 */
 vuint8m8_t 
-test_vslidedown_vx_u8m8_ta_vl31_0(vuint8m8_t op1)
+test_vslidedown_vx_u8m8_ta_vl31_0(vuint8m8_t dest, vuint8m8_t op1)
 {
-  return vslidedown_vx_u8m8_ta(op1, 0, 31);
+  return vslidedown_vx_u8m8_ta(dest, op1, 0, 31);
 }
 
 /*
@@ -19912,9 +19912,9 @@ test_vslidedown_vx_u8m8_ta_vl31_0(vuint8m8_t op1)
 **  ret
 */
 vuint8m8_t 
-test_vslidedown_vx_u8m8_ta_vl31_31(vuint8m8_t op1)
+test_vslidedown_vx_u8m8_ta_vl31_31(vuint8m8_t dest, vuint8m8_t op1)
 {
-  return vslidedown_vx_u8m8_ta(op1, 31, 31);
+  return vslidedown_vx_u8m8_ta(dest, op1, 31, 31);
 }
 
 /*
@@ -19927,9 +19927,9 @@ test_vslidedown_vx_u8m8_ta_vl31_31(vuint8m8_t op1)
 **  ret
 */
 vuint16mf4_t 
-test_vslidedown_vx_u16mf4_ta_0(vuint16mf4_t op1, size_t vl)
+test_vslidedown_vx_u16mf4_ta_0(vuint16mf4_t dest, vuint16mf4_t op1, size_t vl)
 {
-  return vslidedown_vx_u16mf4_ta(op1, 0, vl);
+  return vslidedown_vx_u16mf4_ta(dest, op1, 0, vl);
 }
 
 /*
@@ -19942,9 +19942,9 @@ test_vslidedown_vx_u16mf4_ta_0(vuint16mf4_t op1, size_t vl)
 **  ret
 */
 vuint16mf4_t 
-test_vslidedown_vx_u16mf4_ta_31(vuint16mf4_t op1, size_t vl)
+test_vslidedown_vx_u16mf4_ta_31(vuint16mf4_t dest, vuint16mf4_t op1, size_t vl)
 {
-  return vslidedown_vx_u16mf4_ta(op1, 31, vl);
+  return vslidedown_vx_u16mf4_ta(dest, op1, 31, vl);
 }
 
 /*
@@ -19957,9 +19957,9 @@ test_vslidedown_vx_u16mf4_ta_31(vuint16mf4_t op1, size_t vl)
 **  ret
 */
 vuint16mf4_t 
-test_vslidedown_vx_u16mf4_ta_vl31_0(vuint16mf4_t op1)
+test_vslidedown_vx_u16mf4_ta_vl31_0(vuint16mf4_t dest, vuint16mf4_t op1)
 {
-  return vslidedown_vx_u16mf4_ta(op1, 0, 31);
+  return vslidedown_vx_u16mf4_ta(dest, op1, 0, 31);
 }
 
 /*
@@ -19972,9 +19972,9 @@ test_vslidedown_vx_u16mf4_ta_vl31_0(vuint16mf4_t op1)
 **  ret
 */
 vuint16mf4_t 
-test_vslidedown_vx_u16mf4_ta_vl31_31(vuint16mf4_t op1)
+test_vslidedown_vx_u16mf4_ta_vl31_31(vuint16mf4_t dest, vuint16mf4_t op1)
 {
-  return vslidedown_vx_u16mf4_ta(op1, 31, 31);
+  return vslidedown_vx_u16mf4_ta(dest, op1, 31, 31);
 }
 
 /*
@@ -19987,9 +19987,9 @@ test_vslidedown_vx_u16mf4_ta_vl31_31(vuint16mf4_t op1)
 **  ret
 */
 vuint16mf2_t 
-test_vslidedown_vx_u16mf2_ta_0(vuint16mf2_t op1, size_t vl)
+test_vslidedown_vx_u16mf2_ta_0(vuint16mf2_t dest, vuint16mf2_t op1, size_t vl)
 {
-  return vslidedown_vx_u16mf2_ta(op1, 0, vl);
+  return vslidedown_vx_u16mf2_ta(dest, op1, 0, vl);
 }
 
 /*
@@ -20002,9 +20002,9 @@ test_vslidedown_vx_u16mf2_ta_0(vuint16mf2_t op1, size_t vl)
 **  ret
 */
 vuint16mf2_t 
-test_vslidedown_vx_u16mf2_ta_31(vuint16mf2_t op1, size_t vl)
+test_vslidedown_vx_u16mf2_ta_31(vuint16mf2_t dest, vuint16mf2_t op1, size_t vl)
 {
-  return vslidedown_vx_u16mf2_ta(op1, 31, vl);
+  return vslidedown_vx_u16mf2_ta(dest, op1, 31, vl);
 }
 
 /*
@@ -20017,9 +20017,9 @@ test_vslidedown_vx_u16mf2_ta_31(vuint16mf2_t op1, size_t vl)
 **  ret
 */
 vuint16mf2_t 
-test_vslidedown_vx_u16mf2_ta_vl31_0(vuint16mf2_t op1)
+test_vslidedown_vx_u16mf2_ta_vl31_0(vuint16mf2_t dest, vuint16mf2_t op1)
 {
-  return vslidedown_vx_u16mf2_ta(op1, 0, 31);
+  return vslidedown_vx_u16mf2_ta(dest, op1, 0, 31);
 }
 
 /*
@@ -20032,9 +20032,9 @@ test_vslidedown_vx_u16mf2_ta_vl31_0(vuint16mf2_t op1)
 **  ret
 */
 vuint16mf2_t 
-test_vslidedown_vx_u16mf2_ta_vl31_31(vuint16mf2_t op1)
+test_vslidedown_vx_u16mf2_ta_vl31_31(vuint16mf2_t dest, vuint16mf2_t op1)
 {
-  return vslidedown_vx_u16mf2_ta(op1, 31, 31);
+  return vslidedown_vx_u16mf2_ta(dest, op1, 31, 31);
 }
 
 /*
@@ -20047,9 +20047,9 @@ test_vslidedown_vx_u16mf2_ta_vl31_31(vuint16mf2_t op1)
 **  ret
 */
 vuint16m1_t 
-test_vslidedown_vx_u16m1_ta_0(vuint16m1_t op1, size_t vl)
+test_vslidedown_vx_u16m1_ta_0(vuint16m1_t dest, vuint16m1_t op1, size_t vl)
 {
-  return vslidedown_vx_u16m1_ta(op1, 0, vl);
+  return vslidedown_vx_u16m1_ta(dest, op1, 0, vl);
 }
 
 /*
@@ -20062,9 +20062,9 @@ test_vslidedown_vx_u16m1_ta_0(vuint16m1_t op1, size_t vl)
 **  ret
 */
 vuint16m1_t 
-test_vslidedown_vx_u16m1_ta_31(vuint16m1_t op1, size_t vl)
+test_vslidedown_vx_u16m1_ta_31(vuint16m1_t dest, vuint16m1_t op1, size_t vl)
 {
-  return vslidedown_vx_u16m1_ta(op1, 31, vl);
+  return vslidedown_vx_u16m1_ta(dest, op1, 31, vl);
 }
 
 /*
@@ -20077,9 +20077,9 @@ test_vslidedown_vx_u16m1_ta_31(vuint16m1_t op1, size_t vl)
 **  ret
 */
 vuint16m1_t 
-test_vslidedown_vx_u16m1_ta_vl31_0(vuint16m1_t op1)
+test_vslidedown_vx_u16m1_ta_vl31_0(vuint16m1_t dest, vuint16m1_t op1)
 {
-  return vslidedown_vx_u16m1_ta(op1, 0, 31);
+  return vslidedown_vx_u16m1_ta(dest, op1, 0, 31);
 }
 
 /*
@@ -20092,9 +20092,9 @@ test_vslidedown_vx_u16m1_ta_vl31_0(vuint16m1_t op1)
 **  ret
 */
 vuint16m1_t 
-test_vslidedown_vx_u16m1_ta_vl31_31(vuint16m1_t op1)
+test_vslidedown_vx_u16m1_ta_vl31_31(vuint16m1_t dest, vuint16m1_t op1)
 {
-  return vslidedown_vx_u16m1_ta(op1, 31, 31);
+  return vslidedown_vx_u16m1_ta(dest, op1, 31, 31);
 }
 
 /*
@@ -20107,9 +20107,9 @@ test_vslidedown_vx_u16m1_ta_vl31_31(vuint16m1_t op1)
 **  ret
 */
 vuint16m2_t 
-test_vslidedown_vx_u16m2_ta_0(vuint16m2_t op1, size_t vl)
+test_vslidedown_vx_u16m2_ta_0(vuint16m2_t dest, vuint16m2_t op1, size_t vl)
 {
-  return vslidedown_vx_u16m2_ta(op1, 0, vl);
+  return vslidedown_vx_u16m2_ta(dest, op1, 0, vl);
 }
 
 /*
@@ -20122,9 +20122,9 @@ test_vslidedown_vx_u16m2_ta_0(vuint16m2_t op1, size_t vl)
 **  ret
 */
 vuint16m2_t 
-test_vslidedown_vx_u16m2_ta_31(vuint16m2_t op1, size_t vl)
+test_vslidedown_vx_u16m2_ta_31(vuint16m2_t dest, vuint16m2_t op1, size_t vl)
 {
-  return vslidedown_vx_u16m2_ta(op1, 31, vl);
+  return vslidedown_vx_u16m2_ta(dest, op1, 31, vl);
 }
 
 /*
@@ -20137,9 +20137,9 @@ test_vslidedown_vx_u16m2_ta_31(vuint16m2_t op1, size_t vl)
 **  ret
 */
 vuint16m2_t 
-test_vslidedown_vx_u16m2_ta_vl31_0(vuint16m2_t op1)
+test_vslidedown_vx_u16m2_ta_vl31_0(vuint16m2_t dest, vuint16m2_t op1)
 {
-  return vslidedown_vx_u16m2_ta(op1, 0, 31);
+  return vslidedown_vx_u16m2_ta(dest, op1, 0, 31);
 }
 
 /*
@@ -20152,9 +20152,9 @@ test_vslidedown_vx_u16m2_ta_vl31_0(vuint16m2_t op1)
 **  ret
 */
 vuint16m2_t 
-test_vslidedown_vx_u16m2_ta_vl31_31(vuint16m2_t op1)
+test_vslidedown_vx_u16m2_ta_vl31_31(vuint16m2_t dest, vuint16m2_t op1)
 {
-  return vslidedown_vx_u16m2_ta(op1, 31, 31);
+  return vslidedown_vx_u16m2_ta(dest, op1, 31, 31);
 }
 
 /*
@@ -20167,9 +20167,9 @@ test_vslidedown_vx_u16m2_ta_vl31_31(vuint16m2_t op1)
 **  ret
 */
 vuint16m4_t 
-test_vslidedown_vx_u16m4_ta_0(vuint16m4_t op1, size_t vl)
+test_vslidedown_vx_u16m4_ta_0(vuint16m4_t dest, vuint16m4_t op1, size_t vl)
 {
-  return vslidedown_vx_u16m4_ta(op1, 0, vl);
+  return vslidedown_vx_u16m4_ta(dest, op1, 0, vl);
 }
 
 /*
@@ -20182,9 +20182,9 @@ test_vslidedown_vx_u16m4_ta_0(vuint16m4_t op1, size_t vl)
 **  ret
 */
 vuint16m4_t 
-test_vslidedown_vx_u16m4_ta_31(vuint16m4_t op1, size_t vl)
+test_vslidedown_vx_u16m4_ta_31(vuint16m4_t dest, vuint16m4_t op1, size_t vl)
 {
-  return vslidedown_vx_u16m4_ta(op1, 31, vl);
+  return vslidedown_vx_u16m4_ta(dest, op1, 31, vl);
 }
 
 /*
@@ -20197,9 +20197,9 @@ test_vslidedown_vx_u16m4_ta_31(vuint16m4_t op1, size_t vl)
 **  ret
 */
 vuint16m4_t 
-test_vslidedown_vx_u16m4_ta_vl31_0(vuint16m4_t op1)
+test_vslidedown_vx_u16m4_ta_vl31_0(vuint16m4_t dest, vuint16m4_t op1)
 {
-  return vslidedown_vx_u16m4_ta(op1, 0, 31);
+  return vslidedown_vx_u16m4_ta(dest, op1, 0, 31);
 }
 
 /*
@@ -20212,9 +20212,9 @@ test_vslidedown_vx_u16m4_ta_vl31_0(vuint16m4_t op1)
 **  ret
 */
 vuint16m4_t 
-test_vslidedown_vx_u16m4_ta_vl31_31(vuint16m4_t op1)
+test_vslidedown_vx_u16m4_ta_vl31_31(vuint16m4_t dest, vuint16m4_t op1)
 {
-  return vslidedown_vx_u16m4_ta(op1, 31, 31);
+  return vslidedown_vx_u16m4_ta(dest, op1, 31, 31);
 }
 
 /*
@@ -20227,9 +20227,9 @@ test_vslidedown_vx_u16m4_ta_vl31_31(vuint16m4_t op1)
 **  ret
 */
 vuint16m8_t 
-test_vslidedown_vx_u16m8_ta_0(vuint16m8_t op1, size_t vl)
+test_vslidedown_vx_u16m8_ta_0(vuint16m8_t dest, vuint16m8_t op1, size_t vl)
 {
-  return vslidedown_vx_u16m8_ta(op1, 0, vl);
+  return vslidedown_vx_u16m8_ta(dest, op1, 0, vl);
 }
 
 /*
@@ -20242,9 +20242,9 @@ test_vslidedown_vx_u16m8_ta_0(vuint16m8_t op1, size_t vl)
 **  ret
 */
 vuint16m8_t 
-test_vslidedown_vx_u16m8_ta_31(vuint16m8_t op1, size_t vl)
+test_vslidedown_vx_u16m8_ta_31(vuint16m8_t dest, vuint16m8_t op1, size_t vl)
 {
-  return vslidedown_vx_u16m8_ta(op1, 31, vl);
+  return vslidedown_vx_u16m8_ta(dest, op1, 31, vl);
 }
 
 /*
@@ -20257,9 +20257,9 @@ test_vslidedown_vx_u16m8_ta_31(vuint16m8_t op1, size_t vl)
 **  ret
 */
 vuint16m8_t 
-test_vslidedown_vx_u16m8_ta_vl31_0(vuint16m8_t op1)
+test_vslidedown_vx_u16m8_ta_vl31_0(vuint16m8_t dest, vuint16m8_t op1)
 {
-  return vslidedown_vx_u16m8_ta(op1, 0, 31);
+  return vslidedown_vx_u16m8_ta(dest, op1, 0, 31);
 }
 
 /*
@@ -20272,9 +20272,9 @@ test_vslidedown_vx_u16m8_ta_vl31_0(vuint16m8_t op1)
 **  ret
 */
 vuint16m8_t 
-test_vslidedown_vx_u16m8_ta_vl31_31(vuint16m8_t op1)
+test_vslidedown_vx_u16m8_ta_vl31_31(vuint16m8_t dest, vuint16m8_t op1)
 {
-  return vslidedown_vx_u16m8_ta(op1, 31, 31);
+  return vslidedown_vx_u16m8_ta(dest, op1, 31, 31);
 }
 
 /*
@@ -20287,9 +20287,9 @@ test_vslidedown_vx_u16m8_ta_vl31_31(vuint16m8_t op1)
 **  ret
 */
 vuint32mf2_t 
-test_vslidedown_vx_u32mf2_ta_0(vuint32mf2_t op1, size_t vl)
+test_vslidedown_vx_u32mf2_ta_0(vuint32mf2_t dest, vuint32mf2_t op1, size_t vl)
 {
-  return vslidedown_vx_u32mf2_ta(op1, 0, vl);
+  return vslidedown_vx_u32mf2_ta(dest, op1, 0, vl);
 }
 
 /*
@@ -20302,9 +20302,9 @@ test_vslidedown_vx_u32mf2_ta_0(vuint32mf2_t op1, size_t vl)
 **  ret
 */
 vuint32mf2_t 
-test_vslidedown_vx_u32mf2_ta_31(vuint32mf2_t op1, size_t vl)
+test_vslidedown_vx_u32mf2_ta_31(vuint32mf2_t dest, vuint32mf2_t op1, size_t vl)
 {
-  return vslidedown_vx_u32mf2_ta(op1, 31, vl);
+  return vslidedown_vx_u32mf2_ta(dest, op1, 31, vl);
 }
 
 /*
@@ -20317,9 +20317,9 @@ test_vslidedown_vx_u32mf2_ta_31(vuint32mf2_t op1, size_t vl)
 **  ret
 */
 vuint32mf2_t 
-test_vslidedown_vx_u32mf2_ta_vl31_0(vuint32mf2_t op1)
+test_vslidedown_vx_u32mf2_ta_vl31_0(vuint32mf2_t dest, vuint32mf2_t op1)
 {
-  return vslidedown_vx_u32mf2_ta(op1, 0, 31);
+  return vslidedown_vx_u32mf2_ta(dest, op1, 0, 31);
 }
 
 /*
@@ -20332,9 +20332,9 @@ test_vslidedown_vx_u32mf2_ta_vl31_0(vuint32mf2_t op1)
 **  ret
 */
 vuint32mf2_t 
-test_vslidedown_vx_u32mf2_ta_vl31_31(vuint32mf2_t op1)
+test_vslidedown_vx_u32mf2_ta_vl31_31(vuint32mf2_t dest, vuint32mf2_t op1)
 {
-  return vslidedown_vx_u32mf2_ta(op1, 31, 31);
+  return vslidedown_vx_u32mf2_ta(dest, op1, 31, 31);
 }
 
 /*
@@ -20347,9 +20347,9 @@ test_vslidedown_vx_u32mf2_ta_vl31_31(vuint32mf2_t op1)
 **  ret
 */
 vuint32m1_t 
-test_vslidedown_vx_u32m1_ta_0(vuint32m1_t op1, size_t vl)
+test_vslidedown_vx_u32m1_ta_0(vuint32m1_t dest, vuint32m1_t op1, size_t vl)
 {
-  return vslidedown_vx_u32m1_ta(op1, 0, vl);
+  return vslidedown_vx_u32m1_ta(dest, op1, 0, vl);
 }
 
 /*
@@ -20362,9 +20362,9 @@ test_vslidedown_vx_u32m1_ta_0(vuint32m1_t op1, size_t vl)
 **  ret
 */
 vuint32m1_t 
-test_vslidedown_vx_u32m1_ta_31(vuint32m1_t op1, size_t vl)
+test_vslidedown_vx_u32m1_ta_31(vuint32m1_t dest, vuint32m1_t op1, size_t vl)
 {
-  return vslidedown_vx_u32m1_ta(op1, 31, vl);
+  return vslidedown_vx_u32m1_ta(dest, op1, 31, vl);
 }
 
 /*
@@ -20377,9 +20377,9 @@ test_vslidedown_vx_u32m1_ta_31(vuint32m1_t op1, size_t vl)
 **  ret
 */
 vuint32m1_t 
-test_vslidedown_vx_u32m1_ta_vl31_0(vuint32m1_t op1)
+test_vslidedown_vx_u32m1_ta_vl31_0(vuint32m1_t dest, vuint32m1_t op1)
 {
-  return vslidedown_vx_u32m1_ta(op1, 0, 31);
+  return vslidedown_vx_u32m1_ta(dest, op1, 0, 31);
 }
 
 /*
@@ -20392,9 +20392,9 @@ test_vslidedown_vx_u32m1_ta_vl31_0(vuint32m1_t op1)
 **  ret
 */
 vuint32m1_t 
-test_vslidedown_vx_u32m1_ta_vl31_31(vuint32m1_t op1)
+test_vslidedown_vx_u32m1_ta_vl31_31(vuint32m1_t dest, vuint32m1_t op1)
 {
-  return vslidedown_vx_u32m1_ta(op1, 31, 31);
+  return vslidedown_vx_u32m1_ta(dest, op1, 31, 31);
 }
 
 /*
@@ -20407,9 +20407,9 @@ test_vslidedown_vx_u32m1_ta_vl31_31(vuint32m1_t op1)
 **  ret
 */
 vuint32m2_t 
-test_vslidedown_vx_u32m2_ta_0(vuint32m2_t op1, size_t vl)
+test_vslidedown_vx_u32m2_ta_0(vuint32m2_t dest, vuint32m2_t op1, size_t vl)
 {
-  return vslidedown_vx_u32m2_ta(op1, 0, vl);
+  return vslidedown_vx_u32m2_ta(dest, op1, 0, vl);
 }
 
 /*
@@ -20422,9 +20422,9 @@ test_vslidedown_vx_u32m2_ta_0(vuint32m2_t op1, size_t vl)
 **  ret
 */
 vuint32m2_t 
-test_vslidedown_vx_u32m2_ta_31(vuint32m2_t op1, size_t vl)
+test_vslidedown_vx_u32m2_ta_31(vuint32m2_t dest, vuint32m2_t op1, size_t vl)
 {
-  return vslidedown_vx_u32m2_ta(op1, 31, vl);
+  return vslidedown_vx_u32m2_ta(dest, op1, 31, vl);
 }
 
 /*
@@ -20437,9 +20437,9 @@ test_vslidedown_vx_u32m2_ta_31(vuint32m2_t op1, size_t vl)
 **  ret
 */
 vuint32m2_t 
-test_vslidedown_vx_u32m2_ta_vl31_0(vuint32m2_t op1)
+test_vslidedown_vx_u32m2_ta_vl31_0(vuint32m2_t dest, vuint32m2_t op1)
 {
-  return vslidedown_vx_u32m2_ta(op1, 0, 31);
+  return vslidedown_vx_u32m2_ta(dest, op1, 0, 31);
 }
 
 /*
@@ -20452,9 +20452,9 @@ test_vslidedown_vx_u32m2_ta_vl31_0(vuint32m2_t op1)
 **  ret
 */
 vuint32m2_t 
-test_vslidedown_vx_u32m2_ta_vl31_31(vuint32m2_t op1)
+test_vslidedown_vx_u32m2_ta_vl31_31(vuint32m2_t dest, vuint32m2_t op1)
 {
-  return vslidedown_vx_u32m2_ta(op1, 31, 31);
+  return vslidedown_vx_u32m2_ta(dest, op1, 31, 31);
 }
 
 /*
@@ -20467,9 +20467,9 @@ test_vslidedown_vx_u32m2_ta_vl31_31(vuint32m2_t op1)
 **  ret
 */
 vuint32m4_t 
-test_vslidedown_vx_u32m4_ta_0(vuint32m4_t op1, size_t vl)
+test_vslidedown_vx_u32m4_ta_0(vuint32m4_t dest, vuint32m4_t op1, size_t vl)
 {
-  return vslidedown_vx_u32m4_ta(op1, 0, vl);
+  return vslidedown_vx_u32m4_ta(dest, op1, 0, vl);
 }
 
 /*
@@ -20482,9 +20482,9 @@ test_vslidedown_vx_u32m4_ta_0(vuint32m4_t op1, size_t vl)
 **  ret
 */
 vuint32m4_t 
-test_vslidedown_vx_u32m4_ta_31(vuint32m4_t op1, size_t vl)
+test_vslidedown_vx_u32m4_ta_31(vuint32m4_t dest, vuint32m4_t op1, size_t vl)
 {
-  return vslidedown_vx_u32m4_ta(op1, 31, vl);
+  return vslidedown_vx_u32m4_ta(dest, op1, 31, vl);
 }
 
 /*
@@ -20497,9 +20497,9 @@ test_vslidedown_vx_u32m4_ta_31(vuint32m4_t op1, size_t vl)
 **  ret
 */
 vuint32m4_t 
-test_vslidedown_vx_u32m4_ta_vl31_0(vuint32m4_t op1)
+test_vslidedown_vx_u32m4_ta_vl31_0(vuint32m4_t dest, vuint32m4_t op1)
 {
-  return vslidedown_vx_u32m4_ta(op1, 0, 31);
+  return vslidedown_vx_u32m4_ta(dest, op1, 0, 31);
 }
 
 /*
@@ -20512,9 +20512,9 @@ test_vslidedown_vx_u32m4_ta_vl31_0(vuint32m4_t op1)
 **  ret
 */
 vuint32m4_t 
-test_vslidedown_vx_u32m4_ta_vl31_31(vuint32m4_t op1)
+test_vslidedown_vx_u32m4_ta_vl31_31(vuint32m4_t dest, vuint32m4_t op1)
 {
-  return vslidedown_vx_u32m4_ta(op1, 31, 31);
+  return vslidedown_vx_u32m4_ta(dest, op1, 31, 31);
 }
 
 /*
@@ -20527,9 +20527,9 @@ test_vslidedown_vx_u32m4_ta_vl31_31(vuint32m4_t op1)
 **  ret
 */
 vuint32m8_t 
-test_vslidedown_vx_u32m8_ta_0(vuint32m8_t op1, size_t vl)
+test_vslidedown_vx_u32m8_ta_0(vuint32m8_t dest, vuint32m8_t op1, size_t vl)
 {
-  return vslidedown_vx_u32m8_ta(op1, 0, vl);
+  return vslidedown_vx_u32m8_ta(dest, op1, 0, vl);
 }
 
 /*
@@ -20542,9 +20542,9 @@ test_vslidedown_vx_u32m8_ta_0(vuint32m8_t op1, size_t vl)
 **  ret
 */
 vuint32m8_t 
-test_vslidedown_vx_u32m8_ta_31(vuint32m8_t op1, size_t vl)
+test_vslidedown_vx_u32m8_ta_31(vuint32m8_t dest, vuint32m8_t op1, size_t vl)
 {
-  return vslidedown_vx_u32m8_ta(op1, 31, vl);
+  return vslidedown_vx_u32m8_ta(dest, op1, 31, vl);
 }
 
 /*
@@ -20557,9 +20557,9 @@ test_vslidedown_vx_u32m8_ta_31(vuint32m8_t op1, size_t vl)
 **  ret
 */
 vuint32m8_t 
-test_vslidedown_vx_u32m8_ta_vl31_0(vuint32m8_t op1)
+test_vslidedown_vx_u32m8_ta_vl31_0(vuint32m8_t dest, vuint32m8_t op1)
 {
-  return vslidedown_vx_u32m8_ta(op1, 0, 31);
+  return vslidedown_vx_u32m8_ta(dest, op1, 0, 31);
 }
 
 /*
@@ -20572,9 +20572,9 @@ test_vslidedown_vx_u32m8_ta_vl31_0(vuint32m8_t op1)
 **  ret
 */
 vuint32m8_t 
-test_vslidedown_vx_u32m8_ta_vl31_31(vuint32m8_t op1)
+test_vslidedown_vx_u32m8_ta_vl31_31(vuint32m8_t dest, vuint32m8_t op1)
 {
-  return vslidedown_vx_u32m8_ta(op1, 31, 31);
+  return vslidedown_vx_u32m8_ta(dest, op1, 31, 31);
 }
 
 /*
@@ -20587,9 +20587,9 @@ test_vslidedown_vx_u32m8_ta_vl31_31(vuint32m8_t op1)
 **  ret
 */
 vuint64m1_t 
-test_vslidedown_vx_u64m1_ta_0(vuint64m1_t op1, size_t vl)
+test_vslidedown_vx_u64m1_ta_0(vuint64m1_t dest, vuint64m1_t op1, size_t vl)
 {
-  return vslidedown_vx_u64m1_ta(op1, 0, vl);
+  return vslidedown_vx_u64m1_ta(dest, op1, 0, vl);
 }
 
 /*
@@ -20602,9 +20602,9 @@ test_vslidedown_vx_u64m1_ta_0(vuint64m1_t op1, size_t vl)
 **  ret
 */
 vuint64m1_t 
-test_vslidedown_vx_u64m1_ta_31(vuint64m1_t op1, size_t vl)
+test_vslidedown_vx_u64m1_ta_31(vuint64m1_t dest, vuint64m1_t op1, size_t vl)
 {
-  return vslidedown_vx_u64m1_ta(op1, 31, vl);
+  return vslidedown_vx_u64m1_ta(dest, op1, 31, vl);
 }
 
 /*
@@ -20617,9 +20617,9 @@ test_vslidedown_vx_u64m1_ta_31(vuint64m1_t op1, size_t vl)
 **  ret
 */
 vuint64m1_t 
-test_vslidedown_vx_u64m1_ta_vl31_0(vuint64m1_t op1)
+test_vslidedown_vx_u64m1_ta_vl31_0(vuint64m1_t dest, vuint64m1_t op1)
 {
-  return vslidedown_vx_u64m1_ta(op1, 0, 31);
+  return vslidedown_vx_u64m1_ta(dest, op1, 0, 31);
 }
 
 /*
@@ -20632,9 +20632,9 @@ test_vslidedown_vx_u64m1_ta_vl31_0(vuint64m1_t op1)
 **  ret
 */
 vuint64m1_t 
-test_vslidedown_vx_u64m1_ta_vl31_31(vuint64m1_t op1)
+test_vslidedown_vx_u64m1_ta_vl31_31(vuint64m1_t dest, vuint64m1_t op1)
 {
-  return vslidedown_vx_u64m1_ta(op1, 31, 31);
+  return vslidedown_vx_u64m1_ta(dest, op1, 31, 31);
 }
 
 /*
@@ -20647,9 +20647,9 @@ test_vslidedown_vx_u64m1_ta_vl31_31(vuint64m1_t op1)
 **  ret
 */
 vuint64m2_t 
-test_vslidedown_vx_u64m2_ta_0(vuint64m2_t op1, size_t vl)
+test_vslidedown_vx_u64m2_ta_0(vuint64m2_t dest, vuint64m2_t op1, size_t vl)
 {
-  return vslidedown_vx_u64m2_ta(op1, 0, vl);
+  return vslidedown_vx_u64m2_ta(dest, op1, 0, vl);
 }
 
 /*
@@ -20662,9 +20662,9 @@ test_vslidedown_vx_u64m2_ta_0(vuint64m2_t op1, size_t vl)
 **  ret
 */
 vuint64m2_t 
-test_vslidedown_vx_u64m2_ta_31(vuint64m2_t op1, size_t vl)
+test_vslidedown_vx_u64m2_ta_31(vuint64m2_t dest, vuint64m2_t op1, size_t vl)
 {
-  return vslidedown_vx_u64m2_ta(op1, 31, vl);
+  return vslidedown_vx_u64m2_ta(dest, op1, 31, vl);
 }
 
 /*
@@ -20677,9 +20677,9 @@ test_vslidedown_vx_u64m2_ta_31(vuint64m2_t op1, size_t vl)
 **  ret
 */
 vuint64m2_t 
-test_vslidedown_vx_u64m2_ta_vl31_0(vuint64m2_t op1)
+test_vslidedown_vx_u64m2_ta_vl31_0(vuint64m2_t dest, vuint64m2_t op1)
 {
-  return vslidedown_vx_u64m2_ta(op1, 0, 31);
+  return vslidedown_vx_u64m2_ta(dest, op1, 0, 31);
 }
 
 /*
@@ -20692,9 +20692,9 @@ test_vslidedown_vx_u64m2_ta_vl31_0(vuint64m2_t op1)
 **  ret
 */
 vuint64m2_t 
-test_vslidedown_vx_u64m2_ta_vl31_31(vuint64m2_t op1)
+test_vslidedown_vx_u64m2_ta_vl31_31(vuint64m2_t dest, vuint64m2_t op1)
 {
-  return vslidedown_vx_u64m2_ta(op1, 31, 31);
+  return vslidedown_vx_u64m2_ta(dest, op1, 31, 31);
 }
 
 /*
@@ -20707,9 +20707,9 @@ test_vslidedown_vx_u64m2_ta_vl31_31(vuint64m2_t op1)
 **  ret
 */
 vuint64m4_t 
-test_vslidedown_vx_u64m4_ta_0(vuint64m4_t op1, size_t vl)
+test_vslidedown_vx_u64m4_ta_0(vuint64m4_t dest, vuint64m4_t op1, size_t vl)
 {
-  return vslidedown_vx_u64m4_ta(op1, 0, vl);
+  return vslidedown_vx_u64m4_ta(dest, op1, 0, vl);
 }
 
 /*
@@ -20722,9 +20722,9 @@ test_vslidedown_vx_u64m4_ta_0(vuint64m4_t op1, size_t vl)
 **  ret
 */
 vuint64m4_t 
-test_vslidedown_vx_u64m4_ta_31(vuint64m4_t op1, size_t vl)
+test_vslidedown_vx_u64m4_ta_31(vuint64m4_t dest, vuint64m4_t op1, size_t vl)
 {
-  return vslidedown_vx_u64m4_ta(op1, 31, vl);
+  return vslidedown_vx_u64m4_ta(dest, op1, 31, vl);
 }
 
 /*
@@ -20737,9 +20737,9 @@ test_vslidedown_vx_u64m4_ta_31(vuint64m4_t op1, size_t vl)
 **  ret
 */
 vuint64m4_t 
-test_vslidedown_vx_u64m4_ta_vl31_0(vuint64m4_t op1)
+test_vslidedown_vx_u64m4_ta_vl31_0(vuint64m4_t dest, vuint64m4_t op1)
 {
-  return vslidedown_vx_u64m4_ta(op1, 0, 31);
+  return vslidedown_vx_u64m4_ta(dest, op1, 0, 31);
 }
 
 /*
@@ -20752,9 +20752,9 @@ test_vslidedown_vx_u64m4_ta_vl31_0(vuint64m4_t op1)
 **  ret
 */
 vuint64m4_t 
-test_vslidedown_vx_u64m4_ta_vl31_31(vuint64m4_t op1)
+test_vslidedown_vx_u64m4_ta_vl31_31(vuint64m4_t dest, vuint64m4_t op1)
 {
-  return vslidedown_vx_u64m4_ta(op1, 31, 31);
+  return vslidedown_vx_u64m4_ta(dest, op1, 31, 31);
 }
 
 /*
@@ -20767,9 +20767,9 @@ test_vslidedown_vx_u64m4_ta_vl31_31(vuint64m4_t op1)
 **  ret
 */
 vuint64m8_t 
-test_vslidedown_vx_u64m8_ta_0(vuint64m8_t op1, size_t vl)
+test_vslidedown_vx_u64m8_ta_0(vuint64m8_t dest, vuint64m8_t op1, size_t vl)
 {
-  return vslidedown_vx_u64m8_ta(op1, 0, vl);
+  return vslidedown_vx_u64m8_ta(dest, op1, 0, vl);
 }
 
 /*
@@ -20782,9 +20782,9 @@ test_vslidedown_vx_u64m8_ta_0(vuint64m8_t op1, size_t vl)
 **  ret
 */
 vuint64m8_t 
-test_vslidedown_vx_u64m8_ta_31(vuint64m8_t op1, size_t vl)
+test_vslidedown_vx_u64m8_ta_31(vuint64m8_t dest, vuint64m8_t op1, size_t vl)
 {
-  return vslidedown_vx_u64m8_ta(op1, 31, vl);
+  return vslidedown_vx_u64m8_ta(dest, op1, 31, vl);
 }
 
 /*
@@ -20797,9 +20797,9 @@ test_vslidedown_vx_u64m8_ta_31(vuint64m8_t op1, size_t vl)
 **  ret
 */
 vuint64m8_t 
-test_vslidedown_vx_u64m8_ta_vl31_0(vuint64m8_t op1)
+test_vslidedown_vx_u64m8_ta_vl31_0(vuint64m8_t dest, vuint64m8_t op1)
 {
-  return vslidedown_vx_u64m8_ta(op1, 0, 31);
+  return vslidedown_vx_u64m8_ta(dest, op1, 0, 31);
 }
 
 /*
@@ -20812,9 +20812,9 @@ test_vslidedown_vx_u64m8_ta_vl31_0(vuint64m8_t op1)
 **  ret
 */
 vuint64m8_t 
-test_vslidedown_vx_u64m8_ta_vl31_31(vuint64m8_t op1)
+test_vslidedown_vx_u64m8_ta_vl31_31(vuint64m8_t dest, vuint64m8_t op1)
 {
-  return vslidedown_vx_u64m8_ta(op1, 31, 31);
+  return vslidedown_vx_u64m8_ta(dest, op1, 31, 31);
 }
 
 /*
@@ -22237,7 +22237,7 @@ test_vslidedown_vx_u64m8_tu_vl31_31(vuint64m8_t dest, vuint64m8_t op1)
 vuint8mf8_t 
 test_vslidedown_vx_u8mf8_tama_0(vbool64_t mask, vuint8mf8_t maskedoff, vuint8mf8_t op1, size_t vl)
 {
-  return vslidedown_vx_u8mf8_tama(mask, op1, 0, vl);
+  return vslidedown_vx_u8mf8_tama(mask, op1, op1, 0, vl);
 }
 
 /*
@@ -22252,7 +22252,7 @@ test_vslidedown_vx_u8mf8_tama_0(vbool64_t mask, vuint8mf8_t maskedoff, vuint8mf8
 vuint8mf8_t 
 test_vslidedown_vx_u8mf8_tama_31(vbool64_t mask, vuint8mf8_t maskedoff, vuint8mf8_t op1, size_t vl)
 {
-  return vslidedown_vx_u8mf8_tama(mask, op1, 31, vl);
+  return vslidedown_vx_u8mf8_tama(mask, op1, op1, 31, vl);
 }
 
 /*
@@ -22267,7 +22267,7 @@ test_vslidedown_vx_u8mf8_tama_31(vbool64_t mask, vuint8mf8_t maskedoff, vuint8mf
 vuint8mf8_t 
 test_vslidedown_vx_u8mf8_tama_vl31_0(vbool64_t mask, vuint8mf8_t maskedoff, vuint8mf8_t op1)
 {
-  return vslidedown_vx_u8mf8_tama(mask, op1, 0, 31);
+  return vslidedown_vx_u8mf8_tama(mask, op1, op1, 0, 31);
 }
 
 /*
@@ -22282,7 +22282,7 @@ test_vslidedown_vx_u8mf8_tama_vl31_0(vbool64_t mask, vuint8mf8_t maskedoff, vuin
 vuint8mf8_t 
 test_vslidedown_vx_u8mf8_tama_vl31_31(vbool64_t mask, vuint8mf8_t maskedoff, vuint8mf8_t op1)
 {
-  return vslidedown_vx_u8mf8_tama(mask, op1, 31, 31);
+  return vslidedown_vx_u8mf8_tama(mask, op1, op1, 31, 31);
 }
 
 /*
@@ -22297,7 +22297,7 @@ test_vslidedown_vx_u8mf8_tama_vl31_31(vbool64_t mask, vuint8mf8_t maskedoff, vui
 vuint8mf4_t 
 test_vslidedown_vx_u8mf4_tama_0(vbool32_t mask, vuint8mf4_t maskedoff, vuint8mf4_t op1, size_t vl)
 {
-  return vslidedown_vx_u8mf4_tama(mask, op1, 0, vl);
+  return vslidedown_vx_u8mf4_tama(mask, op1, op1, 0, vl);
 }
 
 /*
@@ -22312,7 +22312,7 @@ test_vslidedown_vx_u8mf4_tama_0(vbool32_t mask, vuint8mf4_t maskedoff, vuint8mf4
 vuint8mf4_t 
 test_vslidedown_vx_u8mf4_tama_31(vbool32_t mask, vuint8mf4_t maskedoff, vuint8mf4_t op1, size_t vl)
 {
-  return vslidedown_vx_u8mf4_tama(mask, op1, 31, vl);
+  return vslidedown_vx_u8mf4_tama(mask, op1, op1, 31, vl);
 }
 
 /*
@@ -22327,7 +22327,7 @@ test_vslidedown_vx_u8mf4_tama_31(vbool32_t mask, vuint8mf4_t maskedoff, vuint8mf
 vuint8mf4_t 
 test_vslidedown_vx_u8mf4_tama_vl31_0(vbool32_t mask, vuint8mf4_t maskedoff, vuint8mf4_t op1)
 {
-  return vslidedown_vx_u8mf4_tama(mask, op1, 0, 31);
+  return vslidedown_vx_u8mf4_tama(mask, op1, op1, 0, 31);
 }
 
 /*
@@ -22342,7 +22342,7 @@ test_vslidedown_vx_u8mf4_tama_vl31_0(vbool32_t mask, vuint8mf4_t maskedoff, vuin
 vuint8mf4_t 
 test_vslidedown_vx_u8mf4_tama_vl31_31(vbool32_t mask, vuint8mf4_t maskedoff, vuint8mf4_t op1)
 {
-  return vslidedown_vx_u8mf4_tama(mask, op1, 31, 31);
+  return vslidedown_vx_u8mf4_tama(mask, op1, op1, 31, 31);
 }
 
 /*
@@ -22357,7 +22357,7 @@ test_vslidedown_vx_u8mf4_tama_vl31_31(vbool32_t mask, vuint8mf4_t maskedoff, vui
 vuint8mf2_t 
 test_vslidedown_vx_u8mf2_tama_0(vbool16_t mask, vuint8mf2_t maskedoff, vuint8mf2_t op1, size_t vl)
 {
-  return vslidedown_vx_u8mf2_tama(mask, op1, 0, vl);
+  return vslidedown_vx_u8mf2_tama(mask, op1, op1, 0, vl);
 }
 
 /*
@@ -22372,7 +22372,7 @@ test_vslidedown_vx_u8mf2_tama_0(vbool16_t mask, vuint8mf2_t maskedoff, vuint8mf2
 vuint8mf2_t 
 test_vslidedown_vx_u8mf2_tama_31(vbool16_t mask, vuint8mf2_t maskedoff, vuint8mf2_t op1, size_t vl)
 {
-  return vslidedown_vx_u8mf2_tama(mask, op1, 31, vl);
+  return vslidedown_vx_u8mf2_tama(mask, op1, op1, 31, vl);
 }
 
 /*
@@ -22387,7 +22387,7 @@ test_vslidedown_vx_u8mf2_tama_31(vbool16_t mask, vuint8mf2_t maskedoff, vuint8mf
 vuint8mf2_t 
 test_vslidedown_vx_u8mf2_tama_vl31_0(vbool16_t mask, vuint8mf2_t maskedoff, vuint8mf2_t op1)
 {
-  return vslidedown_vx_u8mf2_tama(mask, op1, 0, 31);
+  return vslidedown_vx_u8mf2_tama(mask, op1, op1, 0, 31);
 }
 
 /*
@@ -22402,7 +22402,7 @@ test_vslidedown_vx_u8mf2_tama_vl31_0(vbool16_t mask, vuint8mf2_t maskedoff, vuin
 vuint8mf2_t 
 test_vslidedown_vx_u8mf2_tama_vl31_31(vbool16_t mask, vuint8mf2_t maskedoff, vuint8mf2_t op1)
 {
-  return vslidedown_vx_u8mf2_tama(mask, op1, 31, 31);
+  return vslidedown_vx_u8mf2_tama(mask, op1, op1, 31, 31);
 }
 
 /*
@@ -22417,7 +22417,7 @@ test_vslidedown_vx_u8mf2_tama_vl31_31(vbool16_t mask, vuint8mf2_t maskedoff, vui
 vuint8m1_t 
 test_vslidedown_vx_u8m1_tama_0(vbool8_t mask, vuint8m1_t maskedoff, vuint8m1_t op1, size_t vl)
 {
-  return vslidedown_vx_u8m1_tama(mask, op1, 0, vl);
+  return vslidedown_vx_u8m1_tama(mask, op1, op1, 0, vl);
 }
 
 /*
@@ -22432,7 +22432,7 @@ test_vslidedown_vx_u8m1_tama_0(vbool8_t mask, vuint8m1_t maskedoff, vuint8m1_t o
 vuint8m1_t 
 test_vslidedown_vx_u8m1_tama_31(vbool8_t mask, vuint8m1_t maskedoff, vuint8m1_t op1, size_t vl)
 {
-  return vslidedown_vx_u8m1_tama(mask, op1, 31, vl);
+  return vslidedown_vx_u8m1_tama(mask, op1, op1, 31, vl);
 }
 
 /*
@@ -22447,7 +22447,7 @@ test_vslidedown_vx_u8m1_tama_31(vbool8_t mask, vuint8m1_t maskedoff, vuint8m1_t 
 vuint8m1_t 
 test_vslidedown_vx_u8m1_tama_vl31_0(vbool8_t mask, vuint8m1_t maskedoff, vuint8m1_t op1)
 {
-  return vslidedown_vx_u8m1_tama(mask, op1, 0, 31);
+  return vslidedown_vx_u8m1_tama(mask, op1, op1, 0, 31);
 }
 
 /*
@@ -22462,7 +22462,7 @@ test_vslidedown_vx_u8m1_tama_vl31_0(vbool8_t mask, vuint8m1_t maskedoff, vuint8m
 vuint8m1_t 
 test_vslidedown_vx_u8m1_tama_vl31_31(vbool8_t mask, vuint8m1_t maskedoff, vuint8m1_t op1)
 {
-  return vslidedown_vx_u8m1_tama(mask, op1, 31, 31);
+  return vslidedown_vx_u8m1_tama(mask, op1, op1, 31, 31);
 }
 
 /*
@@ -22477,7 +22477,7 @@ test_vslidedown_vx_u8m1_tama_vl31_31(vbool8_t mask, vuint8m1_t maskedoff, vuint8
 vuint8m2_t 
 test_vslidedown_vx_u8m2_tama_0(vbool4_t mask, vuint8m2_t maskedoff, vuint8m2_t op1, size_t vl)
 {
-  return vslidedown_vx_u8m2_tama(mask, op1, 0, vl);
+  return vslidedown_vx_u8m2_tama(mask, op1, op1, 0, vl);
 }
 
 /*
@@ -22492,7 +22492,7 @@ test_vslidedown_vx_u8m2_tama_0(vbool4_t mask, vuint8m2_t maskedoff, vuint8m2_t o
 vuint8m2_t 
 test_vslidedown_vx_u8m2_tama_31(vbool4_t mask, vuint8m2_t maskedoff, vuint8m2_t op1, size_t vl)
 {
-  return vslidedown_vx_u8m2_tama(mask, op1, 31, vl);
+  return vslidedown_vx_u8m2_tama(mask, op1, op1, 31, vl);
 }
 
 /*
@@ -22507,7 +22507,7 @@ test_vslidedown_vx_u8m2_tama_31(vbool4_t mask, vuint8m2_t maskedoff, vuint8m2_t 
 vuint8m2_t 
 test_vslidedown_vx_u8m2_tama_vl31_0(vbool4_t mask, vuint8m2_t maskedoff, vuint8m2_t op1)
 {
-  return vslidedown_vx_u8m2_tama(mask, op1, 0, 31);
+  return vslidedown_vx_u8m2_tama(mask, op1, op1, 0, 31);
 }
 
 /*
@@ -22522,7 +22522,7 @@ test_vslidedown_vx_u8m2_tama_vl31_0(vbool4_t mask, vuint8m2_t maskedoff, vuint8m
 vuint8m2_t 
 test_vslidedown_vx_u8m2_tama_vl31_31(vbool4_t mask, vuint8m2_t maskedoff, vuint8m2_t op1)
 {
-  return vslidedown_vx_u8m2_tama(mask, op1, 31, 31);
+  return vslidedown_vx_u8m2_tama(mask, op1, op1, 31, 31);
 }
 
 /*
@@ -22537,7 +22537,7 @@ test_vslidedown_vx_u8m2_tama_vl31_31(vbool4_t mask, vuint8m2_t maskedoff, vuint8
 vuint8m4_t 
 test_vslidedown_vx_u8m4_tama_0(vbool2_t mask, vuint8m4_t maskedoff, vuint8m4_t op1, size_t vl)
 {
-  return vslidedown_vx_u8m4_tama(mask, op1, 0, vl);
+  return vslidedown_vx_u8m4_tama(mask, op1, op1, 0, vl);
 }
 
 /*
@@ -22552,7 +22552,7 @@ test_vslidedown_vx_u8m4_tama_0(vbool2_t mask, vuint8m4_t maskedoff, vuint8m4_t o
 vuint8m4_t 
 test_vslidedown_vx_u8m4_tama_31(vbool2_t mask, vuint8m4_t maskedoff, vuint8m4_t op1, size_t vl)
 {
-  return vslidedown_vx_u8m4_tama(mask, op1, 31, vl);
+  return vslidedown_vx_u8m4_tama(mask, op1, op1, 31, vl);
 }
 
 /*
@@ -22567,7 +22567,7 @@ test_vslidedown_vx_u8m4_tama_31(vbool2_t mask, vuint8m4_t maskedoff, vuint8m4_t 
 vuint8m4_t 
 test_vslidedown_vx_u8m4_tama_vl31_0(vbool2_t mask, vuint8m4_t maskedoff, vuint8m4_t op1)
 {
-  return vslidedown_vx_u8m4_tama(mask, op1, 0, 31);
+  return vslidedown_vx_u8m4_tama(mask, op1, op1, 0, 31);
 }
 
 /*
@@ -22582,7 +22582,7 @@ test_vslidedown_vx_u8m4_tama_vl31_0(vbool2_t mask, vuint8m4_t maskedoff, vuint8m
 vuint8m4_t 
 test_vslidedown_vx_u8m4_tama_vl31_31(vbool2_t mask, vuint8m4_t maskedoff, vuint8m4_t op1)
 {
-  return vslidedown_vx_u8m4_tama(mask, op1, 31, 31);
+  return vslidedown_vx_u8m4_tama(mask, op1, op1, 31, 31);
 }
 
 /*
@@ -22597,7 +22597,7 @@ test_vslidedown_vx_u8m4_tama_vl31_31(vbool2_t mask, vuint8m4_t maskedoff, vuint8
 vuint8m8_t 
 test_vslidedown_vx_u8m8_tama_0(vbool1_t mask, vuint8m8_t maskedoff, vuint8m8_t op1, size_t vl)
 {
-  return vslidedown_vx_u8m8_tama(mask, op1, 0, vl);
+  return vslidedown_vx_u8m8_tama(mask, op1, op1, 0, vl);
 }
 
 /*
@@ -22612,7 +22612,7 @@ test_vslidedown_vx_u8m8_tama_0(vbool1_t mask, vuint8m8_t maskedoff, vuint8m8_t o
 vuint8m8_t 
 test_vslidedown_vx_u8m8_tama_31(vbool1_t mask, vuint8m8_t maskedoff, vuint8m8_t op1, size_t vl)
 {
-  return vslidedown_vx_u8m8_tama(mask, op1, 31, vl);
+  return vslidedown_vx_u8m8_tama(mask, op1, op1, 31, vl);
 }
 
 /*
@@ -22627,7 +22627,7 @@ test_vslidedown_vx_u8m8_tama_31(vbool1_t mask, vuint8m8_t maskedoff, vuint8m8_t 
 vuint8m8_t 
 test_vslidedown_vx_u8m8_tama_vl31_0(vbool1_t mask, vuint8m8_t maskedoff, vuint8m8_t op1)
 {
-  return vslidedown_vx_u8m8_tama(mask, op1, 0, 31);
+  return vslidedown_vx_u8m8_tama(mask, op1, op1, 0, 31);
 }
 
 /*
@@ -22642,7 +22642,7 @@ test_vslidedown_vx_u8m8_tama_vl31_0(vbool1_t mask, vuint8m8_t maskedoff, vuint8m
 vuint8m8_t 
 test_vslidedown_vx_u8m8_tama_vl31_31(vbool1_t mask, vuint8m8_t maskedoff, vuint8m8_t op1)
 {
-  return vslidedown_vx_u8m8_tama(mask, op1, 31, 31);
+  return vslidedown_vx_u8m8_tama(mask, op1, op1, 31, 31);
 }
 
 /*
@@ -22657,7 +22657,7 @@ test_vslidedown_vx_u8m8_tama_vl31_31(vbool1_t mask, vuint8m8_t maskedoff, vuint8
 vuint16mf4_t 
 test_vslidedown_vx_u16mf4_tama_0(vbool64_t mask, vuint16mf4_t maskedoff, vuint16mf4_t op1, size_t vl)
 {
-  return vslidedown_vx_u16mf4_tama(mask, op1, 0, vl);
+  return vslidedown_vx_u16mf4_tama(mask, op1, op1, 0, vl);
 }
 
 /*
@@ -22672,7 +22672,7 @@ test_vslidedown_vx_u16mf4_tama_0(vbool64_t mask, vuint16mf4_t maskedoff, vuint16
 vuint16mf4_t 
 test_vslidedown_vx_u16mf4_tama_31(vbool64_t mask, vuint16mf4_t maskedoff, vuint16mf4_t op1, size_t vl)
 {
-  return vslidedown_vx_u16mf4_tama(mask, op1, 31, vl);
+  return vslidedown_vx_u16mf4_tama(mask, op1, op1, 31, vl);
 }
 
 /*
@@ -22687,7 +22687,7 @@ test_vslidedown_vx_u16mf4_tama_31(vbool64_t mask, vuint16mf4_t maskedoff, vuint1
 vuint16mf4_t 
 test_vslidedown_vx_u16mf4_tama_vl31_0(vbool64_t mask, vuint16mf4_t maskedoff, vuint16mf4_t op1)
 {
-  return vslidedown_vx_u16mf4_tama(mask, op1, 0, 31);
+  return vslidedown_vx_u16mf4_tama(mask, op1, op1, 0, 31);
 }
 
 /*
@@ -22702,7 +22702,7 @@ test_vslidedown_vx_u16mf4_tama_vl31_0(vbool64_t mask, vuint16mf4_t maskedoff, vu
 vuint16mf4_t 
 test_vslidedown_vx_u16mf4_tama_vl31_31(vbool64_t mask, vuint16mf4_t maskedoff, vuint16mf4_t op1)
 {
-  return vslidedown_vx_u16mf4_tama(mask, op1, 31, 31);
+  return vslidedown_vx_u16mf4_tama(mask, op1, op1, 31, 31);
 }
 
 /*
@@ -22717,7 +22717,7 @@ test_vslidedown_vx_u16mf4_tama_vl31_31(vbool64_t mask, vuint16mf4_t maskedoff, v
 vuint16mf2_t 
 test_vslidedown_vx_u16mf2_tama_0(vbool32_t mask, vuint16mf2_t maskedoff, vuint16mf2_t op1, size_t vl)
 {
-  return vslidedown_vx_u16mf2_tama(mask, op1, 0, vl);
+  return vslidedown_vx_u16mf2_tama(mask, op1, op1, 0, vl);
 }
 
 /*
@@ -22732,7 +22732,7 @@ test_vslidedown_vx_u16mf2_tama_0(vbool32_t mask, vuint16mf2_t maskedoff, vuint16
 vuint16mf2_t 
 test_vslidedown_vx_u16mf2_tama_31(vbool32_t mask, vuint16mf2_t maskedoff, vuint16mf2_t op1, size_t vl)
 {
-  return vslidedown_vx_u16mf2_tama(mask, op1, 31, vl);
+  return vslidedown_vx_u16mf2_tama(mask, op1, op1, 31, vl);
 }
 
 /*
@@ -22747,7 +22747,7 @@ test_vslidedown_vx_u16mf2_tama_31(vbool32_t mask, vuint16mf2_t maskedoff, vuint1
 vuint16mf2_t 
 test_vslidedown_vx_u16mf2_tama_vl31_0(vbool32_t mask, vuint16mf2_t maskedoff, vuint16mf2_t op1)
 {
-  return vslidedown_vx_u16mf2_tama(mask, op1, 0, 31);
+  return vslidedown_vx_u16mf2_tama(mask, op1, op1, 0, 31);
 }
 
 /*
@@ -22762,7 +22762,7 @@ test_vslidedown_vx_u16mf2_tama_vl31_0(vbool32_t mask, vuint16mf2_t maskedoff, vu
 vuint16mf2_t 
 test_vslidedown_vx_u16mf2_tama_vl31_31(vbool32_t mask, vuint16mf2_t maskedoff, vuint16mf2_t op1)
 {
-  return vslidedown_vx_u16mf2_tama(mask, op1, 31, 31);
+  return vslidedown_vx_u16mf2_tama(mask, op1, op1, 31, 31);
 }
 
 /*
@@ -22777,7 +22777,7 @@ test_vslidedown_vx_u16mf2_tama_vl31_31(vbool32_t mask, vuint16mf2_t maskedoff, v
 vuint16m1_t 
 test_vslidedown_vx_u16m1_tama_0(vbool16_t mask, vuint16m1_t maskedoff, vuint16m1_t op1, size_t vl)
 {
-  return vslidedown_vx_u16m1_tama(mask, op1, 0, vl);
+  return vslidedown_vx_u16m1_tama(mask, op1, op1, 0, vl);
 }
 
 /*
@@ -22792,7 +22792,7 @@ test_vslidedown_vx_u16m1_tama_0(vbool16_t mask, vuint16m1_t maskedoff, vuint16m1
 vuint16m1_t 
 test_vslidedown_vx_u16m1_tama_31(vbool16_t mask, vuint16m1_t maskedoff, vuint16m1_t op1, size_t vl)
 {
-  return vslidedown_vx_u16m1_tama(mask, op1, 31, vl);
+  return vslidedown_vx_u16m1_tama(mask, op1, op1, 31, vl);
 }
 
 /*
@@ -22807,7 +22807,7 @@ test_vslidedown_vx_u16m1_tama_31(vbool16_t mask, vuint16m1_t maskedoff, vuint16m
 vuint16m1_t 
 test_vslidedown_vx_u16m1_tama_vl31_0(vbool16_t mask, vuint16m1_t maskedoff, vuint16m1_t op1)
 {
-  return vslidedown_vx_u16m1_tama(mask, op1, 0, 31);
+  return vslidedown_vx_u16m1_tama(mask, op1, op1, 0, 31);
 }
 
 /*
@@ -22822,7 +22822,7 @@ test_vslidedown_vx_u16m1_tama_vl31_0(vbool16_t mask, vuint16m1_t maskedoff, vuin
 vuint16m1_t 
 test_vslidedown_vx_u16m1_tama_vl31_31(vbool16_t mask, vuint16m1_t maskedoff, vuint16m1_t op1)
 {
-  return vslidedown_vx_u16m1_tama(mask, op1, 31, 31);
+  return vslidedown_vx_u16m1_tama(mask, op1, op1, 31, 31);
 }
 
 /*
@@ -22837,7 +22837,7 @@ test_vslidedown_vx_u16m1_tama_vl31_31(vbool16_t mask, vuint16m1_t maskedoff, vui
 vuint16m2_t 
 test_vslidedown_vx_u16m2_tama_0(vbool8_t mask, vuint16m2_t maskedoff, vuint16m2_t op1, size_t vl)
 {
-  return vslidedown_vx_u16m2_tama(mask, op1, 0, vl);
+  return vslidedown_vx_u16m2_tama(mask, op1, op1, 0, vl);
 }
 
 /*
@@ -22852,7 +22852,7 @@ test_vslidedown_vx_u16m2_tama_0(vbool8_t mask, vuint16m2_t maskedoff, vuint16m2_
 vuint16m2_t 
 test_vslidedown_vx_u16m2_tama_31(vbool8_t mask, vuint16m2_t maskedoff, vuint16m2_t op1, size_t vl)
 {
-  return vslidedown_vx_u16m2_tama(mask, op1, 31, vl);
+  return vslidedown_vx_u16m2_tama(mask, op1, op1, 31, vl);
 }
 
 /*
@@ -22867,7 +22867,7 @@ test_vslidedown_vx_u16m2_tama_31(vbool8_t mask, vuint16m2_t maskedoff, vuint16m2
 vuint16m2_t 
 test_vslidedown_vx_u16m2_tama_vl31_0(vbool8_t mask, vuint16m2_t maskedoff, vuint16m2_t op1)
 {
-  return vslidedown_vx_u16m2_tama(mask, op1, 0, 31);
+  return vslidedown_vx_u16m2_tama(mask, op1, op1, 0, 31);
 }
 
 /*
@@ -22882,7 +22882,7 @@ test_vslidedown_vx_u16m2_tama_vl31_0(vbool8_t mask, vuint16m2_t maskedoff, vuint
 vuint16m2_t 
 test_vslidedown_vx_u16m2_tama_vl31_31(vbool8_t mask, vuint16m2_t maskedoff, vuint16m2_t op1)
 {
-  return vslidedown_vx_u16m2_tama(mask, op1, 31, 31);
+  return vslidedown_vx_u16m2_tama(mask, op1, op1, 31, 31);
 }
 
 /*
@@ -22897,7 +22897,7 @@ test_vslidedown_vx_u16m2_tama_vl31_31(vbool8_t mask, vuint16m2_t maskedoff, vuin
 vuint16m4_t 
 test_vslidedown_vx_u16m4_tama_0(vbool4_t mask, vuint16m4_t maskedoff, vuint16m4_t op1, size_t vl)
 {
-  return vslidedown_vx_u16m4_tama(mask, op1, 0, vl);
+  return vslidedown_vx_u16m4_tama(mask, op1, op1, 0, vl);
 }
 
 /*
@@ -22912,7 +22912,7 @@ test_vslidedown_vx_u16m4_tama_0(vbool4_t mask, vuint16m4_t maskedoff, vuint16m4_
 vuint16m4_t 
 test_vslidedown_vx_u16m4_tama_31(vbool4_t mask, vuint16m4_t maskedoff, vuint16m4_t op1, size_t vl)
 {
-  return vslidedown_vx_u16m4_tama(mask, op1, 31, vl);
+  return vslidedown_vx_u16m4_tama(mask, op1, op1, 31, vl);
 }
 
 /*
@@ -22927,7 +22927,7 @@ test_vslidedown_vx_u16m4_tama_31(vbool4_t mask, vuint16m4_t maskedoff, vuint16m4
 vuint16m4_t 
 test_vslidedown_vx_u16m4_tama_vl31_0(vbool4_t mask, vuint16m4_t maskedoff, vuint16m4_t op1)
 {
-  return vslidedown_vx_u16m4_tama(mask, op1, 0, 31);
+  return vslidedown_vx_u16m4_tama(mask, op1, op1, 0, 31);
 }
 
 /*
@@ -22942,7 +22942,7 @@ test_vslidedown_vx_u16m4_tama_vl31_0(vbool4_t mask, vuint16m4_t maskedoff, vuint
 vuint16m4_t 
 test_vslidedown_vx_u16m4_tama_vl31_31(vbool4_t mask, vuint16m4_t maskedoff, vuint16m4_t op1)
 {
-  return vslidedown_vx_u16m4_tama(mask, op1, 31, 31);
+  return vslidedown_vx_u16m4_tama(mask, op1, op1, 31, 31);
 }
 
 /*
@@ -22957,7 +22957,7 @@ test_vslidedown_vx_u16m4_tama_vl31_31(vbool4_t mask, vuint16m4_t maskedoff, vuin
 vuint16m8_t 
 test_vslidedown_vx_u16m8_tama_0(vbool2_t mask, vuint16m8_t maskedoff, vuint16m8_t op1, size_t vl)
 {
-  return vslidedown_vx_u16m8_tama(mask, op1, 0, vl);
+  return vslidedown_vx_u16m8_tama(mask, op1, op1, 0, vl);
 }
 
 /*
@@ -22972,7 +22972,7 @@ test_vslidedown_vx_u16m8_tama_0(vbool2_t mask, vuint16m8_t maskedoff, vuint16m8_
 vuint16m8_t 
 test_vslidedown_vx_u16m8_tama_31(vbool2_t mask, vuint16m8_t maskedoff, vuint16m8_t op1, size_t vl)
 {
-  return vslidedown_vx_u16m8_tama(mask, op1, 31, vl);
+  return vslidedown_vx_u16m8_tama(mask, op1, op1, 31, vl);
 }
 
 /*
@@ -22987,7 +22987,7 @@ test_vslidedown_vx_u16m8_tama_31(vbool2_t mask, vuint16m8_t maskedoff, vuint16m8
 vuint16m8_t 
 test_vslidedown_vx_u16m8_tama_vl31_0(vbool2_t mask, vuint16m8_t maskedoff, vuint16m8_t op1)
 {
-  return vslidedown_vx_u16m8_tama(mask, op1, 0, 31);
+  return vslidedown_vx_u16m8_tama(mask, op1, op1, 0, 31);
 }
 
 /*
@@ -23002,7 +23002,7 @@ test_vslidedown_vx_u16m8_tama_vl31_0(vbool2_t mask, vuint16m8_t maskedoff, vuint
 vuint16m8_t 
 test_vslidedown_vx_u16m8_tama_vl31_31(vbool2_t mask, vuint16m8_t maskedoff, vuint16m8_t op1)
 {
-  return vslidedown_vx_u16m8_tama(mask, op1, 31, 31);
+  return vslidedown_vx_u16m8_tama(mask, op1, op1, 31, 31);
 }
 
 /*
@@ -23017,7 +23017,7 @@ test_vslidedown_vx_u16m8_tama_vl31_31(vbool2_t mask, vuint16m8_t maskedoff, vuin
 vuint32mf2_t 
 test_vslidedown_vx_u32mf2_tama_0(vbool64_t mask, vuint32mf2_t maskedoff, vuint32mf2_t op1, size_t vl)
 {
-  return vslidedown_vx_u32mf2_tama(mask, op1, 0, vl);
+  return vslidedown_vx_u32mf2_tama(mask, op1, op1, 0, vl);
 }
 
 /*
@@ -23032,7 +23032,7 @@ test_vslidedown_vx_u32mf2_tama_0(vbool64_t mask, vuint32mf2_t maskedoff, vuint32
 vuint32mf2_t 
 test_vslidedown_vx_u32mf2_tama_31(vbool64_t mask, vuint32mf2_t maskedoff, vuint32mf2_t op1, size_t vl)
 {
-  return vslidedown_vx_u32mf2_tama(mask, op1, 31, vl);
+  return vslidedown_vx_u32mf2_tama(mask, op1, op1, 31, vl);
 }
 
 /*
@@ -23047,7 +23047,7 @@ test_vslidedown_vx_u32mf2_tama_31(vbool64_t mask, vuint32mf2_t maskedoff, vuint3
 vuint32mf2_t 
 test_vslidedown_vx_u32mf2_tama_vl31_0(vbool64_t mask, vuint32mf2_t maskedoff, vuint32mf2_t op1)
 {
-  return vslidedown_vx_u32mf2_tama(mask, op1, 0, 31);
+  return vslidedown_vx_u32mf2_tama(mask, op1, op1, 0, 31);
 }
 
 /*
@@ -23062,7 +23062,7 @@ test_vslidedown_vx_u32mf2_tama_vl31_0(vbool64_t mask, vuint32mf2_t maskedoff, vu
 vuint32mf2_t 
 test_vslidedown_vx_u32mf2_tama_vl31_31(vbool64_t mask, vuint32mf2_t maskedoff, vuint32mf2_t op1)
 {
-  return vslidedown_vx_u32mf2_tama(mask, op1, 31, 31);
+  return vslidedown_vx_u32mf2_tama(mask, op1, op1, 31, 31);
 }
 
 /*
@@ -23077,7 +23077,7 @@ test_vslidedown_vx_u32mf2_tama_vl31_31(vbool64_t mask, vuint32mf2_t maskedoff, v
 vuint32m1_t 
 test_vslidedown_vx_u32m1_tama_0(vbool32_t mask, vuint32m1_t maskedoff, vuint32m1_t op1, size_t vl)
 {
-  return vslidedown_vx_u32m1_tama(mask, op1, 0, vl);
+  return vslidedown_vx_u32m1_tama(mask, op1, op1, 0, vl);
 }
 
 /*
@@ -23092,7 +23092,7 @@ test_vslidedown_vx_u32m1_tama_0(vbool32_t mask, vuint32m1_t maskedoff, vuint32m1
 vuint32m1_t 
 test_vslidedown_vx_u32m1_tama_31(vbool32_t mask, vuint32m1_t maskedoff, vuint32m1_t op1, size_t vl)
 {
-  return vslidedown_vx_u32m1_tama(mask, op1, 31, vl);
+  return vslidedown_vx_u32m1_tama(mask, op1, op1, 31, vl);
 }
 
 /*
@@ -23107,7 +23107,7 @@ test_vslidedown_vx_u32m1_tama_31(vbool32_t mask, vuint32m1_t maskedoff, vuint32m
 vuint32m1_t 
 test_vslidedown_vx_u32m1_tama_vl31_0(vbool32_t mask, vuint32m1_t maskedoff, vuint32m1_t op1)
 {
-  return vslidedown_vx_u32m1_tama(mask, op1, 0, 31);
+  return vslidedown_vx_u32m1_tama(mask, op1, op1, 0, 31);
 }
 
 /*
@@ -23122,7 +23122,7 @@ test_vslidedown_vx_u32m1_tama_vl31_0(vbool32_t mask, vuint32m1_t maskedoff, vuin
 vuint32m1_t 
 test_vslidedown_vx_u32m1_tama_vl31_31(vbool32_t mask, vuint32m1_t maskedoff, vuint32m1_t op1)
 {
-  return vslidedown_vx_u32m1_tama(mask, op1, 31, 31);
+  return vslidedown_vx_u32m1_tama(mask, op1, op1, 31, 31);
 }
 
 /*
@@ -23137,7 +23137,7 @@ test_vslidedown_vx_u32m1_tama_vl31_31(vbool32_t mask, vuint32m1_t maskedoff, vui
 vuint32m2_t 
 test_vslidedown_vx_u32m2_tama_0(vbool16_t mask, vuint32m2_t maskedoff, vuint32m2_t op1, size_t vl)
 {
-  return vslidedown_vx_u32m2_tama(mask, op1, 0, vl);
+  return vslidedown_vx_u32m2_tama(mask, op1, op1, 0, vl);
 }
 
 /*
@@ -23152,7 +23152,7 @@ test_vslidedown_vx_u32m2_tama_0(vbool16_t mask, vuint32m2_t maskedoff, vuint32m2
 vuint32m2_t 
 test_vslidedown_vx_u32m2_tama_31(vbool16_t mask, vuint32m2_t maskedoff, vuint32m2_t op1, size_t vl)
 {
-  return vslidedown_vx_u32m2_tama(mask, op1, 31, vl);
+  return vslidedown_vx_u32m2_tama(mask, op1, op1, 31, vl);
 }
 
 /*
@@ -23167,7 +23167,7 @@ test_vslidedown_vx_u32m2_tama_31(vbool16_t mask, vuint32m2_t maskedoff, vuint32m
 vuint32m2_t 
 test_vslidedown_vx_u32m2_tama_vl31_0(vbool16_t mask, vuint32m2_t maskedoff, vuint32m2_t op1)
 {
-  return vslidedown_vx_u32m2_tama(mask, op1, 0, 31);
+  return vslidedown_vx_u32m2_tama(mask, op1, op1, 0, 31);
 }
 
 /*
@@ -23182,7 +23182,7 @@ test_vslidedown_vx_u32m2_tama_vl31_0(vbool16_t mask, vuint32m2_t maskedoff, vuin
 vuint32m2_t 
 test_vslidedown_vx_u32m2_tama_vl31_31(vbool16_t mask, vuint32m2_t maskedoff, vuint32m2_t op1)
 {
-  return vslidedown_vx_u32m2_tama(mask, op1, 31, 31);
+  return vslidedown_vx_u32m2_tama(mask, op1, op1, 31, 31);
 }
 
 /*
@@ -23197,7 +23197,7 @@ test_vslidedown_vx_u32m2_tama_vl31_31(vbool16_t mask, vuint32m2_t maskedoff, vui
 vuint32m4_t 
 test_vslidedown_vx_u32m4_tama_0(vbool8_t mask, vuint32m4_t maskedoff, vuint32m4_t op1, size_t vl)
 {
-  return vslidedown_vx_u32m4_tama(mask, op1, 0, vl);
+  return vslidedown_vx_u32m4_tama(mask, op1, op1, 0, vl);
 }
 
 /*
@@ -23212,7 +23212,7 @@ test_vslidedown_vx_u32m4_tama_0(vbool8_t mask, vuint32m4_t maskedoff, vuint32m4_
 vuint32m4_t 
 test_vslidedown_vx_u32m4_tama_31(vbool8_t mask, vuint32m4_t maskedoff, vuint32m4_t op1, size_t vl)
 {
-  return vslidedown_vx_u32m4_tama(mask, op1, 31, vl);
+  return vslidedown_vx_u32m4_tama(mask, op1, op1, 31, vl);
 }
 
 /*
@@ -23227,7 +23227,7 @@ test_vslidedown_vx_u32m4_tama_31(vbool8_t mask, vuint32m4_t maskedoff, vuint32m4
 vuint32m4_t 
 test_vslidedown_vx_u32m4_tama_vl31_0(vbool8_t mask, vuint32m4_t maskedoff, vuint32m4_t op1)
 {
-  return vslidedown_vx_u32m4_tama(mask, op1, 0, 31);
+  return vslidedown_vx_u32m4_tama(mask, op1, op1, 0, 31);
 }
 
 /*
@@ -23242,7 +23242,7 @@ test_vslidedown_vx_u32m4_tama_vl31_0(vbool8_t mask, vuint32m4_t maskedoff, vuint
 vuint32m4_t 
 test_vslidedown_vx_u32m4_tama_vl31_31(vbool8_t mask, vuint32m4_t maskedoff, vuint32m4_t op1)
 {
-  return vslidedown_vx_u32m4_tama(mask, op1, 31, 31);
+  return vslidedown_vx_u32m4_tama(mask, op1, op1, 31, 31);
 }
 
 /*
@@ -23257,7 +23257,7 @@ test_vslidedown_vx_u32m4_tama_vl31_31(vbool8_t mask, vuint32m4_t maskedoff, vuin
 vuint32m8_t 
 test_vslidedown_vx_u32m8_tama_0(vbool4_t mask, vuint32m8_t maskedoff, vuint32m8_t op1, size_t vl)
 {
-  return vslidedown_vx_u32m8_tama(mask, op1, 0, vl);
+  return vslidedown_vx_u32m8_tama(mask, op1, op1, 0, vl);
 }
 
 /*
@@ -23272,7 +23272,7 @@ test_vslidedown_vx_u32m8_tama_0(vbool4_t mask, vuint32m8_t maskedoff, vuint32m8_
 vuint32m8_t 
 test_vslidedown_vx_u32m8_tama_31(vbool4_t mask, vuint32m8_t maskedoff, vuint32m8_t op1, size_t vl)
 {
-  return vslidedown_vx_u32m8_tama(mask, op1, 31, vl);
+  return vslidedown_vx_u32m8_tama(mask, op1, op1, 31, vl);
 }
 
 /*
@@ -23287,7 +23287,7 @@ test_vslidedown_vx_u32m8_tama_31(vbool4_t mask, vuint32m8_t maskedoff, vuint32m8
 vuint32m8_t 
 test_vslidedown_vx_u32m8_tama_vl31_0(vbool4_t mask, vuint32m8_t maskedoff, vuint32m8_t op1)
 {
-  return vslidedown_vx_u32m8_tama(mask, op1, 0, 31);
+  return vslidedown_vx_u32m8_tama(mask, op1, op1, 0, 31);
 }
 
 /*
@@ -23302,7 +23302,7 @@ test_vslidedown_vx_u32m8_tama_vl31_0(vbool4_t mask, vuint32m8_t maskedoff, vuint
 vuint32m8_t 
 test_vslidedown_vx_u32m8_tama_vl31_31(vbool4_t mask, vuint32m8_t maskedoff, vuint32m8_t op1)
 {
-  return vslidedown_vx_u32m8_tama(mask, op1, 31, 31);
+  return vslidedown_vx_u32m8_tama(mask, op1, op1, 31, 31);
 }
 
 /*
@@ -23317,7 +23317,7 @@ test_vslidedown_vx_u32m8_tama_vl31_31(vbool4_t mask, vuint32m8_t maskedoff, vuin
 vuint64m1_t 
 test_vslidedown_vx_u64m1_tama_0(vbool64_t mask, vuint64m1_t maskedoff, vuint64m1_t op1, size_t vl)
 {
-  return vslidedown_vx_u64m1_tama(mask, op1, 0, vl);
+  return vslidedown_vx_u64m1_tama(mask, op1, op1, 0, vl);
 }
 
 /*
@@ -23332,7 +23332,7 @@ test_vslidedown_vx_u64m1_tama_0(vbool64_t mask, vuint64m1_t maskedoff, vuint64m1
 vuint64m1_t 
 test_vslidedown_vx_u64m1_tama_31(vbool64_t mask, vuint64m1_t maskedoff, vuint64m1_t op1, size_t vl)
 {
-  return vslidedown_vx_u64m1_tama(mask, op1, 31, vl);
+  return vslidedown_vx_u64m1_tama(mask, op1, op1, 31, vl);
 }
 
 /*
@@ -23347,7 +23347,7 @@ test_vslidedown_vx_u64m1_tama_31(vbool64_t mask, vuint64m1_t maskedoff, vuint64m
 vuint64m1_t 
 test_vslidedown_vx_u64m1_tama_vl31_0(vbool64_t mask, vuint64m1_t maskedoff, vuint64m1_t op1)
 {
-  return vslidedown_vx_u64m1_tama(mask, op1, 0, 31);
+  return vslidedown_vx_u64m1_tama(mask, op1, op1, 0, 31);
 }
 
 /*
@@ -23362,7 +23362,7 @@ test_vslidedown_vx_u64m1_tama_vl31_0(vbool64_t mask, vuint64m1_t maskedoff, vuin
 vuint64m1_t 
 test_vslidedown_vx_u64m1_tama_vl31_31(vbool64_t mask, vuint64m1_t maskedoff, vuint64m1_t op1)
 {
-  return vslidedown_vx_u64m1_tama(mask, op1, 31, 31);
+  return vslidedown_vx_u64m1_tama(mask, op1, op1, 31, 31);
 }
 
 /*
@@ -23377,7 +23377,7 @@ test_vslidedown_vx_u64m1_tama_vl31_31(vbool64_t mask, vuint64m1_t maskedoff, vui
 vuint64m2_t 
 test_vslidedown_vx_u64m2_tama_0(vbool32_t mask, vuint64m2_t maskedoff, vuint64m2_t op1, size_t vl)
 {
-  return vslidedown_vx_u64m2_tama(mask, op1, 0, vl);
+  return vslidedown_vx_u64m2_tama(mask, op1, op1, 0, vl);
 }
 
 /*
@@ -23392,7 +23392,7 @@ test_vslidedown_vx_u64m2_tama_0(vbool32_t mask, vuint64m2_t maskedoff, vuint64m2
 vuint64m2_t 
 test_vslidedown_vx_u64m2_tama_31(vbool32_t mask, vuint64m2_t maskedoff, vuint64m2_t op1, size_t vl)
 {
-  return vslidedown_vx_u64m2_tama(mask, op1, 31, vl);
+  return vslidedown_vx_u64m2_tama(mask, op1, op1, 31, vl);
 }
 
 /*
@@ -23407,7 +23407,7 @@ test_vslidedown_vx_u64m2_tama_31(vbool32_t mask, vuint64m2_t maskedoff, vuint64m
 vuint64m2_t 
 test_vslidedown_vx_u64m2_tama_vl31_0(vbool32_t mask, vuint64m2_t maskedoff, vuint64m2_t op1)
 {
-  return vslidedown_vx_u64m2_tama(mask, op1, 0, 31);
+  return vslidedown_vx_u64m2_tama(mask, op1, op1, 0, 31);
 }
 
 /*
@@ -23422,7 +23422,7 @@ test_vslidedown_vx_u64m2_tama_vl31_0(vbool32_t mask, vuint64m2_t maskedoff, vuin
 vuint64m2_t 
 test_vslidedown_vx_u64m2_tama_vl31_31(vbool32_t mask, vuint64m2_t maskedoff, vuint64m2_t op1)
 {
-  return vslidedown_vx_u64m2_tama(mask, op1, 31, 31);
+  return vslidedown_vx_u64m2_tama(mask, op1, op1, 31, 31);
 }
 
 /*
@@ -23437,7 +23437,7 @@ test_vslidedown_vx_u64m2_tama_vl31_31(vbool32_t mask, vuint64m2_t maskedoff, vui
 vuint64m4_t 
 test_vslidedown_vx_u64m4_tama_0(vbool16_t mask, vuint64m4_t maskedoff, vuint64m4_t op1, size_t vl)
 {
-  return vslidedown_vx_u64m4_tama(mask, op1, 0, vl);
+  return vslidedown_vx_u64m4_tama(mask, op1, op1, 0, vl);
 }
 
 /*
@@ -23452,7 +23452,7 @@ test_vslidedown_vx_u64m4_tama_0(vbool16_t mask, vuint64m4_t maskedoff, vuint64m4
 vuint64m4_t 
 test_vslidedown_vx_u64m4_tama_31(vbool16_t mask, vuint64m4_t maskedoff, vuint64m4_t op1, size_t vl)
 {
-  return vslidedown_vx_u64m4_tama(mask, op1, 31, vl);
+  return vslidedown_vx_u64m4_tama(mask, op1, op1, 31, vl);
 }
 
 /*
@@ -23467,7 +23467,7 @@ test_vslidedown_vx_u64m4_tama_31(vbool16_t mask, vuint64m4_t maskedoff, vuint64m
 vuint64m4_t 
 test_vslidedown_vx_u64m4_tama_vl31_0(vbool16_t mask, vuint64m4_t maskedoff, vuint64m4_t op1)
 {
-  return vslidedown_vx_u64m4_tama(mask, op1, 0, 31);
+  return vslidedown_vx_u64m4_tama(mask, op1, op1, 0, 31);
 }
 
 /*
@@ -23482,7 +23482,7 @@ test_vslidedown_vx_u64m4_tama_vl31_0(vbool16_t mask, vuint64m4_t maskedoff, vuin
 vuint64m4_t 
 test_vslidedown_vx_u64m4_tama_vl31_31(vbool16_t mask, vuint64m4_t maskedoff, vuint64m4_t op1)
 {
-  return vslidedown_vx_u64m4_tama(mask, op1, 31, 31);
+  return vslidedown_vx_u64m4_tama(mask, op1, op1, 31, 31);
 }
 
 /*
@@ -23497,7 +23497,7 @@ test_vslidedown_vx_u64m4_tama_vl31_31(vbool16_t mask, vuint64m4_t maskedoff, vui
 vuint64m8_t 
 test_vslidedown_vx_u64m8_tama_0(vbool8_t mask, vuint64m8_t maskedoff, vuint64m8_t op1, size_t vl)
 {
-  return vslidedown_vx_u64m8_tama(mask, op1, 0, vl);
+  return vslidedown_vx_u64m8_tama(mask, op1, op1, 0, vl);
 }
 
 /*
@@ -23512,7 +23512,7 @@ test_vslidedown_vx_u64m8_tama_0(vbool8_t mask, vuint64m8_t maskedoff, vuint64m8_
 vuint64m8_t 
 test_vslidedown_vx_u64m8_tama_31(vbool8_t mask, vuint64m8_t maskedoff, vuint64m8_t op1, size_t vl)
 {
-  return vslidedown_vx_u64m8_tama(mask, op1, 31, vl);
+  return vslidedown_vx_u64m8_tama(mask, op1, op1, 31, vl);
 }
 
 /*
@@ -23527,7 +23527,7 @@ test_vslidedown_vx_u64m8_tama_31(vbool8_t mask, vuint64m8_t maskedoff, vuint64m8
 vuint64m8_t 
 test_vslidedown_vx_u64m8_tama_vl31_0(vbool8_t mask, vuint64m8_t maskedoff, vuint64m8_t op1)
 {
-  return vslidedown_vx_u64m8_tama(mask, op1, 0, 31);
+  return vslidedown_vx_u64m8_tama(mask, op1, op1, 0, 31);
 }
 
 /*
@@ -23542,7 +23542,7 @@ test_vslidedown_vx_u64m8_tama_vl31_0(vbool8_t mask, vuint64m8_t maskedoff, vuint
 vuint64m8_t 
 test_vslidedown_vx_u64m8_tama_vl31_31(vbool8_t mask, vuint64m8_t maskedoff, vuint64m8_t op1)
 {
-  return vslidedown_vx_u64m8_tama(mask, op1, 31, 31);
+  return vslidedown_vx_u64m8_tama(mask, op1, op1, 31, 31);
 }
 
 /*
@@ -27517,7 +27517,7 @@ test_vslidedown_vx_u64m8_tumu_vl31_31(vbool8_t mask, vuint64m8_t maskedoff, vuin
 vuint8mf8_t 
 test_vslidedown_vx_u8mf8_tama_vl32_0(vbool64_t mask, vuint8mf8_t maskedoff, vuint8mf8_t op1)
 {
-  return vslidedown_vx_u8mf8_tama(mask, op1, 0, 32);
+  return vslidedown_vx_u8mf8_tama(mask, op1, op1, 0, 32);
 }
 
 /*
@@ -27532,7 +27532,7 @@ test_vslidedown_vx_u8mf8_tama_vl32_0(vbool64_t mask, vuint8mf8_t maskedoff, vuin
 vuint8mf8_t 
 test_vslidedown_vx_u8mf8_tama_vl32_31(vbool64_t mask, vuint8mf8_t maskedoff, vuint8mf8_t op1)
 {
-  return vslidedown_vx_u8mf8_tama(mask, op1, 31, 32);
+  return vslidedown_vx_u8mf8_tama(mask, op1, op1, 31, 32);
 }
 
 /*
@@ -27547,7 +27547,7 @@ test_vslidedown_vx_u8mf8_tama_vl32_31(vbool64_t mask, vuint8mf8_t maskedoff, vui
 vuint8mf4_t 
 test_vslidedown_vx_u8mf4_tama_vl32_0(vbool32_t mask, vuint8mf4_t maskedoff, vuint8mf4_t op1)
 {
-  return vslidedown_vx_u8mf4_tama(mask, op1, 0, 32);
+  return vslidedown_vx_u8mf4_tama(mask, op1, op1, 0, 32);
 }
 
 /*
@@ -27562,7 +27562,7 @@ test_vslidedown_vx_u8mf4_tama_vl32_0(vbool32_t mask, vuint8mf4_t maskedoff, vuin
 vuint8mf4_t 
 test_vslidedown_vx_u8mf4_tama_vl32_31(vbool32_t mask, vuint8mf4_t maskedoff, vuint8mf4_t op1)
 {
-  return vslidedown_vx_u8mf4_tama(mask, op1, 31, 32);
+  return vslidedown_vx_u8mf4_tama(mask, op1, op1, 31, 32);
 }
 
 /*
@@ -27577,7 +27577,7 @@ test_vslidedown_vx_u8mf4_tama_vl32_31(vbool32_t mask, vuint8mf4_t maskedoff, vui
 vuint8mf2_t 
 test_vslidedown_vx_u8mf2_tama_vl32_0(vbool16_t mask, vuint8mf2_t maskedoff, vuint8mf2_t op1)
 {
-  return vslidedown_vx_u8mf2_tama(mask, op1, 0, 32);
+  return vslidedown_vx_u8mf2_tama(mask, op1, op1, 0, 32);
 }
 
 /*
@@ -27592,7 +27592,7 @@ test_vslidedown_vx_u8mf2_tama_vl32_0(vbool16_t mask, vuint8mf2_t maskedoff, vuin
 vuint8mf2_t 
 test_vslidedown_vx_u8mf2_tama_vl32_31(vbool16_t mask, vuint8mf2_t maskedoff, vuint8mf2_t op1)
 {
-  return vslidedown_vx_u8mf2_tama(mask, op1, 31, 32);
+  return vslidedown_vx_u8mf2_tama(mask, op1, op1, 31, 32);
 }
 
 /*
@@ -27607,7 +27607,7 @@ test_vslidedown_vx_u8mf2_tama_vl32_31(vbool16_t mask, vuint8mf2_t maskedoff, vui
 vuint8m1_t 
 test_vslidedown_vx_u8m1_tama_vl32_0(vbool8_t mask, vuint8m1_t maskedoff, vuint8m1_t op1)
 {
-  return vslidedown_vx_u8m1_tama(mask, op1, 0, 32);
+  return vslidedown_vx_u8m1_tama(mask, op1, op1, 0, 32);
 }
 
 /*
@@ -27622,7 +27622,7 @@ test_vslidedown_vx_u8m1_tama_vl32_0(vbool8_t mask, vuint8m1_t maskedoff, vuint8m
 vuint8m1_t 
 test_vslidedown_vx_u8m1_tama_vl32_31(vbool8_t mask, vuint8m1_t maskedoff, vuint8m1_t op1)
 {
-  return vslidedown_vx_u8m1_tama(mask, op1, 31, 32);
+  return vslidedown_vx_u8m1_tama(mask, op1, op1, 31, 32);
 }
 
 /*
@@ -27637,7 +27637,7 @@ test_vslidedown_vx_u8m1_tama_vl32_31(vbool8_t mask, vuint8m1_t maskedoff, vuint8
 vuint8m2_t 
 test_vslidedown_vx_u8m2_tama_vl32_0(vbool4_t mask, vuint8m2_t maskedoff, vuint8m2_t op1)
 {
-  return vslidedown_vx_u8m2_tama(mask, op1, 0, 32);
+  return vslidedown_vx_u8m2_tama(mask, op1, op1, 0, 32);
 }
 
 /*
@@ -27652,7 +27652,7 @@ test_vslidedown_vx_u8m2_tama_vl32_0(vbool4_t mask, vuint8m2_t maskedoff, vuint8m
 vuint8m2_t 
 test_vslidedown_vx_u8m2_tama_vl32_31(vbool4_t mask, vuint8m2_t maskedoff, vuint8m2_t op1)
 {
-  return vslidedown_vx_u8m2_tama(mask, op1, 31, 32);
+  return vslidedown_vx_u8m2_tama(mask, op1, op1, 31, 32);
 }
 
 /*
@@ -27667,7 +27667,7 @@ test_vslidedown_vx_u8m2_tama_vl32_31(vbool4_t mask, vuint8m2_t maskedoff, vuint8
 vuint8m4_t 
 test_vslidedown_vx_u8m4_tama_vl32_0(vbool2_t mask, vuint8m4_t maskedoff, vuint8m4_t op1)
 {
-  return vslidedown_vx_u8m4_tama(mask, op1, 0, 32);
+  return vslidedown_vx_u8m4_tama(mask, op1, op1, 0, 32);
 }
 
 /*
@@ -27682,7 +27682,7 @@ test_vslidedown_vx_u8m4_tama_vl32_0(vbool2_t mask, vuint8m4_t maskedoff, vuint8m
 vuint8m4_t 
 test_vslidedown_vx_u8m4_tama_vl32_31(vbool2_t mask, vuint8m4_t maskedoff, vuint8m4_t op1)
 {
-  return vslidedown_vx_u8m4_tama(mask, op1, 31, 32);
+  return vslidedown_vx_u8m4_tama(mask, op1, op1, 31, 32);
 }
 
 /*
@@ -27697,7 +27697,7 @@ test_vslidedown_vx_u8m4_tama_vl32_31(vbool2_t mask, vuint8m4_t maskedoff, vuint8
 vuint8m8_t 
 test_vslidedown_vx_u8m8_tama_vl32_0(vbool1_t mask, vuint8m8_t maskedoff, vuint8m8_t op1)
 {
-  return vslidedown_vx_u8m8_tama(mask, op1, 0, 32);
+  return vslidedown_vx_u8m8_tama(mask, op1, op1, 0, 32);
 }
 
 /*
@@ -27712,7 +27712,7 @@ test_vslidedown_vx_u8m8_tama_vl32_0(vbool1_t mask, vuint8m8_t maskedoff, vuint8m
 vuint8m8_t 
 test_vslidedown_vx_u8m8_tama_vl32_31(vbool1_t mask, vuint8m8_t maskedoff, vuint8m8_t op1)
 {
-  return vslidedown_vx_u8m8_tama(mask, op1, 31, 32);
+  return vslidedown_vx_u8m8_tama(mask, op1, op1, 31, 32);
 }
 
 /*
@@ -27727,7 +27727,7 @@ test_vslidedown_vx_u8m8_tama_vl32_31(vbool1_t mask, vuint8m8_t maskedoff, vuint8
 vuint16mf4_t 
 test_vslidedown_vx_u16mf4_tama_vl32_0(vbool64_t mask, vuint16mf4_t maskedoff, vuint16mf4_t op1)
 {
-  return vslidedown_vx_u16mf4_tama(mask, op1, 0, 32);
+  return vslidedown_vx_u16mf4_tama(mask, op1, op1, 0, 32);
 }
 
 /*
@@ -27742,7 +27742,7 @@ test_vslidedown_vx_u16mf4_tama_vl32_0(vbool64_t mask, vuint16mf4_t maskedoff, vu
 vuint16mf4_t 
 test_vslidedown_vx_u16mf4_tama_vl32_31(vbool64_t mask, vuint16mf4_t maskedoff, vuint16mf4_t op1)
 {
-  return vslidedown_vx_u16mf4_tama(mask, op1, 31, 32);
+  return vslidedown_vx_u16mf4_tama(mask, op1, op1, 31, 32);
 }
 
 /*
@@ -27757,7 +27757,7 @@ test_vslidedown_vx_u16mf4_tama_vl32_31(vbool64_t mask, vuint16mf4_t maskedoff, v
 vuint16mf2_t 
 test_vslidedown_vx_u16mf2_tama_vl32_0(vbool32_t mask, vuint16mf2_t maskedoff, vuint16mf2_t op1)
 {
-  return vslidedown_vx_u16mf2_tama(mask, op1, 0, 32);
+  return vslidedown_vx_u16mf2_tama(mask, op1, op1, 0, 32);
 }
 
 /*
@@ -27772,7 +27772,7 @@ test_vslidedown_vx_u16mf2_tama_vl32_0(vbool32_t mask, vuint16mf2_t maskedoff, vu
 vuint16mf2_t 
 test_vslidedown_vx_u16mf2_tama_vl32_31(vbool32_t mask, vuint16mf2_t maskedoff, vuint16mf2_t op1)
 {
-  return vslidedown_vx_u16mf2_tama(mask, op1, 31, 32);
+  return vslidedown_vx_u16mf2_tama(mask, op1, op1, 31, 32);
 }
 
 /*
@@ -27787,7 +27787,7 @@ test_vslidedown_vx_u16mf2_tama_vl32_31(vbool32_t mask, vuint16mf2_t maskedoff, v
 vuint16m1_t 
 test_vslidedown_vx_u16m1_tama_vl32_0(vbool16_t mask, vuint16m1_t maskedoff, vuint16m1_t op1)
 {
-  return vslidedown_vx_u16m1_tama(mask, op1, 0, 32);
+  return vslidedown_vx_u16m1_tama(mask, op1, op1, 0, 32);
 }
 
 /*
@@ -27802,7 +27802,7 @@ test_vslidedown_vx_u16m1_tama_vl32_0(vbool16_t mask, vuint16m1_t maskedoff, vuin
 vuint16m1_t 
 test_vslidedown_vx_u16m1_tama_vl32_31(vbool16_t mask, vuint16m1_t maskedoff, vuint16m1_t op1)
 {
-  return vslidedown_vx_u16m1_tama(mask, op1, 31, 32);
+  return vslidedown_vx_u16m1_tama(mask, op1, op1, 31, 32);
 }
 
 /*
@@ -27817,7 +27817,7 @@ test_vslidedown_vx_u16m1_tama_vl32_31(vbool16_t mask, vuint16m1_t maskedoff, vui
 vuint16m2_t 
 test_vslidedown_vx_u16m2_tama_vl32_0(vbool8_t mask, vuint16m2_t maskedoff, vuint16m2_t op1)
 {
-  return vslidedown_vx_u16m2_tama(mask, op1, 0, 32);
+  return vslidedown_vx_u16m2_tama(mask, op1, op1, 0, 32);
 }
 
 /*
@@ -27832,7 +27832,7 @@ test_vslidedown_vx_u16m2_tama_vl32_0(vbool8_t mask, vuint16m2_t maskedoff, vuint
 vuint16m2_t 
 test_vslidedown_vx_u16m2_tama_vl32_31(vbool8_t mask, vuint16m2_t maskedoff, vuint16m2_t op1)
 {
-  return vslidedown_vx_u16m2_tama(mask, op1, 31, 32);
+  return vslidedown_vx_u16m2_tama(mask, op1, op1, 31, 32);
 }
 
 /*
@@ -27847,7 +27847,7 @@ test_vslidedown_vx_u16m2_tama_vl32_31(vbool8_t mask, vuint16m2_t maskedoff, vuin
 vuint16m4_t 
 test_vslidedown_vx_u16m4_tama_vl32_0(vbool4_t mask, vuint16m4_t maskedoff, vuint16m4_t op1)
 {
-  return vslidedown_vx_u16m4_tama(mask, op1, 0, 32);
+  return vslidedown_vx_u16m4_tama(mask, op1, op1, 0, 32);
 }
 
 /*
@@ -27862,7 +27862,7 @@ test_vslidedown_vx_u16m4_tama_vl32_0(vbool4_t mask, vuint16m4_t maskedoff, vuint
 vuint16m4_t 
 test_vslidedown_vx_u16m4_tama_vl32_31(vbool4_t mask, vuint16m4_t maskedoff, vuint16m4_t op1)
 {
-  return vslidedown_vx_u16m4_tama(mask, op1, 31, 32);
+  return vslidedown_vx_u16m4_tama(mask, op1, op1, 31, 32);
 }
 
 /*
@@ -27877,7 +27877,7 @@ test_vslidedown_vx_u16m4_tama_vl32_31(vbool4_t mask, vuint16m4_t maskedoff, vuin
 vuint16m8_t 
 test_vslidedown_vx_u16m8_tama_vl32_0(vbool2_t mask, vuint16m8_t maskedoff, vuint16m8_t op1)
 {
-  return vslidedown_vx_u16m8_tama(mask, op1, 0, 32);
+  return vslidedown_vx_u16m8_tama(mask, op1, op1, 0, 32);
 }
 
 /*
@@ -27892,7 +27892,7 @@ test_vslidedown_vx_u16m8_tama_vl32_0(vbool2_t mask, vuint16m8_t maskedoff, vuint
 vuint16m8_t 
 test_vslidedown_vx_u16m8_tama_vl32_31(vbool2_t mask, vuint16m8_t maskedoff, vuint16m8_t op1)
 {
-  return vslidedown_vx_u16m8_tama(mask, op1, 31, 32);
+  return vslidedown_vx_u16m8_tama(mask, op1, op1, 31, 32);
 }
 
 /*
@@ -27907,7 +27907,7 @@ test_vslidedown_vx_u16m8_tama_vl32_31(vbool2_t mask, vuint16m8_t maskedoff, vuin
 vuint32mf2_t 
 test_vslidedown_vx_u32mf2_tama_vl32_0(vbool64_t mask, vuint32mf2_t maskedoff, vuint32mf2_t op1)
 {
-  return vslidedown_vx_u32mf2_tama(mask, op1, 0, 32);
+  return vslidedown_vx_u32mf2_tama(mask, op1, op1, 0, 32);
 }
 
 /*
@@ -27922,7 +27922,7 @@ test_vslidedown_vx_u32mf2_tama_vl32_0(vbool64_t mask, vuint32mf2_t maskedoff, vu
 vuint32mf2_t 
 test_vslidedown_vx_u32mf2_tama_vl32_31(vbool64_t mask, vuint32mf2_t maskedoff, vuint32mf2_t op1)
 {
-  return vslidedown_vx_u32mf2_tama(mask, op1, 31, 32);
+  return vslidedown_vx_u32mf2_tama(mask, op1, op1, 31, 32);
 }
 
 /*
@@ -27937,7 +27937,7 @@ test_vslidedown_vx_u32mf2_tama_vl32_31(vbool64_t mask, vuint32mf2_t maskedoff, v
 vuint32m1_t 
 test_vslidedown_vx_u32m1_tama_vl32_0(vbool32_t mask, vuint32m1_t maskedoff, vuint32m1_t op1)
 {
-  return vslidedown_vx_u32m1_tama(mask, op1, 0, 32);
+  return vslidedown_vx_u32m1_tama(mask, op1, op1, 0, 32);
 }
 
 /*
@@ -27952,7 +27952,7 @@ test_vslidedown_vx_u32m1_tama_vl32_0(vbool32_t mask, vuint32m1_t maskedoff, vuin
 vuint32m1_t 
 test_vslidedown_vx_u32m1_tama_vl32_31(vbool32_t mask, vuint32m1_t maskedoff, vuint32m1_t op1)
 {
-  return vslidedown_vx_u32m1_tama(mask, op1, 31, 32);
+  return vslidedown_vx_u32m1_tama(mask, op1, op1, 31, 32);
 }
 
 /*
@@ -27967,7 +27967,7 @@ test_vslidedown_vx_u32m1_tama_vl32_31(vbool32_t mask, vuint32m1_t maskedoff, vui
 vuint32m2_t 
 test_vslidedown_vx_u32m2_tama_vl32_0(vbool16_t mask, vuint32m2_t maskedoff, vuint32m2_t op1)
 {
-  return vslidedown_vx_u32m2_tama(mask, op1, 0, 32);
+  return vslidedown_vx_u32m2_tama(mask, op1, op1, 0, 32);
 }
 
 /*
@@ -27982,7 +27982,7 @@ test_vslidedown_vx_u32m2_tama_vl32_0(vbool16_t mask, vuint32m2_t maskedoff, vuin
 vuint32m2_t 
 test_vslidedown_vx_u32m2_tama_vl32_31(vbool16_t mask, vuint32m2_t maskedoff, vuint32m2_t op1)
 {
-  return vslidedown_vx_u32m2_tama(mask, op1, 31, 32);
+  return vslidedown_vx_u32m2_tama(mask, op1, op1, 31, 32);
 }
 
 /*
@@ -27997,7 +27997,7 @@ test_vslidedown_vx_u32m2_tama_vl32_31(vbool16_t mask, vuint32m2_t maskedoff, vui
 vuint32m4_t 
 test_vslidedown_vx_u32m4_tama_vl32_0(vbool8_t mask, vuint32m4_t maskedoff, vuint32m4_t op1)
 {
-  return vslidedown_vx_u32m4_tama(mask, op1, 0, 32);
+  return vslidedown_vx_u32m4_tama(mask, op1, op1, 0, 32);
 }
 
 /*
@@ -28012,7 +28012,7 @@ test_vslidedown_vx_u32m4_tama_vl32_0(vbool8_t mask, vuint32m4_t maskedoff, vuint
 vuint32m4_t 
 test_vslidedown_vx_u32m4_tama_vl32_31(vbool8_t mask, vuint32m4_t maskedoff, vuint32m4_t op1)
 {
-  return vslidedown_vx_u32m4_tama(mask, op1, 31, 32);
+  return vslidedown_vx_u32m4_tama(mask, op1, op1, 31, 32);
 }
 
 /*
@@ -28027,7 +28027,7 @@ test_vslidedown_vx_u32m4_tama_vl32_31(vbool8_t mask, vuint32m4_t maskedoff, vuin
 vuint32m8_t 
 test_vslidedown_vx_u32m8_tama_vl32_0(vbool4_t mask, vuint32m8_t maskedoff, vuint32m8_t op1)
 {
-  return vslidedown_vx_u32m8_tama(mask, op1, 0, 32);
+  return vslidedown_vx_u32m8_tama(mask, op1, op1, 0, 32);
 }
 
 /*
@@ -28042,7 +28042,7 @@ test_vslidedown_vx_u32m8_tama_vl32_0(vbool4_t mask, vuint32m8_t maskedoff, vuint
 vuint32m8_t 
 test_vslidedown_vx_u32m8_tama_vl32_31(vbool4_t mask, vuint32m8_t maskedoff, vuint32m8_t op1)
 {
-  return vslidedown_vx_u32m8_tama(mask, op1, 31, 32);
+  return vslidedown_vx_u32m8_tama(mask, op1, op1, 31, 32);
 }
 
 /*
@@ -28057,7 +28057,7 @@ test_vslidedown_vx_u32m8_tama_vl32_31(vbool4_t mask, vuint32m8_t maskedoff, vuin
 vuint64m1_t 
 test_vslidedown_vx_u64m1_tama_vl32_0(vbool64_t mask, vuint64m1_t maskedoff, vuint64m1_t op1)
 {
-  return vslidedown_vx_u64m1_tama(mask, op1, 0, 32);
+  return vslidedown_vx_u64m1_tama(mask, op1, op1, 0, 32);
 }
 
 /*
@@ -28072,7 +28072,7 @@ test_vslidedown_vx_u64m1_tama_vl32_0(vbool64_t mask, vuint64m1_t maskedoff, vuin
 vuint64m1_t 
 test_vslidedown_vx_u64m1_tama_vl32_31(vbool64_t mask, vuint64m1_t maskedoff, vuint64m1_t op1)
 {
-  return vslidedown_vx_u64m1_tama(mask, op1, 31, 32);
+  return vslidedown_vx_u64m1_tama(mask, op1, op1, 31, 32);
 }
 
 /*
@@ -28087,7 +28087,7 @@ test_vslidedown_vx_u64m1_tama_vl32_31(vbool64_t mask, vuint64m1_t maskedoff, vui
 vuint64m2_t 
 test_vslidedown_vx_u64m2_tama_vl32_0(vbool32_t mask, vuint64m2_t maskedoff, vuint64m2_t op1)
 {
-  return vslidedown_vx_u64m2_tama(mask, op1, 0, 32);
+  return vslidedown_vx_u64m2_tama(mask, op1, op1, 0, 32);
 }
 
 /*
@@ -28102,7 +28102,7 @@ test_vslidedown_vx_u64m2_tama_vl32_0(vbool32_t mask, vuint64m2_t maskedoff, vuin
 vuint64m2_t 
 test_vslidedown_vx_u64m2_tama_vl32_31(vbool32_t mask, vuint64m2_t maskedoff, vuint64m2_t op1)
 {
-  return vslidedown_vx_u64m2_tama(mask, op1, 31, 32);
+  return vslidedown_vx_u64m2_tama(mask, op1, op1, 31, 32);
 }
 
 /*
@@ -28117,7 +28117,7 @@ test_vslidedown_vx_u64m2_tama_vl32_31(vbool32_t mask, vuint64m2_t maskedoff, vui
 vuint64m4_t 
 test_vslidedown_vx_u64m4_tama_vl32_0(vbool16_t mask, vuint64m4_t maskedoff, vuint64m4_t op1)
 {
-  return vslidedown_vx_u64m4_tama(mask, op1, 0, 32);
+  return vslidedown_vx_u64m4_tama(mask, op1, op1, 0, 32);
 }
 
 /*
@@ -28132,7 +28132,7 @@ test_vslidedown_vx_u64m4_tama_vl32_0(vbool16_t mask, vuint64m4_t maskedoff, vuin
 vuint64m4_t 
 test_vslidedown_vx_u64m4_tama_vl32_31(vbool16_t mask, vuint64m4_t maskedoff, vuint64m4_t op1)
 {
-  return vslidedown_vx_u64m4_tama(mask, op1, 31, 32);
+  return vslidedown_vx_u64m4_tama(mask, op1, op1, 31, 32);
 }
 
 /*
@@ -28147,7 +28147,7 @@ test_vslidedown_vx_u64m4_tama_vl32_31(vbool16_t mask, vuint64m4_t maskedoff, vui
 vuint64m8_t 
 test_vslidedown_vx_u64m8_tama_vl32_0(vbool8_t mask, vuint64m8_t maskedoff, vuint64m8_t op1)
 {
-  return vslidedown_vx_u64m8_tama(mask, op1, 0, 32);
+  return vslidedown_vx_u64m8_tama(mask, op1, op1, 0, 32);
 }
 
 /*
@@ -28162,7 +28162,7 @@ test_vslidedown_vx_u64m8_tama_vl32_0(vbool8_t mask, vuint64m8_t maskedoff, vuint
 vuint64m8_t 
 test_vslidedown_vx_u64m8_tama_vl32_31(vbool8_t mask, vuint64m8_t maskedoff, vuint64m8_t op1)
 {
-  return vslidedown_vx_u64m8_tama(mask, op1, 31, 32);
+  return vslidedown_vx_u64m8_tama(mask, op1, op1, 31, 32);
 }
 
 /*
@@ -30155,9 +30155,9 @@ test_vslidedown_vx_u64m8_tumu_vl32_31(vbool8_t mask, vuint64m8_t maskedoff, vuin
 **  ret
 */
 vuint8mf8_t 
-test_vslidedown_vx_u8mf8_ta_vl32_0(vuint8mf8_t op1)
+test_vslidedown_vx_u8mf8_ta_vl32_0(vuint8mf8_t dest, vuint8mf8_t op1)
 {
-  return vslidedown_vx_u8mf8_ta(op1, 0, 32);
+  return vslidedown_vx_u8mf8_ta(dest, op1, 0, 32);
 }
 
 /*
@@ -30170,9 +30170,9 @@ test_vslidedown_vx_u8mf8_ta_vl32_0(vuint8mf8_t op1)
 **  ret
 */
 vuint8mf8_t 
-test_vslidedown_vx_u8mf8_ta_vl32_31(vuint8mf8_t op1)
+test_vslidedown_vx_u8mf8_ta_vl32_31(vuint8mf8_t dest, vuint8mf8_t op1)
 {
-  return vslidedown_vx_u8mf8_ta(op1, 31, 32);
+  return vslidedown_vx_u8mf8_ta(dest, op1, 31, 32);
 }
 
 /*
@@ -30185,9 +30185,9 @@ test_vslidedown_vx_u8mf8_ta_vl32_31(vuint8mf8_t op1)
 **  ret
 */
 vuint8mf4_t 
-test_vslidedown_vx_u8mf4_ta_vl32_0(vuint8mf4_t op1)
+test_vslidedown_vx_u8mf4_ta_vl32_0(vuint8mf4_t dest, vuint8mf4_t op1)
 {
-  return vslidedown_vx_u8mf4_ta(op1, 0, 32);
+  return vslidedown_vx_u8mf4_ta(dest, op1, 0, 32);
 }
 
 /*
@@ -30200,9 +30200,9 @@ test_vslidedown_vx_u8mf4_ta_vl32_0(vuint8mf4_t op1)
 **  ret
 */
 vuint8mf4_t 
-test_vslidedown_vx_u8mf4_ta_vl32_31(vuint8mf4_t op1)
+test_vslidedown_vx_u8mf4_ta_vl32_31(vuint8mf4_t dest, vuint8mf4_t op1)
 {
-  return vslidedown_vx_u8mf4_ta(op1, 31, 32);
+  return vslidedown_vx_u8mf4_ta(dest, op1, 31, 32);
 }
 
 /*
@@ -30215,9 +30215,9 @@ test_vslidedown_vx_u8mf4_ta_vl32_31(vuint8mf4_t op1)
 **  ret
 */
 vuint8mf2_t 
-test_vslidedown_vx_u8mf2_ta_vl32_0(vuint8mf2_t op1)
+test_vslidedown_vx_u8mf2_ta_vl32_0(vuint8mf2_t dest, vuint8mf2_t op1)
 {
-  return vslidedown_vx_u8mf2_ta(op1, 0, 32);
+  return vslidedown_vx_u8mf2_ta(dest, op1, 0, 32);
 }
 
 /*
@@ -30230,9 +30230,9 @@ test_vslidedown_vx_u8mf2_ta_vl32_0(vuint8mf2_t op1)
 **  ret
 */
 vuint8mf2_t 
-test_vslidedown_vx_u8mf2_ta_vl32_31(vuint8mf2_t op1)
+test_vslidedown_vx_u8mf2_ta_vl32_31(vuint8mf2_t dest, vuint8mf2_t op1)
 {
-  return vslidedown_vx_u8mf2_ta(op1, 31, 32);
+  return vslidedown_vx_u8mf2_ta(dest, op1, 31, 32);
 }
 
 /*
@@ -30245,9 +30245,9 @@ test_vslidedown_vx_u8mf2_ta_vl32_31(vuint8mf2_t op1)
 **  ret
 */
 vuint8m1_t 
-test_vslidedown_vx_u8m1_ta_vl32_0(vuint8m1_t op1)
+test_vslidedown_vx_u8m1_ta_vl32_0(vuint8m1_t dest, vuint8m1_t op1)
 {
-  return vslidedown_vx_u8m1_ta(op1, 0, 32);
+  return vslidedown_vx_u8m1_ta(dest, op1, 0, 32);
 }
 
 /*
@@ -30260,9 +30260,9 @@ test_vslidedown_vx_u8m1_ta_vl32_0(vuint8m1_t op1)
 **  ret
 */
 vuint8m1_t 
-test_vslidedown_vx_u8m1_ta_vl32_31(vuint8m1_t op1)
+test_vslidedown_vx_u8m1_ta_vl32_31(vuint8m1_t dest, vuint8m1_t op1)
 {
-  return vslidedown_vx_u8m1_ta(op1, 31, 32);
+  return vslidedown_vx_u8m1_ta(dest, op1, 31, 32);
 }
 
 /*
@@ -30275,9 +30275,9 @@ test_vslidedown_vx_u8m1_ta_vl32_31(vuint8m1_t op1)
 **  ret
 */
 vuint8m2_t 
-test_vslidedown_vx_u8m2_ta_vl32_0(vuint8m2_t op1)
+test_vslidedown_vx_u8m2_ta_vl32_0(vuint8m2_t dest, vuint8m2_t op1)
 {
-  return vslidedown_vx_u8m2_ta(op1, 0, 32);
+  return vslidedown_vx_u8m2_ta(dest, op1, 0, 32);
 }
 
 /*
@@ -30290,9 +30290,9 @@ test_vslidedown_vx_u8m2_ta_vl32_0(vuint8m2_t op1)
 **  ret
 */
 vuint8m2_t 
-test_vslidedown_vx_u8m2_ta_vl32_31(vuint8m2_t op1)
+test_vslidedown_vx_u8m2_ta_vl32_31(vuint8m2_t dest, vuint8m2_t op1)
 {
-  return vslidedown_vx_u8m2_ta(op1, 31, 32);
+  return vslidedown_vx_u8m2_ta(dest, op1, 31, 32);
 }
 
 /*
@@ -30305,9 +30305,9 @@ test_vslidedown_vx_u8m2_ta_vl32_31(vuint8m2_t op1)
 **  ret
 */
 vuint8m4_t 
-test_vslidedown_vx_u8m4_ta_vl32_0(vuint8m4_t op1)
+test_vslidedown_vx_u8m4_ta_vl32_0(vuint8m4_t dest, vuint8m4_t op1)
 {
-  return vslidedown_vx_u8m4_ta(op1, 0, 32);
+  return vslidedown_vx_u8m4_ta(dest, op1, 0, 32);
 }
 
 /*
@@ -30320,9 +30320,9 @@ test_vslidedown_vx_u8m4_ta_vl32_0(vuint8m4_t op1)
 **  ret
 */
 vuint8m4_t 
-test_vslidedown_vx_u8m4_ta_vl32_31(vuint8m4_t op1)
+test_vslidedown_vx_u8m4_ta_vl32_31(vuint8m4_t dest, vuint8m4_t op1)
 {
-  return vslidedown_vx_u8m4_ta(op1, 31, 32);
+  return vslidedown_vx_u8m4_ta(dest, op1, 31, 32);
 }
 
 /*
@@ -30335,9 +30335,9 @@ test_vslidedown_vx_u8m4_ta_vl32_31(vuint8m4_t op1)
 **  ret
 */
 vuint8m8_t 
-test_vslidedown_vx_u8m8_ta_vl32_0(vuint8m8_t op1)
+test_vslidedown_vx_u8m8_ta_vl32_0(vuint8m8_t dest, vuint8m8_t op1)
 {
-  return vslidedown_vx_u8m8_ta(op1, 0, 32);
+  return vslidedown_vx_u8m8_ta(dest, op1, 0, 32);
 }
 
 /*
@@ -30350,9 +30350,9 @@ test_vslidedown_vx_u8m8_ta_vl32_0(vuint8m8_t op1)
 **  ret
 */
 vuint8m8_t 
-test_vslidedown_vx_u8m8_ta_vl32_31(vuint8m8_t op1)
+test_vslidedown_vx_u8m8_ta_vl32_31(vuint8m8_t dest, vuint8m8_t op1)
 {
-  return vslidedown_vx_u8m8_ta(op1, 31, 32);
+  return vslidedown_vx_u8m8_ta(dest, op1, 31, 32);
 }
 
 /*
@@ -30365,9 +30365,9 @@ test_vslidedown_vx_u8m8_ta_vl32_31(vuint8m8_t op1)
 **  ret
 */
 vuint16mf4_t 
-test_vslidedown_vx_u16mf4_ta_vl32_0(vuint16mf4_t op1)
+test_vslidedown_vx_u16mf4_ta_vl32_0(vuint16mf4_t dest, vuint16mf4_t op1)
 {
-  return vslidedown_vx_u16mf4_ta(op1, 0, 32);
+  return vslidedown_vx_u16mf4_ta(dest, op1, 0, 32);
 }
 
 /*
@@ -30380,9 +30380,9 @@ test_vslidedown_vx_u16mf4_ta_vl32_0(vuint16mf4_t op1)
 **  ret
 */
 vuint16mf4_t 
-test_vslidedown_vx_u16mf4_ta_vl32_31(vuint16mf4_t op1)
+test_vslidedown_vx_u16mf4_ta_vl32_31(vuint16mf4_t dest, vuint16mf4_t op1)
 {
-  return vslidedown_vx_u16mf4_ta(op1, 31, 32);
+  return vslidedown_vx_u16mf4_ta(dest, op1, 31, 32);
 }
 
 /*
@@ -30395,9 +30395,9 @@ test_vslidedown_vx_u16mf4_ta_vl32_31(vuint16mf4_t op1)
 **  ret
 */
 vuint16mf2_t 
-test_vslidedown_vx_u16mf2_ta_vl32_0(vuint16mf2_t op1)
+test_vslidedown_vx_u16mf2_ta_vl32_0(vuint16mf2_t dest, vuint16mf2_t op1)
 {
-  return vslidedown_vx_u16mf2_ta(op1, 0, 32);
+  return vslidedown_vx_u16mf2_ta(dest, op1, 0, 32);
 }
 
 /*
@@ -30410,9 +30410,9 @@ test_vslidedown_vx_u16mf2_ta_vl32_0(vuint16mf2_t op1)
 **  ret
 */
 vuint16mf2_t 
-test_vslidedown_vx_u16mf2_ta_vl32_31(vuint16mf2_t op1)
+test_vslidedown_vx_u16mf2_ta_vl32_31(vuint16mf2_t dest, vuint16mf2_t op1)
 {
-  return vslidedown_vx_u16mf2_ta(op1, 31, 32);
+  return vslidedown_vx_u16mf2_ta(dest, op1, 31, 32);
 }
 
 /*
@@ -30425,9 +30425,9 @@ test_vslidedown_vx_u16mf2_ta_vl32_31(vuint16mf2_t op1)
 **  ret
 */
 vuint16m1_t 
-test_vslidedown_vx_u16m1_ta_vl32_0(vuint16m1_t op1)
+test_vslidedown_vx_u16m1_ta_vl32_0(vuint16m1_t dest, vuint16m1_t op1)
 {
-  return vslidedown_vx_u16m1_ta(op1, 0, 32);
+  return vslidedown_vx_u16m1_ta(dest, op1, 0, 32);
 }
 
 /*
@@ -30440,9 +30440,9 @@ test_vslidedown_vx_u16m1_ta_vl32_0(vuint16m1_t op1)
 **  ret
 */
 vuint16m1_t 
-test_vslidedown_vx_u16m1_ta_vl32_31(vuint16m1_t op1)
+test_vslidedown_vx_u16m1_ta_vl32_31(vuint16m1_t dest, vuint16m1_t op1)
 {
-  return vslidedown_vx_u16m1_ta(op1, 31, 32);
+  return vslidedown_vx_u16m1_ta(dest, op1, 31, 32);
 }
 
 /*
@@ -30455,9 +30455,9 @@ test_vslidedown_vx_u16m1_ta_vl32_31(vuint16m1_t op1)
 **  ret
 */
 vuint16m2_t 
-test_vslidedown_vx_u16m2_ta_vl32_0(vuint16m2_t op1)
+test_vslidedown_vx_u16m2_ta_vl32_0(vuint16m2_t dest, vuint16m2_t op1)
 {
-  return vslidedown_vx_u16m2_ta(op1, 0, 32);
+  return vslidedown_vx_u16m2_ta(dest, op1, 0, 32);
 }
 
 /*
@@ -30470,9 +30470,9 @@ test_vslidedown_vx_u16m2_ta_vl32_0(vuint16m2_t op1)
 **  ret
 */
 vuint16m2_t 
-test_vslidedown_vx_u16m2_ta_vl32_31(vuint16m2_t op1)
+test_vslidedown_vx_u16m2_ta_vl32_31(vuint16m2_t dest, vuint16m2_t op1)
 {
-  return vslidedown_vx_u16m2_ta(op1, 31, 32);
+  return vslidedown_vx_u16m2_ta(dest, op1, 31, 32);
 }
 
 /*
@@ -30485,9 +30485,9 @@ test_vslidedown_vx_u16m2_ta_vl32_31(vuint16m2_t op1)
 **  ret
 */
 vuint16m4_t 
-test_vslidedown_vx_u16m4_ta_vl32_0(vuint16m4_t op1)
+test_vslidedown_vx_u16m4_ta_vl32_0(vuint16m4_t dest, vuint16m4_t op1)
 {
-  return vslidedown_vx_u16m4_ta(op1, 0, 32);
+  return vslidedown_vx_u16m4_ta(dest, op1, 0, 32);
 }
 
 /*
@@ -30500,9 +30500,9 @@ test_vslidedown_vx_u16m4_ta_vl32_0(vuint16m4_t op1)
 **  ret
 */
 vuint16m4_t 
-test_vslidedown_vx_u16m4_ta_vl32_31(vuint16m4_t op1)
+test_vslidedown_vx_u16m4_ta_vl32_31(vuint16m4_t dest, vuint16m4_t op1)
 {
-  return vslidedown_vx_u16m4_ta(op1, 31, 32);
+  return vslidedown_vx_u16m4_ta(dest, op1, 31, 32);
 }
 
 /*
@@ -30515,9 +30515,9 @@ test_vslidedown_vx_u16m4_ta_vl32_31(vuint16m4_t op1)
 **  ret
 */
 vuint16m8_t 
-test_vslidedown_vx_u16m8_ta_vl32_0(vuint16m8_t op1)
+test_vslidedown_vx_u16m8_ta_vl32_0(vuint16m8_t dest, vuint16m8_t op1)
 {
-  return vslidedown_vx_u16m8_ta(op1, 0, 32);
+  return vslidedown_vx_u16m8_ta(dest, op1, 0, 32);
 }
 
 /*
@@ -30530,9 +30530,9 @@ test_vslidedown_vx_u16m8_ta_vl32_0(vuint16m8_t op1)
 **  ret
 */
 vuint16m8_t 
-test_vslidedown_vx_u16m8_ta_vl32_31(vuint16m8_t op1)
+test_vslidedown_vx_u16m8_ta_vl32_31(vuint16m8_t dest, vuint16m8_t op1)
 {
-  return vslidedown_vx_u16m8_ta(op1, 31, 32);
+  return vslidedown_vx_u16m8_ta(dest, op1, 31, 32);
 }
 
 /*
@@ -30545,9 +30545,9 @@ test_vslidedown_vx_u16m8_ta_vl32_31(vuint16m8_t op1)
 **  ret
 */
 vuint32mf2_t 
-test_vslidedown_vx_u32mf2_ta_vl32_0(vuint32mf2_t op1)
+test_vslidedown_vx_u32mf2_ta_vl32_0(vuint32mf2_t dest, vuint32mf2_t op1)
 {
-  return vslidedown_vx_u32mf2_ta(op1, 0, 32);
+  return vslidedown_vx_u32mf2_ta(dest, op1, 0, 32);
 }
 
 /*
@@ -30560,9 +30560,9 @@ test_vslidedown_vx_u32mf2_ta_vl32_0(vuint32mf2_t op1)
 **  ret
 */
 vuint32mf2_t 
-test_vslidedown_vx_u32mf2_ta_vl32_31(vuint32mf2_t op1)
+test_vslidedown_vx_u32mf2_ta_vl32_31(vuint32mf2_t dest, vuint32mf2_t op1)
 {
-  return vslidedown_vx_u32mf2_ta(op1, 31, 32);
+  return vslidedown_vx_u32mf2_ta(dest, op1, 31, 32);
 }
 
 /*
@@ -30575,9 +30575,9 @@ test_vslidedown_vx_u32mf2_ta_vl32_31(vuint32mf2_t op1)
 **  ret
 */
 vuint32m1_t 
-test_vslidedown_vx_u32m1_ta_vl32_0(vuint32m1_t op1)
+test_vslidedown_vx_u32m1_ta_vl32_0(vuint32m1_t dest, vuint32m1_t op1)
 {
-  return vslidedown_vx_u32m1_ta(op1, 0, 32);
+  return vslidedown_vx_u32m1_ta(dest, op1, 0, 32);
 }
 
 /*
@@ -30590,9 +30590,9 @@ test_vslidedown_vx_u32m1_ta_vl32_0(vuint32m1_t op1)
 **  ret
 */
 vuint32m1_t 
-test_vslidedown_vx_u32m1_ta_vl32_31(vuint32m1_t op1)
+test_vslidedown_vx_u32m1_ta_vl32_31(vuint32m1_t dest, vuint32m1_t op1)
 {
-  return vslidedown_vx_u32m1_ta(op1, 31, 32);
+  return vslidedown_vx_u32m1_ta(dest, op1, 31, 32);
 }
 
 /*
@@ -30605,9 +30605,9 @@ test_vslidedown_vx_u32m1_ta_vl32_31(vuint32m1_t op1)
 **  ret
 */
 vuint32m2_t 
-test_vslidedown_vx_u32m2_ta_vl32_0(vuint32m2_t op1)
+test_vslidedown_vx_u32m2_ta_vl32_0(vuint32m2_t dest, vuint32m2_t op1)
 {
-  return vslidedown_vx_u32m2_ta(op1, 0, 32);
+  return vslidedown_vx_u32m2_ta(dest, op1, 0, 32);
 }
 
 /*
@@ -30620,9 +30620,9 @@ test_vslidedown_vx_u32m2_ta_vl32_0(vuint32m2_t op1)
 **  ret
 */
 vuint32m2_t 
-test_vslidedown_vx_u32m2_ta_vl32_31(vuint32m2_t op1)
+test_vslidedown_vx_u32m2_ta_vl32_31(vuint32m2_t dest, vuint32m2_t op1)
 {
-  return vslidedown_vx_u32m2_ta(op1, 31, 32);
+  return vslidedown_vx_u32m2_ta(dest, op1, 31, 32);
 }
 
 /*
@@ -30635,9 +30635,9 @@ test_vslidedown_vx_u32m2_ta_vl32_31(vuint32m2_t op1)
 **  ret
 */
 vuint32m4_t 
-test_vslidedown_vx_u32m4_ta_vl32_0(vuint32m4_t op1)
+test_vslidedown_vx_u32m4_ta_vl32_0(vuint32m4_t dest, vuint32m4_t op1)
 {
-  return vslidedown_vx_u32m4_ta(op1, 0, 32);
+  return vslidedown_vx_u32m4_ta(dest, op1, 0, 32);
 }
 
 /*
@@ -30650,9 +30650,9 @@ test_vslidedown_vx_u32m4_ta_vl32_0(vuint32m4_t op1)
 **  ret
 */
 vuint32m4_t 
-test_vslidedown_vx_u32m4_ta_vl32_31(vuint32m4_t op1)
+test_vslidedown_vx_u32m4_ta_vl32_31(vuint32m4_t dest, vuint32m4_t op1)
 {
-  return vslidedown_vx_u32m4_ta(op1, 31, 32);
+  return vslidedown_vx_u32m4_ta(dest, op1, 31, 32);
 }
 
 /*
@@ -30665,9 +30665,9 @@ test_vslidedown_vx_u32m4_ta_vl32_31(vuint32m4_t op1)
 **  ret
 */
 vuint32m8_t 
-test_vslidedown_vx_u32m8_ta_vl32_0(vuint32m8_t op1)
+test_vslidedown_vx_u32m8_ta_vl32_0(vuint32m8_t dest, vuint32m8_t op1)
 {
-  return vslidedown_vx_u32m8_ta(op1, 0, 32);
+  return vslidedown_vx_u32m8_ta(dest, op1, 0, 32);
 }
 
 /*
@@ -30680,9 +30680,9 @@ test_vslidedown_vx_u32m8_ta_vl32_0(vuint32m8_t op1)
 **  ret
 */
 vuint32m8_t 
-test_vslidedown_vx_u32m8_ta_vl32_31(vuint32m8_t op1)
+test_vslidedown_vx_u32m8_ta_vl32_31(vuint32m8_t dest, vuint32m8_t op1)
 {
-  return vslidedown_vx_u32m8_ta(op1, 31, 32);
+  return vslidedown_vx_u32m8_ta(dest, op1, 31, 32);
 }
 
 /*
@@ -30695,9 +30695,9 @@ test_vslidedown_vx_u32m8_ta_vl32_31(vuint32m8_t op1)
 **  ret
 */
 vuint64m1_t 
-test_vslidedown_vx_u64m1_ta_vl32_0(vuint64m1_t op1)
+test_vslidedown_vx_u64m1_ta_vl32_0(vuint64m1_t dest, vuint64m1_t op1)
 {
-  return vslidedown_vx_u64m1_ta(op1, 0, 32);
+  return vslidedown_vx_u64m1_ta(dest, op1, 0, 32);
 }
 
 /*
@@ -30710,9 +30710,9 @@ test_vslidedown_vx_u64m1_ta_vl32_0(vuint64m1_t op1)
 **  ret
 */
 vuint64m1_t 
-test_vslidedown_vx_u64m1_ta_vl32_31(vuint64m1_t op1)
+test_vslidedown_vx_u64m1_ta_vl32_31(vuint64m1_t dest, vuint64m1_t op1)
 {
-  return vslidedown_vx_u64m1_ta(op1, 31, 32);
+  return vslidedown_vx_u64m1_ta(dest, op1, 31, 32);
 }
 
 /*
@@ -30725,9 +30725,9 @@ test_vslidedown_vx_u64m1_ta_vl32_31(vuint64m1_t op1)
 **  ret
 */
 vuint64m2_t 
-test_vslidedown_vx_u64m2_ta_vl32_0(vuint64m2_t op1)
+test_vslidedown_vx_u64m2_ta_vl32_0(vuint64m2_t dest, vuint64m2_t op1)
 {
-  return vslidedown_vx_u64m2_ta(op1, 0, 32);
+  return vslidedown_vx_u64m2_ta(dest, op1, 0, 32);
 }
 
 /*
@@ -30740,9 +30740,9 @@ test_vslidedown_vx_u64m2_ta_vl32_0(vuint64m2_t op1)
 **  ret
 */
 vuint64m2_t 
-test_vslidedown_vx_u64m2_ta_vl32_31(vuint64m2_t op1)
+test_vslidedown_vx_u64m2_ta_vl32_31(vuint64m2_t dest, vuint64m2_t op1)
 {
-  return vslidedown_vx_u64m2_ta(op1, 31, 32);
+  return vslidedown_vx_u64m2_ta(dest, op1, 31, 32);
 }
 
 /*
@@ -30755,9 +30755,9 @@ test_vslidedown_vx_u64m2_ta_vl32_31(vuint64m2_t op1)
 **  ret
 */
 vuint64m4_t 
-test_vslidedown_vx_u64m4_ta_vl32_0(vuint64m4_t op1)
+test_vslidedown_vx_u64m4_ta_vl32_0(vuint64m4_t dest, vuint64m4_t op1)
 {
-  return vslidedown_vx_u64m4_ta(op1, 0, 32);
+  return vslidedown_vx_u64m4_ta(dest, op1, 0, 32);
 }
 
 /*
@@ -30770,9 +30770,9 @@ test_vslidedown_vx_u64m4_ta_vl32_0(vuint64m4_t op1)
 **  ret
 */
 vuint64m4_t 
-test_vslidedown_vx_u64m4_ta_vl32_31(vuint64m4_t op1)
+test_vslidedown_vx_u64m4_ta_vl32_31(vuint64m4_t dest, vuint64m4_t op1)
 {
-  return vslidedown_vx_u64m4_ta(op1, 31, 32);
+  return vslidedown_vx_u64m4_ta(dest, op1, 31, 32);
 }
 
 /*
@@ -30785,9 +30785,9 @@ test_vslidedown_vx_u64m4_ta_vl32_31(vuint64m4_t op1)
 **  ret
 */
 vuint64m8_t 
-test_vslidedown_vx_u64m8_ta_vl32_0(vuint64m8_t op1)
+test_vslidedown_vx_u64m8_ta_vl32_0(vuint64m8_t dest, vuint64m8_t op1)
 {
-  return vslidedown_vx_u64m8_ta(op1, 0, 32);
+  return vslidedown_vx_u64m8_ta(dest, op1, 0, 32);
 }
 
 /*
@@ -30800,9 +30800,9 @@ test_vslidedown_vx_u64m8_ta_vl32_0(vuint64m8_t op1)
 **  ret
 */
 vuint64m8_t 
-test_vslidedown_vx_u64m8_ta_vl32_31(vuint64m8_t op1)
+test_vslidedown_vx_u64m8_ta_vl32_31(vuint64m8_t dest, vuint64m8_t op1)
 {
-  return vslidedown_vx_u64m8_ta(op1, 31, 32);
+  return vslidedown_vx_u64m8_ta(dest, op1, 31, 32);
 }
 
 /*
@@ -33348,9 +33348,9 @@ test_vslidedown_vx_f64m8_m_vl32(vbool8_t mask, vfloat64m8_t maskedoff, vfloat64m
 **  ret
 */
 vfloat16mf4_t 
-test_vslidedown_vx_f16mf4_ta(vfloat16mf4_t op1, size_t op2, size_t vl)
+test_vslidedown_vx_f16mf4_ta(vfloat16mf4_t dest, vfloat16mf4_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_f16mf4_ta(op1, op2, vl);
+  return vslidedown_vx_f16mf4_ta(dest, op1, op2, vl);
 }
 
 /*
@@ -33363,9 +33363,9 @@ test_vslidedown_vx_f16mf4_ta(vfloat16mf4_t op1, size_t op2, size_t vl)
 **  ret
 */
 vfloat16mf4_t 
-test_vslidedown_vx_f16mf4_ta_vl31(vfloat16mf4_t op1, size_t op2)
+test_vslidedown_vx_f16mf4_ta_vl31(vfloat16mf4_t dest, vfloat16mf4_t op1, size_t op2)
 {
-  return vslidedown_vx_f16mf4_ta(op1, op2, 31);
+  return vslidedown_vx_f16mf4_ta(dest, op1, op2, 31);
 }
 
 /*
@@ -33378,9 +33378,9 @@ test_vslidedown_vx_f16mf4_ta_vl31(vfloat16mf4_t op1, size_t op2)
 **  ret
 */
 vfloat16mf2_t 
-test_vslidedown_vx_f16mf2_ta(vfloat16mf2_t op1, size_t op2, size_t vl)
+test_vslidedown_vx_f16mf2_ta(vfloat16mf2_t dest, vfloat16mf2_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_f16mf2_ta(op1, op2, vl);
+  return vslidedown_vx_f16mf2_ta(dest, op1, op2, vl);
 }
 
 /*
@@ -33393,9 +33393,9 @@ test_vslidedown_vx_f16mf2_ta(vfloat16mf2_t op1, size_t op2, size_t vl)
 **  ret
 */
 vfloat16mf2_t 
-test_vslidedown_vx_f16mf2_ta_vl31(vfloat16mf2_t op1, size_t op2)
+test_vslidedown_vx_f16mf2_ta_vl31(vfloat16mf2_t dest, vfloat16mf2_t op1, size_t op2)
 {
-  return vslidedown_vx_f16mf2_ta(op1, op2, 31);
+  return vslidedown_vx_f16mf2_ta(dest, op1, op2, 31);
 }
 
 /*
@@ -33408,9 +33408,9 @@ test_vslidedown_vx_f16mf2_ta_vl31(vfloat16mf2_t op1, size_t op2)
 **  ret
 */
 vfloat16m1_t 
-test_vslidedown_vx_f16m1_ta(vfloat16m1_t op1, size_t op2, size_t vl)
+test_vslidedown_vx_f16m1_ta(vfloat16m1_t dest, vfloat16m1_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_f16m1_ta(op1, op2, vl);
+  return vslidedown_vx_f16m1_ta(dest, op1, op2, vl);
 }
 
 /*
@@ -33423,9 +33423,9 @@ test_vslidedown_vx_f16m1_ta(vfloat16m1_t op1, size_t op2, size_t vl)
 **  ret
 */
 vfloat16m1_t 
-test_vslidedown_vx_f16m1_ta_vl31(vfloat16m1_t op1, size_t op2)
+test_vslidedown_vx_f16m1_ta_vl31(vfloat16m1_t dest, vfloat16m1_t op1, size_t op2)
 {
-  return vslidedown_vx_f16m1_ta(op1, op2, 31);
+  return vslidedown_vx_f16m1_ta(dest, op1, op2, 31);
 }
 
 /*
@@ -33438,9 +33438,9 @@ test_vslidedown_vx_f16m1_ta_vl31(vfloat16m1_t op1, size_t op2)
 **  ret
 */
 vfloat16m2_t 
-test_vslidedown_vx_f16m2_ta(vfloat16m2_t op1, size_t op2, size_t vl)
+test_vslidedown_vx_f16m2_ta(vfloat16m2_t dest, vfloat16m2_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_f16m2_ta(op1, op2, vl);
+  return vslidedown_vx_f16m2_ta(dest, op1, op2, vl);
 }
 
 /*
@@ -33453,9 +33453,9 @@ test_vslidedown_vx_f16m2_ta(vfloat16m2_t op1, size_t op2, size_t vl)
 **  ret
 */
 vfloat16m2_t 
-test_vslidedown_vx_f16m2_ta_vl31(vfloat16m2_t op1, size_t op2)
+test_vslidedown_vx_f16m2_ta_vl31(vfloat16m2_t dest, vfloat16m2_t op1, size_t op2)
 {
-  return vslidedown_vx_f16m2_ta(op1, op2, 31);
+  return vslidedown_vx_f16m2_ta(dest, op1, op2, 31);
 }
 
 /*
@@ -33468,9 +33468,9 @@ test_vslidedown_vx_f16m2_ta_vl31(vfloat16m2_t op1, size_t op2)
 **  ret
 */
 vfloat16m4_t 
-test_vslidedown_vx_f16m4_ta(vfloat16m4_t op1, size_t op2, size_t vl)
+test_vslidedown_vx_f16m4_ta(vfloat16m4_t dest, vfloat16m4_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_f16m4_ta(op1, op2, vl);
+  return vslidedown_vx_f16m4_ta(dest, op1, op2, vl);
 }
 
 /*
@@ -33483,9 +33483,9 @@ test_vslidedown_vx_f16m4_ta(vfloat16m4_t op1, size_t op2, size_t vl)
 **  ret
 */
 vfloat16m4_t 
-test_vslidedown_vx_f16m4_ta_vl31(vfloat16m4_t op1, size_t op2)
+test_vslidedown_vx_f16m4_ta_vl31(vfloat16m4_t dest, vfloat16m4_t op1, size_t op2)
 {
-  return vslidedown_vx_f16m4_ta(op1, op2, 31);
+  return vslidedown_vx_f16m4_ta(dest, op1, op2, 31);
 }
 
 /*
@@ -33498,9 +33498,9 @@ test_vslidedown_vx_f16m4_ta_vl31(vfloat16m4_t op1, size_t op2)
 **  ret
 */
 vfloat16m8_t 
-test_vslidedown_vx_f16m8_ta(vfloat16m8_t op1, size_t op2, size_t vl)
+test_vslidedown_vx_f16m8_ta(vfloat16m8_t dest, vfloat16m8_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_f16m8_ta(op1, op2, vl);
+  return vslidedown_vx_f16m8_ta(dest, op1, op2, vl);
 }
 
 /*
@@ -33513,9 +33513,9 @@ test_vslidedown_vx_f16m8_ta(vfloat16m8_t op1, size_t op2, size_t vl)
 **  ret
 */
 vfloat16m8_t 
-test_vslidedown_vx_f16m8_ta_vl31(vfloat16m8_t op1, size_t op2)
+test_vslidedown_vx_f16m8_ta_vl31(vfloat16m8_t dest, vfloat16m8_t op1, size_t op2)
 {
-  return vslidedown_vx_f16m8_ta(op1, op2, 31);
+  return vslidedown_vx_f16m8_ta(dest, op1, op2, 31);
 }
 
 /*
@@ -33528,9 +33528,9 @@ test_vslidedown_vx_f16m8_ta_vl31(vfloat16m8_t op1, size_t op2)
 **  ret
 */
 vfloat32mf2_t 
-test_vslidedown_vx_f32mf2_ta(vfloat32mf2_t op1, size_t op2, size_t vl)
+test_vslidedown_vx_f32mf2_ta(vfloat32mf2_t dest, vfloat32mf2_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_f32mf2_ta(op1, op2, vl);
+  return vslidedown_vx_f32mf2_ta(dest, op1, op2, vl);
 }
 
 /*
@@ -33543,9 +33543,9 @@ test_vslidedown_vx_f32mf2_ta(vfloat32mf2_t op1, size_t op2, size_t vl)
 **  ret
 */
 vfloat32mf2_t 
-test_vslidedown_vx_f32mf2_ta_vl31(vfloat32mf2_t op1, size_t op2)
+test_vslidedown_vx_f32mf2_ta_vl31(vfloat32mf2_t dest, vfloat32mf2_t op1, size_t op2)
 {
-  return vslidedown_vx_f32mf2_ta(op1, op2, 31);
+  return vslidedown_vx_f32mf2_ta(dest, op1, op2, 31);
 }
 
 /*
@@ -33558,9 +33558,9 @@ test_vslidedown_vx_f32mf2_ta_vl31(vfloat32mf2_t op1, size_t op2)
 **  ret
 */
 vfloat32m1_t 
-test_vslidedown_vx_f32m1_ta(vfloat32m1_t op1, size_t op2, size_t vl)
+test_vslidedown_vx_f32m1_ta(vfloat32m1_t dest, vfloat32m1_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_f32m1_ta(op1, op2, vl);
+  return vslidedown_vx_f32m1_ta(dest, op1, op2, vl);
 }
 
 /*
@@ -33573,9 +33573,9 @@ test_vslidedown_vx_f32m1_ta(vfloat32m1_t op1, size_t op2, size_t vl)
 **  ret
 */
 vfloat32m1_t 
-test_vslidedown_vx_f32m1_ta_vl31(vfloat32m1_t op1, size_t op2)
+test_vslidedown_vx_f32m1_ta_vl31(vfloat32m1_t dest, vfloat32m1_t op1, size_t op2)
 {
-  return vslidedown_vx_f32m1_ta(op1, op2, 31);
+  return vslidedown_vx_f32m1_ta(dest, op1, op2, 31);
 }
 
 /*
@@ -33588,9 +33588,9 @@ test_vslidedown_vx_f32m1_ta_vl31(vfloat32m1_t op1, size_t op2)
 **  ret
 */
 vfloat32m2_t 
-test_vslidedown_vx_f32m2_ta(vfloat32m2_t op1, size_t op2, size_t vl)
+test_vslidedown_vx_f32m2_ta(vfloat32m2_t dest, vfloat32m2_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_f32m2_ta(op1, op2, vl);
+  return vslidedown_vx_f32m2_ta(dest, op1, op2, vl);
 }
 
 /*
@@ -33603,9 +33603,9 @@ test_vslidedown_vx_f32m2_ta(vfloat32m2_t op1, size_t op2, size_t vl)
 **  ret
 */
 vfloat32m2_t 
-test_vslidedown_vx_f32m2_ta_vl31(vfloat32m2_t op1, size_t op2)
+test_vslidedown_vx_f32m2_ta_vl31(vfloat32m2_t dest, vfloat32m2_t op1, size_t op2)
 {
-  return vslidedown_vx_f32m2_ta(op1, op2, 31);
+  return vslidedown_vx_f32m2_ta(dest, op1, op2, 31);
 }
 
 /*
@@ -33618,9 +33618,9 @@ test_vslidedown_vx_f32m2_ta_vl31(vfloat32m2_t op1, size_t op2)
 **  ret
 */
 vfloat32m4_t 
-test_vslidedown_vx_f32m4_ta(vfloat32m4_t op1, size_t op2, size_t vl)
+test_vslidedown_vx_f32m4_ta(vfloat32m4_t dest, vfloat32m4_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_f32m4_ta(op1, op2, vl);
+  return vslidedown_vx_f32m4_ta(dest, op1, op2, vl);
 }
 
 /*
@@ -33633,9 +33633,9 @@ test_vslidedown_vx_f32m4_ta(vfloat32m4_t op1, size_t op2, size_t vl)
 **  ret
 */
 vfloat32m4_t 
-test_vslidedown_vx_f32m4_ta_vl31(vfloat32m4_t op1, size_t op2)
+test_vslidedown_vx_f32m4_ta_vl31(vfloat32m4_t dest, vfloat32m4_t op1, size_t op2)
 {
-  return vslidedown_vx_f32m4_ta(op1, op2, 31);
+  return vslidedown_vx_f32m4_ta(dest, op1, op2, 31);
 }
 
 /*
@@ -33648,9 +33648,9 @@ test_vslidedown_vx_f32m4_ta_vl31(vfloat32m4_t op1, size_t op2)
 **  ret
 */
 vfloat32m8_t 
-test_vslidedown_vx_f32m8_ta(vfloat32m8_t op1, size_t op2, size_t vl)
+test_vslidedown_vx_f32m8_ta(vfloat32m8_t dest, vfloat32m8_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_f32m8_ta(op1, op2, vl);
+  return vslidedown_vx_f32m8_ta(dest, op1, op2, vl);
 }
 
 /*
@@ -33663,9 +33663,9 @@ test_vslidedown_vx_f32m8_ta(vfloat32m8_t op1, size_t op2, size_t vl)
 **  ret
 */
 vfloat32m8_t 
-test_vslidedown_vx_f32m8_ta_vl31(vfloat32m8_t op1, size_t op2)
+test_vslidedown_vx_f32m8_ta_vl31(vfloat32m8_t dest, vfloat32m8_t op1, size_t op2)
 {
-  return vslidedown_vx_f32m8_ta(op1, op2, 31);
+  return vslidedown_vx_f32m8_ta(dest, op1, op2, 31);
 }
 
 /*
@@ -33678,9 +33678,9 @@ test_vslidedown_vx_f32m8_ta_vl31(vfloat32m8_t op1, size_t op2)
 **  ret
 */
 vfloat64m1_t 
-test_vslidedown_vx_f64m1_ta(vfloat64m1_t op1, size_t op2, size_t vl)
+test_vslidedown_vx_f64m1_ta(vfloat64m1_t dest, vfloat64m1_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_f64m1_ta(op1, op2, vl);
+  return vslidedown_vx_f64m1_ta(dest, op1, op2, vl);
 }
 
 /*
@@ -33693,9 +33693,9 @@ test_vslidedown_vx_f64m1_ta(vfloat64m1_t op1, size_t op2, size_t vl)
 **  ret
 */
 vfloat64m1_t 
-test_vslidedown_vx_f64m1_ta_vl31(vfloat64m1_t op1, size_t op2)
+test_vslidedown_vx_f64m1_ta_vl31(vfloat64m1_t dest, vfloat64m1_t op1, size_t op2)
 {
-  return vslidedown_vx_f64m1_ta(op1, op2, 31);
+  return vslidedown_vx_f64m1_ta(dest, op1, op2, 31);
 }
 
 /*
@@ -33708,9 +33708,9 @@ test_vslidedown_vx_f64m1_ta_vl31(vfloat64m1_t op1, size_t op2)
 **  ret
 */
 vfloat64m2_t 
-test_vslidedown_vx_f64m2_ta(vfloat64m2_t op1, size_t op2, size_t vl)
+test_vslidedown_vx_f64m2_ta(vfloat64m2_t dest, vfloat64m2_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_f64m2_ta(op1, op2, vl);
+  return vslidedown_vx_f64m2_ta(dest, op1, op2, vl);
 }
 
 /*
@@ -33723,9 +33723,9 @@ test_vslidedown_vx_f64m2_ta(vfloat64m2_t op1, size_t op2, size_t vl)
 **  ret
 */
 vfloat64m2_t 
-test_vslidedown_vx_f64m2_ta_vl31(vfloat64m2_t op1, size_t op2)
+test_vslidedown_vx_f64m2_ta_vl31(vfloat64m2_t dest, vfloat64m2_t op1, size_t op2)
 {
-  return vslidedown_vx_f64m2_ta(op1, op2, 31);
+  return vslidedown_vx_f64m2_ta(dest, op1, op2, 31);
 }
 
 /*
@@ -33738,9 +33738,9 @@ test_vslidedown_vx_f64m2_ta_vl31(vfloat64m2_t op1, size_t op2)
 **  ret
 */
 vfloat64m4_t 
-test_vslidedown_vx_f64m4_ta(vfloat64m4_t op1, size_t op2, size_t vl)
+test_vslidedown_vx_f64m4_ta(vfloat64m4_t dest, vfloat64m4_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_f64m4_ta(op1, op2, vl);
+  return vslidedown_vx_f64m4_ta(dest, op1, op2, vl);
 }
 
 /*
@@ -33753,9 +33753,9 @@ test_vslidedown_vx_f64m4_ta(vfloat64m4_t op1, size_t op2, size_t vl)
 **  ret
 */
 vfloat64m4_t 
-test_vslidedown_vx_f64m4_ta_vl31(vfloat64m4_t op1, size_t op2)
+test_vslidedown_vx_f64m4_ta_vl31(vfloat64m4_t dest, vfloat64m4_t op1, size_t op2)
 {
-  return vslidedown_vx_f64m4_ta(op1, op2, 31);
+  return vslidedown_vx_f64m4_ta(dest, op1, op2, 31);
 }
 
 /*
@@ -33768,9 +33768,9 @@ test_vslidedown_vx_f64m4_ta_vl31(vfloat64m4_t op1, size_t op2)
 **  ret
 */
 vfloat64m8_t 
-test_vslidedown_vx_f64m8_ta(vfloat64m8_t op1, size_t op2, size_t vl)
+test_vslidedown_vx_f64m8_ta(vfloat64m8_t dest, vfloat64m8_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_f64m8_ta(op1, op2, vl);
+  return vslidedown_vx_f64m8_ta(dest, op1, op2, vl);
 }
 
 /*
@@ -33783,9 +33783,9 @@ test_vslidedown_vx_f64m8_ta(vfloat64m8_t op1, size_t op2, size_t vl)
 **  ret
 */
 vfloat64m8_t 
-test_vslidedown_vx_f64m8_ta_vl31(vfloat64m8_t op1, size_t op2)
+test_vslidedown_vx_f64m8_ta_vl31(vfloat64m8_t dest, vfloat64m8_t op1, size_t op2)
 {
-  return vslidedown_vx_f64m8_ta(op1, op2, 31);
+  return vslidedown_vx_f64m8_ta(dest, op1, op2, 31);
 }
 
 /*
@@ -34250,7 +34250,7 @@ test_vslidedown_vx_f64m8_tu_vl31(vfloat64m8_t dest, vfloat64m8_t op1, size_t op2
 vfloat16mf4_t 
 test_vslidedown_vx_f16mf4_tama(vbool64_t mask, vfloat16mf4_t maskedoff, vfloat16mf4_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_f16mf4_tama(mask, op1, op2, vl);
+  return vslidedown_vx_f16mf4_tama(mask, op1, op1, op2, vl);
 }
 
 /*
@@ -34265,7 +34265,7 @@ test_vslidedown_vx_f16mf4_tama(vbool64_t mask, vfloat16mf4_t maskedoff, vfloat16
 vfloat16mf4_t 
 test_vslidedown_vx_f16mf4_tama_vl31(vbool64_t mask, vfloat16mf4_t maskedoff, vfloat16mf4_t op1, size_t op2)
 {
-  return vslidedown_vx_f16mf4_tama(mask, op1, op2, 31);
+  return vslidedown_vx_f16mf4_tama(mask, op1, op1, op2, 31);
 }
 
 /*
@@ -34280,7 +34280,7 @@ test_vslidedown_vx_f16mf4_tama_vl31(vbool64_t mask, vfloat16mf4_t maskedoff, vfl
 vfloat16mf2_t 
 test_vslidedown_vx_f16mf2_tama(vbool32_t mask, vfloat16mf2_t maskedoff, vfloat16mf2_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_f16mf2_tama(mask, op1, op2, vl);
+  return vslidedown_vx_f16mf2_tama(mask, op1, op1, op2, vl);
 }
 
 /*
@@ -34295,7 +34295,7 @@ test_vslidedown_vx_f16mf2_tama(vbool32_t mask, vfloat16mf2_t maskedoff, vfloat16
 vfloat16mf2_t 
 test_vslidedown_vx_f16mf2_tama_vl31(vbool32_t mask, vfloat16mf2_t maskedoff, vfloat16mf2_t op1, size_t op2)
 {
-  return vslidedown_vx_f16mf2_tama(mask, op1, op2, 31);
+  return vslidedown_vx_f16mf2_tama(mask, op1, op1, op2, 31);
 }
 
 /*
@@ -34310,7 +34310,7 @@ test_vslidedown_vx_f16mf2_tama_vl31(vbool32_t mask, vfloat16mf2_t maskedoff, vfl
 vfloat16m1_t 
 test_vslidedown_vx_f16m1_tama(vbool16_t mask, vfloat16m1_t maskedoff, vfloat16m1_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_f16m1_tama(mask, op1, op2, vl);
+  return vslidedown_vx_f16m1_tama(mask, op1, op1, op2, vl);
 }
 
 /*
@@ -34325,7 +34325,7 @@ test_vslidedown_vx_f16m1_tama(vbool16_t mask, vfloat16m1_t maskedoff, vfloat16m1
 vfloat16m1_t 
 test_vslidedown_vx_f16m1_tama_vl31(vbool16_t mask, vfloat16m1_t maskedoff, vfloat16m1_t op1, size_t op2)
 {
-  return vslidedown_vx_f16m1_tama(mask, op1, op2, 31);
+  return vslidedown_vx_f16m1_tama(mask, op1, op1, op2, 31);
 }
 
 /*
@@ -34340,7 +34340,7 @@ test_vslidedown_vx_f16m1_tama_vl31(vbool16_t mask, vfloat16m1_t maskedoff, vfloa
 vfloat16m2_t 
 test_vslidedown_vx_f16m2_tama(vbool8_t mask, vfloat16m2_t maskedoff, vfloat16m2_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_f16m2_tama(mask, op1, op2, vl);
+  return vslidedown_vx_f16m2_tama(mask, op1, op1, op2, vl);
 }
 
 /*
@@ -34355,7 +34355,7 @@ test_vslidedown_vx_f16m2_tama(vbool8_t mask, vfloat16m2_t maskedoff, vfloat16m2_
 vfloat16m2_t 
 test_vslidedown_vx_f16m2_tama_vl31(vbool8_t mask, vfloat16m2_t maskedoff, vfloat16m2_t op1, size_t op2)
 {
-  return vslidedown_vx_f16m2_tama(mask, op1, op2, 31);
+  return vslidedown_vx_f16m2_tama(mask, op1, op1, op2, 31);
 }
 
 /*
@@ -34370,7 +34370,7 @@ test_vslidedown_vx_f16m2_tama_vl31(vbool8_t mask, vfloat16m2_t maskedoff, vfloat
 vfloat16m4_t 
 test_vslidedown_vx_f16m4_tama(vbool4_t mask, vfloat16m4_t maskedoff, vfloat16m4_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_f16m4_tama(mask, op1, op2, vl);
+  return vslidedown_vx_f16m4_tama(mask, op1, op1, op2, vl);
 }
 
 /*
@@ -34385,7 +34385,7 @@ test_vslidedown_vx_f16m4_tama(vbool4_t mask, vfloat16m4_t maskedoff, vfloat16m4_
 vfloat16m4_t 
 test_vslidedown_vx_f16m4_tama_vl31(vbool4_t mask, vfloat16m4_t maskedoff, vfloat16m4_t op1, size_t op2)
 {
-  return vslidedown_vx_f16m4_tama(mask, op1, op2, 31);
+  return vslidedown_vx_f16m4_tama(mask, op1, op1, op2, 31);
 }
 
 /*
@@ -34400,7 +34400,7 @@ test_vslidedown_vx_f16m4_tama_vl31(vbool4_t mask, vfloat16m4_t maskedoff, vfloat
 vfloat16m8_t 
 test_vslidedown_vx_f16m8_tama(vbool2_t mask, vfloat16m8_t maskedoff, vfloat16m8_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_f16m8_tama(mask, op1, op2, vl);
+  return vslidedown_vx_f16m8_tama(mask, op1, op1, op2, vl);
 }
 
 /*
@@ -34415,7 +34415,7 @@ test_vslidedown_vx_f16m8_tama(vbool2_t mask, vfloat16m8_t maskedoff, vfloat16m8_
 vfloat16m8_t 
 test_vslidedown_vx_f16m8_tama_vl31(vbool2_t mask, vfloat16m8_t maskedoff, vfloat16m8_t op1, size_t op2)
 {
-  return vslidedown_vx_f16m8_tama(mask, op1, op2, 31);
+  return vslidedown_vx_f16m8_tama(mask, op1, op1, op2, 31);
 }
 
 /*
@@ -34430,7 +34430,7 @@ test_vslidedown_vx_f16m8_tama_vl31(vbool2_t mask, vfloat16m8_t maskedoff, vfloat
 vfloat32mf2_t 
 test_vslidedown_vx_f32mf2_tama(vbool64_t mask, vfloat32mf2_t maskedoff, vfloat32mf2_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_f32mf2_tama(mask, op1, op2, vl);
+  return vslidedown_vx_f32mf2_tama(mask, op1, op1, op2, vl);
 }
 
 /*
@@ -34445,7 +34445,7 @@ test_vslidedown_vx_f32mf2_tama(vbool64_t mask, vfloat32mf2_t maskedoff, vfloat32
 vfloat32mf2_t 
 test_vslidedown_vx_f32mf2_tama_vl31(vbool64_t mask, vfloat32mf2_t maskedoff, vfloat32mf2_t op1, size_t op2)
 {
-  return vslidedown_vx_f32mf2_tama(mask, op1, op2, 31);
+  return vslidedown_vx_f32mf2_tama(mask, op1, op1, op2, 31);
 }
 
 /*
@@ -34460,7 +34460,7 @@ test_vslidedown_vx_f32mf2_tama_vl31(vbool64_t mask, vfloat32mf2_t maskedoff, vfl
 vfloat32m1_t 
 test_vslidedown_vx_f32m1_tama(vbool32_t mask, vfloat32m1_t maskedoff, vfloat32m1_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_f32m1_tama(mask, op1, op2, vl);
+  return vslidedown_vx_f32m1_tama(mask, op1, op1, op2, vl);
 }
 
 /*
@@ -34475,7 +34475,7 @@ test_vslidedown_vx_f32m1_tama(vbool32_t mask, vfloat32m1_t maskedoff, vfloat32m1
 vfloat32m1_t 
 test_vslidedown_vx_f32m1_tama_vl31(vbool32_t mask, vfloat32m1_t maskedoff, vfloat32m1_t op1, size_t op2)
 {
-  return vslidedown_vx_f32m1_tama(mask, op1, op2, 31);
+  return vslidedown_vx_f32m1_tama(mask, op1, op1, op2, 31);
 }
 
 /*
@@ -34490,7 +34490,7 @@ test_vslidedown_vx_f32m1_tama_vl31(vbool32_t mask, vfloat32m1_t maskedoff, vfloa
 vfloat32m2_t 
 test_vslidedown_vx_f32m2_tama(vbool16_t mask, vfloat32m2_t maskedoff, vfloat32m2_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_f32m2_tama(mask, op1, op2, vl);
+  return vslidedown_vx_f32m2_tama(mask, op1, op1, op2, vl);
 }
 
 /*
@@ -34505,7 +34505,7 @@ test_vslidedown_vx_f32m2_tama(vbool16_t mask, vfloat32m2_t maskedoff, vfloat32m2
 vfloat32m2_t 
 test_vslidedown_vx_f32m2_tama_vl31(vbool16_t mask, vfloat32m2_t maskedoff, vfloat32m2_t op1, size_t op2)
 {
-  return vslidedown_vx_f32m2_tama(mask, op1, op2, 31);
+  return vslidedown_vx_f32m2_tama(mask, op1, op1, op2, 31);
 }
 
 /*
@@ -34520,7 +34520,7 @@ test_vslidedown_vx_f32m2_tama_vl31(vbool16_t mask, vfloat32m2_t maskedoff, vfloa
 vfloat32m4_t 
 test_vslidedown_vx_f32m4_tama(vbool8_t mask, vfloat32m4_t maskedoff, vfloat32m4_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_f32m4_tama(mask, op1, op2, vl);
+  return vslidedown_vx_f32m4_tama(mask, op1, op1, op2, vl);
 }
 
 /*
@@ -34535,7 +34535,7 @@ test_vslidedown_vx_f32m4_tama(vbool8_t mask, vfloat32m4_t maskedoff, vfloat32m4_
 vfloat32m4_t 
 test_vslidedown_vx_f32m4_tama_vl31(vbool8_t mask, vfloat32m4_t maskedoff, vfloat32m4_t op1, size_t op2)
 {
-  return vslidedown_vx_f32m4_tama(mask, op1, op2, 31);
+  return vslidedown_vx_f32m4_tama(mask, op1, op1, op2, 31);
 }
 
 /*
@@ -34550,7 +34550,7 @@ test_vslidedown_vx_f32m4_tama_vl31(vbool8_t mask, vfloat32m4_t maskedoff, vfloat
 vfloat32m8_t 
 test_vslidedown_vx_f32m8_tama(vbool4_t mask, vfloat32m8_t maskedoff, vfloat32m8_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_f32m8_tama(mask, op1, op2, vl);
+  return vslidedown_vx_f32m8_tama(mask, op1, op1, op2, vl);
 }
 
 /*
@@ -34565,7 +34565,7 @@ test_vslidedown_vx_f32m8_tama(vbool4_t mask, vfloat32m8_t maskedoff, vfloat32m8_
 vfloat32m8_t 
 test_vslidedown_vx_f32m8_tama_vl31(vbool4_t mask, vfloat32m8_t maskedoff, vfloat32m8_t op1, size_t op2)
 {
-  return vslidedown_vx_f32m8_tama(mask, op1, op2, 31);
+  return vslidedown_vx_f32m8_tama(mask, op1, op1, op2, 31);
 }
 
 /*
@@ -34580,7 +34580,7 @@ test_vslidedown_vx_f32m8_tama_vl31(vbool4_t mask, vfloat32m8_t maskedoff, vfloat
 vfloat64m1_t 
 test_vslidedown_vx_f64m1_tama(vbool64_t mask, vfloat64m1_t maskedoff, vfloat64m1_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_f64m1_tama(mask, op1, op2, vl);
+  return vslidedown_vx_f64m1_tama(mask, op1, op1, op2, vl);
 }
 
 /*
@@ -34595,7 +34595,7 @@ test_vslidedown_vx_f64m1_tama(vbool64_t mask, vfloat64m1_t maskedoff, vfloat64m1
 vfloat64m1_t 
 test_vslidedown_vx_f64m1_tama_vl31(vbool64_t mask, vfloat64m1_t maskedoff, vfloat64m1_t op1, size_t op2)
 {
-  return vslidedown_vx_f64m1_tama(mask, op1, op2, 31);
+  return vslidedown_vx_f64m1_tama(mask, op1, op1, op2, 31);
 }
 
 /*
@@ -34610,7 +34610,7 @@ test_vslidedown_vx_f64m1_tama_vl31(vbool64_t mask, vfloat64m1_t maskedoff, vfloa
 vfloat64m2_t 
 test_vslidedown_vx_f64m2_tama(vbool32_t mask, vfloat64m2_t maskedoff, vfloat64m2_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_f64m2_tama(mask, op1, op2, vl);
+  return vslidedown_vx_f64m2_tama(mask, op1, op1, op2, vl);
 }
 
 /*
@@ -34625,7 +34625,7 @@ test_vslidedown_vx_f64m2_tama(vbool32_t mask, vfloat64m2_t maskedoff, vfloat64m2
 vfloat64m2_t 
 test_vslidedown_vx_f64m2_tama_vl31(vbool32_t mask, vfloat64m2_t maskedoff, vfloat64m2_t op1, size_t op2)
 {
-  return vslidedown_vx_f64m2_tama(mask, op1, op2, 31);
+  return vslidedown_vx_f64m2_tama(mask, op1, op1, op2, 31);
 }
 
 /*
@@ -34640,7 +34640,7 @@ test_vslidedown_vx_f64m2_tama_vl31(vbool32_t mask, vfloat64m2_t maskedoff, vfloa
 vfloat64m4_t 
 test_vslidedown_vx_f64m4_tama(vbool16_t mask, vfloat64m4_t maskedoff, vfloat64m4_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_f64m4_tama(mask, op1, op2, vl);
+  return vslidedown_vx_f64m4_tama(mask, op1, op1, op2, vl);
 }
 
 /*
@@ -34655,7 +34655,7 @@ test_vslidedown_vx_f64m4_tama(vbool16_t mask, vfloat64m4_t maskedoff, vfloat64m4
 vfloat64m4_t 
 test_vslidedown_vx_f64m4_tama_vl31(vbool16_t mask, vfloat64m4_t maskedoff, vfloat64m4_t op1, size_t op2)
 {
-  return vslidedown_vx_f64m4_tama(mask, op1, op2, 31);
+  return vslidedown_vx_f64m4_tama(mask, op1, op1, op2, 31);
 }
 
 /*
@@ -34670,7 +34670,7 @@ test_vslidedown_vx_f64m4_tama_vl31(vbool16_t mask, vfloat64m4_t maskedoff, vfloa
 vfloat64m8_t 
 test_vslidedown_vx_f64m8_tama(vbool8_t mask, vfloat64m8_t maskedoff, vfloat64m8_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_f64m8_tama(mask, op1, op2, vl);
+  return vslidedown_vx_f64m8_tama(mask, op1, op1, op2, vl);
 }
 
 /*
@@ -34685,7 +34685,7 @@ test_vslidedown_vx_f64m8_tama(vbool8_t mask, vfloat64m8_t maskedoff, vfloat64m8_
 vfloat64m8_t 
 test_vslidedown_vx_f64m8_tama_vl31(vbool8_t mask, vfloat64m8_t maskedoff, vfloat64m8_t op1, size_t op2)
 {
-  return vslidedown_vx_f64m8_tama(mask, op1, op2, 31);
+  return vslidedown_vx_f64m8_tama(mask, op1, op1, op2, 31);
 }
 
 /*
@@ -36050,7 +36050,7 @@ test_vslidedown_vx_f64m8_tumu_vl31(vbool8_t mask, vfloat64m8_t maskedoff, vfloat
 vfloat16mf4_t 
 test_vslidedown_vx_f16mf4_tama_vl32(vbool64_t mask, vfloat16mf4_t maskedoff, vfloat16mf4_t op1, size_t op2)
 {
-  return vslidedown_vx_f16mf4_tama(mask, op1, op2, 32);
+  return vslidedown_vx_f16mf4_tama(mask, op1, op1, op2, 32);
 }
 
 /*
@@ -36065,7 +36065,7 @@ test_vslidedown_vx_f16mf4_tama_vl32(vbool64_t mask, vfloat16mf4_t maskedoff, vfl
 vfloat16mf2_t 
 test_vslidedown_vx_f16mf2_tama_vl32(vbool32_t mask, vfloat16mf2_t maskedoff, vfloat16mf2_t op1, size_t op2)
 {
-  return vslidedown_vx_f16mf2_tama(mask, op1, op2, 32);
+  return vslidedown_vx_f16mf2_tama(mask, op1, op1, op2, 32);
 }
 
 /*
@@ -36080,7 +36080,7 @@ test_vslidedown_vx_f16mf2_tama_vl32(vbool32_t mask, vfloat16mf2_t maskedoff, vfl
 vfloat16m1_t 
 test_vslidedown_vx_f16m1_tama_vl32(vbool16_t mask, vfloat16m1_t maskedoff, vfloat16m1_t op1, size_t op2)
 {
-  return vslidedown_vx_f16m1_tama(mask, op1, op2, 32);
+  return vslidedown_vx_f16m1_tama(mask, op1, op1, op2, 32);
 }
 
 /*
@@ -36095,7 +36095,7 @@ test_vslidedown_vx_f16m1_tama_vl32(vbool16_t mask, vfloat16m1_t maskedoff, vfloa
 vfloat16m2_t 
 test_vslidedown_vx_f16m2_tama_vl32(vbool8_t mask, vfloat16m2_t maskedoff, vfloat16m2_t op1, size_t op2)
 {
-  return vslidedown_vx_f16m2_tama(mask, op1, op2, 32);
+  return vslidedown_vx_f16m2_tama(mask, op1, op1, op2, 32);
 }
 
 /*
@@ -36110,7 +36110,7 @@ test_vslidedown_vx_f16m2_tama_vl32(vbool8_t mask, vfloat16m2_t maskedoff, vfloat
 vfloat16m4_t 
 test_vslidedown_vx_f16m4_tama_vl32(vbool4_t mask, vfloat16m4_t maskedoff, vfloat16m4_t op1, size_t op2)
 {
-  return vslidedown_vx_f16m4_tama(mask, op1, op2, 32);
+  return vslidedown_vx_f16m4_tama(mask, op1, op1, op2, 32);
 }
 
 /*
@@ -36125,7 +36125,7 @@ test_vslidedown_vx_f16m4_tama_vl32(vbool4_t mask, vfloat16m4_t maskedoff, vfloat
 vfloat16m8_t 
 test_vslidedown_vx_f16m8_tama_vl32(vbool2_t mask, vfloat16m8_t maskedoff, vfloat16m8_t op1, size_t op2)
 {
-  return vslidedown_vx_f16m8_tama(mask, op1, op2, 32);
+  return vslidedown_vx_f16m8_tama(mask, op1, op1, op2, 32);
 }
 
 /*
@@ -36140,7 +36140,7 @@ test_vslidedown_vx_f16m8_tama_vl32(vbool2_t mask, vfloat16m8_t maskedoff, vfloat
 vfloat32mf2_t 
 test_vslidedown_vx_f32mf2_tama_vl32(vbool64_t mask, vfloat32mf2_t maskedoff, vfloat32mf2_t op1, size_t op2)
 {
-  return vslidedown_vx_f32mf2_tama(mask, op1, op2, 32);
+  return vslidedown_vx_f32mf2_tama(mask, op1, op1, op2, 32);
 }
 
 /*
@@ -36155,7 +36155,7 @@ test_vslidedown_vx_f32mf2_tama_vl32(vbool64_t mask, vfloat32mf2_t maskedoff, vfl
 vfloat32m1_t 
 test_vslidedown_vx_f32m1_tama_vl32(vbool32_t mask, vfloat32m1_t maskedoff, vfloat32m1_t op1, size_t op2)
 {
-  return vslidedown_vx_f32m1_tama(mask, op1, op2, 32);
+  return vslidedown_vx_f32m1_tama(mask, op1, op1, op2, 32);
 }
 
 /*
@@ -36170,7 +36170,7 @@ test_vslidedown_vx_f32m1_tama_vl32(vbool32_t mask, vfloat32m1_t maskedoff, vfloa
 vfloat32m2_t 
 test_vslidedown_vx_f32m2_tama_vl32(vbool16_t mask, vfloat32m2_t maskedoff, vfloat32m2_t op1, size_t op2)
 {
-  return vslidedown_vx_f32m2_tama(mask, op1, op2, 32);
+  return vslidedown_vx_f32m2_tama(mask, op1, op1, op2, 32);
 }
 
 /*
@@ -36185,7 +36185,7 @@ test_vslidedown_vx_f32m2_tama_vl32(vbool16_t mask, vfloat32m2_t maskedoff, vfloa
 vfloat32m4_t 
 test_vslidedown_vx_f32m4_tama_vl32(vbool8_t mask, vfloat32m4_t maskedoff, vfloat32m4_t op1, size_t op2)
 {
-  return vslidedown_vx_f32m4_tama(mask, op1, op2, 32);
+  return vslidedown_vx_f32m4_tama(mask, op1, op1, op2, 32);
 }
 
 /*
@@ -36200,7 +36200,7 @@ test_vslidedown_vx_f32m4_tama_vl32(vbool8_t mask, vfloat32m4_t maskedoff, vfloat
 vfloat32m8_t 
 test_vslidedown_vx_f32m8_tama_vl32(vbool4_t mask, vfloat32m8_t maskedoff, vfloat32m8_t op1, size_t op2)
 {
-  return vslidedown_vx_f32m8_tama(mask, op1, op2, 32);
+  return vslidedown_vx_f32m8_tama(mask, op1, op1, op2, 32);
 }
 
 /*
@@ -36215,7 +36215,7 @@ test_vslidedown_vx_f32m8_tama_vl32(vbool4_t mask, vfloat32m8_t maskedoff, vfloat
 vfloat64m1_t 
 test_vslidedown_vx_f64m1_tama_vl32(vbool64_t mask, vfloat64m1_t maskedoff, vfloat64m1_t op1, size_t op2)
 {
-  return vslidedown_vx_f64m1_tama(mask, op1, op2, 32);
+  return vslidedown_vx_f64m1_tama(mask, op1, op1, op2, 32);
 }
 
 /*
@@ -36230,7 +36230,7 @@ test_vslidedown_vx_f64m1_tama_vl32(vbool64_t mask, vfloat64m1_t maskedoff, vfloa
 vfloat64m2_t 
 test_vslidedown_vx_f64m2_tama_vl32(vbool32_t mask, vfloat64m2_t maskedoff, vfloat64m2_t op1, size_t op2)
 {
-  return vslidedown_vx_f64m2_tama(mask, op1, op2, 32);
+  return vslidedown_vx_f64m2_tama(mask, op1, op1, op2, 32);
 }
 
 /*
@@ -36245,7 +36245,7 @@ test_vslidedown_vx_f64m2_tama_vl32(vbool32_t mask, vfloat64m2_t maskedoff, vfloa
 vfloat64m4_t 
 test_vslidedown_vx_f64m4_tama_vl32(vbool16_t mask, vfloat64m4_t maskedoff, vfloat64m4_t op1, size_t op2)
 {
-  return vslidedown_vx_f64m4_tama(mask, op1, op2, 32);
+  return vslidedown_vx_f64m4_tama(mask, op1, op1, op2, 32);
 }
 
 /*
@@ -36260,7 +36260,7 @@ test_vslidedown_vx_f64m4_tama_vl32(vbool16_t mask, vfloat64m4_t maskedoff, vfloa
 vfloat64m8_t 
 test_vslidedown_vx_f64m8_tama_vl32(vbool8_t mask, vfloat64m8_t maskedoff, vfloat64m8_t op1, size_t op2)
 {
-  return vslidedown_vx_f64m8_tama(mask, op1, op2, 32);
+  return vslidedown_vx_f64m8_tama(mask, op1, op1, op2, 32);
 }
 
 /*
@@ -36948,9 +36948,9 @@ test_vslidedown_vx_f64m8_tumu_vl32(vbool8_t mask, vfloat64m8_t maskedoff, vfloat
 **  ret
 */
 vfloat16mf4_t 
-test_vslidedown_vx_f16mf4_ta_vl32(vfloat16mf4_t op1, size_t op2)
+test_vslidedown_vx_f16mf4_ta_vl32(vfloat16mf4_t dest, vfloat16mf4_t op1, size_t op2)
 {
-  return vslidedown_vx_f16mf4_ta(op1, op2, 32);
+  return vslidedown_vx_f16mf4_ta(dest, op1, op2, 32);
 }
 
 /*
@@ -36963,9 +36963,9 @@ test_vslidedown_vx_f16mf4_ta_vl32(vfloat16mf4_t op1, size_t op2)
 **  ret
 */
 vfloat16mf2_t 
-test_vslidedown_vx_f16mf2_ta_vl32(vfloat16mf2_t op1, size_t op2)
+test_vslidedown_vx_f16mf2_ta_vl32(vfloat16mf2_t dest, vfloat16mf2_t op1, size_t op2)
 {
-  return vslidedown_vx_f16mf2_ta(op1, op2, 32);
+  return vslidedown_vx_f16mf2_ta(dest, op1, op2, 32);
 }
 
 /*
@@ -36978,9 +36978,9 @@ test_vslidedown_vx_f16mf2_ta_vl32(vfloat16mf2_t op1, size_t op2)
 **  ret
 */
 vfloat16m1_t 
-test_vslidedown_vx_f16m1_ta_vl32(vfloat16m1_t op1, size_t op2)
+test_vslidedown_vx_f16m1_ta_vl32(vfloat16m1_t dest, vfloat16m1_t op1, size_t op2)
 {
-  return vslidedown_vx_f16m1_ta(op1, op2, 32);
+  return vslidedown_vx_f16m1_ta(dest, op1, op2, 32);
 }
 
 /*
@@ -36993,9 +36993,9 @@ test_vslidedown_vx_f16m1_ta_vl32(vfloat16m1_t op1, size_t op2)
 **  ret
 */
 vfloat16m2_t 
-test_vslidedown_vx_f16m2_ta_vl32(vfloat16m2_t op1, size_t op2)
+test_vslidedown_vx_f16m2_ta_vl32(vfloat16m2_t dest, vfloat16m2_t op1, size_t op2)
 {
-  return vslidedown_vx_f16m2_ta(op1, op2, 32);
+  return vslidedown_vx_f16m2_ta(dest, op1, op2, 32);
 }
 
 /*
@@ -37008,9 +37008,9 @@ test_vslidedown_vx_f16m2_ta_vl32(vfloat16m2_t op1, size_t op2)
 **  ret
 */
 vfloat16m4_t 
-test_vslidedown_vx_f16m4_ta_vl32(vfloat16m4_t op1, size_t op2)
+test_vslidedown_vx_f16m4_ta_vl32(vfloat16m4_t dest, vfloat16m4_t op1, size_t op2)
 {
-  return vslidedown_vx_f16m4_ta(op1, op2, 32);
+  return vslidedown_vx_f16m4_ta(dest, op1, op2, 32);
 }
 
 /*
@@ -37023,9 +37023,9 @@ test_vslidedown_vx_f16m4_ta_vl32(vfloat16m4_t op1, size_t op2)
 **  ret
 */
 vfloat16m8_t 
-test_vslidedown_vx_f16m8_ta_vl32(vfloat16m8_t op1, size_t op2)
+test_vslidedown_vx_f16m8_ta_vl32(vfloat16m8_t dest, vfloat16m8_t op1, size_t op2)
 {
-  return vslidedown_vx_f16m8_ta(op1, op2, 32);
+  return vslidedown_vx_f16m8_ta(dest, op1, op2, 32);
 }
 
 /*
@@ -37038,9 +37038,9 @@ test_vslidedown_vx_f16m8_ta_vl32(vfloat16m8_t op1, size_t op2)
 **  ret
 */
 vfloat32mf2_t 
-test_vslidedown_vx_f32mf2_ta_vl32(vfloat32mf2_t op1, size_t op2)
+test_vslidedown_vx_f32mf2_ta_vl32(vfloat32mf2_t dest, vfloat32mf2_t op1, size_t op2)
 {
-  return vslidedown_vx_f32mf2_ta(op1, op2, 32);
+  return vslidedown_vx_f32mf2_ta(dest, op1, op2, 32);
 }
 
 /*
@@ -37053,9 +37053,9 @@ test_vslidedown_vx_f32mf2_ta_vl32(vfloat32mf2_t op1, size_t op2)
 **  ret
 */
 vfloat32m1_t 
-test_vslidedown_vx_f32m1_ta_vl32(vfloat32m1_t op1, size_t op2)
+test_vslidedown_vx_f32m1_ta_vl32(vfloat32m1_t dest, vfloat32m1_t op1, size_t op2)
 {
-  return vslidedown_vx_f32m1_ta(op1, op2, 32);
+  return vslidedown_vx_f32m1_ta(dest, op1, op2, 32);
 }
 
 /*
@@ -37068,9 +37068,9 @@ test_vslidedown_vx_f32m1_ta_vl32(vfloat32m1_t op1, size_t op2)
 **  ret
 */
 vfloat32m2_t 
-test_vslidedown_vx_f32m2_ta_vl32(vfloat32m2_t op1, size_t op2)
+test_vslidedown_vx_f32m2_ta_vl32(vfloat32m2_t dest, vfloat32m2_t op1, size_t op2)
 {
-  return vslidedown_vx_f32m2_ta(op1, op2, 32);
+  return vslidedown_vx_f32m2_ta(dest, op1, op2, 32);
 }
 
 /*
@@ -37083,9 +37083,9 @@ test_vslidedown_vx_f32m2_ta_vl32(vfloat32m2_t op1, size_t op2)
 **  ret
 */
 vfloat32m4_t 
-test_vslidedown_vx_f32m4_ta_vl32(vfloat32m4_t op1, size_t op2)
+test_vslidedown_vx_f32m4_ta_vl32(vfloat32m4_t dest, vfloat32m4_t op1, size_t op2)
 {
-  return vslidedown_vx_f32m4_ta(op1, op2, 32);
+  return vslidedown_vx_f32m4_ta(dest, op1, op2, 32);
 }
 
 /*
@@ -37098,9 +37098,9 @@ test_vslidedown_vx_f32m4_ta_vl32(vfloat32m4_t op1, size_t op2)
 **  ret
 */
 vfloat32m8_t 
-test_vslidedown_vx_f32m8_ta_vl32(vfloat32m8_t op1, size_t op2)
+test_vslidedown_vx_f32m8_ta_vl32(vfloat32m8_t dest, vfloat32m8_t op1, size_t op2)
 {
-  return vslidedown_vx_f32m8_ta(op1, op2, 32);
+  return vslidedown_vx_f32m8_ta(dest, op1, op2, 32);
 }
 
 /*
@@ -37113,9 +37113,9 @@ test_vslidedown_vx_f32m8_ta_vl32(vfloat32m8_t op1, size_t op2)
 **  ret
 */
 vfloat64m1_t 
-test_vslidedown_vx_f64m1_ta_vl32(vfloat64m1_t op1, size_t op2)
+test_vslidedown_vx_f64m1_ta_vl32(vfloat64m1_t dest, vfloat64m1_t op1, size_t op2)
 {
-  return vslidedown_vx_f64m1_ta(op1, op2, 32);
+  return vslidedown_vx_f64m1_ta(dest, op1, op2, 32);
 }
 
 /*
@@ -37128,9 +37128,9 @@ test_vslidedown_vx_f64m1_ta_vl32(vfloat64m1_t op1, size_t op2)
 **  ret
 */
 vfloat64m2_t 
-test_vslidedown_vx_f64m2_ta_vl32(vfloat64m2_t op1, size_t op2)
+test_vslidedown_vx_f64m2_ta_vl32(vfloat64m2_t dest, vfloat64m2_t op1, size_t op2)
 {
-  return vslidedown_vx_f64m2_ta(op1, op2, 32);
+  return vslidedown_vx_f64m2_ta(dest, op1, op2, 32);
 }
 
 /*
@@ -37143,9 +37143,9 @@ test_vslidedown_vx_f64m2_ta_vl32(vfloat64m2_t op1, size_t op2)
 **  ret
 */
 vfloat64m4_t 
-test_vslidedown_vx_f64m4_ta_vl32(vfloat64m4_t op1, size_t op2)
+test_vslidedown_vx_f64m4_ta_vl32(vfloat64m4_t dest, vfloat64m4_t op1, size_t op2)
 {
-  return vslidedown_vx_f64m4_ta(op1, op2, 32);
+  return vslidedown_vx_f64m4_ta(dest, op1, op2, 32);
 }
 
 /*
@@ -37158,9 +37158,9 @@ test_vslidedown_vx_f64m4_ta_vl32(vfloat64m4_t op1, size_t op2)
 **  ret
 */
 vfloat64m8_t 
-test_vslidedown_vx_f64m8_ta_vl32(vfloat64m8_t op1, size_t op2)
+test_vslidedown_vx_f64m8_ta_vl32(vfloat64m8_t dest, vfloat64m8_t op1, size_t op2)
 {
-  return vslidedown_vx_f64m8_ta(op1, op2, 32);
+  return vslidedown_vx_f64m8_ta(dest, op1, op2, 32);
 }
 
 /*
@@ -39273,9 +39273,9 @@ test_vslidedown_vx_i64m8_m_vl32(vbool8_t mask, vint64m8_t maskedoff, vint64m8_t 
 **  ret
 */
 vint8mf8_t 
-test_vslidedown_vx_i8mf8_ta(vint8mf8_t op1, size_t op2, size_t vl)
+test_vslidedown_vx_i8mf8_ta(vint8mf8_t dest, vint8mf8_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_i8mf8_ta(op1, op2, vl);
+  return vslidedown_vx_i8mf8_ta(dest, op1, op2, vl);
 }
 
 /*
@@ -39288,9 +39288,9 @@ test_vslidedown_vx_i8mf8_ta(vint8mf8_t op1, size_t op2, size_t vl)
 **  ret
 */
 vint8mf8_t 
-test_vslidedown_vx_i8mf8_ta_vl31(vint8mf8_t op1, size_t op2)
+test_vslidedown_vx_i8mf8_ta_vl31(vint8mf8_t dest, vint8mf8_t op1, size_t op2)
 {
-  return vslidedown_vx_i8mf8_ta(op1, op2, 31);
+  return vslidedown_vx_i8mf8_ta(dest, op1, op2, 31);
 }
 
 /*
@@ -39303,9 +39303,9 @@ test_vslidedown_vx_i8mf8_ta_vl31(vint8mf8_t op1, size_t op2)
 **  ret
 */
 vint8mf4_t 
-test_vslidedown_vx_i8mf4_ta(vint8mf4_t op1, size_t op2, size_t vl)
+test_vslidedown_vx_i8mf4_ta(vint8mf4_t dest, vint8mf4_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_i8mf4_ta(op1, op2, vl);
+  return vslidedown_vx_i8mf4_ta(dest, op1, op2, vl);
 }
 
 /*
@@ -39318,9 +39318,9 @@ test_vslidedown_vx_i8mf4_ta(vint8mf4_t op1, size_t op2, size_t vl)
 **  ret
 */
 vint8mf4_t 
-test_vslidedown_vx_i8mf4_ta_vl31(vint8mf4_t op1, size_t op2)
+test_vslidedown_vx_i8mf4_ta_vl31(vint8mf4_t dest, vint8mf4_t op1, size_t op2)
 {
-  return vslidedown_vx_i8mf4_ta(op1, op2, 31);
+  return vslidedown_vx_i8mf4_ta(dest, op1, op2, 31);
 }
 
 /*
@@ -39333,9 +39333,9 @@ test_vslidedown_vx_i8mf4_ta_vl31(vint8mf4_t op1, size_t op2)
 **  ret
 */
 vint8mf2_t 
-test_vslidedown_vx_i8mf2_ta(vint8mf2_t op1, size_t op2, size_t vl)
+test_vslidedown_vx_i8mf2_ta(vint8mf2_t dest, vint8mf2_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_i8mf2_ta(op1, op2, vl);
+  return vslidedown_vx_i8mf2_ta(dest, op1, op2, vl);
 }
 
 /*
@@ -39348,9 +39348,9 @@ test_vslidedown_vx_i8mf2_ta(vint8mf2_t op1, size_t op2, size_t vl)
 **  ret
 */
 vint8mf2_t 
-test_vslidedown_vx_i8mf2_ta_vl31(vint8mf2_t op1, size_t op2)
+test_vslidedown_vx_i8mf2_ta_vl31(vint8mf2_t dest, vint8mf2_t op1, size_t op2)
 {
-  return vslidedown_vx_i8mf2_ta(op1, op2, 31);
+  return vslidedown_vx_i8mf2_ta(dest, op1, op2, 31);
 }
 
 /*
@@ -39363,9 +39363,9 @@ test_vslidedown_vx_i8mf2_ta_vl31(vint8mf2_t op1, size_t op2)
 **  ret
 */
 vint8m1_t 
-test_vslidedown_vx_i8m1_ta(vint8m1_t op1, size_t op2, size_t vl)
+test_vslidedown_vx_i8m1_ta(vint8m1_t dest, vint8m1_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_i8m1_ta(op1, op2, vl);
+  return vslidedown_vx_i8m1_ta(dest, op1, op2, vl);
 }
 
 /*
@@ -39378,9 +39378,9 @@ test_vslidedown_vx_i8m1_ta(vint8m1_t op1, size_t op2, size_t vl)
 **  ret
 */
 vint8m1_t 
-test_vslidedown_vx_i8m1_ta_vl31(vint8m1_t op1, size_t op2)
+test_vslidedown_vx_i8m1_ta_vl31(vint8m1_t dest, vint8m1_t op1, size_t op2)
 {
-  return vslidedown_vx_i8m1_ta(op1, op2, 31);
+  return vslidedown_vx_i8m1_ta(dest, op1, op2, 31);
 }
 
 /*
@@ -39393,9 +39393,9 @@ test_vslidedown_vx_i8m1_ta_vl31(vint8m1_t op1, size_t op2)
 **  ret
 */
 vint8m2_t 
-test_vslidedown_vx_i8m2_ta(vint8m2_t op1, size_t op2, size_t vl)
+test_vslidedown_vx_i8m2_ta(vint8m2_t dest, vint8m2_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_i8m2_ta(op1, op2, vl);
+  return vslidedown_vx_i8m2_ta(dest, op1, op2, vl);
 }
 
 /*
@@ -39408,9 +39408,9 @@ test_vslidedown_vx_i8m2_ta(vint8m2_t op1, size_t op2, size_t vl)
 **  ret
 */
 vint8m2_t 
-test_vslidedown_vx_i8m2_ta_vl31(vint8m2_t op1, size_t op2)
+test_vslidedown_vx_i8m2_ta_vl31(vint8m2_t dest, vint8m2_t op1, size_t op2)
 {
-  return vslidedown_vx_i8m2_ta(op1, op2, 31);
+  return vslidedown_vx_i8m2_ta(dest, op1, op2, 31);
 }
 
 /*
@@ -39423,9 +39423,9 @@ test_vslidedown_vx_i8m2_ta_vl31(vint8m2_t op1, size_t op2)
 **  ret
 */
 vint8m4_t 
-test_vslidedown_vx_i8m4_ta(vint8m4_t op1, size_t op2, size_t vl)
+test_vslidedown_vx_i8m4_ta(vint8m4_t dest, vint8m4_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_i8m4_ta(op1, op2, vl);
+  return vslidedown_vx_i8m4_ta(dest, op1, op2, vl);
 }
 
 /*
@@ -39438,9 +39438,9 @@ test_vslidedown_vx_i8m4_ta(vint8m4_t op1, size_t op2, size_t vl)
 **  ret
 */
 vint8m4_t 
-test_vslidedown_vx_i8m4_ta_vl31(vint8m4_t op1, size_t op2)
+test_vslidedown_vx_i8m4_ta_vl31(vint8m4_t dest, vint8m4_t op1, size_t op2)
 {
-  return vslidedown_vx_i8m4_ta(op1, op2, 31);
+  return vslidedown_vx_i8m4_ta(dest, op1, op2, 31);
 }
 
 /*
@@ -39453,9 +39453,9 @@ test_vslidedown_vx_i8m4_ta_vl31(vint8m4_t op1, size_t op2)
 **  ret
 */
 vint8m8_t 
-test_vslidedown_vx_i8m8_ta(vint8m8_t op1, size_t op2, size_t vl)
+test_vslidedown_vx_i8m8_ta(vint8m8_t dest, vint8m8_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_i8m8_ta(op1, op2, vl);
+  return vslidedown_vx_i8m8_ta(dest, op1, op2, vl);
 }
 
 /*
@@ -39468,9 +39468,9 @@ test_vslidedown_vx_i8m8_ta(vint8m8_t op1, size_t op2, size_t vl)
 **  ret
 */
 vint8m8_t 
-test_vslidedown_vx_i8m8_ta_vl31(vint8m8_t op1, size_t op2)
+test_vslidedown_vx_i8m8_ta_vl31(vint8m8_t dest, vint8m8_t op1, size_t op2)
 {
-  return vslidedown_vx_i8m8_ta(op1, op2, 31);
+  return vslidedown_vx_i8m8_ta(dest, op1, op2, 31);
 }
 
 /*
@@ -39483,9 +39483,9 @@ test_vslidedown_vx_i8m8_ta_vl31(vint8m8_t op1, size_t op2)
 **  ret
 */
 vint16mf4_t 
-test_vslidedown_vx_i16mf4_ta(vint16mf4_t op1, size_t op2, size_t vl)
+test_vslidedown_vx_i16mf4_ta(vint16mf4_t dest, vint16mf4_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_i16mf4_ta(op1, op2, vl);
+  return vslidedown_vx_i16mf4_ta(dest, op1, op2, vl);
 }
 
 /*
@@ -39498,9 +39498,9 @@ test_vslidedown_vx_i16mf4_ta(vint16mf4_t op1, size_t op2, size_t vl)
 **  ret
 */
 vint16mf4_t 
-test_vslidedown_vx_i16mf4_ta_vl31(vint16mf4_t op1, size_t op2)
+test_vslidedown_vx_i16mf4_ta_vl31(vint16mf4_t dest, vint16mf4_t op1, size_t op2)
 {
-  return vslidedown_vx_i16mf4_ta(op1, op2, 31);
+  return vslidedown_vx_i16mf4_ta(dest, op1, op2, 31);
 }
 
 /*
@@ -39513,9 +39513,9 @@ test_vslidedown_vx_i16mf4_ta_vl31(vint16mf4_t op1, size_t op2)
 **  ret
 */
 vint16mf2_t 
-test_vslidedown_vx_i16mf2_ta(vint16mf2_t op1, size_t op2, size_t vl)
+test_vslidedown_vx_i16mf2_ta(vint16mf2_t dest, vint16mf2_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_i16mf2_ta(op1, op2, vl);
+  return vslidedown_vx_i16mf2_ta(dest, op1, op2, vl);
 }
 
 /*
@@ -39528,9 +39528,9 @@ test_vslidedown_vx_i16mf2_ta(vint16mf2_t op1, size_t op2, size_t vl)
 **  ret
 */
 vint16mf2_t 
-test_vslidedown_vx_i16mf2_ta_vl31(vint16mf2_t op1, size_t op2)
+test_vslidedown_vx_i16mf2_ta_vl31(vint16mf2_t dest, vint16mf2_t op1, size_t op2)
 {
-  return vslidedown_vx_i16mf2_ta(op1, op2, 31);
+  return vslidedown_vx_i16mf2_ta(dest, op1, op2, 31);
 }
 
 /*
@@ -39543,9 +39543,9 @@ test_vslidedown_vx_i16mf2_ta_vl31(vint16mf2_t op1, size_t op2)
 **  ret
 */
 vint16m1_t 
-test_vslidedown_vx_i16m1_ta(vint16m1_t op1, size_t op2, size_t vl)
+test_vslidedown_vx_i16m1_ta(vint16m1_t dest, vint16m1_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_i16m1_ta(op1, op2, vl);
+  return vslidedown_vx_i16m1_ta(dest, op1, op2, vl);
 }
 
 /*
@@ -39558,9 +39558,9 @@ test_vslidedown_vx_i16m1_ta(vint16m1_t op1, size_t op2, size_t vl)
 **  ret
 */
 vint16m1_t 
-test_vslidedown_vx_i16m1_ta_vl31(vint16m1_t op1, size_t op2)
+test_vslidedown_vx_i16m1_ta_vl31(vint16m1_t dest, vint16m1_t op1, size_t op2)
 {
-  return vslidedown_vx_i16m1_ta(op1, op2, 31);
+  return vslidedown_vx_i16m1_ta(dest, op1, op2, 31);
 }
 
 /*
@@ -39573,9 +39573,9 @@ test_vslidedown_vx_i16m1_ta_vl31(vint16m1_t op1, size_t op2)
 **  ret
 */
 vint16m2_t 
-test_vslidedown_vx_i16m2_ta(vint16m2_t op1, size_t op2, size_t vl)
+test_vslidedown_vx_i16m2_ta(vint16m2_t dest, vint16m2_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_i16m2_ta(op1, op2, vl);
+  return vslidedown_vx_i16m2_ta(dest, op1, op2, vl);
 }
 
 /*
@@ -39588,9 +39588,9 @@ test_vslidedown_vx_i16m2_ta(vint16m2_t op1, size_t op2, size_t vl)
 **  ret
 */
 vint16m2_t 
-test_vslidedown_vx_i16m2_ta_vl31(vint16m2_t op1, size_t op2)
+test_vslidedown_vx_i16m2_ta_vl31(vint16m2_t dest, vint16m2_t op1, size_t op2)
 {
-  return vslidedown_vx_i16m2_ta(op1, op2, 31);
+  return vslidedown_vx_i16m2_ta(dest, op1, op2, 31);
 }
 
 /*
@@ -39603,9 +39603,9 @@ test_vslidedown_vx_i16m2_ta_vl31(vint16m2_t op1, size_t op2)
 **  ret
 */
 vint16m4_t 
-test_vslidedown_vx_i16m4_ta(vint16m4_t op1, size_t op2, size_t vl)
+test_vslidedown_vx_i16m4_ta(vint16m4_t dest, vint16m4_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_i16m4_ta(op1, op2, vl);
+  return vslidedown_vx_i16m4_ta(dest, op1, op2, vl);
 }
 
 /*
@@ -39618,9 +39618,9 @@ test_vslidedown_vx_i16m4_ta(vint16m4_t op1, size_t op2, size_t vl)
 **  ret
 */
 vint16m4_t 
-test_vslidedown_vx_i16m4_ta_vl31(vint16m4_t op1, size_t op2)
+test_vslidedown_vx_i16m4_ta_vl31(vint16m4_t dest, vint16m4_t op1, size_t op2)
 {
-  return vslidedown_vx_i16m4_ta(op1, op2, 31);
+  return vslidedown_vx_i16m4_ta(dest, op1, op2, 31);
 }
 
 /*
@@ -39633,9 +39633,9 @@ test_vslidedown_vx_i16m4_ta_vl31(vint16m4_t op1, size_t op2)
 **  ret
 */
 vint16m8_t 
-test_vslidedown_vx_i16m8_ta(vint16m8_t op1, size_t op2, size_t vl)
+test_vslidedown_vx_i16m8_ta(vint16m8_t dest, vint16m8_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_i16m8_ta(op1, op2, vl);
+  return vslidedown_vx_i16m8_ta(dest, op1, op2, vl);
 }
 
 /*
@@ -39648,9 +39648,9 @@ test_vslidedown_vx_i16m8_ta(vint16m8_t op1, size_t op2, size_t vl)
 **  ret
 */
 vint16m8_t 
-test_vslidedown_vx_i16m8_ta_vl31(vint16m8_t op1, size_t op2)
+test_vslidedown_vx_i16m8_ta_vl31(vint16m8_t dest, vint16m8_t op1, size_t op2)
 {
-  return vslidedown_vx_i16m8_ta(op1, op2, 31);
+  return vslidedown_vx_i16m8_ta(dest, op1, op2, 31);
 }
 
 /*
@@ -39663,9 +39663,9 @@ test_vslidedown_vx_i16m8_ta_vl31(vint16m8_t op1, size_t op2)
 **  ret
 */
 vint32mf2_t 
-test_vslidedown_vx_i32mf2_ta(vint32mf2_t op1, size_t op2, size_t vl)
+test_vslidedown_vx_i32mf2_ta(vint32mf2_t dest, vint32mf2_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_i32mf2_ta(op1, op2, vl);
+  return vslidedown_vx_i32mf2_ta(dest, op1, op2, vl);
 }
 
 /*
@@ -39678,9 +39678,9 @@ test_vslidedown_vx_i32mf2_ta(vint32mf2_t op1, size_t op2, size_t vl)
 **  ret
 */
 vint32mf2_t 
-test_vslidedown_vx_i32mf2_ta_vl31(vint32mf2_t op1, size_t op2)
+test_vslidedown_vx_i32mf2_ta_vl31(vint32mf2_t dest, vint32mf2_t op1, size_t op2)
 {
-  return vslidedown_vx_i32mf2_ta(op1, op2, 31);
+  return vslidedown_vx_i32mf2_ta(dest, op1, op2, 31);
 }
 
 /*
@@ -39693,9 +39693,9 @@ test_vslidedown_vx_i32mf2_ta_vl31(vint32mf2_t op1, size_t op2)
 **  ret
 */
 vint32m1_t 
-test_vslidedown_vx_i32m1_ta(vint32m1_t op1, size_t op2, size_t vl)
+test_vslidedown_vx_i32m1_ta(vint32m1_t dest, vint32m1_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_i32m1_ta(op1, op2, vl);
+  return vslidedown_vx_i32m1_ta(dest, op1, op2, vl);
 }
 
 /*
@@ -39708,9 +39708,9 @@ test_vslidedown_vx_i32m1_ta(vint32m1_t op1, size_t op2, size_t vl)
 **  ret
 */
 vint32m1_t 
-test_vslidedown_vx_i32m1_ta_vl31(vint32m1_t op1, size_t op2)
+test_vslidedown_vx_i32m1_ta_vl31(vint32m1_t dest, vint32m1_t op1, size_t op2)
 {
-  return vslidedown_vx_i32m1_ta(op1, op2, 31);
+  return vslidedown_vx_i32m1_ta(dest, op1, op2, 31);
 }
 
 /*
@@ -39723,9 +39723,9 @@ test_vslidedown_vx_i32m1_ta_vl31(vint32m1_t op1, size_t op2)
 **  ret
 */
 vint32m2_t 
-test_vslidedown_vx_i32m2_ta(vint32m2_t op1, size_t op2, size_t vl)
+test_vslidedown_vx_i32m2_ta(vint32m2_t dest, vint32m2_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_i32m2_ta(op1, op2, vl);
+  return vslidedown_vx_i32m2_ta(dest, op1, op2, vl);
 }
 
 /*
@@ -39738,9 +39738,9 @@ test_vslidedown_vx_i32m2_ta(vint32m2_t op1, size_t op2, size_t vl)
 **  ret
 */
 vint32m2_t 
-test_vslidedown_vx_i32m2_ta_vl31(vint32m2_t op1, size_t op2)
+test_vslidedown_vx_i32m2_ta_vl31(vint32m2_t dest, vint32m2_t op1, size_t op2)
 {
-  return vslidedown_vx_i32m2_ta(op1, op2, 31);
+  return vslidedown_vx_i32m2_ta(dest, op1, op2, 31);
 }
 
 /*
@@ -39753,9 +39753,9 @@ test_vslidedown_vx_i32m2_ta_vl31(vint32m2_t op1, size_t op2)
 **  ret
 */
 vint32m4_t 
-test_vslidedown_vx_i32m4_ta(vint32m4_t op1, size_t op2, size_t vl)
+test_vslidedown_vx_i32m4_ta(vint32m4_t dest, vint32m4_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_i32m4_ta(op1, op2, vl);
+  return vslidedown_vx_i32m4_ta(dest, op1, op2, vl);
 }
 
 /*
@@ -39768,9 +39768,9 @@ test_vslidedown_vx_i32m4_ta(vint32m4_t op1, size_t op2, size_t vl)
 **  ret
 */
 vint32m4_t 
-test_vslidedown_vx_i32m4_ta_vl31(vint32m4_t op1, size_t op2)
+test_vslidedown_vx_i32m4_ta_vl31(vint32m4_t dest, vint32m4_t op1, size_t op2)
 {
-  return vslidedown_vx_i32m4_ta(op1, op2, 31);
+  return vslidedown_vx_i32m4_ta(dest, op1, op2, 31);
 }
 
 /*
@@ -39783,9 +39783,9 @@ test_vslidedown_vx_i32m4_ta_vl31(vint32m4_t op1, size_t op2)
 **  ret
 */
 vint32m8_t 
-test_vslidedown_vx_i32m8_ta(vint32m8_t op1, size_t op2, size_t vl)
+test_vslidedown_vx_i32m8_ta(vint32m8_t dest, vint32m8_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_i32m8_ta(op1, op2, vl);
+  return vslidedown_vx_i32m8_ta(dest, op1, op2, vl);
 }
 
 /*
@@ -39798,9 +39798,9 @@ test_vslidedown_vx_i32m8_ta(vint32m8_t op1, size_t op2, size_t vl)
 **  ret
 */
 vint32m8_t 
-test_vslidedown_vx_i32m8_ta_vl31(vint32m8_t op1, size_t op2)
+test_vslidedown_vx_i32m8_ta_vl31(vint32m8_t dest, vint32m8_t op1, size_t op2)
 {
-  return vslidedown_vx_i32m8_ta(op1, op2, 31);
+  return vslidedown_vx_i32m8_ta(dest, op1, op2, 31);
 }
 
 /*
@@ -39813,9 +39813,9 @@ test_vslidedown_vx_i32m8_ta_vl31(vint32m8_t op1, size_t op2)
 **  ret
 */
 vint64m1_t 
-test_vslidedown_vx_i64m1_ta(vint64m1_t op1, size_t op2, size_t vl)
+test_vslidedown_vx_i64m1_ta(vint64m1_t dest, vint64m1_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_i64m1_ta(op1, op2, vl);
+  return vslidedown_vx_i64m1_ta(dest, op1, op2, vl);
 }
 
 /*
@@ -39828,9 +39828,9 @@ test_vslidedown_vx_i64m1_ta(vint64m1_t op1, size_t op2, size_t vl)
 **  ret
 */
 vint64m1_t 
-test_vslidedown_vx_i64m1_ta_vl31(vint64m1_t op1, size_t op2)
+test_vslidedown_vx_i64m1_ta_vl31(vint64m1_t dest, vint64m1_t op1, size_t op2)
 {
-  return vslidedown_vx_i64m1_ta(op1, op2, 31);
+  return vslidedown_vx_i64m1_ta(dest, op1, op2, 31);
 }
 
 /*
@@ -39843,9 +39843,9 @@ test_vslidedown_vx_i64m1_ta_vl31(vint64m1_t op1, size_t op2)
 **  ret
 */
 vint64m2_t 
-test_vslidedown_vx_i64m2_ta(vint64m2_t op1, size_t op2, size_t vl)
+test_vslidedown_vx_i64m2_ta(vint64m2_t dest, vint64m2_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_i64m2_ta(op1, op2, vl);
+  return vslidedown_vx_i64m2_ta(dest, op1, op2, vl);
 }
 
 /*
@@ -39858,9 +39858,9 @@ test_vslidedown_vx_i64m2_ta(vint64m2_t op1, size_t op2, size_t vl)
 **  ret
 */
 vint64m2_t 
-test_vslidedown_vx_i64m2_ta_vl31(vint64m2_t op1, size_t op2)
+test_vslidedown_vx_i64m2_ta_vl31(vint64m2_t dest, vint64m2_t op1, size_t op2)
 {
-  return vslidedown_vx_i64m2_ta(op1, op2, 31);
+  return vslidedown_vx_i64m2_ta(dest, op1, op2, 31);
 }
 
 /*
@@ -39873,9 +39873,9 @@ test_vslidedown_vx_i64m2_ta_vl31(vint64m2_t op1, size_t op2)
 **  ret
 */
 vint64m4_t 
-test_vslidedown_vx_i64m4_ta(vint64m4_t op1, size_t op2, size_t vl)
+test_vslidedown_vx_i64m4_ta(vint64m4_t dest, vint64m4_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_i64m4_ta(op1, op2, vl);
+  return vslidedown_vx_i64m4_ta(dest, op1, op2, vl);
 }
 
 /*
@@ -39888,9 +39888,9 @@ test_vslidedown_vx_i64m4_ta(vint64m4_t op1, size_t op2, size_t vl)
 **  ret
 */
 vint64m4_t 
-test_vslidedown_vx_i64m4_ta_vl31(vint64m4_t op1, size_t op2)
+test_vslidedown_vx_i64m4_ta_vl31(vint64m4_t dest, vint64m4_t op1, size_t op2)
 {
-  return vslidedown_vx_i64m4_ta(op1, op2, 31);
+  return vslidedown_vx_i64m4_ta(dest, op1, op2, 31);
 }
 
 /*
@@ -39903,9 +39903,9 @@ test_vslidedown_vx_i64m4_ta_vl31(vint64m4_t op1, size_t op2)
 **  ret
 */
 vint64m8_t 
-test_vslidedown_vx_i64m8_ta(vint64m8_t op1, size_t op2, size_t vl)
+test_vslidedown_vx_i64m8_ta(vint64m8_t dest, vint64m8_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_i64m8_ta(op1, op2, vl);
+  return vslidedown_vx_i64m8_ta(dest, op1, op2, vl);
 }
 
 /*
@@ -39918,9 +39918,9 @@ test_vslidedown_vx_i64m8_ta(vint64m8_t op1, size_t op2, size_t vl)
 **  ret
 */
 vint64m8_t 
-test_vslidedown_vx_i64m8_ta_vl31(vint64m8_t op1, size_t op2)
+test_vslidedown_vx_i64m8_ta_vl31(vint64m8_t dest, vint64m8_t op1, size_t op2)
 {
-  return vslidedown_vx_i64m8_ta(op1, op2, 31);
+  return vslidedown_vx_i64m8_ta(dest, op1, op2, 31);
 }
 
 /*
@@ -40595,7 +40595,7 @@ test_vslidedown_vx_i64m8_tu_vl31(vint64m8_t dest, vint64m8_t op1, size_t op2)
 vint8mf8_t 
 test_vslidedown_vx_i8mf8_tama(vbool64_t mask, vint8mf8_t maskedoff, vint8mf8_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_i8mf8_tama(mask, op1, op2, vl);
+  return vslidedown_vx_i8mf8_tama(mask, op1, op1, op2, vl);
 }
 
 /*
@@ -40610,7 +40610,7 @@ test_vslidedown_vx_i8mf8_tama(vbool64_t mask, vint8mf8_t maskedoff, vint8mf8_t o
 vint8mf8_t 
 test_vslidedown_vx_i8mf8_tama_vl31(vbool64_t mask, vint8mf8_t maskedoff, vint8mf8_t op1, size_t op2)
 {
-  return vslidedown_vx_i8mf8_tama(mask, op1, op2, 31);
+  return vslidedown_vx_i8mf8_tama(mask, op1, op1, op2, 31);
 }
 
 /*
@@ -40625,7 +40625,7 @@ test_vslidedown_vx_i8mf8_tama_vl31(vbool64_t mask, vint8mf8_t maskedoff, vint8mf
 vint8mf4_t 
 test_vslidedown_vx_i8mf4_tama(vbool32_t mask, vint8mf4_t maskedoff, vint8mf4_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_i8mf4_tama(mask, op1, op2, vl);
+  return vslidedown_vx_i8mf4_tama(mask, op1, op1, op2, vl);
 }
 
 /*
@@ -40640,7 +40640,7 @@ test_vslidedown_vx_i8mf4_tama(vbool32_t mask, vint8mf4_t maskedoff, vint8mf4_t o
 vint8mf4_t 
 test_vslidedown_vx_i8mf4_tama_vl31(vbool32_t mask, vint8mf4_t maskedoff, vint8mf4_t op1, size_t op2)
 {
-  return vslidedown_vx_i8mf4_tama(mask, op1, op2, 31);
+  return vslidedown_vx_i8mf4_tama(mask, op1, op1, op2, 31);
 }
 
 /*
@@ -40655,7 +40655,7 @@ test_vslidedown_vx_i8mf4_tama_vl31(vbool32_t mask, vint8mf4_t maskedoff, vint8mf
 vint8mf2_t 
 test_vslidedown_vx_i8mf2_tama(vbool16_t mask, vint8mf2_t maskedoff, vint8mf2_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_i8mf2_tama(mask, op1, op2, vl);
+  return vslidedown_vx_i8mf2_tama(mask, op1, op1, op2, vl);
 }
 
 /*
@@ -40670,7 +40670,7 @@ test_vslidedown_vx_i8mf2_tama(vbool16_t mask, vint8mf2_t maskedoff, vint8mf2_t o
 vint8mf2_t 
 test_vslidedown_vx_i8mf2_tama_vl31(vbool16_t mask, vint8mf2_t maskedoff, vint8mf2_t op1, size_t op2)
 {
-  return vslidedown_vx_i8mf2_tama(mask, op1, op2, 31);
+  return vslidedown_vx_i8mf2_tama(mask, op1, op1, op2, 31);
 }
 
 /*
@@ -40685,7 +40685,7 @@ test_vslidedown_vx_i8mf2_tama_vl31(vbool16_t mask, vint8mf2_t maskedoff, vint8mf
 vint8m1_t 
 test_vslidedown_vx_i8m1_tama(vbool8_t mask, vint8m1_t maskedoff, vint8m1_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_i8m1_tama(mask, op1, op2, vl);
+  return vslidedown_vx_i8m1_tama(mask, op1, op1, op2, vl);
 }
 
 /*
@@ -40700,7 +40700,7 @@ test_vslidedown_vx_i8m1_tama(vbool8_t mask, vint8m1_t maskedoff, vint8m1_t op1, 
 vint8m1_t 
 test_vslidedown_vx_i8m1_tama_vl31(vbool8_t mask, vint8m1_t maskedoff, vint8m1_t op1, size_t op2)
 {
-  return vslidedown_vx_i8m1_tama(mask, op1, op2, 31);
+  return vslidedown_vx_i8m1_tama(mask, op1, op1, op2, 31);
 }
 
 /*
@@ -40715,7 +40715,7 @@ test_vslidedown_vx_i8m1_tama_vl31(vbool8_t mask, vint8m1_t maskedoff, vint8m1_t 
 vint8m2_t 
 test_vslidedown_vx_i8m2_tama(vbool4_t mask, vint8m2_t maskedoff, vint8m2_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_i8m2_tama(mask, op1, op2, vl);
+  return vslidedown_vx_i8m2_tama(mask, op1, op1, op2, vl);
 }
 
 /*
@@ -40730,7 +40730,7 @@ test_vslidedown_vx_i8m2_tama(vbool4_t mask, vint8m2_t maskedoff, vint8m2_t op1, 
 vint8m2_t 
 test_vslidedown_vx_i8m2_tama_vl31(vbool4_t mask, vint8m2_t maskedoff, vint8m2_t op1, size_t op2)
 {
-  return vslidedown_vx_i8m2_tama(mask, op1, op2, 31);
+  return vslidedown_vx_i8m2_tama(mask, op1, op1, op2, 31);
 }
 
 /*
@@ -40745,7 +40745,7 @@ test_vslidedown_vx_i8m2_tama_vl31(vbool4_t mask, vint8m2_t maskedoff, vint8m2_t 
 vint8m4_t 
 test_vslidedown_vx_i8m4_tama(vbool2_t mask, vint8m4_t maskedoff, vint8m4_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_i8m4_tama(mask, op1, op2, vl);
+  return vslidedown_vx_i8m4_tama(mask, op1, op1, op2, vl);
 }
 
 /*
@@ -40760,7 +40760,7 @@ test_vslidedown_vx_i8m4_tama(vbool2_t mask, vint8m4_t maskedoff, vint8m4_t op1, 
 vint8m4_t 
 test_vslidedown_vx_i8m4_tama_vl31(vbool2_t mask, vint8m4_t maskedoff, vint8m4_t op1, size_t op2)
 {
-  return vslidedown_vx_i8m4_tama(mask, op1, op2, 31);
+  return vslidedown_vx_i8m4_tama(mask, op1, op1, op2, 31);
 }
 
 /*
@@ -40775,7 +40775,7 @@ test_vslidedown_vx_i8m4_tama_vl31(vbool2_t mask, vint8m4_t maskedoff, vint8m4_t 
 vint8m8_t 
 test_vslidedown_vx_i8m8_tama(vbool1_t mask, vint8m8_t maskedoff, vint8m8_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_i8m8_tama(mask, op1, op2, vl);
+  return vslidedown_vx_i8m8_tama(mask, op1, op1, op2, vl);
 }
 
 /*
@@ -40790,7 +40790,7 @@ test_vslidedown_vx_i8m8_tama(vbool1_t mask, vint8m8_t maskedoff, vint8m8_t op1, 
 vint8m8_t 
 test_vslidedown_vx_i8m8_tama_vl31(vbool1_t mask, vint8m8_t maskedoff, vint8m8_t op1, size_t op2)
 {
-  return vslidedown_vx_i8m8_tama(mask, op1, op2, 31);
+  return vslidedown_vx_i8m8_tama(mask, op1, op1, op2, 31);
 }
 
 /*
@@ -40805,7 +40805,7 @@ test_vslidedown_vx_i8m8_tama_vl31(vbool1_t mask, vint8m8_t maskedoff, vint8m8_t 
 vint16mf4_t 
 test_vslidedown_vx_i16mf4_tama(vbool64_t mask, vint16mf4_t maskedoff, vint16mf4_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_i16mf4_tama(mask, op1, op2, vl);
+  return vslidedown_vx_i16mf4_tama(mask, op1, op1, op2, vl);
 }
 
 /*
@@ -40820,7 +40820,7 @@ test_vslidedown_vx_i16mf4_tama(vbool64_t mask, vint16mf4_t maskedoff, vint16mf4_
 vint16mf4_t 
 test_vslidedown_vx_i16mf4_tama_vl31(vbool64_t mask, vint16mf4_t maskedoff, vint16mf4_t op1, size_t op2)
 {
-  return vslidedown_vx_i16mf4_tama(mask, op1, op2, 31);
+  return vslidedown_vx_i16mf4_tama(mask, op1, op1, op2, 31);
 }
 
 /*
@@ -40835,7 +40835,7 @@ test_vslidedown_vx_i16mf4_tama_vl31(vbool64_t mask, vint16mf4_t maskedoff, vint1
 vint16mf2_t 
 test_vslidedown_vx_i16mf2_tama(vbool32_t mask, vint16mf2_t maskedoff, vint16mf2_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_i16mf2_tama(mask, op1, op2, vl);
+  return vslidedown_vx_i16mf2_tama(mask, op1, op1, op2, vl);
 }
 
 /*
@@ -40850,7 +40850,7 @@ test_vslidedown_vx_i16mf2_tama(vbool32_t mask, vint16mf2_t maskedoff, vint16mf2_
 vint16mf2_t 
 test_vslidedown_vx_i16mf2_tama_vl31(vbool32_t mask, vint16mf2_t maskedoff, vint16mf2_t op1, size_t op2)
 {
-  return vslidedown_vx_i16mf2_tama(mask, op1, op2, 31);
+  return vslidedown_vx_i16mf2_tama(mask, op1, op1, op2, 31);
 }
 
 /*
@@ -40865,7 +40865,7 @@ test_vslidedown_vx_i16mf2_tama_vl31(vbool32_t mask, vint16mf2_t maskedoff, vint1
 vint16m1_t 
 test_vslidedown_vx_i16m1_tama(vbool16_t mask, vint16m1_t maskedoff, vint16m1_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_i16m1_tama(mask, op1, op2, vl);
+  return vslidedown_vx_i16m1_tama(mask, op1, op1, op2, vl);
 }
 
 /*
@@ -40880,7 +40880,7 @@ test_vslidedown_vx_i16m1_tama(vbool16_t mask, vint16m1_t maskedoff, vint16m1_t o
 vint16m1_t 
 test_vslidedown_vx_i16m1_tama_vl31(vbool16_t mask, vint16m1_t maskedoff, vint16m1_t op1, size_t op2)
 {
-  return vslidedown_vx_i16m1_tama(mask, op1, op2, 31);
+  return vslidedown_vx_i16m1_tama(mask, op1, op1, op2, 31);
 }
 
 /*
@@ -40895,7 +40895,7 @@ test_vslidedown_vx_i16m1_tama_vl31(vbool16_t mask, vint16m1_t maskedoff, vint16m
 vint16m2_t 
 test_vslidedown_vx_i16m2_tama(vbool8_t mask, vint16m2_t maskedoff, vint16m2_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_i16m2_tama(mask, op1, op2, vl);
+  return vslidedown_vx_i16m2_tama(mask, op1, op1, op2, vl);
 }
 
 /*
@@ -40910,7 +40910,7 @@ test_vslidedown_vx_i16m2_tama(vbool8_t mask, vint16m2_t maskedoff, vint16m2_t op
 vint16m2_t 
 test_vslidedown_vx_i16m2_tama_vl31(vbool8_t mask, vint16m2_t maskedoff, vint16m2_t op1, size_t op2)
 {
-  return vslidedown_vx_i16m2_tama(mask, op1, op2, 31);
+  return vslidedown_vx_i16m2_tama(mask, op1, op1, op2, 31);
 }
 
 /*
@@ -40925,7 +40925,7 @@ test_vslidedown_vx_i16m2_tama_vl31(vbool8_t mask, vint16m2_t maskedoff, vint16m2
 vint16m4_t 
 test_vslidedown_vx_i16m4_tama(vbool4_t mask, vint16m4_t maskedoff, vint16m4_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_i16m4_tama(mask, op1, op2, vl);
+  return vslidedown_vx_i16m4_tama(mask, op1, op1, op2, vl);
 }
 
 /*
@@ -40940,7 +40940,7 @@ test_vslidedown_vx_i16m4_tama(vbool4_t mask, vint16m4_t maskedoff, vint16m4_t op
 vint16m4_t 
 test_vslidedown_vx_i16m4_tama_vl31(vbool4_t mask, vint16m4_t maskedoff, vint16m4_t op1, size_t op2)
 {
-  return vslidedown_vx_i16m4_tama(mask, op1, op2, 31);
+  return vslidedown_vx_i16m4_tama(mask, op1, op1, op2, 31);
 }
 
 /*
@@ -40955,7 +40955,7 @@ test_vslidedown_vx_i16m4_tama_vl31(vbool4_t mask, vint16m4_t maskedoff, vint16m4
 vint16m8_t 
 test_vslidedown_vx_i16m8_tama(vbool2_t mask, vint16m8_t maskedoff, vint16m8_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_i16m8_tama(mask, op1, op2, vl);
+  return vslidedown_vx_i16m8_tama(mask, op1, op1, op2, vl);
 }
 
 /*
@@ -40970,7 +40970,7 @@ test_vslidedown_vx_i16m8_tama(vbool2_t mask, vint16m8_t maskedoff, vint16m8_t op
 vint16m8_t 
 test_vslidedown_vx_i16m8_tama_vl31(vbool2_t mask, vint16m8_t maskedoff, vint16m8_t op1, size_t op2)
 {
-  return vslidedown_vx_i16m8_tama(mask, op1, op2, 31);
+  return vslidedown_vx_i16m8_tama(mask, op1, op1, op2, 31);
 }
 
 /*
@@ -40985,7 +40985,7 @@ test_vslidedown_vx_i16m8_tama_vl31(vbool2_t mask, vint16m8_t maskedoff, vint16m8
 vint32mf2_t 
 test_vslidedown_vx_i32mf2_tama(vbool64_t mask, vint32mf2_t maskedoff, vint32mf2_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_i32mf2_tama(mask, op1, op2, vl);
+  return vslidedown_vx_i32mf2_tama(mask, op1, op1, op2, vl);
 }
 
 /*
@@ -41000,7 +41000,7 @@ test_vslidedown_vx_i32mf2_tama(vbool64_t mask, vint32mf2_t maskedoff, vint32mf2_
 vint32mf2_t 
 test_vslidedown_vx_i32mf2_tama_vl31(vbool64_t mask, vint32mf2_t maskedoff, vint32mf2_t op1, size_t op2)
 {
-  return vslidedown_vx_i32mf2_tama(mask, op1, op2, 31);
+  return vslidedown_vx_i32mf2_tama(mask, op1, op1, op2, 31);
 }
 
 /*
@@ -41015,7 +41015,7 @@ test_vslidedown_vx_i32mf2_tama_vl31(vbool64_t mask, vint32mf2_t maskedoff, vint3
 vint32m1_t 
 test_vslidedown_vx_i32m1_tama(vbool32_t mask, vint32m1_t maskedoff, vint32m1_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_i32m1_tama(mask, op1, op2, vl);
+  return vslidedown_vx_i32m1_tama(mask, op1, op1, op2, vl);
 }
 
 /*
@@ -41030,7 +41030,7 @@ test_vslidedown_vx_i32m1_tama(vbool32_t mask, vint32m1_t maskedoff, vint32m1_t o
 vint32m1_t 
 test_vslidedown_vx_i32m1_tama_vl31(vbool32_t mask, vint32m1_t maskedoff, vint32m1_t op1, size_t op2)
 {
-  return vslidedown_vx_i32m1_tama(mask, op1, op2, 31);
+  return vslidedown_vx_i32m1_tama(mask, op1, op1, op2, 31);
 }
 
 /*
@@ -41045,7 +41045,7 @@ test_vslidedown_vx_i32m1_tama_vl31(vbool32_t mask, vint32m1_t maskedoff, vint32m
 vint32m2_t 
 test_vslidedown_vx_i32m2_tama(vbool16_t mask, vint32m2_t maskedoff, vint32m2_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_i32m2_tama(mask, op1, op2, vl);
+  return vslidedown_vx_i32m2_tama(mask, op1, op1, op2, vl);
 }
 
 /*
@@ -41060,7 +41060,7 @@ test_vslidedown_vx_i32m2_tama(vbool16_t mask, vint32m2_t maskedoff, vint32m2_t o
 vint32m2_t 
 test_vslidedown_vx_i32m2_tama_vl31(vbool16_t mask, vint32m2_t maskedoff, vint32m2_t op1, size_t op2)
 {
-  return vslidedown_vx_i32m2_tama(mask, op1, op2, 31);
+  return vslidedown_vx_i32m2_tama(mask, op1, op1, op2, 31);
 }
 
 /*
@@ -41075,7 +41075,7 @@ test_vslidedown_vx_i32m2_tama_vl31(vbool16_t mask, vint32m2_t maskedoff, vint32m
 vint32m4_t 
 test_vslidedown_vx_i32m4_tama(vbool8_t mask, vint32m4_t maskedoff, vint32m4_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_i32m4_tama(mask, op1, op2, vl);
+  return vslidedown_vx_i32m4_tama(mask, op1, op1, op2, vl);
 }
 
 /*
@@ -41090,7 +41090,7 @@ test_vslidedown_vx_i32m4_tama(vbool8_t mask, vint32m4_t maskedoff, vint32m4_t op
 vint32m4_t 
 test_vslidedown_vx_i32m4_tama_vl31(vbool8_t mask, vint32m4_t maskedoff, vint32m4_t op1, size_t op2)
 {
-  return vslidedown_vx_i32m4_tama(mask, op1, op2, 31);
+  return vslidedown_vx_i32m4_tama(mask, op1, op1, op2, 31);
 }
 
 /*
@@ -41105,7 +41105,7 @@ test_vslidedown_vx_i32m4_tama_vl31(vbool8_t mask, vint32m4_t maskedoff, vint32m4
 vint32m8_t 
 test_vslidedown_vx_i32m8_tama(vbool4_t mask, vint32m8_t maskedoff, vint32m8_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_i32m8_tama(mask, op1, op2, vl);
+  return vslidedown_vx_i32m8_tama(mask, op1, op1, op2, vl);
 }
 
 /*
@@ -41120,7 +41120,7 @@ test_vslidedown_vx_i32m8_tama(vbool4_t mask, vint32m8_t maskedoff, vint32m8_t op
 vint32m8_t 
 test_vslidedown_vx_i32m8_tama_vl31(vbool4_t mask, vint32m8_t maskedoff, vint32m8_t op1, size_t op2)
 {
-  return vslidedown_vx_i32m8_tama(mask, op1, op2, 31);
+  return vslidedown_vx_i32m8_tama(mask, op1, op1, op2, 31);
 }
 
 /*
@@ -41135,7 +41135,7 @@ test_vslidedown_vx_i32m8_tama_vl31(vbool4_t mask, vint32m8_t maskedoff, vint32m8
 vint64m1_t 
 test_vslidedown_vx_i64m1_tama(vbool64_t mask, vint64m1_t maskedoff, vint64m1_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_i64m1_tama(mask, op1, op2, vl);
+  return vslidedown_vx_i64m1_tama(mask, op1, op1, op2, vl);
 }
 
 /*
@@ -41150,7 +41150,7 @@ test_vslidedown_vx_i64m1_tama(vbool64_t mask, vint64m1_t maskedoff, vint64m1_t o
 vint64m1_t 
 test_vslidedown_vx_i64m1_tama_vl31(vbool64_t mask, vint64m1_t maskedoff, vint64m1_t op1, size_t op2)
 {
-  return vslidedown_vx_i64m1_tama(mask, op1, op2, 31);
+  return vslidedown_vx_i64m1_tama(mask, op1, op1, op2, 31);
 }
 
 /*
@@ -41165,7 +41165,7 @@ test_vslidedown_vx_i64m1_tama_vl31(vbool64_t mask, vint64m1_t maskedoff, vint64m
 vint64m2_t 
 test_vslidedown_vx_i64m2_tama(vbool32_t mask, vint64m2_t maskedoff, vint64m2_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_i64m2_tama(mask, op1, op2, vl);
+  return vslidedown_vx_i64m2_tama(mask, op1, op1, op2, vl);
 }
 
 /*
@@ -41180,7 +41180,7 @@ test_vslidedown_vx_i64m2_tama(vbool32_t mask, vint64m2_t maskedoff, vint64m2_t o
 vint64m2_t 
 test_vslidedown_vx_i64m2_tama_vl31(vbool32_t mask, vint64m2_t maskedoff, vint64m2_t op1, size_t op2)
 {
-  return vslidedown_vx_i64m2_tama(mask, op1, op2, 31);
+  return vslidedown_vx_i64m2_tama(mask, op1, op1, op2, 31);
 }
 
 /*
@@ -41195,7 +41195,7 @@ test_vslidedown_vx_i64m2_tama_vl31(vbool32_t mask, vint64m2_t maskedoff, vint64m
 vint64m4_t 
 test_vslidedown_vx_i64m4_tama(vbool16_t mask, vint64m4_t maskedoff, vint64m4_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_i64m4_tama(mask, op1, op2, vl);
+  return vslidedown_vx_i64m4_tama(mask, op1, op1, op2, vl);
 }
 
 /*
@@ -41210,7 +41210,7 @@ test_vslidedown_vx_i64m4_tama(vbool16_t mask, vint64m4_t maskedoff, vint64m4_t o
 vint64m4_t 
 test_vslidedown_vx_i64m4_tama_vl31(vbool16_t mask, vint64m4_t maskedoff, vint64m4_t op1, size_t op2)
 {
-  return vslidedown_vx_i64m4_tama(mask, op1, op2, 31);
+  return vslidedown_vx_i64m4_tama(mask, op1, op1, op2, 31);
 }
 
 /*
@@ -41225,7 +41225,7 @@ test_vslidedown_vx_i64m4_tama_vl31(vbool16_t mask, vint64m4_t maskedoff, vint64m
 vint64m8_t 
 test_vslidedown_vx_i64m8_tama(vbool8_t mask, vint64m8_t maskedoff, vint64m8_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_i64m8_tama(mask, op1, op2, vl);
+  return vslidedown_vx_i64m8_tama(mask, op1, op1, op2, vl);
 }
 
 /*
@@ -41240,7 +41240,7 @@ test_vslidedown_vx_i64m8_tama(vbool8_t mask, vint64m8_t maskedoff, vint64m8_t op
 vint64m8_t 
 test_vslidedown_vx_i64m8_tama_vl31(vbool8_t mask, vint64m8_t maskedoff, vint64m8_t op1, size_t op2)
 {
-  return vslidedown_vx_i64m8_tama(mask, op1, op2, 31);
+  return vslidedown_vx_i64m8_tama(mask, op1, op1, op2, 31);
 }
 
 /*
@@ -43235,7 +43235,7 @@ test_vslidedown_vx_i64m8_tumu_vl31(vbool8_t mask, vint64m8_t maskedoff, vint64m8
 vint8mf8_t 
 test_vslidedown_vx_i8mf8_tama_vl32(vbool64_t mask, vint8mf8_t maskedoff, vint8mf8_t op1, size_t op2)
 {
-  return vslidedown_vx_i8mf8_tama(mask, op1, op2, 32);
+  return vslidedown_vx_i8mf8_tama(mask, op1, op1, op2, 32);
 }
 
 /*
@@ -43250,7 +43250,7 @@ test_vslidedown_vx_i8mf8_tama_vl32(vbool64_t mask, vint8mf8_t maskedoff, vint8mf
 vint8mf4_t 
 test_vslidedown_vx_i8mf4_tama_vl32(vbool32_t mask, vint8mf4_t maskedoff, vint8mf4_t op1, size_t op2)
 {
-  return vslidedown_vx_i8mf4_tama(mask, op1, op2, 32);
+  return vslidedown_vx_i8mf4_tama(mask, op1, op1, op2, 32);
 }
 
 /*
@@ -43265,7 +43265,7 @@ test_vslidedown_vx_i8mf4_tama_vl32(vbool32_t mask, vint8mf4_t maskedoff, vint8mf
 vint8mf2_t 
 test_vslidedown_vx_i8mf2_tama_vl32(vbool16_t mask, vint8mf2_t maskedoff, vint8mf2_t op1, size_t op2)
 {
-  return vslidedown_vx_i8mf2_tama(mask, op1, op2, 32);
+  return vslidedown_vx_i8mf2_tama(mask, op1, op1, op2, 32);
 }
 
 /*
@@ -43280,7 +43280,7 @@ test_vslidedown_vx_i8mf2_tama_vl32(vbool16_t mask, vint8mf2_t maskedoff, vint8mf
 vint8m1_t 
 test_vslidedown_vx_i8m1_tama_vl32(vbool8_t mask, vint8m1_t maskedoff, vint8m1_t op1, size_t op2)
 {
-  return vslidedown_vx_i8m1_tama(mask, op1, op2, 32);
+  return vslidedown_vx_i8m1_tama(mask, op1, op1, op2, 32);
 }
 
 /*
@@ -43295,7 +43295,7 @@ test_vslidedown_vx_i8m1_tama_vl32(vbool8_t mask, vint8m1_t maskedoff, vint8m1_t 
 vint8m2_t 
 test_vslidedown_vx_i8m2_tama_vl32(vbool4_t mask, vint8m2_t maskedoff, vint8m2_t op1, size_t op2)
 {
-  return vslidedown_vx_i8m2_tama(mask, op1, op2, 32);
+  return vslidedown_vx_i8m2_tama(mask, op1, op1, op2, 32);
 }
 
 /*
@@ -43310,7 +43310,7 @@ test_vslidedown_vx_i8m2_tama_vl32(vbool4_t mask, vint8m2_t maskedoff, vint8m2_t 
 vint8m4_t 
 test_vslidedown_vx_i8m4_tama_vl32(vbool2_t mask, vint8m4_t maskedoff, vint8m4_t op1, size_t op2)
 {
-  return vslidedown_vx_i8m4_tama(mask, op1, op2, 32);
+  return vslidedown_vx_i8m4_tama(mask, op1, op1, op2, 32);
 }
 
 /*
@@ -43325,7 +43325,7 @@ test_vslidedown_vx_i8m4_tama_vl32(vbool2_t mask, vint8m4_t maskedoff, vint8m4_t 
 vint8m8_t 
 test_vslidedown_vx_i8m8_tama_vl32(vbool1_t mask, vint8m8_t maskedoff, vint8m8_t op1, size_t op2)
 {
-  return vslidedown_vx_i8m8_tama(mask, op1, op2, 32);
+  return vslidedown_vx_i8m8_tama(mask, op1, op1, op2, 32);
 }
 
 /*
@@ -43340,7 +43340,7 @@ test_vslidedown_vx_i8m8_tama_vl32(vbool1_t mask, vint8m8_t maskedoff, vint8m8_t 
 vint16mf4_t 
 test_vslidedown_vx_i16mf4_tama_vl32(vbool64_t mask, vint16mf4_t maskedoff, vint16mf4_t op1, size_t op2)
 {
-  return vslidedown_vx_i16mf4_tama(mask, op1, op2, 32);
+  return vslidedown_vx_i16mf4_tama(mask, op1, op1, op2, 32);
 }
 
 /*
@@ -43355,7 +43355,7 @@ test_vslidedown_vx_i16mf4_tama_vl32(vbool64_t mask, vint16mf4_t maskedoff, vint1
 vint16mf2_t 
 test_vslidedown_vx_i16mf2_tama_vl32(vbool32_t mask, vint16mf2_t maskedoff, vint16mf2_t op1, size_t op2)
 {
-  return vslidedown_vx_i16mf2_tama(mask, op1, op2, 32);
+  return vslidedown_vx_i16mf2_tama(mask, op1, op1, op2, 32);
 }
 
 /*
@@ -43370,7 +43370,7 @@ test_vslidedown_vx_i16mf2_tama_vl32(vbool32_t mask, vint16mf2_t maskedoff, vint1
 vint16m1_t 
 test_vslidedown_vx_i16m1_tama_vl32(vbool16_t mask, vint16m1_t maskedoff, vint16m1_t op1, size_t op2)
 {
-  return vslidedown_vx_i16m1_tama(mask, op1, op2, 32);
+  return vslidedown_vx_i16m1_tama(mask, op1, op1, op2, 32);
 }
 
 /*
@@ -43385,7 +43385,7 @@ test_vslidedown_vx_i16m1_tama_vl32(vbool16_t mask, vint16m1_t maskedoff, vint16m
 vint16m2_t 
 test_vslidedown_vx_i16m2_tama_vl32(vbool8_t mask, vint16m2_t maskedoff, vint16m2_t op1, size_t op2)
 {
-  return vslidedown_vx_i16m2_tama(mask, op1, op2, 32);
+  return vslidedown_vx_i16m2_tama(mask, op1, op1, op2, 32);
 }
 
 /*
@@ -43400,7 +43400,7 @@ test_vslidedown_vx_i16m2_tama_vl32(vbool8_t mask, vint16m2_t maskedoff, vint16m2
 vint16m4_t 
 test_vslidedown_vx_i16m4_tama_vl32(vbool4_t mask, vint16m4_t maskedoff, vint16m4_t op1, size_t op2)
 {
-  return vslidedown_vx_i16m4_tama(mask, op1, op2, 32);
+  return vslidedown_vx_i16m4_tama(mask, op1, op1, op2, 32);
 }
 
 /*
@@ -43415,7 +43415,7 @@ test_vslidedown_vx_i16m4_tama_vl32(vbool4_t mask, vint16m4_t maskedoff, vint16m4
 vint16m8_t 
 test_vslidedown_vx_i16m8_tama_vl32(vbool2_t mask, vint16m8_t maskedoff, vint16m8_t op1, size_t op2)
 {
-  return vslidedown_vx_i16m8_tama(mask, op1, op2, 32);
+  return vslidedown_vx_i16m8_tama(mask, op1, op1, op2, 32);
 }
 
 /*
@@ -43430,7 +43430,7 @@ test_vslidedown_vx_i16m8_tama_vl32(vbool2_t mask, vint16m8_t maskedoff, vint16m8
 vint32mf2_t 
 test_vslidedown_vx_i32mf2_tama_vl32(vbool64_t mask, vint32mf2_t maskedoff, vint32mf2_t op1, size_t op2)
 {
-  return vslidedown_vx_i32mf2_tama(mask, op1, op2, 32);
+  return vslidedown_vx_i32mf2_tama(mask, op1, op1, op2, 32);
 }
 
 /*
@@ -43445,7 +43445,7 @@ test_vslidedown_vx_i32mf2_tama_vl32(vbool64_t mask, vint32mf2_t maskedoff, vint3
 vint32m1_t 
 test_vslidedown_vx_i32m1_tama_vl32(vbool32_t mask, vint32m1_t maskedoff, vint32m1_t op1, size_t op2)
 {
-  return vslidedown_vx_i32m1_tama(mask, op1, op2, 32);
+  return vslidedown_vx_i32m1_tama(mask, op1, op1, op2, 32);
 }
 
 /*
@@ -43460,7 +43460,7 @@ test_vslidedown_vx_i32m1_tama_vl32(vbool32_t mask, vint32m1_t maskedoff, vint32m
 vint32m2_t 
 test_vslidedown_vx_i32m2_tama_vl32(vbool16_t mask, vint32m2_t maskedoff, vint32m2_t op1, size_t op2)
 {
-  return vslidedown_vx_i32m2_tama(mask, op1, op2, 32);
+  return vslidedown_vx_i32m2_tama(mask, op1, op1, op2, 32);
 }
 
 /*
@@ -43475,7 +43475,7 @@ test_vslidedown_vx_i32m2_tama_vl32(vbool16_t mask, vint32m2_t maskedoff, vint32m
 vint32m4_t 
 test_vslidedown_vx_i32m4_tama_vl32(vbool8_t mask, vint32m4_t maskedoff, vint32m4_t op1, size_t op2)
 {
-  return vslidedown_vx_i32m4_tama(mask, op1, op2, 32);
+  return vslidedown_vx_i32m4_tama(mask, op1, op1, op2, 32);
 }
 
 /*
@@ -43490,7 +43490,7 @@ test_vslidedown_vx_i32m4_tama_vl32(vbool8_t mask, vint32m4_t maskedoff, vint32m4
 vint32m8_t 
 test_vslidedown_vx_i32m8_tama_vl32(vbool4_t mask, vint32m8_t maskedoff, vint32m8_t op1, size_t op2)
 {
-  return vslidedown_vx_i32m8_tama(mask, op1, op2, 32);
+  return vslidedown_vx_i32m8_tama(mask, op1, op1, op2, 32);
 }
 
 /*
@@ -43505,7 +43505,7 @@ test_vslidedown_vx_i32m8_tama_vl32(vbool4_t mask, vint32m8_t maskedoff, vint32m8
 vint64m1_t 
 test_vslidedown_vx_i64m1_tama_vl32(vbool64_t mask, vint64m1_t maskedoff, vint64m1_t op1, size_t op2)
 {
-  return vslidedown_vx_i64m1_tama(mask, op1, op2, 32);
+  return vslidedown_vx_i64m1_tama(mask, op1, op1, op2, 32);
 }
 
 /*
@@ -43520,7 +43520,7 @@ test_vslidedown_vx_i64m1_tama_vl32(vbool64_t mask, vint64m1_t maskedoff, vint64m
 vint64m2_t 
 test_vslidedown_vx_i64m2_tama_vl32(vbool32_t mask, vint64m2_t maskedoff, vint64m2_t op1, size_t op2)
 {
-  return vslidedown_vx_i64m2_tama(mask, op1, op2, 32);
+  return vslidedown_vx_i64m2_tama(mask, op1, op1, op2, 32);
 }
 
 /*
@@ -43535,7 +43535,7 @@ test_vslidedown_vx_i64m2_tama_vl32(vbool32_t mask, vint64m2_t maskedoff, vint64m
 vint64m4_t 
 test_vslidedown_vx_i64m4_tama_vl32(vbool16_t mask, vint64m4_t maskedoff, vint64m4_t op1, size_t op2)
 {
-  return vslidedown_vx_i64m4_tama(mask, op1, op2, 32);
+  return vslidedown_vx_i64m4_tama(mask, op1, op1, op2, 32);
 }
 
 /*
@@ -43550,7 +43550,7 @@ test_vslidedown_vx_i64m4_tama_vl32(vbool16_t mask, vint64m4_t maskedoff, vint64m
 vint64m8_t 
 test_vslidedown_vx_i64m8_tama_vl32(vbool8_t mask, vint64m8_t maskedoff, vint64m8_t op1, size_t op2)
 {
-  return vslidedown_vx_i64m8_tama(mask, op1, op2, 32);
+  return vslidedown_vx_i64m8_tama(mask, op1, op1, op2, 32);
 }
 
 /*
@@ -44553,9 +44553,9 @@ test_vslidedown_vx_i64m8_tumu_vl32(vbool8_t mask, vint64m8_t maskedoff, vint64m8
 **  ret
 */
 vint8mf8_t 
-test_vslidedown_vx_i8mf8_ta_vl32(vint8mf8_t op1, size_t op2)
+test_vslidedown_vx_i8mf8_ta_vl32(vint8mf8_t dest, vint8mf8_t op1, size_t op2)
 {
-  return vslidedown_vx_i8mf8_ta(op1, op2, 32);
+  return vslidedown_vx_i8mf8_ta(dest, op1, op2, 32);
 }
 
 /*
@@ -44568,9 +44568,9 @@ test_vslidedown_vx_i8mf8_ta_vl32(vint8mf8_t op1, size_t op2)
 **  ret
 */
 vint8mf4_t 
-test_vslidedown_vx_i8mf4_ta_vl32(vint8mf4_t op1, size_t op2)
+test_vslidedown_vx_i8mf4_ta_vl32(vint8mf4_t dest, vint8mf4_t op1, size_t op2)
 {
-  return vslidedown_vx_i8mf4_ta(op1, op2, 32);
+  return vslidedown_vx_i8mf4_ta(dest, op1, op2, 32);
 }
 
 /*
@@ -44583,9 +44583,9 @@ test_vslidedown_vx_i8mf4_ta_vl32(vint8mf4_t op1, size_t op2)
 **  ret
 */
 vint8mf2_t 
-test_vslidedown_vx_i8mf2_ta_vl32(vint8mf2_t op1, size_t op2)
+test_vslidedown_vx_i8mf2_ta_vl32(vint8mf2_t dest, vint8mf2_t op1, size_t op2)
 {
-  return vslidedown_vx_i8mf2_ta(op1, op2, 32);
+  return vslidedown_vx_i8mf2_ta(dest, op1, op2, 32);
 }
 
 /*
@@ -44598,9 +44598,9 @@ test_vslidedown_vx_i8mf2_ta_vl32(vint8mf2_t op1, size_t op2)
 **  ret
 */
 vint8m1_t 
-test_vslidedown_vx_i8m1_ta_vl32(vint8m1_t op1, size_t op2)
+test_vslidedown_vx_i8m1_ta_vl32(vint8m1_t dest, vint8m1_t op1, size_t op2)
 {
-  return vslidedown_vx_i8m1_ta(op1, op2, 32);
+  return vslidedown_vx_i8m1_ta(dest, op1, op2, 32);
 }
 
 /*
@@ -44613,9 +44613,9 @@ test_vslidedown_vx_i8m1_ta_vl32(vint8m1_t op1, size_t op2)
 **  ret
 */
 vint8m2_t 
-test_vslidedown_vx_i8m2_ta_vl32(vint8m2_t op1, size_t op2)
+test_vslidedown_vx_i8m2_ta_vl32(vint8m2_t dest, vint8m2_t op1, size_t op2)
 {
-  return vslidedown_vx_i8m2_ta(op1, op2, 32);
+  return vslidedown_vx_i8m2_ta(dest, op1, op2, 32);
 }
 
 /*
@@ -44628,9 +44628,9 @@ test_vslidedown_vx_i8m2_ta_vl32(vint8m2_t op1, size_t op2)
 **  ret
 */
 vint8m4_t 
-test_vslidedown_vx_i8m4_ta_vl32(vint8m4_t op1, size_t op2)
+test_vslidedown_vx_i8m4_ta_vl32(vint8m4_t dest, vint8m4_t op1, size_t op2)
 {
-  return vslidedown_vx_i8m4_ta(op1, op2, 32);
+  return vslidedown_vx_i8m4_ta(dest, op1, op2, 32);
 }
 
 /*
@@ -44643,9 +44643,9 @@ test_vslidedown_vx_i8m4_ta_vl32(vint8m4_t op1, size_t op2)
 **  ret
 */
 vint8m8_t 
-test_vslidedown_vx_i8m8_ta_vl32(vint8m8_t op1, size_t op2)
+test_vslidedown_vx_i8m8_ta_vl32(vint8m8_t dest, vint8m8_t op1, size_t op2)
 {
-  return vslidedown_vx_i8m8_ta(op1, op2, 32);
+  return vslidedown_vx_i8m8_ta(dest, op1, op2, 32);
 }
 
 /*
@@ -44658,9 +44658,9 @@ test_vslidedown_vx_i8m8_ta_vl32(vint8m8_t op1, size_t op2)
 **  ret
 */
 vint16mf4_t 
-test_vslidedown_vx_i16mf4_ta_vl32(vint16mf4_t op1, size_t op2)
+test_vslidedown_vx_i16mf4_ta_vl32(vint16mf4_t dest, vint16mf4_t op1, size_t op2)
 {
-  return vslidedown_vx_i16mf4_ta(op1, op2, 32);
+  return vslidedown_vx_i16mf4_ta(dest, op1, op2, 32);
 }
 
 /*
@@ -44673,9 +44673,9 @@ test_vslidedown_vx_i16mf4_ta_vl32(vint16mf4_t op1, size_t op2)
 **  ret
 */
 vint16mf2_t 
-test_vslidedown_vx_i16mf2_ta_vl32(vint16mf2_t op1, size_t op2)
+test_vslidedown_vx_i16mf2_ta_vl32(vint16mf2_t dest, vint16mf2_t op1, size_t op2)
 {
-  return vslidedown_vx_i16mf2_ta(op1, op2, 32);
+  return vslidedown_vx_i16mf2_ta(dest, op1, op2, 32);
 }
 
 /*
@@ -44688,9 +44688,9 @@ test_vslidedown_vx_i16mf2_ta_vl32(vint16mf2_t op1, size_t op2)
 **  ret
 */
 vint16m1_t 
-test_vslidedown_vx_i16m1_ta_vl32(vint16m1_t op1, size_t op2)
+test_vslidedown_vx_i16m1_ta_vl32(vint16m1_t dest, vint16m1_t op1, size_t op2)
 {
-  return vslidedown_vx_i16m1_ta(op1, op2, 32);
+  return vslidedown_vx_i16m1_ta(dest, op1, op2, 32);
 }
 
 /*
@@ -44703,9 +44703,9 @@ test_vslidedown_vx_i16m1_ta_vl32(vint16m1_t op1, size_t op2)
 **  ret
 */
 vint16m2_t 
-test_vslidedown_vx_i16m2_ta_vl32(vint16m2_t op1, size_t op2)
+test_vslidedown_vx_i16m2_ta_vl32(vint16m2_t dest, vint16m2_t op1, size_t op2)
 {
-  return vslidedown_vx_i16m2_ta(op1, op2, 32);
+  return vslidedown_vx_i16m2_ta(dest, op1, op2, 32);
 }
 
 /*
@@ -44718,9 +44718,9 @@ test_vslidedown_vx_i16m2_ta_vl32(vint16m2_t op1, size_t op2)
 **  ret
 */
 vint16m4_t 
-test_vslidedown_vx_i16m4_ta_vl32(vint16m4_t op1, size_t op2)
+test_vslidedown_vx_i16m4_ta_vl32(vint16m4_t dest, vint16m4_t op1, size_t op2)
 {
-  return vslidedown_vx_i16m4_ta(op1, op2, 32);
+  return vslidedown_vx_i16m4_ta(dest, op1, op2, 32);
 }
 
 /*
@@ -44733,9 +44733,9 @@ test_vslidedown_vx_i16m4_ta_vl32(vint16m4_t op1, size_t op2)
 **  ret
 */
 vint16m8_t 
-test_vslidedown_vx_i16m8_ta_vl32(vint16m8_t op1, size_t op2)
+test_vslidedown_vx_i16m8_ta_vl32(vint16m8_t dest, vint16m8_t op1, size_t op2)
 {
-  return vslidedown_vx_i16m8_ta(op1, op2, 32);
+  return vslidedown_vx_i16m8_ta(dest, op1, op2, 32);
 }
 
 /*
@@ -44748,9 +44748,9 @@ test_vslidedown_vx_i16m8_ta_vl32(vint16m8_t op1, size_t op2)
 **  ret
 */
 vint32mf2_t 
-test_vslidedown_vx_i32mf2_ta_vl32(vint32mf2_t op1, size_t op2)
+test_vslidedown_vx_i32mf2_ta_vl32(vint32mf2_t dest, vint32mf2_t op1, size_t op2)
 {
-  return vslidedown_vx_i32mf2_ta(op1, op2, 32);
+  return vslidedown_vx_i32mf2_ta(dest, op1, op2, 32);
 }
 
 /*
@@ -44763,9 +44763,9 @@ test_vslidedown_vx_i32mf2_ta_vl32(vint32mf2_t op1, size_t op2)
 **  ret
 */
 vint32m1_t 
-test_vslidedown_vx_i32m1_ta_vl32(vint32m1_t op1, size_t op2)
+test_vslidedown_vx_i32m1_ta_vl32(vint32m1_t dest, vint32m1_t op1, size_t op2)
 {
-  return vslidedown_vx_i32m1_ta(op1, op2, 32);
+  return vslidedown_vx_i32m1_ta(dest, op1, op2, 32);
 }
 
 /*
@@ -44778,9 +44778,9 @@ test_vslidedown_vx_i32m1_ta_vl32(vint32m1_t op1, size_t op2)
 **  ret
 */
 vint32m2_t 
-test_vslidedown_vx_i32m2_ta_vl32(vint32m2_t op1, size_t op2)
+test_vslidedown_vx_i32m2_ta_vl32(vint32m2_t dest, vint32m2_t op1, size_t op2)
 {
-  return vslidedown_vx_i32m2_ta(op1, op2, 32);
+  return vslidedown_vx_i32m2_ta(dest, op1, op2, 32);
 }
 
 /*
@@ -44793,9 +44793,9 @@ test_vslidedown_vx_i32m2_ta_vl32(vint32m2_t op1, size_t op2)
 **  ret
 */
 vint32m4_t 
-test_vslidedown_vx_i32m4_ta_vl32(vint32m4_t op1, size_t op2)
+test_vslidedown_vx_i32m4_ta_vl32(vint32m4_t dest, vint32m4_t op1, size_t op2)
 {
-  return vslidedown_vx_i32m4_ta(op1, op2, 32);
+  return vslidedown_vx_i32m4_ta(dest, op1, op2, 32);
 }
 
 /*
@@ -44808,9 +44808,9 @@ test_vslidedown_vx_i32m4_ta_vl32(vint32m4_t op1, size_t op2)
 **  ret
 */
 vint32m8_t 
-test_vslidedown_vx_i32m8_ta_vl32(vint32m8_t op1, size_t op2)
+test_vslidedown_vx_i32m8_ta_vl32(vint32m8_t dest, vint32m8_t op1, size_t op2)
 {
-  return vslidedown_vx_i32m8_ta(op1, op2, 32);
+  return vslidedown_vx_i32m8_ta(dest, op1, op2, 32);
 }
 
 /*
@@ -44823,9 +44823,9 @@ test_vslidedown_vx_i32m8_ta_vl32(vint32m8_t op1, size_t op2)
 **  ret
 */
 vint64m1_t 
-test_vslidedown_vx_i64m1_ta_vl32(vint64m1_t op1, size_t op2)
+test_vslidedown_vx_i64m1_ta_vl32(vint64m1_t dest, vint64m1_t op1, size_t op2)
 {
-  return vslidedown_vx_i64m1_ta(op1, op2, 32);
+  return vslidedown_vx_i64m1_ta(dest, op1, op2, 32);
 }
 
 /*
@@ -44838,9 +44838,9 @@ test_vslidedown_vx_i64m1_ta_vl32(vint64m1_t op1, size_t op2)
 **  ret
 */
 vint64m2_t 
-test_vslidedown_vx_i64m2_ta_vl32(vint64m2_t op1, size_t op2)
+test_vslidedown_vx_i64m2_ta_vl32(vint64m2_t dest, vint64m2_t op1, size_t op2)
 {
-  return vslidedown_vx_i64m2_ta(op1, op2, 32);
+  return vslidedown_vx_i64m2_ta(dest, op1, op2, 32);
 }
 
 /*
@@ -44853,9 +44853,9 @@ test_vslidedown_vx_i64m2_ta_vl32(vint64m2_t op1, size_t op2)
 **  ret
 */
 vint64m4_t 
-test_vslidedown_vx_i64m4_ta_vl32(vint64m4_t op1, size_t op2)
+test_vslidedown_vx_i64m4_ta_vl32(vint64m4_t dest, vint64m4_t op1, size_t op2)
 {
-  return vslidedown_vx_i64m4_ta(op1, op2, 32);
+  return vslidedown_vx_i64m4_ta(dest, op1, op2, 32);
 }
 
 /*
@@ -44868,9 +44868,9 @@ test_vslidedown_vx_i64m4_ta_vl32(vint64m4_t op1, size_t op2)
 **  ret
 */
 vint64m8_t 
-test_vslidedown_vx_i64m8_ta_vl32(vint64m8_t op1, size_t op2)
+test_vslidedown_vx_i64m8_ta_vl32(vint64m8_t dest, vint64m8_t op1, size_t op2)
 {
-  return vslidedown_vx_i64m8_ta(op1, op2, 32);
+  return vslidedown_vx_i64m8_ta(dest, op1, op2, 32);
 }
 
 /*
@@ -47193,9 +47193,9 @@ test_vslidedown_vx_u64m8_m_vl32(vbool8_t mask, vuint64m8_t maskedoff, vuint64m8_
 **  ret
 */
 vuint8mf8_t 
-test_vslidedown_vx_u8mf8_ta(vuint8mf8_t op1, size_t op2, size_t vl)
+test_vslidedown_vx_u8mf8_ta(vuint8mf8_t dest, vuint8mf8_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_u8mf8_ta(op1, op2, vl);
+  return vslidedown_vx_u8mf8_ta(dest, op1, op2, vl);
 }
 
 /*
@@ -47208,9 +47208,9 @@ test_vslidedown_vx_u8mf8_ta(vuint8mf8_t op1, size_t op2, size_t vl)
 **  ret
 */
 vuint8mf8_t 
-test_vslidedown_vx_u8mf8_ta_vl31(vuint8mf8_t op1, size_t op2)
+test_vslidedown_vx_u8mf8_ta_vl31(vuint8mf8_t dest, vuint8mf8_t op1, size_t op2)
 {
-  return vslidedown_vx_u8mf8_ta(op1, op2, 31);
+  return vslidedown_vx_u8mf8_ta(dest, op1, op2, 31);
 }
 
 /*
@@ -47223,9 +47223,9 @@ test_vslidedown_vx_u8mf8_ta_vl31(vuint8mf8_t op1, size_t op2)
 **  ret
 */
 vuint8mf4_t 
-test_vslidedown_vx_u8mf4_ta(vuint8mf4_t op1, size_t op2, size_t vl)
+test_vslidedown_vx_u8mf4_ta(vuint8mf4_t dest, vuint8mf4_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_u8mf4_ta(op1, op2, vl);
+  return vslidedown_vx_u8mf4_ta(dest, op1, op2, vl);
 }
 
 /*
@@ -47238,9 +47238,9 @@ test_vslidedown_vx_u8mf4_ta(vuint8mf4_t op1, size_t op2, size_t vl)
 **  ret
 */
 vuint8mf4_t 
-test_vslidedown_vx_u8mf4_ta_vl31(vuint8mf4_t op1, size_t op2)
+test_vslidedown_vx_u8mf4_ta_vl31(vuint8mf4_t dest, vuint8mf4_t op1, size_t op2)
 {
-  return vslidedown_vx_u8mf4_ta(op1, op2, 31);
+  return vslidedown_vx_u8mf4_ta(dest, op1, op2, 31);
 }
 
 /*
@@ -47253,9 +47253,9 @@ test_vslidedown_vx_u8mf4_ta_vl31(vuint8mf4_t op1, size_t op2)
 **  ret
 */
 vuint8mf2_t 
-test_vslidedown_vx_u8mf2_ta(vuint8mf2_t op1, size_t op2, size_t vl)
+test_vslidedown_vx_u8mf2_ta(vuint8mf2_t dest, vuint8mf2_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_u8mf2_ta(op1, op2, vl);
+  return vslidedown_vx_u8mf2_ta(dest, op1, op2, vl);
 }
 
 /*
@@ -47268,9 +47268,9 @@ test_vslidedown_vx_u8mf2_ta(vuint8mf2_t op1, size_t op2, size_t vl)
 **  ret
 */
 vuint8mf2_t 
-test_vslidedown_vx_u8mf2_ta_vl31(vuint8mf2_t op1, size_t op2)
+test_vslidedown_vx_u8mf2_ta_vl31(vuint8mf2_t dest, vuint8mf2_t op1, size_t op2)
 {
-  return vslidedown_vx_u8mf2_ta(op1, op2, 31);
+  return vslidedown_vx_u8mf2_ta(dest, op1, op2, 31);
 }
 
 /*
@@ -47283,9 +47283,9 @@ test_vslidedown_vx_u8mf2_ta_vl31(vuint8mf2_t op1, size_t op2)
 **  ret
 */
 vuint8m1_t 
-test_vslidedown_vx_u8m1_ta(vuint8m1_t op1, size_t op2, size_t vl)
+test_vslidedown_vx_u8m1_ta(vuint8m1_t dest, vuint8m1_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_u8m1_ta(op1, op2, vl);
+  return vslidedown_vx_u8m1_ta(dest, op1, op2, vl);
 }
 
 /*
@@ -47298,9 +47298,9 @@ test_vslidedown_vx_u8m1_ta(vuint8m1_t op1, size_t op2, size_t vl)
 **  ret
 */
 vuint8m1_t 
-test_vslidedown_vx_u8m1_ta_vl31(vuint8m1_t op1, size_t op2)
+test_vslidedown_vx_u8m1_ta_vl31(vuint8m1_t dest, vuint8m1_t op1, size_t op2)
 {
-  return vslidedown_vx_u8m1_ta(op1, op2, 31);
+  return vslidedown_vx_u8m1_ta(dest, op1, op2, 31);
 }
 
 /*
@@ -47313,9 +47313,9 @@ test_vslidedown_vx_u8m1_ta_vl31(vuint8m1_t op1, size_t op2)
 **  ret
 */
 vuint8m2_t 
-test_vslidedown_vx_u8m2_ta(vuint8m2_t op1, size_t op2, size_t vl)
+test_vslidedown_vx_u8m2_ta(vuint8m2_t dest, vuint8m2_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_u8m2_ta(op1, op2, vl);
+  return vslidedown_vx_u8m2_ta(dest, op1, op2, vl);
 }
 
 /*
@@ -47328,9 +47328,9 @@ test_vslidedown_vx_u8m2_ta(vuint8m2_t op1, size_t op2, size_t vl)
 **  ret
 */
 vuint8m2_t 
-test_vslidedown_vx_u8m2_ta_vl31(vuint8m2_t op1, size_t op2)
+test_vslidedown_vx_u8m2_ta_vl31(vuint8m2_t dest, vuint8m2_t op1, size_t op2)
 {
-  return vslidedown_vx_u8m2_ta(op1, op2, 31);
+  return vslidedown_vx_u8m2_ta(dest, op1, op2, 31);
 }
 
 /*
@@ -47343,9 +47343,9 @@ test_vslidedown_vx_u8m2_ta_vl31(vuint8m2_t op1, size_t op2)
 **  ret
 */
 vuint8m4_t 
-test_vslidedown_vx_u8m4_ta(vuint8m4_t op1, size_t op2, size_t vl)
+test_vslidedown_vx_u8m4_ta(vuint8m4_t dest, vuint8m4_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_u8m4_ta(op1, op2, vl);
+  return vslidedown_vx_u8m4_ta(dest, op1, op2, vl);
 }
 
 /*
@@ -47358,9 +47358,9 @@ test_vslidedown_vx_u8m4_ta(vuint8m4_t op1, size_t op2, size_t vl)
 **  ret
 */
 vuint8m4_t 
-test_vslidedown_vx_u8m4_ta_vl31(vuint8m4_t op1, size_t op2)
+test_vslidedown_vx_u8m4_ta_vl31(vuint8m4_t dest, vuint8m4_t op1, size_t op2)
 {
-  return vslidedown_vx_u8m4_ta(op1, op2, 31);
+  return vslidedown_vx_u8m4_ta(dest, op1, op2, 31);
 }
 
 /*
@@ -47373,9 +47373,9 @@ test_vslidedown_vx_u8m4_ta_vl31(vuint8m4_t op1, size_t op2)
 **  ret
 */
 vuint8m8_t 
-test_vslidedown_vx_u8m8_ta(vuint8m8_t op1, size_t op2, size_t vl)
+test_vslidedown_vx_u8m8_ta(vuint8m8_t dest, vuint8m8_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_u8m8_ta(op1, op2, vl);
+  return vslidedown_vx_u8m8_ta(dest, op1, op2, vl);
 }
 
 /*
@@ -47388,9 +47388,9 @@ test_vslidedown_vx_u8m8_ta(vuint8m8_t op1, size_t op2, size_t vl)
 **  ret
 */
 vuint8m8_t 
-test_vslidedown_vx_u8m8_ta_vl31(vuint8m8_t op1, size_t op2)
+test_vslidedown_vx_u8m8_ta_vl31(vuint8m8_t dest, vuint8m8_t op1, size_t op2)
 {
-  return vslidedown_vx_u8m8_ta(op1, op2, 31);
+  return vslidedown_vx_u8m8_ta(dest, op1, op2, 31);
 }
 
 /*
@@ -47403,9 +47403,9 @@ test_vslidedown_vx_u8m8_ta_vl31(vuint8m8_t op1, size_t op2)
 **  ret
 */
 vuint16mf4_t 
-test_vslidedown_vx_u16mf4_ta(vuint16mf4_t op1, size_t op2, size_t vl)
+test_vslidedown_vx_u16mf4_ta(vuint16mf4_t dest, vuint16mf4_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_u16mf4_ta(op1, op2, vl);
+  return vslidedown_vx_u16mf4_ta(dest, op1, op2, vl);
 }
 
 /*
@@ -47418,9 +47418,9 @@ test_vslidedown_vx_u16mf4_ta(vuint16mf4_t op1, size_t op2, size_t vl)
 **  ret
 */
 vuint16mf4_t 
-test_vslidedown_vx_u16mf4_ta_vl31(vuint16mf4_t op1, size_t op2)
+test_vslidedown_vx_u16mf4_ta_vl31(vuint16mf4_t dest, vuint16mf4_t op1, size_t op2)
 {
-  return vslidedown_vx_u16mf4_ta(op1, op2, 31);
+  return vslidedown_vx_u16mf4_ta(dest, op1, op2, 31);
 }
 
 /*
@@ -47433,9 +47433,9 @@ test_vslidedown_vx_u16mf4_ta_vl31(vuint16mf4_t op1, size_t op2)
 **  ret
 */
 vuint16mf2_t 
-test_vslidedown_vx_u16mf2_ta(vuint16mf2_t op1, size_t op2, size_t vl)
+test_vslidedown_vx_u16mf2_ta(vuint16mf2_t dest, vuint16mf2_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_u16mf2_ta(op1, op2, vl);
+  return vslidedown_vx_u16mf2_ta(dest, op1, op2, vl);
 }
 
 /*
@@ -47448,9 +47448,9 @@ test_vslidedown_vx_u16mf2_ta(vuint16mf2_t op1, size_t op2, size_t vl)
 **  ret
 */
 vuint16mf2_t 
-test_vslidedown_vx_u16mf2_ta_vl31(vuint16mf2_t op1, size_t op2)
+test_vslidedown_vx_u16mf2_ta_vl31(vuint16mf2_t dest, vuint16mf2_t op1, size_t op2)
 {
-  return vslidedown_vx_u16mf2_ta(op1, op2, 31);
+  return vslidedown_vx_u16mf2_ta(dest, op1, op2, 31);
 }
 
 /*
@@ -47463,9 +47463,9 @@ test_vslidedown_vx_u16mf2_ta_vl31(vuint16mf2_t op1, size_t op2)
 **  ret
 */
 vuint16m1_t 
-test_vslidedown_vx_u16m1_ta(vuint16m1_t op1, size_t op2, size_t vl)
+test_vslidedown_vx_u16m1_ta(vuint16m1_t dest, vuint16m1_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_u16m1_ta(op1, op2, vl);
+  return vslidedown_vx_u16m1_ta(dest, op1, op2, vl);
 }
 
 /*
@@ -47478,9 +47478,9 @@ test_vslidedown_vx_u16m1_ta(vuint16m1_t op1, size_t op2, size_t vl)
 **  ret
 */
 vuint16m1_t 
-test_vslidedown_vx_u16m1_ta_vl31(vuint16m1_t op1, size_t op2)
+test_vslidedown_vx_u16m1_ta_vl31(vuint16m1_t dest, vuint16m1_t op1, size_t op2)
 {
-  return vslidedown_vx_u16m1_ta(op1, op2, 31);
+  return vslidedown_vx_u16m1_ta(dest, op1, op2, 31);
 }
 
 /*
@@ -47493,9 +47493,9 @@ test_vslidedown_vx_u16m1_ta_vl31(vuint16m1_t op1, size_t op2)
 **  ret
 */
 vuint16m2_t 
-test_vslidedown_vx_u16m2_ta(vuint16m2_t op1, size_t op2, size_t vl)
+test_vslidedown_vx_u16m2_ta(vuint16m2_t dest, vuint16m2_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_u16m2_ta(op1, op2, vl);
+  return vslidedown_vx_u16m2_ta(dest, op1, op2, vl);
 }
 
 /*
@@ -47508,9 +47508,9 @@ test_vslidedown_vx_u16m2_ta(vuint16m2_t op1, size_t op2, size_t vl)
 **  ret
 */
 vuint16m2_t 
-test_vslidedown_vx_u16m2_ta_vl31(vuint16m2_t op1, size_t op2)
+test_vslidedown_vx_u16m2_ta_vl31(vuint16m2_t dest, vuint16m2_t op1, size_t op2)
 {
-  return vslidedown_vx_u16m2_ta(op1, op2, 31);
+  return vslidedown_vx_u16m2_ta(dest, op1, op2, 31);
 }
 
 /*
@@ -47523,9 +47523,9 @@ test_vslidedown_vx_u16m2_ta_vl31(vuint16m2_t op1, size_t op2)
 **  ret
 */
 vuint16m4_t 
-test_vslidedown_vx_u16m4_ta(vuint16m4_t op1, size_t op2, size_t vl)
+test_vslidedown_vx_u16m4_ta(vuint16m4_t dest, vuint16m4_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_u16m4_ta(op1, op2, vl);
+  return vslidedown_vx_u16m4_ta(dest, op1, op2, vl);
 }
 
 /*
@@ -47538,9 +47538,9 @@ test_vslidedown_vx_u16m4_ta(vuint16m4_t op1, size_t op2, size_t vl)
 **  ret
 */
 vuint16m4_t 
-test_vslidedown_vx_u16m4_ta_vl31(vuint16m4_t op1, size_t op2)
+test_vslidedown_vx_u16m4_ta_vl31(vuint16m4_t dest, vuint16m4_t op1, size_t op2)
 {
-  return vslidedown_vx_u16m4_ta(op1, op2, 31);
+  return vslidedown_vx_u16m4_ta(dest, op1, op2, 31);
 }
 
 /*
@@ -47553,9 +47553,9 @@ test_vslidedown_vx_u16m4_ta_vl31(vuint16m4_t op1, size_t op2)
 **  ret
 */
 vuint16m8_t 
-test_vslidedown_vx_u16m8_ta(vuint16m8_t op1, size_t op2, size_t vl)
+test_vslidedown_vx_u16m8_ta(vuint16m8_t dest, vuint16m8_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_u16m8_ta(op1, op2, vl);
+  return vslidedown_vx_u16m8_ta(dest, op1, op2, vl);
 }
 
 /*
@@ -47568,9 +47568,9 @@ test_vslidedown_vx_u16m8_ta(vuint16m8_t op1, size_t op2, size_t vl)
 **  ret
 */
 vuint16m8_t 
-test_vslidedown_vx_u16m8_ta_vl31(vuint16m8_t op1, size_t op2)
+test_vslidedown_vx_u16m8_ta_vl31(vuint16m8_t dest, vuint16m8_t op1, size_t op2)
 {
-  return vslidedown_vx_u16m8_ta(op1, op2, 31);
+  return vslidedown_vx_u16m8_ta(dest, op1, op2, 31);
 }
 
 /*
@@ -47583,9 +47583,9 @@ test_vslidedown_vx_u16m8_ta_vl31(vuint16m8_t op1, size_t op2)
 **  ret
 */
 vuint32mf2_t 
-test_vslidedown_vx_u32mf2_ta(vuint32mf2_t op1, size_t op2, size_t vl)
+test_vslidedown_vx_u32mf2_ta(vuint32mf2_t dest, vuint32mf2_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_u32mf2_ta(op1, op2, vl);
+  return vslidedown_vx_u32mf2_ta(dest, op1, op2, vl);
 }
 
 /*
@@ -47598,9 +47598,9 @@ test_vslidedown_vx_u32mf2_ta(vuint32mf2_t op1, size_t op2, size_t vl)
 **  ret
 */
 vuint32mf2_t 
-test_vslidedown_vx_u32mf2_ta_vl31(vuint32mf2_t op1, size_t op2)
+test_vslidedown_vx_u32mf2_ta_vl31(vuint32mf2_t dest, vuint32mf2_t op1, size_t op2)
 {
-  return vslidedown_vx_u32mf2_ta(op1, op2, 31);
+  return vslidedown_vx_u32mf2_ta(dest, op1, op2, 31);
 }
 
 /*
@@ -47613,9 +47613,9 @@ test_vslidedown_vx_u32mf2_ta_vl31(vuint32mf2_t op1, size_t op2)
 **  ret
 */
 vuint32m1_t 
-test_vslidedown_vx_u32m1_ta(vuint32m1_t op1, size_t op2, size_t vl)
+test_vslidedown_vx_u32m1_ta(vuint32m1_t dest, vuint32m1_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_u32m1_ta(op1, op2, vl);
+  return vslidedown_vx_u32m1_ta(dest, op1, op2, vl);
 }
 
 /*
@@ -47628,9 +47628,9 @@ test_vslidedown_vx_u32m1_ta(vuint32m1_t op1, size_t op2, size_t vl)
 **  ret
 */
 vuint32m1_t 
-test_vslidedown_vx_u32m1_ta_vl31(vuint32m1_t op1, size_t op2)
+test_vslidedown_vx_u32m1_ta_vl31(vuint32m1_t dest, vuint32m1_t op1, size_t op2)
 {
-  return vslidedown_vx_u32m1_ta(op1, op2, 31);
+  return vslidedown_vx_u32m1_ta(dest, op1, op2, 31);
 }
 
 /*
@@ -47643,9 +47643,9 @@ test_vslidedown_vx_u32m1_ta_vl31(vuint32m1_t op1, size_t op2)
 **  ret
 */
 vuint32m2_t 
-test_vslidedown_vx_u32m2_ta(vuint32m2_t op1, size_t op2, size_t vl)
+test_vslidedown_vx_u32m2_ta(vuint32m2_t dest, vuint32m2_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_u32m2_ta(op1, op2, vl);
+  return vslidedown_vx_u32m2_ta(dest, op1, op2, vl);
 }
 
 /*
@@ -47658,9 +47658,9 @@ test_vslidedown_vx_u32m2_ta(vuint32m2_t op1, size_t op2, size_t vl)
 **  ret
 */
 vuint32m2_t 
-test_vslidedown_vx_u32m2_ta_vl31(vuint32m2_t op1, size_t op2)
+test_vslidedown_vx_u32m2_ta_vl31(vuint32m2_t dest, vuint32m2_t op1, size_t op2)
 {
-  return vslidedown_vx_u32m2_ta(op1, op2, 31);
+  return vslidedown_vx_u32m2_ta(dest, op1, op2, 31);
 }
 
 /*
@@ -47673,9 +47673,9 @@ test_vslidedown_vx_u32m2_ta_vl31(vuint32m2_t op1, size_t op2)
 **  ret
 */
 vuint32m4_t 
-test_vslidedown_vx_u32m4_ta(vuint32m4_t op1, size_t op2, size_t vl)
+test_vslidedown_vx_u32m4_ta(vuint32m4_t dest, vuint32m4_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_u32m4_ta(op1, op2, vl);
+  return vslidedown_vx_u32m4_ta(dest, op1, op2, vl);
 }
 
 /*
@@ -47688,9 +47688,9 @@ test_vslidedown_vx_u32m4_ta(vuint32m4_t op1, size_t op2, size_t vl)
 **  ret
 */
 vuint32m4_t 
-test_vslidedown_vx_u32m4_ta_vl31(vuint32m4_t op1, size_t op2)
+test_vslidedown_vx_u32m4_ta_vl31(vuint32m4_t dest, vuint32m4_t op1, size_t op2)
 {
-  return vslidedown_vx_u32m4_ta(op1, op2, 31);
+  return vslidedown_vx_u32m4_ta(dest, op1, op2, 31);
 }
 
 /*
@@ -47703,9 +47703,9 @@ test_vslidedown_vx_u32m4_ta_vl31(vuint32m4_t op1, size_t op2)
 **  ret
 */
 vuint32m8_t 
-test_vslidedown_vx_u32m8_ta(vuint32m8_t op1, size_t op2, size_t vl)
+test_vslidedown_vx_u32m8_ta(vuint32m8_t dest, vuint32m8_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_u32m8_ta(op1, op2, vl);
+  return vslidedown_vx_u32m8_ta(dest, op1, op2, vl);
 }
 
 /*
@@ -47718,9 +47718,9 @@ test_vslidedown_vx_u32m8_ta(vuint32m8_t op1, size_t op2, size_t vl)
 **  ret
 */
 vuint32m8_t 
-test_vslidedown_vx_u32m8_ta_vl31(vuint32m8_t op1, size_t op2)
+test_vslidedown_vx_u32m8_ta_vl31(vuint32m8_t dest, vuint32m8_t op1, size_t op2)
 {
-  return vslidedown_vx_u32m8_ta(op1, op2, 31);
+  return vslidedown_vx_u32m8_ta(dest, op1, op2, 31);
 }
 
 /*
@@ -47733,9 +47733,9 @@ test_vslidedown_vx_u32m8_ta_vl31(vuint32m8_t op1, size_t op2)
 **  ret
 */
 vuint64m1_t 
-test_vslidedown_vx_u64m1_ta(vuint64m1_t op1, size_t op2, size_t vl)
+test_vslidedown_vx_u64m1_ta(vuint64m1_t dest, vuint64m1_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_u64m1_ta(op1, op2, vl);
+  return vslidedown_vx_u64m1_ta(dest, op1, op2, vl);
 }
 
 /*
@@ -47748,9 +47748,9 @@ test_vslidedown_vx_u64m1_ta(vuint64m1_t op1, size_t op2, size_t vl)
 **  ret
 */
 vuint64m1_t 
-test_vslidedown_vx_u64m1_ta_vl31(vuint64m1_t op1, size_t op2)
+test_vslidedown_vx_u64m1_ta_vl31(vuint64m1_t dest, vuint64m1_t op1, size_t op2)
 {
-  return vslidedown_vx_u64m1_ta(op1, op2, 31);
+  return vslidedown_vx_u64m1_ta(dest, op1, op2, 31);
 }
 
 /*
@@ -47763,9 +47763,9 @@ test_vslidedown_vx_u64m1_ta_vl31(vuint64m1_t op1, size_t op2)
 **  ret
 */
 vuint64m2_t 
-test_vslidedown_vx_u64m2_ta(vuint64m2_t op1, size_t op2, size_t vl)
+test_vslidedown_vx_u64m2_ta(vuint64m2_t dest, vuint64m2_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_u64m2_ta(op1, op2, vl);
+  return vslidedown_vx_u64m2_ta(dest, op1, op2, vl);
 }
 
 /*
@@ -47778,9 +47778,9 @@ test_vslidedown_vx_u64m2_ta(vuint64m2_t op1, size_t op2, size_t vl)
 **  ret
 */
 vuint64m2_t 
-test_vslidedown_vx_u64m2_ta_vl31(vuint64m2_t op1, size_t op2)
+test_vslidedown_vx_u64m2_ta_vl31(vuint64m2_t dest, vuint64m2_t op1, size_t op2)
 {
-  return vslidedown_vx_u64m2_ta(op1, op2, 31);
+  return vslidedown_vx_u64m2_ta(dest, op1, op2, 31);
 }
 
 /*
@@ -47793,9 +47793,9 @@ test_vslidedown_vx_u64m2_ta_vl31(vuint64m2_t op1, size_t op2)
 **  ret
 */
 vuint64m4_t 
-test_vslidedown_vx_u64m4_ta(vuint64m4_t op1, size_t op2, size_t vl)
+test_vslidedown_vx_u64m4_ta(vuint64m4_t dest, vuint64m4_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_u64m4_ta(op1, op2, vl);
+  return vslidedown_vx_u64m4_ta(dest, op1, op2, vl);
 }
 
 /*
@@ -47808,9 +47808,9 @@ test_vslidedown_vx_u64m4_ta(vuint64m4_t op1, size_t op2, size_t vl)
 **  ret
 */
 vuint64m4_t 
-test_vslidedown_vx_u64m4_ta_vl31(vuint64m4_t op1, size_t op2)
+test_vslidedown_vx_u64m4_ta_vl31(vuint64m4_t dest, vuint64m4_t op1, size_t op2)
 {
-  return vslidedown_vx_u64m4_ta(op1, op2, 31);
+  return vslidedown_vx_u64m4_ta(dest, op1, op2, 31);
 }
 
 /*
@@ -47823,9 +47823,9 @@ test_vslidedown_vx_u64m4_ta_vl31(vuint64m4_t op1, size_t op2)
 **  ret
 */
 vuint64m8_t 
-test_vslidedown_vx_u64m8_ta(vuint64m8_t op1, size_t op2, size_t vl)
+test_vslidedown_vx_u64m8_ta(vuint64m8_t dest, vuint64m8_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_u64m8_ta(op1, op2, vl);
+  return vslidedown_vx_u64m8_ta(dest, op1, op2, vl);
 }
 
 /*
@@ -47838,9 +47838,9 @@ test_vslidedown_vx_u64m8_ta(vuint64m8_t op1, size_t op2, size_t vl)
 **  ret
 */
 vuint64m8_t 
-test_vslidedown_vx_u64m8_ta_vl31(vuint64m8_t op1, size_t op2)
+test_vslidedown_vx_u64m8_ta_vl31(vuint64m8_t dest, vuint64m8_t op1, size_t op2)
 {
-  return vslidedown_vx_u64m8_ta(op1, op2, 31);
+  return vslidedown_vx_u64m8_ta(dest, op1, op2, 31);
 }
 
 /*
@@ -48515,7 +48515,7 @@ test_vslidedown_vx_u64m8_tu_vl31(vuint64m8_t dest, vuint64m8_t op1, size_t op2)
 vuint8mf8_t 
 test_vslidedown_vx_u8mf8_tama(vbool64_t mask, vuint8mf8_t maskedoff, vuint8mf8_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_u8mf8_tama(mask, op1, op2, vl);
+  return vslidedown_vx_u8mf8_tama(mask, op1, op1, op2, vl);
 }
 
 /*
@@ -48530,7 +48530,7 @@ test_vslidedown_vx_u8mf8_tama(vbool64_t mask, vuint8mf8_t maskedoff, vuint8mf8_t
 vuint8mf8_t 
 test_vslidedown_vx_u8mf8_tama_vl31(vbool64_t mask, vuint8mf8_t maskedoff, vuint8mf8_t op1, size_t op2)
 {
-  return vslidedown_vx_u8mf8_tama(mask, op1, op2, 31);
+  return vslidedown_vx_u8mf8_tama(mask, op1, op1, op2, 31);
 }
 
 /*
@@ -48545,7 +48545,7 @@ test_vslidedown_vx_u8mf8_tama_vl31(vbool64_t mask, vuint8mf8_t maskedoff, vuint8
 vuint8mf4_t 
 test_vslidedown_vx_u8mf4_tama(vbool32_t mask, vuint8mf4_t maskedoff, vuint8mf4_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_u8mf4_tama(mask, op1, op2, vl);
+  return vslidedown_vx_u8mf4_tama(mask, op1, op1, op2, vl);
 }
 
 /*
@@ -48560,7 +48560,7 @@ test_vslidedown_vx_u8mf4_tama(vbool32_t mask, vuint8mf4_t maskedoff, vuint8mf4_t
 vuint8mf4_t 
 test_vslidedown_vx_u8mf4_tama_vl31(vbool32_t mask, vuint8mf4_t maskedoff, vuint8mf4_t op1, size_t op2)
 {
-  return vslidedown_vx_u8mf4_tama(mask, op1, op2, 31);
+  return vslidedown_vx_u8mf4_tama(mask, op1, op1, op2, 31);
 }
 
 /*
@@ -48575,7 +48575,7 @@ test_vslidedown_vx_u8mf4_tama_vl31(vbool32_t mask, vuint8mf4_t maskedoff, vuint8
 vuint8mf2_t 
 test_vslidedown_vx_u8mf2_tama(vbool16_t mask, vuint8mf2_t maskedoff, vuint8mf2_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_u8mf2_tama(mask, op1, op2, vl);
+  return vslidedown_vx_u8mf2_tama(mask, op1, op1, op2, vl);
 }
 
 /*
@@ -48590,7 +48590,7 @@ test_vslidedown_vx_u8mf2_tama(vbool16_t mask, vuint8mf2_t maskedoff, vuint8mf2_t
 vuint8mf2_t 
 test_vslidedown_vx_u8mf2_tama_vl31(vbool16_t mask, vuint8mf2_t maskedoff, vuint8mf2_t op1, size_t op2)
 {
-  return vslidedown_vx_u8mf2_tama(mask, op1, op2, 31);
+  return vslidedown_vx_u8mf2_tama(mask, op1, op1, op2, 31);
 }
 
 /*
@@ -48605,7 +48605,7 @@ test_vslidedown_vx_u8mf2_tama_vl31(vbool16_t mask, vuint8mf2_t maskedoff, vuint8
 vuint8m1_t 
 test_vslidedown_vx_u8m1_tama(vbool8_t mask, vuint8m1_t maskedoff, vuint8m1_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_u8m1_tama(mask, op1, op2, vl);
+  return vslidedown_vx_u8m1_tama(mask, op1, op1, op2, vl);
 }
 
 /*
@@ -48620,7 +48620,7 @@ test_vslidedown_vx_u8m1_tama(vbool8_t mask, vuint8m1_t maskedoff, vuint8m1_t op1
 vuint8m1_t 
 test_vslidedown_vx_u8m1_tama_vl31(vbool8_t mask, vuint8m1_t maskedoff, vuint8m1_t op1, size_t op2)
 {
-  return vslidedown_vx_u8m1_tama(mask, op1, op2, 31);
+  return vslidedown_vx_u8m1_tama(mask, op1, op1, op2, 31);
 }
 
 /*
@@ -48635,7 +48635,7 @@ test_vslidedown_vx_u8m1_tama_vl31(vbool8_t mask, vuint8m1_t maskedoff, vuint8m1_
 vuint8m2_t 
 test_vslidedown_vx_u8m2_tama(vbool4_t mask, vuint8m2_t maskedoff, vuint8m2_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_u8m2_tama(mask, op1, op2, vl);
+  return vslidedown_vx_u8m2_tama(mask, op1, op1, op2, vl);
 }
 
 /*
@@ -48650,7 +48650,7 @@ test_vslidedown_vx_u8m2_tama(vbool4_t mask, vuint8m2_t maskedoff, vuint8m2_t op1
 vuint8m2_t 
 test_vslidedown_vx_u8m2_tama_vl31(vbool4_t mask, vuint8m2_t maskedoff, vuint8m2_t op1, size_t op2)
 {
-  return vslidedown_vx_u8m2_tama(mask, op1, op2, 31);
+  return vslidedown_vx_u8m2_tama(mask, op1, op1, op2, 31);
 }
 
 /*
@@ -48665,7 +48665,7 @@ test_vslidedown_vx_u8m2_tama_vl31(vbool4_t mask, vuint8m2_t maskedoff, vuint8m2_
 vuint8m4_t 
 test_vslidedown_vx_u8m4_tama(vbool2_t mask, vuint8m4_t maskedoff, vuint8m4_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_u8m4_tama(mask, op1, op2, vl);
+  return vslidedown_vx_u8m4_tama(mask, op1, op1, op2, vl);
 }
 
 /*
@@ -48680,7 +48680,7 @@ test_vslidedown_vx_u8m4_tama(vbool2_t mask, vuint8m4_t maskedoff, vuint8m4_t op1
 vuint8m4_t 
 test_vslidedown_vx_u8m4_tama_vl31(vbool2_t mask, vuint8m4_t maskedoff, vuint8m4_t op1, size_t op2)
 {
-  return vslidedown_vx_u8m4_tama(mask, op1, op2, 31);
+  return vslidedown_vx_u8m4_tama(mask, op1, op1, op2, 31);
 }
 
 /*
@@ -48695,7 +48695,7 @@ test_vslidedown_vx_u8m4_tama_vl31(vbool2_t mask, vuint8m4_t maskedoff, vuint8m4_
 vuint8m8_t 
 test_vslidedown_vx_u8m8_tama(vbool1_t mask, vuint8m8_t maskedoff, vuint8m8_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_u8m8_tama(mask, op1, op2, vl);
+  return vslidedown_vx_u8m8_tama(mask, op1, op1, op2, vl);
 }
 
 /*
@@ -48710,7 +48710,7 @@ test_vslidedown_vx_u8m8_tama(vbool1_t mask, vuint8m8_t maskedoff, vuint8m8_t op1
 vuint8m8_t 
 test_vslidedown_vx_u8m8_tama_vl31(vbool1_t mask, vuint8m8_t maskedoff, vuint8m8_t op1, size_t op2)
 {
-  return vslidedown_vx_u8m8_tama(mask, op1, op2, 31);
+  return vslidedown_vx_u8m8_tama(mask, op1, op1, op2, 31);
 }
 
 /*
@@ -48725,7 +48725,7 @@ test_vslidedown_vx_u8m8_tama_vl31(vbool1_t mask, vuint8m8_t maskedoff, vuint8m8_
 vuint16mf4_t 
 test_vslidedown_vx_u16mf4_tama(vbool64_t mask, vuint16mf4_t maskedoff, vuint16mf4_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_u16mf4_tama(mask, op1, op2, vl);
+  return vslidedown_vx_u16mf4_tama(mask, op1, op1, op2, vl);
 }
 
 /*
@@ -48740,7 +48740,7 @@ test_vslidedown_vx_u16mf4_tama(vbool64_t mask, vuint16mf4_t maskedoff, vuint16mf
 vuint16mf4_t 
 test_vslidedown_vx_u16mf4_tama_vl31(vbool64_t mask, vuint16mf4_t maskedoff, vuint16mf4_t op1, size_t op2)
 {
-  return vslidedown_vx_u16mf4_tama(mask, op1, op2, 31);
+  return vslidedown_vx_u16mf4_tama(mask, op1, op1, op2, 31);
 }
 
 /*
@@ -48755,7 +48755,7 @@ test_vslidedown_vx_u16mf4_tama_vl31(vbool64_t mask, vuint16mf4_t maskedoff, vuin
 vuint16mf2_t 
 test_vslidedown_vx_u16mf2_tama(vbool32_t mask, vuint16mf2_t maskedoff, vuint16mf2_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_u16mf2_tama(mask, op1, op2, vl);
+  return vslidedown_vx_u16mf2_tama(mask, op1, op1, op2, vl);
 }
 
 /*
@@ -48770,7 +48770,7 @@ test_vslidedown_vx_u16mf2_tama(vbool32_t mask, vuint16mf2_t maskedoff, vuint16mf
 vuint16mf2_t 
 test_vslidedown_vx_u16mf2_tama_vl31(vbool32_t mask, vuint16mf2_t maskedoff, vuint16mf2_t op1, size_t op2)
 {
-  return vslidedown_vx_u16mf2_tama(mask, op1, op2, 31);
+  return vslidedown_vx_u16mf2_tama(mask, op1, op1, op2, 31);
 }
 
 /*
@@ -48785,7 +48785,7 @@ test_vslidedown_vx_u16mf2_tama_vl31(vbool32_t mask, vuint16mf2_t maskedoff, vuin
 vuint16m1_t 
 test_vslidedown_vx_u16m1_tama(vbool16_t mask, vuint16m1_t maskedoff, vuint16m1_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_u16m1_tama(mask, op1, op2, vl);
+  return vslidedown_vx_u16m1_tama(mask, op1, op1, op2, vl);
 }
 
 /*
@@ -48800,7 +48800,7 @@ test_vslidedown_vx_u16m1_tama(vbool16_t mask, vuint16m1_t maskedoff, vuint16m1_t
 vuint16m1_t 
 test_vslidedown_vx_u16m1_tama_vl31(vbool16_t mask, vuint16m1_t maskedoff, vuint16m1_t op1, size_t op2)
 {
-  return vslidedown_vx_u16m1_tama(mask, op1, op2, 31);
+  return vslidedown_vx_u16m1_tama(mask, op1, op1, op2, 31);
 }
 
 /*
@@ -48815,7 +48815,7 @@ test_vslidedown_vx_u16m1_tama_vl31(vbool16_t mask, vuint16m1_t maskedoff, vuint1
 vuint16m2_t 
 test_vslidedown_vx_u16m2_tama(vbool8_t mask, vuint16m2_t maskedoff, vuint16m2_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_u16m2_tama(mask, op1, op2, vl);
+  return vslidedown_vx_u16m2_tama(mask, op1, op1, op2, vl);
 }
 
 /*
@@ -48830,7 +48830,7 @@ test_vslidedown_vx_u16m2_tama(vbool8_t mask, vuint16m2_t maskedoff, vuint16m2_t 
 vuint16m2_t 
 test_vslidedown_vx_u16m2_tama_vl31(vbool8_t mask, vuint16m2_t maskedoff, vuint16m2_t op1, size_t op2)
 {
-  return vslidedown_vx_u16m2_tama(mask, op1, op2, 31);
+  return vslidedown_vx_u16m2_tama(mask, op1, op1, op2, 31);
 }
 
 /*
@@ -48845,7 +48845,7 @@ test_vslidedown_vx_u16m2_tama_vl31(vbool8_t mask, vuint16m2_t maskedoff, vuint16
 vuint16m4_t 
 test_vslidedown_vx_u16m4_tama(vbool4_t mask, vuint16m4_t maskedoff, vuint16m4_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_u16m4_tama(mask, op1, op2, vl);
+  return vslidedown_vx_u16m4_tama(mask, op1, op1, op2, vl);
 }
 
 /*
@@ -48860,7 +48860,7 @@ test_vslidedown_vx_u16m4_tama(vbool4_t mask, vuint16m4_t maskedoff, vuint16m4_t 
 vuint16m4_t 
 test_vslidedown_vx_u16m4_tama_vl31(vbool4_t mask, vuint16m4_t maskedoff, vuint16m4_t op1, size_t op2)
 {
-  return vslidedown_vx_u16m4_tama(mask, op1, op2, 31);
+  return vslidedown_vx_u16m4_tama(mask, op1, op1, op2, 31);
 }
 
 /*
@@ -48875,7 +48875,7 @@ test_vslidedown_vx_u16m4_tama_vl31(vbool4_t mask, vuint16m4_t maskedoff, vuint16
 vuint16m8_t 
 test_vslidedown_vx_u16m8_tama(vbool2_t mask, vuint16m8_t maskedoff, vuint16m8_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_u16m8_tama(mask, op1, op2, vl);
+  return vslidedown_vx_u16m8_tama(mask, op1, op1, op2, vl);
 }
 
 /*
@@ -48890,7 +48890,7 @@ test_vslidedown_vx_u16m8_tama(vbool2_t mask, vuint16m8_t maskedoff, vuint16m8_t 
 vuint16m8_t 
 test_vslidedown_vx_u16m8_tama_vl31(vbool2_t mask, vuint16m8_t maskedoff, vuint16m8_t op1, size_t op2)
 {
-  return vslidedown_vx_u16m8_tama(mask, op1, op2, 31);
+  return vslidedown_vx_u16m8_tama(mask, op1, op1, op2, 31);
 }
 
 /*
@@ -48905,7 +48905,7 @@ test_vslidedown_vx_u16m8_tama_vl31(vbool2_t mask, vuint16m8_t maskedoff, vuint16
 vuint32mf2_t 
 test_vslidedown_vx_u32mf2_tama(vbool64_t mask, vuint32mf2_t maskedoff, vuint32mf2_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_u32mf2_tama(mask, op1, op2, vl);
+  return vslidedown_vx_u32mf2_tama(mask, op1, op1, op2, vl);
 }
 
 /*
@@ -48920,7 +48920,7 @@ test_vslidedown_vx_u32mf2_tama(vbool64_t mask, vuint32mf2_t maskedoff, vuint32mf
 vuint32mf2_t 
 test_vslidedown_vx_u32mf2_tama_vl31(vbool64_t mask, vuint32mf2_t maskedoff, vuint32mf2_t op1, size_t op2)
 {
-  return vslidedown_vx_u32mf2_tama(mask, op1, op2, 31);
+  return vslidedown_vx_u32mf2_tama(mask, op1, op1, op2, 31);
 }
 
 /*
@@ -48935,7 +48935,7 @@ test_vslidedown_vx_u32mf2_tama_vl31(vbool64_t mask, vuint32mf2_t maskedoff, vuin
 vuint32m1_t 
 test_vslidedown_vx_u32m1_tama(vbool32_t mask, vuint32m1_t maskedoff, vuint32m1_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_u32m1_tama(mask, op1, op2, vl);
+  return vslidedown_vx_u32m1_tama(mask, op1, op1, op2, vl);
 }
 
 /*
@@ -48950,7 +48950,7 @@ test_vslidedown_vx_u32m1_tama(vbool32_t mask, vuint32m1_t maskedoff, vuint32m1_t
 vuint32m1_t 
 test_vslidedown_vx_u32m1_tama_vl31(vbool32_t mask, vuint32m1_t maskedoff, vuint32m1_t op1, size_t op2)
 {
-  return vslidedown_vx_u32m1_tama(mask, op1, op2, 31);
+  return vslidedown_vx_u32m1_tama(mask, op1, op1, op2, 31);
 }
 
 /*
@@ -48965,7 +48965,7 @@ test_vslidedown_vx_u32m1_tama_vl31(vbool32_t mask, vuint32m1_t maskedoff, vuint3
 vuint32m2_t 
 test_vslidedown_vx_u32m2_tama(vbool16_t mask, vuint32m2_t maskedoff, vuint32m2_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_u32m2_tama(mask, op1, op2, vl);
+  return vslidedown_vx_u32m2_tama(mask, op1, op1, op2, vl);
 }
 
 /*
@@ -48980,7 +48980,7 @@ test_vslidedown_vx_u32m2_tama(vbool16_t mask, vuint32m2_t maskedoff, vuint32m2_t
 vuint32m2_t 
 test_vslidedown_vx_u32m2_tama_vl31(vbool16_t mask, vuint32m2_t maskedoff, vuint32m2_t op1, size_t op2)
 {
-  return vslidedown_vx_u32m2_tama(mask, op1, op2, 31);
+  return vslidedown_vx_u32m2_tama(mask, op1, op1, op2, 31);
 }
 
 /*
@@ -48995,7 +48995,7 @@ test_vslidedown_vx_u32m2_tama_vl31(vbool16_t mask, vuint32m2_t maskedoff, vuint3
 vuint32m4_t 
 test_vslidedown_vx_u32m4_tama(vbool8_t mask, vuint32m4_t maskedoff, vuint32m4_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_u32m4_tama(mask, op1, op2, vl);
+  return vslidedown_vx_u32m4_tama(mask, op1, op1, op2, vl);
 }
 
 /*
@@ -49010,7 +49010,7 @@ test_vslidedown_vx_u32m4_tama(vbool8_t mask, vuint32m4_t maskedoff, vuint32m4_t 
 vuint32m4_t 
 test_vslidedown_vx_u32m4_tama_vl31(vbool8_t mask, vuint32m4_t maskedoff, vuint32m4_t op1, size_t op2)
 {
-  return vslidedown_vx_u32m4_tama(mask, op1, op2, 31);
+  return vslidedown_vx_u32m4_tama(mask, op1, op1, op2, 31);
 }
 
 /*
@@ -49025,7 +49025,7 @@ test_vslidedown_vx_u32m4_tama_vl31(vbool8_t mask, vuint32m4_t maskedoff, vuint32
 vuint32m8_t 
 test_vslidedown_vx_u32m8_tama(vbool4_t mask, vuint32m8_t maskedoff, vuint32m8_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_u32m8_tama(mask, op1, op2, vl);
+  return vslidedown_vx_u32m8_tama(mask, op1, op1, op2, vl);
 }
 
 /*
@@ -49040,7 +49040,7 @@ test_vslidedown_vx_u32m8_tama(vbool4_t mask, vuint32m8_t maskedoff, vuint32m8_t 
 vuint32m8_t 
 test_vslidedown_vx_u32m8_tama_vl31(vbool4_t mask, vuint32m8_t maskedoff, vuint32m8_t op1, size_t op2)
 {
-  return vslidedown_vx_u32m8_tama(mask, op1, op2, 31);
+  return vslidedown_vx_u32m8_tama(mask, op1, op1, op2, 31);
 }
 
 /*
@@ -49055,7 +49055,7 @@ test_vslidedown_vx_u32m8_tama_vl31(vbool4_t mask, vuint32m8_t maskedoff, vuint32
 vuint64m1_t 
 test_vslidedown_vx_u64m1_tama(vbool64_t mask, vuint64m1_t maskedoff, vuint64m1_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_u64m1_tama(mask, op1, op2, vl);
+  return vslidedown_vx_u64m1_tama(mask, op1, op1, op2, vl);
 }
 
 /*
@@ -49070,7 +49070,7 @@ test_vslidedown_vx_u64m1_tama(vbool64_t mask, vuint64m1_t maskedoff, vuint64m1_t
 vuint64m1_t 
 test_vslidedown_vx_u64m1_tama_vl31(vbool64_t mask, vuint64m1_t maskedoff, vuint64m1_t op1, size_t op2)
 {
-  return vslidedown_vx_u64m1_tama(mask, op1, op2, 31);
+  return vslidedown_vx_u64m1_tama(mask, op1, op1, op2, 31);
 }
 
 /*
@@ -49085,7 +49085,7 @@ test_vslidedown_vx_u64m1_tama_vl31(vbool64_t mask, vuint64m1_t maskedoff, vuint6
 vuint64m2_t 
 test_vslidedown_vx_u64m2_tama(vbool32_t mask, vuint64m2_t maskedoff, vuint64m2_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_u64m2_tama(mask, op1, op2, vl);
+  return vslidedown_vx_u64m2_tama(mask, op1, op1, op2, vl);
 }
 
 /*
@@ -49100,7 +49100,7 @@ test_vslidedown_vx_u64m2_tama(vbool32_t mask, vuint64m2_t maskedoff, vuint64m2_t
 vuint64m2_t 
 test_vslidedown_vx_u64m2_tama_vl31(vbool32_t mask, vuint64m2_t maskedoff, vuint64m2_t op1, size_t op2)
 {
-  return vslidedown_vx_u64m2_tama(mask, op1, op2, 31);
+  return vslidedown_vx_u64m2_tama(mask, op1, op1, op2, 31);
 }
 
 /*
@@ -49115,7 +49115,7 @@ test_vslidedown_vx_u64m2_tama_vl31(vbool32_t mask, vuint64m2_t maskedoff, vuint6
 vuint64m4_t 
 test_vslidedown_vx_u64m4_tama(vbool16_t mask, vuint64m4_t maskedoff, vuint64m4_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_u64m4_tama(mask, op1, op2, vl);
+  return vslidedown_vx_u64m4_tama(mask, op1, op1, op2, vl);
 }
 
 /*
@@ -49130,7 +49130,7 @@ test_vslidedown_vx_u64m4_tama(vbool16_t mask, vuint64m4_t maskedoff, vuint64m4_t
 vuint64m4_t 
 test_vslidedown_vx_u64m4_tama_vl31(vbool16_t mask, vuint64m4_t maskedoff, vuint64m4_t op1, size_t op2)
 {
-  return vslidedown_vx_u64m4_tama(mask, op1, op2, 31);
+  return vslidedown_vx_u64m4_tama(mask, op1, op1, op2, 31);
 }
 
 /*
@@ -49145,7 +49145,7 @@ test_vslidedown_vx_u64m4_tama_vl31(vbool16_t mask, vuint64m4_t maskedoff, vuint6
 vuint64m8_t 
 test_vslidedown_vx_u64m8_tama(vbool8_t mask, vuint64m8_t maskedoff, vuint64m8_t op1, size_t op2, size_t vl)
 {
-  return vslidedown_vx_u64m8_tama(mask, op1, op2, vl);
+  return vslidedown_vx_u64m8_tama(mask, op1, op1, op2, vl);
 }
 
 /*
@@ -49160,7 +49160,7 @@ test_vslidedown_vx_u64m8_tama(vbool8_t mask, vuint64m8_t maskedoff, vuint64m8_t 
 vuint64m8_t 
 test_vslidedown_vx_u64m8_tama_vl31(vbool8_t mask, vuint64m8_t maskedoff, vuint64m8_t op1, size_t op2)
 {
-  return vslidedown_vx_u64m8_tama(mask, op1, op2, 31);
+  return vslidedown_vx_u64m8_tama(mask, op1, op1, op2, 31);
 }
 
 /*
@@ -51155,7 +51155,7 @@ test_vslidedown_vx_u64m8_tumu_vl31(vbool8_t mask, vuint64m8_t maskedoff, vuint64
 vuint8mf8_t 
 test_vslidedown_vx_u8mf8_tama_vl32(vbool64_t mask, vuint8mf8_t maskedoff, vuint8mf8_t op1, size_t op2)
 {
-  return vslidedown_vx_u8mf8_tama(mask, op1, op2, 32);
+  return vslidedown_vx_u8mf8_tama(mask, op1, op1, op2, 32);
 }
 
 /*
@@ -51170,7 +51170,7 @@ test_vslidedown_vx_u8mf8_tama_vl32(vbool64_t mask, vuint8mf8_t maskedoff, vuint8
 vuint8mf4_t 
 test_vslidedown_vx_u8mf4_tama_vl32(vbool32_t mask, vuint8mf4_t maskedoff, vuint8mf4_t op1, size_t op2)
 {
-  return vslidedown_vx_u8mf4_tama(mask, op1, op2, 32);
+  return vslidedown_vx_u8mf4_tama(mask, op1, op1, op2, 32);
 }
 
 /*
@@ -51185,7 +51185,7 @@ test_vslidedown_vx_u8mf4_tama_vl32(vbool32_t mask, vuint8mf4_t maskedoff, vuint8
 vuint8mf2_t 
 test_vslidedown_vx_u8mf2_tama_vl32(vbool16_t mask, vuint8mf2_t maskedoff, vuint8mf2_t op1, size_t op2)
 {
-  return vslidedown_vx_u8mf2_tama(mask, op1, op2, 32);
+  return vslidedown_vx_u8mf2_tama(mask, op1, op1, op2, 32);
 }
 
 /*
@@ -51200,7 +51200,7 @@ test_vslidedown_vx_u8mf2_tama_vl32(vbool16_t mask, vuint8mf2_t maskedoff, vuint8
 vuint8m1_t 
 test_vslidedown_vx_u8m1_tama_vl32(vbool8_t mask, vuint8m1_t maskedoff, vuint8m1_t op1, size_t op2)
 {
-  return vslidedown_vx_u8m1_tama(mask, op1, op2, 32);
+  return vslidedown_vx_u8m1_tama(mask, op1, op1, op2, 32);
 }
 
 /*
@@ -51215,7 +51215,7 @@ test_vslidedown_vx_u8m1_tama_vl32(vbool8_t mask, vuint8m1_t maskedoff, vuint8m1_
 vuint8m2_t 
 test_vslidedown_vx_u8m2_tama_vl32(vbool4_t mask, vuint8m2_t maskedoff, vuint8m2_t op1, size_t op2)
 {
-  return vslidedown_vx_u8m2_tama(mask, op1, op2, 32);
+  return vslidedown_vx_u8m2_tama(mask, op1, op1, op2, 32);
 }
 
 /*
@@ -51230,7 +51230,7 @@ test_vslidedown_vx_u8m2_tama_vl32(vbool4_t mask, vuint8m2_t maskedoff, vuint8m2_
 vuint8m4_t 
 test_vslidedown_vx_u8m4_tama_vl32(vbool2_t mask, vuint8m4_t maskedoff, vuint8m4_t op1, size_t op2)
 {
-  return vslidedown_vx_u8m4_tama(mask, op1, op2, 32);
+  return vslidedown_vx_u8m4_tama(mask, op1, op1, op2, 32);
 }
 
 /*
@@ -51245,7 +51245,7 @@ test_vslidedown_vx_u8m4_tama_vl32(vbool2_t mask, vuint8m4_t maskedoff, vuint8m4_
 vuint8m8_t 
 test_vslidedown_vx_u8m8_tama_vl32(vbool1_t mask, vuint8m8_t maskedoff, vuint8m8_t op1, size_t op2)
 {
-  return vslidedown_vx_u8m8_tama(mask, op1, op2, 32);
+  return vslidedown_vx_u8m8_tama(mask, op1, op1, op2, 32);
 }
 
 /*
@@ -51260,7 +51260,7 @@ test_vslidedown_vx_u8m8_tama_vl32(vbool1_t mask, vuint8m8_t maskedoff, vuint8m8_
 vuint16mf4_t 
 test_vslidedown_vx_u16mf4_tama_vl32(vbool64_t mask, vuint16mf4_t maskedoff, vuint16mf4_t op1, size_t op2)
 {
-  return vslidedown_vx_u16mf4_tama(mask, op1, op2, 32);
+  return vslidedown_vx_u16mf4_tama(mask, op1, op1, op2, 32);
 }
 
 /*
@@ -51275,7 +51275,7 @@ test_vslidedown_vx_u16mf4_tama_vl32(vbool64_t mask, vuint16mf4_t maskedoff, vuin
 vuint16mf2_t 
 test_vslidedown_vx_u16mf2_tama_vl32(vbool32_t mask, vuint16mf2_t maskedoff, vuint16mf2_t op1, size_t op2)
 {
-  return vslidedown_vx_u16mf2_tama(mask, op1, op2, 32);
+  return vslidedown_vx_u16mf2_tama(mask, op1, op1, op2, 32);
 }
 
 /*
@@ -51290,7 +51290,7 @@ test_vslidedown_vx_u16mf2_tama_vl32(vbool32_t mask, vuint16mf2_t maskedoff, vuin
 vuint16m1_t 
 test_vslidedown_vx_u16m1_tama_vl32(vbool16_t mask, vuint16m1_t maskedoff, vuint16m1_t op1, size_t op2)
 {
-  return vslidedown_vx_u16m1_tama(mask, op1, op2, 32);
+  return vslidedown_vx_u16m1_tama(mask, op1, op1, op2, 32);
 }
 
 /*
@@ -51305,7 +51305,7 @@ test_vslidedown_vx_u16m1_tama_vl32(vbool16_t mask, vuint16m1_t maskedoff, vuint1
 vuint16m2_t 
 test_vslidedown_vx_u16m2_tama_vl32(vbool8_t mask, vuint16m2_t maskedoff, vuint16m2_t op1, size_t op2)
 {
-  return vslidedown_vx_u16m2_tama(mask, op1, op2, 32);
+  return vslidedown_vx_u16m2_tama(mask, op1, op1, op2, 32);
 }
 
 /*
@@ -51320,7 +51320,7 @@ test_vslidedown_vx_u16m2_tama_vl32(vbool8_t mask, vuint16m2_t maskedoff, vuint16
 vuint16m4_t 
 test_vslidedown_vx_u16m4_tama_vl32(vbool4_t mask, vuint16m4_t maskedoff, vuint16m4_t op1, size_t op2)
 {
-  return vslidedown_vx_u16m4_tama(mask, op1, op2, 32);
+  return vslidedown_vx_u16m4_tama(mask, op1, op1, op2, 32);
 }
 
 /*
@@ -51335,7 +51335,7 @@ test_vslidedown_vx_u16m4_tama_vl32(vbool4_t mask, vuint16m4_t maskedoff, vuint16
 vuint16m8_t 
 test_vslidedown_vx_u16m8_tama_vl32(vbool2_t mask, vuint16m8_t maskedoff, vuint16m8_t op1, size_t op2)
 {
-  return vslidedown_vx_u16m8_tama(mask, op1, op2, 32);
+  return vslidedown_vx_u16m8_tama(mask, op1, op1, op2, 32);
 }
 
 /*
@@ -51350,7 +51350,7 @@ test_vslidedown_vx_u16m8_tama_vl32(vbool2_t mask, vuint16m8_t maskedoff, vuint16
 vuint32mf2_t 
 test_vslidedown_vx_u32mf2_tama_vl32(vbool64_t mask, vuint32mf2_t maskedoff, vuint32mf2_t op1, size_t op2)
 {
-  return vslidedown_vx_u32mf2_tama(mask, op1, op2, 32);
+  return vslidedown_vx_u32mf2_tama(mask, op1, op1, op2, 32);
 }
 
 /*
@@ -51365,7 +51365,7 @@ test_vslidedown_vx_u32mf2_tama_vl32(vbool64_t mask, vuint32mf2_t maskedoff, vuin
 vuint32m1_t 
 test_vslidedown_vx_u32m1_tama_vl32(vbool32_t mask, vuint32m1_t maskedoff, vuint32m1_t op1, size_t op2)
 {
-  return vslidedown_vx_u32m1_tama(mask, op1, op2, 32);
+  return vslidedown_vx_u32m1_tama(mask, op1, op1, op2, 32);
 }
 
 /*
@@ -51380,7 +51380,7 @@ test_vslidedown_vx_u32m1_tama_vl32(vbool32_t mask, vuint32m1_t maskedoff, vuint3
 vuint32m2_t 
 test_vslidedown_vx_u32m2_tama_vl32(vbool16_t mask, vuint32m2_t maskedoff, vuint32m2_t op1, size_t op2)
 {
-  return vslidedown_vx_u32m2_tama(mask, op1, op2, 32);
+  return vslidedown_vx_u32m2_tama(mask, op1, op1, op2, 32);
 }
 
 /*
@@ -51395,7 +51395,7 @@ test_vslidedown_vx_u32m2_tama_vl32(vbool16_t mask, vuint32m2_t maskedoff, vuint3
 vuint32m4_t 
 test_vslidedown_vx_u32m4_tama_vl32(vbool8_t mask, vuint32m4_t maskedoff, vuint32m4_t op1, size_t op2)
 {
-  return vslidedown_vx_u32m4_tama(mask, op1, op2, 32);
+  return vslidedown_vx_u32m4_tama(mask, op1, op1, op2, 32);
 }
 
 /*
@@ -51410,7 +51410,7 @@ test_vslidedown_vx_u32m4_tama_vl32(vbool8_t mask, vuint32m4_t maskedoff, vuint32
 vuint32m8_t 
 test_vslidedown_vx_u32m8_tama_vl32(vbool4_t mask, vuint32m8_t maskedoff, vuint32m8_t op1, size_t op2)
 {
-  return vslidedown_vx_u32m8_tama(mask, op1, op2, 32);
+  return vslidedown_vx_u32m8_tama(mask, op1, op1, op2, 32);
 }
 
 /*
@@ -51425,7 +51425,7 @@ test_vslidedown_vx_u32m8_tama_vl32(vbool4_t mask, vuint32m8_t maskedoff, vuint32
 vuint64m1_t 
 test_vslidedown_vx_u64m1_tama_vl32(vbool64_t mask, vuint64m1_t maskedoff, vuint64m1_t op1, size_t op2)
 {
-  return vslidedown_vx_u64m1_tama(mask, op1, op2, 32);
+  return vslidedown_vx_u64m1_tama(mask, op1, op1, op2, 32);
 }
 
 /*
@@ -51440,7 +51440,7 @@ test_vslidedown_vx_u64m1_tama_vl32(vbool64_t mask, vuint64m1_t maskedoff, vuint6
 vuint64m2_t 
 test_vslidedown_vx_u64m2_tama_vl32(vbool32_t mask, vuint64m2_t maskedoff, vuint64m2_t op1, size_t op2)
 {
-  return vslidedown_vx_u64m2_tama(mask, op1, op2, 32);
+  return vslidedown_vx_u64m2_tama(mask, op1, op1, op2, 32);
 }
 
 /*
@@ -51455,7 +51455,7 @@ test_vslidedown_vx_u64m2_tama_vl32(vbool32_t mask, vuint64m2_t maskedoff, vuint6
 vuint64m4_t 
 test_vslidedown_vx_u64m4_tama_vl32(vbool16_t mask, vuint64m4_t maskedoff, vuint64m4_t op1, size_t op2)
 {
-  return vslidedown_vx_u64m4_tama(mask, op1, op2, 32);
+  return vslidedown_vx_u64m4_tama(mask, op1, op1, op2, 32);
 }
 
 /*
@@ -51470,7 +51470,7 @@ test_vslidedown_vx_u64m4_tama_vl32(vbool16_t mask, vuint64m4_t maskedoff, vuint6
 vuint64m8_t 
 test_vslidedown_vx_u64m8_tama_vl32(vbool8_t mask, vuint64m8_t maskedoff, vuint64m8_t op1, size_t op2)
 {
-  return vslidedown_vx_u64m8_tama(mask, op1, op2, 32);
+  return vslidedown_vx_u64m8_tama(mask, op1, op1, op2, 32);
 }
 
 /*
@@ -52473,9 +52473,9 @@ test_vslidedown_vx_u64m8_tumu_vl32(vbool8_t mask, vuint64m8_t maskedoff, vuint64
 **  ret
 */
 vuint8mf8_t 
-test_vslidedown_vx_u8mf8_ta_vl32(vuint8mf8_t op1, size_t op2)
+test_vslidedown_vx_u8mf8_ta_vl32(vuint8mf8_t dest, vuint8mf8_t op1, size_t op2)
 {
-  return vslidedown_vx_u8mf8_ta(op1, op2, 32);
+  return vslidedown_vx_u8mf8_ta(dest, op1, op2, 32);
 }
 
 /*
@@ -52488,9 +52488,9 @@ test_vslidedown_vx_u8mf8_ta_vl32(vuint8mf8_t op1, size_t op2)
 **  ret
 */
 vuint8mf4_t 
-test_vslidedown_vx_u8mf4_ta_vl32(vuint8mf4_t op1, size_t op2)
+test_vslidedown_vx_u8mf4_ta_vl32(vuint8mf4_t dest, vuint8mf4_t op1, size_t op2)
 {
-  return vslidedown_vx_u8mf4_ta(op1, op2, 32);
+  return vslidedown_vx_u8mf4_ta(dest, op1, op2, 32);
 }
 
 /*
@@ -52503,9 +52503,9 @@ test_vslidedown_vx_u8mf4_ta_vl32(vuint8mf4_t op1, size_t op2)
 **  ret
 */
 vuint8mf2_t 
-test_vslidedown_vx_u8mf2_ta_vl32(vuint8mf2_t op1, size_t op2)
+test_vslidedown_vx_u8mf2_ta_vl32(vuint8mf2_t dest, vuint8mf2_t op1, size_t op2)
 {
-  return vslidedown_vx_u8mf2_ta(op1, op2, 32);
+  return vslidedown_vx_u8mf2_ta(dest, op1, op2, 32);
 }
 
 /*
@@ -52518,9 +52518,9 @@ test_vslidedown_vx_u8mf2_ta_vl32(vuint8mf2_t op1, size_t op2)
 **  ret
 */
 vuint8m1_t 
-test_vslidedown_vx_u8m1_ta_vl32(vuint8m1_t op1, size_t op2)
+test_vslidedown_vx_u8m1_ta_vl32(vuint8m1_t dest, vuint8m1_t op1, size_t op2)
 {
-  return vslidedown_vx_u8m1_ta(op1, op2, 32);
+  return vslidedown_vx_u8m1_ta(dest, op1, op2, 32);
 }
 
 /*
@@ -52533,9 +52533,9 @@ test_vslidedown_vx_u8m1_ta_vl32(vuint8m1_t op1, size_t op2)
 **  ret
 */
 vuint8m2_t 
-test_vslidedown_vx_u8m2_ta_vl32(vuint8m2_t op1, size_t op2)
+test_vslidedown_vx_u8m2_ta_vl32(vuint8m2_t dest, vuint8m2_t op1, size_t op2)
 {
-  return vslidedown_vx_u8m2_ta(op1, op2, 32);
+  return vslidedown_vx_u8m2_ta(dest, op1, op2, 32);
 }
 
 /*
@@ -52548,9 +52548,9 @@ test_vslidedown_vx_u8m2_ta_vl32(vuint8m2_t op1, size_t op2)
 **  ret
 */
 vuint8m4_t 
-test_vslidedown_vx_u8m4_ta_vl32(vuint8m4_t op1, size_t op2)
+test_vslidedown_vx_u8m4_ta_vl32(vuint8m4_t dest, vuint8m4_t op1, size_t op2)
 {
-  return vslidedown_vx_u8m4_ta(op1, op2, 32);
+  return vslidedown_vx_u8m4_ta(dest, op1, op2, 32);
 }
 
 /*
@@ -52563,9 +52563,9 @@ test_vslidedown_vx_u8m4_ta_vl32(vuint8m4_t op1, size_t op2)
 **  ret
 */
 vuint8m8_t 
-test_vslidedown_vx_u8m8_ta_vl32(vuint8m8_t op1, size_t op2)
+test_vslidedown_vx_u8m8_ta_vl32(vuint8m8_t dest, vuint8m8_t op1, size_t op2)
 {
-  return vslidedown_vx_u8m8_ta(op1, op2, 32);
+  return vslidedown_vx_u8m8_ta(dest, op1, op2, 32);
 }
 
 /*
@@ -52578,9 +52578,9 @@ test_vslidedown_vx_u8m8_ta_vl32(vuint8m8_t op1, size_t op2)
 **  ret
 */
 vuint16mf4_t 
-test_vslidedown_vx_u16mf4_ta_vl32(vuint16mf4_t op1, size_t op2)
+test_vslidedown_vx_u16mf4_ta_vl32(vuint16mf4_t dest, vuint16mf4_t op1, size_t op2)
 {
-  return vslidedown_vx_u16mf4_ta(op1, op2, 32);
+  return vslidedown_vx_u16mf4_ta(dest, op1, op2, 32);
 }
 
 /*
@@ -52593,9 +52593,9 @@ test_vslidedown_vx_u16mf4_ta_vl32(vuint16mf4_t op1, size_t op2)
 **  ret
 */
 vuint16mf2_t 
-test_vslidedown_vx_u16mf2_ta_vl32(vuint16mf2_t op1, size_t op2)
+test_vslidedown_vx_u16mf2_ta_vl32(vuint16mf2_t dest, vuint16mf2_t op1, size_t op2)
 {
-  return vslidedown_vx_u16mf2_ta(op1, op2, 32);
+  return vslidedown_vx_u16mf2_ta(dest, op1, op2, 32);
 }
 
 /*
@@ -52608,9 +52608,9 @@ test_vslidedown_vx_u16mf2_ta_vl32(vuint16mf2_t op1, size_t op2)
 **  ret
 */
 vuint16m1_t 
-test_vslidedown_vx_u16m1_ta_vl32(vuint16m1_t op1, size_t op2)
+test_vslidedown_vx_u16m1_ta_vl32(vuint16m1_t dest, vuint16m1_t op1, size_t op2)
 {
-  return vslidedown_vx_u16m1_ta(op1, op2, 32);
+  return vslidedown_vx_u16m1_ta(dest, op1, op2, 32);
 }
 
 /*
@@ -52623,9 +52623,9 @@ test_vslidedown_vx_u16m1_ta_vl32(vuint16m1_t op1, size_t op2)
 **  ret
 */
 vuint16m2_t 
-test_vslidedown_vx_u16m2_ta_vl32(vuint16m2_t op1, size_t op2)
+test_vslidedown_vx_u16m2_ta_vl32(vuint16m2_t dest, vuint16m2_t op1, size_t op2)
 {
-  return vslidedown_vx_u16m2_ta(op1, op2, 32);
+  return vslidedown_vx_u16m2_ta(dest, op1, op2, 32);
 }
 
 /*
@@ -52638,9 +52638,9 @@ test_vslidedown_vx_u16m2_ta_vl32(vuint16m2_t op1, size_t op2)
 **  ret
 */
 vuint16m4_t 
-test_vslidedown_vx_u16m4_ta_vl32(vuint16m4_t op1, size_t op2)
+test_vslidedown_vx_u16m4_ta_vl32(vuint16m4_t dest, vuint16m4_t op1, size_t op2)
 {
-  return vslidedown_vx_u16m4_ta(op1, op2, 32);
+  return vslidedown_vx_u16m4_ta(dest, op1, op2, 32);
 }
 
 /*
@@ -52653,9 +52653,9 @@ test_vslidedown_vx_u16m4_ta_vl32(vuint16m4_t op1, size_t op2)
 **  ret
 */
 vuint16m8_t 
-test_vslidedown_vx_u16m8_ta_vl32(vuint16m8_t op1, size_t op2)
+test_vslidedown_vx_u16m8_ta_vl32(vuint16m8_t dest, vuint16m8_t op1, size_t op2)
 {
-  return vslidedown_vx_u16m8_ta(op1, op2, 32);
+  return vslidedown_vx_u16m8_ta(dest, op1, op2, 32);
 }
 
 /*
@@ -52668,9 +52668,9 @@ test_vslidedown_vx_u16m8_ta_vl32(vuint16m8_t op1, size_t op2)
 **  ret
 */
 vuint32mf2_t 
-test_vslidedown_vx_u32mf2_ta_vl32(vuint32mf2_t op1, size_t op2)
+test_vslidedown_vx_u32mf2_ta_vl32(vuint32mf2_t dest, vuint32mf2_t op1, size_t op2)
 {
-  return vslidedown_vx_u32mf2_ta(op1, op2, 32);
+  return vslidedown_vx_u32mf2_ta(dest, op1, op2, 32);
 }
 
 /*
@@ -52683,9 +52683,9 @@ test_vslidedown_vx_u32mf2_ta_vl32(vuint32mf2_t op1, size_t op2)
 **  ret
 */
 vuint32m1_t 
-test_vslidedown_vx_u32m1_ta_vl32(vuint32m1_t op1, size_t op2)
+test_vslidedown_vx_u32m1_ta_vl32(vuint32m1_t dest, vuint32m1_t op1, size_t op2)
 {
-  return vslidedown_vx_u32m1_ta(op1, op2, 32);
+  return vslidedown_vx_u32m1_ta(dest, op1, op2, 32);
 }
 
 /*
@@ -52698,9 +52698,9 @@ test_vslidedown_vx_u32m1_ta_vl32(vuint32m1_t op1, size_t op2)
 **  ret
 */
 vuint32m2_t 
-test_vslidedown_vx_u32m2_ta_vl32(vuint32m2_t op1, size_t op2)
+test_vslidedown_vx_u32m2_ta_vl32(vuint32m2_t dest, vuint32m2_t op1, size_t op2)
 {
-  return vslidedown_vx_u32m2_ta(op1, op2, 32);
+  return vslidedown_vx_u32m2_ta(dest, op1, op2, 32);
 }
 
 /*
@@ -52713,9 +52713,9 @@ test_vslidedown_vx_u32m2_ta_vl32(vuint32m2_t op1, size_t op2)
 **  ret
 */
 vuint32m4_t 
-test_vslidedown_vx_u32m4_ta_vl32(vuint32m4_t op1, size_t op2)
+test_vslidedown_vx_u32m4_ta_vl32(vuint32m4_t dest, vuint32m4_t op1, size_t op2)
 {
-  return vslidedown_vx_u32m4_ta(op1, op2, 32);
+  return vslidedown_vx_u32m4_ta(dest, op1, op2, 32);
 }
 
 /*
@@ -52728,9 +52728,9 @@ test_vslidedown_vx_u32m4_ta_vl32(vuint32m4_t op1, size_t op2)
 **  ret
 */
 vuint32m8_t 
-test_vslidedown_vx_u32m8_ta_vl32(vuint32m8_t op1, size_t op2)
+test_vslidedown_vx_u32m8_ta_vl32(vuint32m8_t dest, vuint32m8_t op1, size_t op2)
 {
-  return vslidedown_vx_u32m8_ta(op1, op2, 32);
+  return vslidedown_vx_u32m8_ta(dest, op1, op2, 32);
 }
 
 /*
@@ -52743,9 +52743,9 @@ test_vslidedown_vx_u32m8_ta_vl32(vuint32m8_t op1, size_t op2)
 **  ret
 */
 vuint64m1_t 
-test_vslidedown_vx_u64m1_ta_vl32(vuint64m1_t op1, size_t op2)
+test_vslidedown_vx_u64m1_ta_vl32(vuint64m1_t dest, vuint64m1_t op1, size_t op2)
 {
-  return vslidedown_vx_u64m1_ta(op1, op2, 32);
+  return vslidedown_vx_u64m1_ta(dest, op1, op2, 32);
 }
 
 /*
@@ -52758,9 +52758,9 @@ test_vslidedown_vx_u64m1_ta_vl32(vuint64m1_t op1, size_t op2)
 **  ret
 */
 vuint64m2_t 
-test_vslidedown_vx_u64m2_ta_vl32(vuint64m2_t op1, size_t op2)
+test_vslidedown_vx_u64m2_ta_vl32(vuint64m2_t dest, vuint64m2_t op1, size_t op2)
 {
-  return vslidedown_vx_u64m2_ta(op1, op2, 32);
+  return vslidedown_vx_u64m2_ta(dest, op1, op2, 32);
 }
 
 /*
@@ -52773,9 +52773,9 @@ test_vslidedown_vx_u64m2_ta_vl32(vuint64m2_t op1, size_t op2)
 **  ret
 */
 vuint64m4_t 
-test_vslidedown_vx_u64m4_ta_vl32(vuint64m4_t op1, size_t op2)
+test_vslidedown_vx_u64m4_ta_vl32(vuint64m4_t dest, vuint64m4_t op1, size_t op2)
 {
-  return vslidedown_vx_u64m4_ta(op1, op2, 32);
+  return vslidedown_vx_u64m4_ta(dest, op1, op2, 32);
 }
 
 /*
@@ -52788,9 +52788,9 @@ test_vslidedown_vx_u64m4_ta_vl32(vuint64m4_t op1, size_t op2)
 **  ret
 */
 vuint64m8_t 
-test_vslidedown_vx_u64m8_ta_vl32(vuint64m8_t op1, size_t op2)
+test_vslidedown_vx_u64m8_ta_vl32(vuint64m8_t dest, vuint64m8_t op1, size_t op2)
 {
-  return vslidedown_vx_u64m8_ta(op1, op2, 32);
+  return vslidedown_vx_u64m8_ta(dest, op1, op2, 32);
 }
 
 /*

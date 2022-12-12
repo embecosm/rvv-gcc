@@ -1356,7 +1356,7 @@ test_vwredsum_vs_i32m8_i64m1_m_vl32(vbool4_t mask, vint64m1_t maskedoff, vint32m
 }
 
 /*
-** test_vwredsum_vs_i8mf8_i16m1_m_ta:
+** test_vwredsum_vs_i8mf8_i16m1_tam:
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e8,\s*mf8,\s*ta,\s*m[au]
 **  ...
@@ -1365,9 +1365,9 @@ test_vwredsum_vs_i32m8_i64m1_m_vl32(vbool4_t mask, vint64m1_t maskedoff, vint32m
 **  ret
 */
 vint16m1_t 
-test_vwredsum_vs_i8mf8_i16m1_m_ta(vbool64_t mask, vint16m1_t maskedoff, vint8mf8_t op1, vint16m1_t op2, size_t vl)
+test_vwredsum_vs_i8mf8_i16m1_tam(vbool64_t mask, vint16m1_t maskedoff, vint8mf8_t op1, vint16m1_t op2, size_t vl)
 {
-  return vwredsum_vs_i8mf8_i16m1_m_ta(mask, op1, op2, vl);
+  return vwredsum_vs_i8mf8_i16m1_tam(mask, op1, op2, vl);
 }
 
 /*
@@ -1382,11 +1382,11 @@ test_vwredsum_vs_i8mf8_i16m1_m_ta(vbool64_t mask, vint16m1_t maskedoff, vint8mf8
 vint16m1_t 
 test_vwredsum_vs_i8mf8_i16m1_m_ta_vl31(vbool64_t mask, vint16m1_t maskedoff, vint8mf8_t op1, vint16m1_t op2)
 {
-  return vwredsum_vs_i8mf8_i16m1_m_ta(mask, op1, op2, 31);
+  return vwredsum_vs_i8mf8_i16m1_tam(mask, op1, op2, 31);
 }
 
 /*
-** test_vwredsum_vs_i8mf4_i16m1_m_ta:
+** test_vwredsum_vs_i8mf4_i16m1_tam:
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e8,\s*mf4,\s*ta,\s*m[au]
 **  ...
@@ -1395,9 +1395,9 @@ test_vwredsum_vs_i8mf8_i16m1_m_ta_vl31(vbool64_t mask, vint16m1_t maskedoff, vin
 **  ret
 */
 vint16m1_t 
-test_vwredsum_vs_i8mf4_i16m1_m_ta(vbool32_t mask, vint16m1_t maskedoff, vint8mf4_t op1, vint16m1_t op2, size_t vl)
+test_vwredsum_vs_i8mf4_i16m1_tam(vbool32_t mask, vint16m1_t maskedoff, vint8mf4_t op1, vint16m1_t op2, size_t vl)
 {
-  return vwredsum_vs_i8mf4_i16m1_m_ta(mask, op1, op2, vl);
+  return vwredsum_vs_i8mf4_i16m1_tam(mask, op1, op2, vl);
 }
 
 /*
@@ -1412,11 +1412,11 @@ test_vwredsum_vs_i8mf4_i16m1_m_ta(vbool32_t mask, vint16m1_t maskedoff, vint8mf4
 vint16m1_t 
 test_vwredsum_vs_i8mf4_i16m1_m_ta_vl31(vbool32_t mask, vint16m1_t maskedoff, vint8mf4_t op1, vint16m1_t op2)
 {
-  return vwredsum_vs_i8mf4_i16m1_m_ta(mask, op1, op2, 31);
+  return vwredsum_vs_i8mf4_i16m1_tam(mask, op1, op2, 31);
 }
 
 /*
-** test_vwredsum_vs_i8mf2_i16m1_m_ta:
+** test_vwredsum_vs_i8mf2_i16m1_tam:
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e8,\s*mf2,\s*ta,\s*m[au]
 **  ...
@@ -1425,9 +1425,9 @@ test_vwredsum_vs_i8mf4_i16m1_m_ta_vl31(vbool32_t mask, vint16m1_t maskedoff, vin
 **  ret
 */
 vint16m1_t 
-test_vwredsum_vs_i8mf2_i16m1_m_ta(vbool16_t mask, vint16m1_t maskedoff, vint8mf2_t op1, vint16m1_t op2, size_t vl)
+test_vwredsum_vs_i8mf2_i16m1_tam(vbool16_t mask, vint16m1_t maskedoff, vint8mf2_t op1, vint16m1_t op2, size_t vl)
 {
-  return vwredsum_vs_i8mf2_i16m1_m_ta(mask, op1, op2, vl);
+  return vwredsum_vs_i8mf2_i16m1_tam(mask, op1, op2, vl);
 }
 
 /*
@@ -1442,11 +1442,11 @@ test_vwredsum_vs_i8mf2_i16m1_m_ta(vbool16_t mask, vint16m1_t maskedoff, vint8mf2
 vint16m1_t 
 test_vwredsum_vs_i8mf2_i16m1_m_ta_vl31(vbool16_t mask, vint16m1_t maskedoff, vint8mf2_t op1, vint16m1_t op2)
 {
-  return vwredsum_vs_i8mf2_i16m1_m_ta(mask, op1, op2, 31);
+  return vwredsum_vs_i8mf2_i16m1_tam(mask, op1, op2, 31);
 }
 
 /*
-** test_vwredsum_vs_i8m1_i16m1_m_ta:
+** test_vwredsum_vs_i8m1_i16m1_tam:
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e8,\s*m1,\s*ta,\s*m[au]
 **  ...
@@ -1455,9 +1455,9 @@ test_vwredsum_vs_i8mf2_i16m1_m_ta_vl31(vbool16_t mask, vint16m1_t maskedoff, vin
 **  ret
 */
 vint16m1_t 
-test_vwredsum_vs_i8m1_i16m1_m_ta(vbool8_t mask, vint16m1_t maskedoff, vint8m1_t op1, vint16m1_t op2, size_t vl)
+test_vwredsum_vs_i8m1_i16m1_tam(vbool8_t mask, vint16m1_t maskedoff, vint8m1_t op1, vint16m1_t op2, size_t vl)
 {
-  return vwredsum_vs_i8m1_i16m1_m_ta(mask, op1, op2, vl);
+  return vwredsum_vs_i8m1_i16m1_tam(mask, op1, op2, vl);
 }
 
 /*
@@ -1472,11 +1472,11 @@ test_vwredsum_vs_i8m1_i16m1_m_ta(vbool8_t mask, vint16m1_t maskedoff, vint8m1_t 
 vint16m1_t 
 test_vwredsum_vs_i8m1_i16m1_m_ta_vl31(vbool8_t mask, vint16m1_t maskedoff, vint8m1_t op1, vint16m1_t op2)
 {
-  return vwredsum_vs_i8m1_i16m1_m_ta(mask, op1, op2, 31);
+  return vwredsum_vs_i8m1_i16m1_tam(mask, op1, op2, 31);
 }
 
 /*
-** test_vwredsum_vs_i8m2_i16m1_m_ta:
+** test_vwredsum_vs_i8m2_i16m1_tam:
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e8,\s*m2,\s*ta,\s*m[au]
 **  ...
@@ -1485,9 +1485,9 @@ test_vwredsum_vs_i8m1_i16m1_m_ta_vl31(vbool8_t mask, vint16m1_t maskedoff, vint8
 **  ret
 */
 vint16m1_t 
-test_vwredsum_vs_i8m2_i16m1_m_ta(vbool4_t mask, vint16m1_t maskedoff, vint8m2_t op1, vint16m1_t op2, size_t vl)
+test_vwredsum_vs_i8m2_i16m1_tam(vbool4_t mask, vint16m1_t maskedoff, vint8m2_t op1, vint16m1_t op2, size_t vl)
 {
-  return vwredsum_vs_i8m2_i16m1_m_ta(mask, op1, op2, vl);
+  return vwredsum_vs_i8m2_i16m1_tam(mask, op1, op2, vl);
 }
 
 /*
@@ -1502,11 +1502,11 @@ test_vwredsum_vs_i8m2_i16m1_m_ta(vbool4_t mask, vint16m1_t maskedoff, vint8m2_t 
 vint16m1_t 
 test_vwredsum_vs_i8m2_i16m1_m_ta_vl31(vbool4_t mask, vint16m1_t maskedoff, vint8m2_t op1, vint16m1_t op2)
 {
-  return vwredsum_vs_i8m2_i16m1_m_ta(mask, op1, op2, 31);
+  return vwredsum_vs_i8m2_i16m1_tam(mask, op1, op2, 31);
 }
 
 /*
-** test_vwredsum_vs_i8m4_i16m1_m_ta:
+** test_vwredsum_vs_i8m4_i16m1_tam:
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e8,\s*m4,\s*ta,\s*m[au]
 **  ...
@@ -1515,9 +1515,9 @@ test_vwredsum_vs_i8m2_i16m1_m_ta_vl31(vbool4_t mask, vint16m1_t maskedoff, vint8
 **  ret
 */
 vint16m1_t 
-test_vwredsum_vs_i8m4_i16m1_m_ta(vbool2_t mask, vint16m1_t maskedoff, vint8m4_t op1, vint16m1_t op2, size_t vl)
+test_vwredsum_vs_i8m4_i16m1_tam(vbool2_t mask, vint16m1_t maskedoff, vint8m4_t op1, vint16m1_t op2, size_t vl)
 {
-  return vwredsum_vs_i8m4_i16m1_m_ta(mask, op1, op2, vl);
+  return vwredsum_vs_i8m4_i16m1_tam(mask, op1, op2, vl);
 }
 
 /*
@@ -1532,11 +1532,11 @@ test_vwredsum_vs_i8m4_i16m1_m_ta(vbool2_t mask, vint16m1_t maskedoff, vint8m4_t 
 vint16m1_t 
 test_vwredsum_vs_i8m4_i16m1_m_ta_vl31(vbool2_t mask, vint16m1_t maskedoff, vint8m4_t op1, vint16m1_t op2)
 {
-  return vwredsum_vs_i8m4_i16m1_m_ta(mask, op1, op2, 31);
+  return vwredsum_vs_i8m4_i16m1_tam(mask, op1, op2, 31);
 }
 
 /*
-** test_vwredsum_vs_i8m8_i16m1_m_ta:
+** test_vwredsum_vs_i8m8_i16m1_tam:
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e8,\s*m8,\s*ta,\s*m[au]
 **  ...
@@ -1545,9 +1545,9 @@ test_vwredsum_vs_i8m4_i16m1_m_ta_vl31(vbool2_t mask, vint16m1_t maskedoff, vint8
 **  ret
 */
 vint16m1_t 
-test_vwredsum_vs_i8m8_i16m1_m_ta(vbool1_t mask, vint16m1_t maskedoff, vint8m8_t op1, vint16m1_t op2, size_t vl)
+test_vwredsum_vs_i8m8_i16m1_tam(vbool1_t mask, vint16m1_t maskedoff, vint8m8_t op1, vint16m1_t op2, size_t vl)
 {
-  return vwredsum_vs_i8m8_i16m1_m_ta(mask, op1, op2, vl);
+  return vwredsum_vs_i8m8_i16m1_tam(mask, op1, op2, vl);
 }
 
 /*
@@ -1562,11 +1562,11 @@ test_vwredsum_vs_i8m8_i16m1_m_ta(vbool1_t mask, vint16m1_t maskedoff, vint8m8_t 
 vint16m1_t 
 test_vwredsum_vs_i8m8_i16m1_m_ta_vl31(vbool1_t mask, vint16m1_t maskedoff, vint8m8_t op1, vint16m1_t op2)
 {
-  return vwredsum_vs_i8m8_i16m1_m_ta(mask, op1, op2, 31);
+  return vwredsum_vs_i8m8_i16m1_tam(mask, op1, op2, 31);
 }
 
 /*
-** test_vwredsum_vs_i16mf4_i32m1_m_ta:
+** test_vwredsum_vs_i16mf4_i32m1_tam:
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e16,\s*mf4,\s*ta,\s*m[au]
 **  ...
@@ -1575,9 +1575,9 @@ test_vwredsum_vs_i8m8_i16m1_m_ta_vl31(vbool1_t mask, vint16m1_t maskedoff, vint8
 **  ret
 */
 vint32m1_t 
-test_vwredsum_vs_i16mf4_i32m1_m_ta(vbool64_t mask, vint32m1_t maskedoff, vint16mf4_t op1, vint32m1_t op2, size_t vl)
+test_vwredsum_vs_i16mf4_i32m1_tam(vbool64_t mask, vint32m1_t maskedoff, vint16mf4_t op1, vint32m1_t op2, size_t vl)
 {
-  return vwredsum_vs_i16mf4_i32m1_m_ta(mask, op1, op2, vl);
+  return vwredsum_vs_i16mf4_i32m1_tam(mask, op1, op2, vl);
 }
 
 /*
@@ -1592,11 +1592,11 @@ test_vwredsum_vs_i16mf4_i32m1_m_ta(vbool64_t mask, vint32m1_t maskedoff, vint16m
 vint32m1_t 
 test_vwredsum_vs_i16mf4_i32m1_m_ta_vl31(vbool64_t mask, vint32m1_t maskedoff, vint16mf4_t op1, vint32m1_t op2)
 {
-  return vwredsum_vs_i16mf4_i32m1_m_ta(mask, op1, op2, 31);
+  return vwredsum_vs_i16mf4_i32m1_tam(mask, op1, op2, 31);
 }
 
 /*
-** test_vwredsum_vs_i16mf2_i32m1_m_ta:
+** test_vwredsum_vs_i16mf2_i32m1_tam:
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e16,\s*mf2,\s*ta,\s*m[au]
 **  ...
@@ -1605,9 +1605,9 @@ test_vwredsum_vs_i16mf4_i32m1_m_ta_vl31(vbool64_t mask, vint32m1_t maskedoff, vi
 **  ret
 */
 vint32m1_t 
-test_vwredsum_vs_i16mf2_i32m1_m_ta(vbool32_t mask, vint32m1_t maskedoff, vint16mf2_t op1, vint32m1_t op2, size_t vl)
+test_vwredsum_vs_i16mf2_i32m1_tam(vbool32_t mask, vint32m1_t maskedoff, vint16mf2_t op1, vint32m1_t op2, size_t vl)
 {
-  return vwredsum_vs_i16mf2_i32m1_m_ta(mask, op1, op2, vl);
+  return vwredsum_vs_i16mf2_i32m1_tam(mask, op1, op2, vl);
 }
 
 /*
@@ -1622,11 +1622,11 @@ test_vwredsum_vs_i16mf2_i32m1_m_ta(vbool32_t mask, vint32m1_t maskedoff, vint16m
 vint32m1_t 
 test_vwredsum_vs_i16mf2_i32m1_m_ta_vl31(vbool32_t mask, vint32m1_t maskedoff, vint16mf2_t op1, vint32m1_t op2)
 {
-  return vwredsum_vs_i16mf2_i32m1_m_ta(mask, op1, op2, 31);
+  return vwredsum_vs_i16mf2_i32m1_tam(mask, op1, op2, 31);
 }
 
 /*
-** test_vwredsum_vs_i16m1_i32m1_m_ta:
+** test_vwredsum_vs_i16m1_i32m1_tam:
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e16,\s*m1,\s*ta,\s*m[au]
 **  ...
@@ -1635,9 +1635,9 @@ test_vwredsum_vs_i16mf2_i32m1_m_ta_vl31(vbool32_t mask, vint32m1_t maskedoff, vi
 **  ret
 */
 vint32m1_t 
-test_vwredsum_vs_i16m1_i32m1_m_ta(vbool16_t mask, vint32m1_t maskedoff, vint16m1_t op1, vint32m1_t op2, size_t vl)
+test_vwredsum_vs_i16m1_i32m1_tam(vbool16_t mask, vint32m1_t maskedoff, vint16m1_t op1, vint32m1_t op2, size_t vl)
 {
-  return vwredsum_vs_i16m1_i32m1_m_ta(mask, op1, op2, vl);
+  return vwredsum_vs_i16m1_i32m1_tam(mask, op1, op2, vl);
 }
 
 /*
@@ -1652,11 +1652,11 @@ test_vwredsum_vs_i16m1_i32m1_m_ta(vbool16_t mask, vint32m1_t maskedoff, vint16m1
 vint32m1_t 
 test_vwredsum_vs_i16m1_i32m1_m_ta_vl31(vbool16_t mask, vint32m1_t maskedoff, vint16m1_t op1, vint32m1_t op2)
 {
-  return vwredsum_vs_i16m1_i32m1_m_ta(mask, op1, op2, 31);
+  return vwredsum_vs_i16m1_i32m1_tam(mask, op1, op2, 31);
 }
 
 /*
-** test_vwredsum_vs_i16m2_i32m1_m_ta:
+** test_vwredsum_vs_i16m2_i32m1_tam:
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e16,\s*m2,\s*ta,\s*m[au]
 **  ...
@@ -1665,9 +1665,9 @@ test_vwredsum_vs_i16m1_i32m1_m_ta_vl31(vbool16_t mask, vint32m1_t maskedoff, vin
 **  ret
 */
 vint32m1_t 
-test_vwredsum_vs_i16m2_i32m1_m_ta(vbool8_t mask, vint32m1_t maskedoff, vint16m2_t op1, vint32m1_t op2, size_t vl)
+test_vwredsum_vs_i16m2_i32m1_tam(vbool8_t mask, vint32m1_t maskedoff, vint16m2_t op1, vint32m1_t op2, size_t vl)
 {
-  return vwredsum_vs_i16m2_i32m1_m_ta(mask, op1, op2, vl);
+  return vwredsum_vs_i16m2_i32m1_tam(mask, op1, op2, vl);
 }
 
 /*
@@ -1682,11 +1682,11 @@ test_vwredsum_vs_i16m2_i32m1_m_ta(vbool8_t mask, vint32m1_t maskedoff, vint16m2_
 vint32m1_t 
 test_vwredsum_vs_i16m2_i32m1_m_ta_vl31(vbool8_t mask, vint32m1_t maskedoff, vint16m2_t op1, vint32m1_t op2)
 {
-  return vwredsum_vs_i16m2_i32m1_m_ta(mask, op1, op2, 31);
+  return vwredsum_vs_i16m2_i32m1_tam(mask, op1, op2, 31);
 }
 
 /*
-** test_vwredsum_vs_i16m4_i32m1_m_ta:
+** test_vwredsum_vs_i16m4_i32m1_tam:
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e16,\s*m4,\s*ta,\s*m[au]
 **  ...
@@ -1695,9 +1695,9 @@ test_vwredsum_vs_i16m2_i32m1_m_ta_vl31(vbool8_t mask, vint32m1_t maskedoff, vint
 **  ret
 */
 vint32m1_t 
-test_vwredsum_vs_i16m4_i32m1_m_ta(vbool4_t mask, vint32m1_t maskedoff, vint16m4_t op1, vint32m1_t op2, size_t vl)
+test_vwredsum_vs_i16m4_i32m1_tam(vbool4_t mask, vint32m1_t maskedoff, vint16m4_t op1, vint32m1_t op2, size_t vl)
 {
-  return vwredsum_vs_i16m4_i32m1_m_ta(mask, op1, op2, vl);
+  return vwredsum_vs_i16m4_i32m1_tam(mask, op1, op2, vl);
 }
 
 /*
@@ -1712,11 +1712,11 @@ test_vwredsum_vs_i16m4_i32m1_m_ta(vbool4_t mask, vint32m1_t maskedoff, vint16m4_
 vint32m1_t 
 test_vwredsum_vs_i16m4_i32m1_m_ta_vl31(vbool4_t mask, vint32m1_t maskedoff, vint16m4_t op1, vint32m1_t op2)
 {
-  return vwredsum_vs_i16m4_i32m1_m_ta(mask, op1, op2, 31);
+  return vwredsum_vs_i16m4_i32m1_tam(mask, op1, op2, 31);
 }
 
 /*
-** test_vwredsum_vs_i16m8_i32m1_m_ta:
+** test_vwredsum_vs_i16m8_i32m1_tam:
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e16,\s*m8,\s*ta,\s*m[au]
 **  ...
@@ -1725,9 +1725,9 @@ test_vwredsum_vs_i16m4_i32m1_m_ta_vl31(vbool4_t mask, vint32m1_t maskedoff, vint
 **  ret
 */
 vint32m1_t 
-test_vwredsum_vs_i16m8_i32m1_m_ta(vbool2_t mask, vint32m1_t maskedoff, vint16m8_t op1, vint32m1_t op2, size_t vl)
+test_vwredsum_vs_i16m8_i32m1_tam(vbool2_t mask, vint32m1_t maskedoff, vint16m8_t op1, vint32m1_t op2, size_t vl)
 {
-  return vwredsum_vs_i16m8_i32m1_m_ta(mask, op1, op2, vl);
+  return vwredsum_vs_i16m8_i32m1_tam(mask, op1, op2, vl);
 }
 
 /*
@@ -1742,11 +1742,11 @@ test_vwredsum_vs_i16m8_i32m1_m_ta(vbool2_t mask, vint32m1_t maskedoff, vint16m8_
 vint32m1_t 
 test_vwredsum_vs_i16m8_i32m1_m_ta_vl31(vbool2_t mask, vint32m1_t maskedoff, vint16m8_t op1, vint32m1_t op2)
 {
-  return vwredsum_vs_i16m8_i32m1_m_ta(mask, op1, op2, 31);
+  return vwredsum_vs_i16m8_i32m1_tam(mask, op1, op2, 31);
 }
 
 /*
-** test_vwredsum_vs_i32mf2_i64m1_m_ta:
+** test_vwredsum_vs_i32mf2_i64m1_tam:
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e32,\s*mf2,\s*ta,\s*m[au]
 **  ...
@@ -1755,9 +1755,9 @@ test_vwredsum_vs_i16m8_i32m1_m_ta_vl31(vbool2_t mask, vint32m1_t maskedoff, vint
 **  ret
 */
 vint64m1_t 
-test_vwredsum_vs_i32mf2_i64m1_m_ta(vbool64_t mask, vint64m1_t maskedoff, vint32mf2_t op1, vint64m1_t op2, size_t vl)
+test_vwredsum_vs_i32mf2_i64m1_tam(vbool64_t mask, vint64m1_t maskedoff, vint32mf2_t op1, vint64m1_t op2, size_t vl)
 {
-  return vwredsum_vs_i32mf2_i64m1_m_ta(mask, op1, op2, vl);
+  return vwredsum_vs_i32mf2_i64m1_tam(mask, op1, op2, vl);
 }
 
 /*
@@ -1772,11 +1772,11 @@ test_vwredsum_vs_i32mf2_i64m1_m_ta(vbool64_t mask, vint64m1_t maskedoff, vint32m
 vint64m1_t 
 test_vwredsum_vs_i32mf2_i64m1_m_ta_vl31(vbool64_t mask, vint64m1_t maskedoff, vint32mf2_t op1, vint64m1_t op2)
 {
-  return vwredsum_vs_i32mf2_i64m1_m_ta(mask, op1, op2, 31);
+  return vwredsum_vs_i32mf2_i64m1_tam(mask, op1, op2, 31);
 }
 
 /*
-** test_vwredsum_vs_i32m1_i64m1_m_ta:
+** test_vwredsum_vs_i32m1_i64m1_tam:
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e32,\s*m1,\s*ta,\s*m[au]
 **  ...
@@ -1785,9 +1785,9 @@ test_vwredsum_vs_i32mf2_i64m1_m_ta_vl31(vbool64_t mask, vint64m1_t maskedoff, vi
 **  ret
 */
 vint64m1_t 
-test_vwredsum_vs_i32m1_i64m1_m_ta(vbool32_t mask, vint64m1_t maskedoff, vint32m1_t op1, vint64m1_t op2, size_t vl)
+test_vwredsum_vs_i32m1_i64m1_tam(vbool32_t mask, vint64m1_t maskedoff, vint32m1_t op1, vint64m1_t op2, size_t vl)
 {
-  return vwredsum_vs_i32m1_i64m1_m_ta(mask, op1, op2, vl);
+  return vwredsum_vs_i32m1_i64m1_tam(mask, op1, op2, vl);
 }
 
 /*
@@ -1802,11 +1802,11 @@ test_vwredsum_vs_i32m1_i64m1_m_ta(vbool32_t mask, vint64m1_t maskedoff, vint32m1
 vint64m1_t 
 test_vwredsum_vs_i32m1_i64m1_m_ta_vl31(vbool32_t mask, vint64m1_t maskedoff, vint32m1_t op1, vint64m1_t op2)
 {
-  return vwredsum_vs_i32m1_i64m1_m_ta(mask, op1, op2, 31);
+  return vwredsum_vs_i32m1_i64m1_tam(mask, op1, op2, 31);
 }
 
 /*
-** test_vwredsum_vs_i32m2_i64m1_m_ta:
+** test_vwredsum_vs_i32m2_i64m1_tam:
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e32,\s*m2,\s*ta,\s*m[au]
 **  ...
@@ -1815,9 +1815,9 @@ test_vwredsum_vs_i32m1_i64m1_m_ta_vl31(vbool32_t mask, vint64m1_t maskedoff, vin
 **  ret
 */
 vint64m1_t 
-test_vwredsum_vs_i32m2_i64m1_m_ta(vbool16_t mask, vint64m1_t maskedoff, vint32m2_t op1, vint64m1_t op2, size_t vl)
+test_vwredsum_vs_i32m2_i64m1_tam(vbool16_t mask, vint64m1_t maskedoff, vint32m2_t op1, vint64m1_t op2, size_t vl)
 {
-  return vwredsum_vs_i32m2_i64m1_m_ta(mask, op1, op2, vl);
+  return vwredsum_vs_i32m2_i64m1_tam(mask, op1, op2, vl);
 }
 
 /*
@@ -1832,11 +1832,11 @@ test_vwredsum_vs_i32m2_i64m1_m_ta(vbool16_t mask, vint64m1_t maskedoff, vint32m2
 vint64m1_t 
 test_vwredsum_vs_i32m2_i64m1_m_ta_vl31(vbool16_t mask, vint64m1_t maskedoff, vint32m2_t op1, vint64m1_t op2)
 {
-  return vwredsum_vs_i32m2_i64m1_m_ta(mask, op1, op2, 31);
+  return vwredsum_vs_i32m2_i64m1_tam(mask, op1, op2, 31);
 }
 
 /*
-** test_vwredsum_vs_i32m4_i64m1_m_ta:
+** test_vwredsum_vs_i32m4_i64m1_tam:
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e32,\s*m4,\s*ta,\s*m[au]
 **  ...
@@ -1845,9 +1845,9 @@ test_vwredsum_vs_i32m2_i64m1_m_ta_vl31(vbool16_t mask, vint64m1_t maskedoff, vin
 **  ret
 */
 vint64m1_t 
-test_vwredsum_vs_i32m4_i64m1_m_ta(vbool8_t mask, vint64m1_t maskedoff, vint32m4_t op1, vint64m1_t op2, size_t vl)
+test_vwredsum_vs_i32m4_i64m1_tam(vbool8_t mask, vint64m1_t maskedoff, vint32m4_t op1, vint64m1_t op2, size_t vl)
 {
-  return vwredsum_vs_i32m4_i64m1_m_ta(mask, op1, op2, vl);
+  return vwredsum_vs_i32m4_i64m1_tam(mask, op1, op2, vl);
 }
 
 /*
@@ -1862,11 +1862,11 @@ test_vwredsum_vs_i32m4_i64m1_m_ta(vbool8_t mask, vint64m1_t maskedoff, vint32m4_
 vint64m1_t 
 test_vwredsum_vs_i32m4_i64m1_m_ta_vl31(vbool8_t mask, vint64m1_t maskedoff, vint32m4_t op1, vint64m1_t op2)
 {
-  return vwredsum_vs_i32m4_i64m1_m_ta(mask, op1, op2, 31);
+  return vwredsum_vs_i32m4_i64m1_tam(mask, op1, op2, 31);
 }
 
 /*
-** test_vwredsum_vs_i32m8_i64m1_m_ta:
+** test_vwredsum_vs_i32m8_i64m1_tam:
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e32,\s*m8,\s*ta,\s*m[au]
 **  ...
@@ -1875,9 +1875,9 @@ test_vwredsum_vs_i32m4_i64m1_m_ta_vl31(vbool8_t mask, vint64m1_t maskedoff, vint
 **  ret
 */
 vint64m1_t 
-test_vwredsum_vs_i32m8_i64m1_m_ta(vbool4_t mask, vint64m1_t maskedoff, vint32m8_t op1, vint64m1_t op2, size_t vl)
+test_vwredsum_vs_i32m8_i64m1_tam(vbool4_t mask, vint64m1_t maskedoff, vint32m8_t op1, vint64m1_t op2, size_t vl)
 {
-  return vwredsum_vs_i32m8_i64m1_m_ta(mask, op1, op2, vl);
+  return vwredsum_vs_i32m8_i64m1_tam(mask, op1, op2, vl);
 }
 
 /*
@@ -1892,7 +1892,7 @@ test_vwredsum_vs_i32m8_i64m1_m_ta(vbool4_t mask, vint64m1_t maskedoff, vint32m8_
 vint64m1_t 
 test_vwredsum_vs_i32m8_i64m1_m_ta_vl31(vbool4_t mask, vint64m1_t maskedoff, vint32m8_t op1, vint64m1_t op2)
 {
-  return vwredsum_vs_i32m8_i64m1_m_ta(mask, op1, op2, 31);
+  return vwredsum_vs_i32m8_i64m1_tam(mask, op1, op2, 31);
 }
 
 /*
@@ -1907,7 +1907,7 @@ test_vwredsum_vs_i32m8_i64m1_m_ta_vl31(vbool4_t mask, vint64m1_t maskedoff, vint
 vint16m1_t 
 test_vwredsum_vs_i8mf8_i16m1_m_ta_vl32(vbool64_t mask, vint16m1_t maskedoff, vint8mf8_t op1, vint16m1_t op2)
 {
-  return vwredsum_vs_i8mf8_i16m1_m_ta(mask, op1, op2, 32);
+  return vwredsum_vs_i8mf8_i16m1_tam(mask, op1, op2, 32);
 }
 
 /*
@@ -1922,7 +1922,7 @@ test_vwredsum_vs_i8mf8_i16m1_m_ta_vl32(vbool64_t mask, vint16m1_t maskedoff, vin
 vint16m1_t 
 test_vwredsum_vs_i8mf4_i16m1_m_ta_vl32(vbool32_t mask, vint16m1_t maskedoff, vint8mf4_t op1, vint16m1_t op2)
 {
-  return vwredsum_vs_i8mf4_i16m1_m_ta(mask, op1, op2, 32);
+  return vwredsum_vs_i8mf4_i16m1_tam(mask, op1, op2, 32);
 }
 
 /*
@@ -1937,7 +1937,7 @@ test_vwredsum_vs_i8mf4_i16m1_m_ta_vl32(vbool32_t mask, vint16m1_t maskedoff, vin
 vint16m1_t 
 test_vwredsum_vs_i8mf2_i16m1_m_ta_vl32(vbool16_t mask, vint16m1_t maskedoff, vint8mf2_t op1, vint16m1_t op2)
 {
-  return vwredsum_vs_i8mf2_i16m1_m_ta(mask, op1, op2, 32);
+  return vwredsum_vs_i8mf2_i16m1_tam(mask, op1, op2, 32);
 }
 
 /*
@@ -1952,7 +1952,7 @@ test_vwredsum_vs_i8mf2_i16m1_m_ta_vl32(vbool16_t mask, vint16m1_t maskedoff, vin
 vint16m1_t 
 test_vwredsum_vs_i8m1_i16m1_m_ta_vl32(vbool8_t mask, vint16m1_t maskedoff, vint8m1_t op1, vint16m1_t op2)
 {
-  return vwredsum_vs_i8m1_i16m1_m_ta(mask, op1, op2, 32);
+  return vwredsum_vs_i8m1_i16m1_tam(mask, op1, op2, 32);
 }
 
 /*
@@ -1967,7 +1967,7 @@ test_vwredsum_vs_i8m1_i16m1_m_ta_vl32(vbool8_t mask, vint16m1_t maskedoff, vint8
 vint16m1_t 
 test_vwredsum_vs_i8m2_i16m1_m_ta_vl32(vbool4_t mask, vint16m1_t maskedoff, vint8m2_t op1, vint16m1_t op2)
 {
-  return vwredsum_vs_i8m2_i16m1_m_ta(mask, op1, op2, 32);
+  return vwredsum_vs_i8m2_i16m1_tam(mask, op1, op2, 32);
 }
 
 /*
@@ -1982,7 +1982,7 @@ test_vwredsum_vs_i8m2_i16m1_m_ta_vl32(vbool4_t mask, vint16m1_t maskedoff, vint8
 vint16m1_t 
 test_vwredsum_vs_i8m4_i16m1_m_ta_vl32(vbool2_t mask, vint16m1_t maskedoff, vint8m4_t op1, vint16m1_t op2)
 {
-  return vwredsum_vs_i8m4_i16m1_m_ta(mask, op1, op2, 32);
+  return vwredsum_vs_i8m4_i16m1_tam(mask, op1, op2, 32);
 }
 
 /*
@@ -1997,7 +1997,7 @@ test_vwredsum_vs_i8m4_i16m1_m_ta_vl32(vbool2_t mask, vint16m1_t maskedoff, vint8
 vint16m1_t 
 test_vwredsum_vs_i8m8_i16m1_m_ta_vl32(vbool1_t mask, vint16m1_t maskedoff, vint8m8_t op1, vint16m1_t op2)
 {
-  return vwredsum_vs_i8m8_i16m1_m_ta(mask, op1, op2, 32);
+  return vwredsum_vs_i8m8_i16m1_tam(mask, op1, op2, 32);
 }
 
 /*
@@ -2012,7 +2012,7 @@ test_vwredsum_vs_i8m8_i16m1_m_ta_vl32(vbool1_t mask, vint16m1_t maskedoff, vint8
 vint32m1_t 
 test_vwredsum_vs_i16mf4_i32m1_m_ta_vl32(vbool64_t mask, vint32m1_t maskedoff, vint16mf4_t op1, vint32m1_t op2)
 {
-  return vwredsum_vs_i16mf4_i32m1_m_ta(mask, op1, op2, 32);
+  return vwredsum_vs_i16mf4_i32m1_tam(mask, op1, op2, 32);
 }
 
 /*
@@ -2027,7 +2027,7 @@ test_vwredsum_vs_i16mf4_i32m1_m_ta_vl32(vbool64_t mask, vint32m1_t maskedoff, vi
 vint32m1_t 
 test_vwredsum_vs_i16mf2_i32m1_m_ta_vl32(vbool32_t mask, vint32m1_t maskedoff, vint16mf2_t op1, vint32m1_t op2)
 {
-  return vwredsum_vs_i16mf2_i32m1_m_ta(mask, op1, op2, 32);
+  return vwredsum_vs_i16mf2_i32m1_tam(mask, op1, op2, 32);
 }
 
 /*
@@ -2042,7 +2042,7 @@ test_vwredsum_vs_i16mf2_i32m1_m_ta_vl32(vbool32_t mask, vint32m1_t maskedoff, vi
 vint32m1_t 
 test_vwredsum_vs_i16m1_i32m1_m_ta_vl32(vbool16_t mask, vint32m1_t maskedoff, vint16m1_t op1, vint32m1_t op2)
 {
-  return vwredsum_vs_i16m1_i32m1_m_ta(mask, op1, op2, 32);
+  return vwredsum_vs_i16m1_i32m1_tam(mask, op1, op2, 32);
 }
 
 /*
@@ -2057,7 +2057,7 @@ test_vwredsum_vs_i16m1_i32m1_m_ta_vl32(vbool16_t mask, vint32m1_t maskedoff, vin
 vint32m1_t 
 test_vwredsum_vs_i16m2_i32m1_m_ta_vl32(vbool8_t mask, vint32m1_t maskedoff, vint16m2_t op1, vint32m1_t op2)
 {
-  return vwredsum_vs_i16m2_i32m1_m_ta(mask, op1, op2, 32);
+  return vwredsum_vs_i16m2_i32m1_tam(mask, op1, op2, 32);
 }
 
 /*
@@ -2072,7 +2072,7 @@ test_vwredsum_vs_i16m2_i32m1_m_ta_vl32(vbool8_t mask, vint32m1_t maskedoff, vint
 vint32m1_t 
 test_vwredsum_vs_i16m4_i32m1_m_ta_vl32(vbool4_t mask, vint32m1_t maskedoff, vint16m4_t op1, vint32m1_t op2)
 {
-  return vwredsum_vs_i16m4_i32m1_m_ta(mask, op1, op2, 32);
+  return vwredsum_vs_i16m4_i32m1_tam(mask, op1, op2, 32);
 }
 
 /*
@@ -2087,7 +2087,7 @@ test_vwredsum_vs_i16m4_i32m1_m_ta_vl32(vbool4_t mask, vint32m1_t maskedoff, vint
 vint32m1_t 
 test_vwredsum_vs_i16m8_i32m1_m_ta_vl32(vbool2_t mask, vint32m1_t maskedoff, vint16m8_t op1, vint32m1_t op2)
 {
-  return vwredsum_vs_i16m8_i32m1_m_ta(mask, op1, op2, 32);
+  return vwredsum_vs_i16m8_i32m1_tam(mask, op1, op2, 32);
 }
 
 /*
@@ -2102,7 +2102,7 @@ test_vwredsum_vs_i16m8_i32m1_m_ta_vl32(vbool2_t mask, vint32m1_t maskedoff, vint
 vint64m1_t 
 test_vwredsum_vs_i32mf2_i64m1_m_ta_vl32(vbool64_t mask, vint64m1_t maskedoff, vint32mf2_t op1, vint64m1_t op2)
 {
-  return vwredsum_vs_i32mf2_i64m1_m_ta(mask, op1, op2, 32);
+  return vwredsum_vs_i32mf2_i64m1_tam(mask, op1, op2, 32);
 }
 
 /*
@@ -2117,7 +2117,7 @@ test_vwredsum_vs_i32mf2_i64m1_m_ta_vl32(vbool64_t mask, vint64m1_t maskedoff, vi
 vint64m1_t 
 test_vwredsum_vs_i32m1_i64m1_m_ta_vl32(vbool32_t mask, vint64m1_t maskedoff, vint32m1_t op1, vint64m1_t op2)
 {
-  return vwredsum_vs_i32m1_i64m1_m_ta(mask, op1, op2, 32);
+  return vwredsum_vs_i32m1_i64m1_tam(mask, op1, op2, 32);
 }
 
 /*
@@ -2132,7 +2132,7 @@ test_vwredsum_vs_i32m1_i64m1_m_ta_vl32(vbool32_t mask, vint64m1_t maskedoff, vin
 vint64m1_t 
 test_vwredsum_vs_i32m2_i64m1_m_ta_vl32(vbool16_t mask, vint64m1_t maskedoff, vint32m2_t op1, vint64m1_t op2)
 {
-  return vwredsum_vs_i32m2_i64m1_m_ta(mask, op1, op2, 32);
+  return vwredsum_vs_i32m2_i64m1_tam(mask, op1, op2, 32);
 }
 
 /*
@@ -2147,7 +2147,7 @@ test_vwredsum_vs_i32m2_i64m1_m_ta_vl32(vbool16_t mask, vint64m1_t maskedoff, vin
 vint64m1_t 
 test_vwredsum_vs_i32m4_i64m1_m_ta_vl32(vbool8_t mask, vint64m1_t maskedoff, vint32m4_t op1, vint64m1_t op2)
 {
-  return vwredsum_vs_i32m4_i64m1_m_ta(mask, op1, op2, 32);
+  return vwredsum_vs_i32m4_i64m1_tam(mask, op1, op2, 32);
 }
 
 /*
@@ -2162,11 +2162,11 @@ test_vwredsum_vs_i32m4_i64m1_m_ta_vl32(vbool8_t mask, vint64m1_t maskedoff, vint
 vint64m1_t 
 test_vwredsum_vs_i32m8_i64m1_m_ta_vl32(vbool4_t mask, vint64m1_t maskedoff, vint32m8_t op1, vint64m1_t op2)
 {
-  return vwredsum_vs_i32m8_i64m1_m_ta(mask, op1, op2, 32);
+  return vwredsum_vs_i32m8_i64m1_tam(mask, op1, op2, 32);
 }
 
 /*
-** test_vwredsum_vs_i8mf8_i16m1_m_tu:
+** test_vwredsum_vs_i8mf8_i16m1_tum:
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e8,\s*mf8,\s*tu,\s*m[au]
 **  ...
@@ -2175,9 +2175,9 @@ test_vwredsum_vs_i32m8_i64m1_m_ta_vl32(vbool4_t mask, vint64m1_t maskedoff, vint
 **  ret
 */
 vint16m1_t 
-test_vwredsum_vs_i8mf8_i16m1_m_tu(vbool64_t mask, vint16m1_t maskedoff, vint8mf8_t op1, vint16m1_t op2, size_t vl)
+test_vwredsum_vs_i8mf8_i16m1_tum(vbool64_t mask, vint16m1_t maskedoff, vint8mf8_t op1, vint16m1_t op2, size_t vl)
 {
-  return vwredsum_vs_i8mf8_i16m1_m_tu(mask, maskedoff, op1, op2, vl);
+  return vwredsum_vs_i8mf8_i16m1_tum(mask, maskedoff, op1, op2, vl);
 }
 
 /*
@@ -2192,11 +2192,11 @@ test_vwredsum_vs_i8mf8_i16m1_m_tu(vbool64_t mask, vint16m1_t maskedoff, vint8mf8
 vint16m1_t 
 test_vwredsum_vs_i8mf8_i16m1_m_tu_vl31(vbool64_t mask, vint16m1_t maskedoff, vint8mf8_t op1, vint16m1_t op2)
 {
-  return vwredsum_vs_i8mf8_i16m1_m_tu(mask, maskedoff, op1, op2, 31);
+  return vwredsum_vs_i8mf8_i16m1_tum(mask, maskedoff, op1, op2, 31);
 }
 
 /*
-** test_vwredsum_vs_i8mf4_i16m1_m_tu:
+** test_vwredsum_vs_i8mf4_i16m1_tum:
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e8,\s*mf4,\s*tu,\s*m[au]
 **  ...
@@ -2205,9 +2205,9 @@ test_vwredsum_vs_i8mf8_i16m1_m_tu_vl31(vbool64_t mask, vint16m1_t maskedoff, vin
 **  ret
 */
 vint16m1_t 
-test_vwredsum_vs_i8mf4_i16m1_m_tu(vbool32_t mask, vint16m1_t maskedoff, vint8mf4_t op1, vint16m1_t op2, size_t vl)
+test_vwredsum_vs_i8mf4_i16m1_tum(vbool32_t mask, vint16m1_t maskedoff, vint8mf4_t op1, vint16m1_t op2, size_t vl)
 {
-  return vwredsum_vs_i8mf4_i16m1_m_tu(mask, maskedoff, op1, op2, vl);
+  return vwredsum_vs_i8mf4_i16m1_tum(mask, maskedoff, op1, op2, vl);
 }
 
 /*
@@ -2222,11 +2222,11 @@ test_vwredsum_vs_i8mf4_i16m1_m_tu(vbool32_t mask, vint16m1_t maskedoff, vint8mf4
 vint16m1_t 
 test_vwredsum_vs_i8mf4_i16m1_m_tu_vl31(vbool32_t mask, vint16m1_t maskedoff, vint8mf4_t op1, vint16m1_t op2)
 {
-  return vwredsum_vs_i8mf4_i16m1_m_tu(mask, maskedoff, op1, op2, 31);
+  return vwredsum_vs_i8mf4_i16m1_tum(mask, maskedoff, op1, op2, 31);
 }
 
 /*
-** test_vwredsum_vs_i8mf2_i16m1_m_tu:
+** test_vwredsum_vs_i8mf2_i16m1_tum:
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e8,\s*mf2,\s*tu,\s*m[au]
 **  ...
@@ -2235,9 +2235,9 @@ test_vwredsum_vs_i8mf4_i16m1_m_tu_vl31(vbool32_t mask, vint16m1_t maskedoff, vin
 **  ret
 */
 vint16m1_t 
-test_vwredsum_vs_i8mf2_i16m1_m_tu(vbool16_t mask, vint16m1_t maskedoff, vint8mf2_t op1, vint16m1_t op2, size_t vl)
+test_vwredsum_vs_i8mf2_i16m1_tum(vbool16_t mask, vint16m1_t maskedoff, vint8mf2_t op1, vint16m1_t op2, size_t vl)
 {
-  return vwredsum_vs_i8mf2_i16m1_m_tu(mask, maskedoff, op1, op2, vl);
+  return vwredsum_vs_i8mf2_i16m1_tum(mask, maskedoff, op1, op2, vl);
 }
 
 /*
@@ -2252,11 +2252,11 @@ test_vwredsum_vs_i8mf2_i16m1_m_tu(vbool16_t mask, vint16m1_t maskedoff, vint8mf2
 vint16m1_t 
 test_vwredsum_vs_i8mf2_i16m1_m_tu_vl31(vbool16_t mask, vint16m1_t maskedoff, vint8mf2_t op1, vint16m1_t op2)
 {
-  return vwredsum_vs_i8mf2_i16m1_m_tu(mask, maskedoff, op1, op2, 31);
+  return vwredsum_vs_i8mf2_i16m1_tum(mask, maskedoff, op1, op2, 31);
 }
 
 /*
-** test_vwredsum_vs_i8m1_i16m1_m_tu:
+** test_vwredsum_vs_i8m1_i16m1_tum:
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e8,\s*m1,\s*tu,\s*m[au]
 **  ...
@@ -2265,9 +2265,9 @@ test_vwredsum_vs_i8mf2_i16m1_m_tu_vl31(vbool16_t mask, vint16m1_t maskedoff, vin
 **  ret
 */
 vint16m1_t 
-test_vwredsum_vs_i8m1_i16m1_m_tu(vbool8_t mask, vint16m1_t maskedoff, vint8m1_t op1, vint16m1_t op2, size_t vl)
+test_vwredsum_vs_i8m1_i16m1_tum(vbool8_t mask, vint16m1_t maskedoff, vint8m1_t op1, vint16m1_t op2, size_t vl)
 {
-  return vwredsum_vs_i8m1_i16m1_m_tu(mask, maskedoff, op1, op2, vl);
+  return vwredsum_vs_i8m1_i16m1_tum(mask, maskedoff, op1, op2, vl);
 }
 
 /*
@@ -2282,11 +2282,11 @@ test_vwredsum_vs_i8m1_i16m1_m_tu(vbool8_t mask, vint16m1_t maskedoff, vint8m1_t 
 vint16m1_t 
 test_vwredsum_vs_i8m1_i16m1_m_tu_vl31(vbool8_t mask, vint16m1_t maskedoff, vint8m1_t op1, vint16m1_t op2)
 {
-  return vwredsum_vs_i8m1_i16m1_m_tu(mask, maskedoff, op1, op2, 31);
+  return vwredsum_vs_i8m1_i16m1_tum(mask, maskedoff, op1, op2, 31);
 }
 
 /*
-** test_vwredsum_vs_i8m2_i16m1_m_tu:
+** test_vwredsum_vs_i8m2_i16m1_tum:
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e8,\s*m2,\s*tu,\s*m[au]
 **  ...
@@ -2295,9 +2295,9 @@ test_vwredsum_vs_i8m1_i16m1_m_tu_vl31(vbool8_t mask, vint16m1_t maskedoff, vint8
 **  ret
 */
 vint16m1_t 
-test_vwredsum_vs_i8m2_i16m1_m_tu(vbool4_t mask, vint16m1_t maskedoff, vint8m2_t op1, vint16m1_t op2, size_t vl)
+test_vwredsum_vs_i8m2_i16m1_tum(vbool4_t mask, vint16m1_t maskedoff, vint8m2_t op1, vint16m1_t op2, size_t vl)
 {
-  return vwredsum_vs_i8m2_i16m1_m_tu(mask, maskedoff, op1, op2, vl);
+  return vwredsum_vs_i8m2_i16m1_tum(mask, maskedoff, op1, op2, vl);
 }
 
 /*
@@ -2312,11 +2312,11 @@ test_vwredsum_vs_i8m2_i16m1_m_tu(vbool4_t mask, vint16m1_t maskedoff, vint8m2_t 
 vint16m1_t 
 test_vwredsum_vs_i8m2_i16m1_m_tu_vl31(vbool4_t mask, vint16m1_t maskedoff, vint8m2_t op1, vint16m1_t op2)
 {
-  return vwredsum_vs_i8m2_i16m1_m_tu(mask, maskedoff, op1, op2, 31);
+  return vwredsum_vs_i8m2_i16m1_tum(mask, maskedoff, op1, op2, 31);
 }
 
 /*
-** test_vwredsum_vs_i8m4_i16m1_m_tu:
+** test_vwredsum_vs_i8m4_i16m1_tum:
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e8,\s*m4,\s*tu,\s*m[au]
 **  ...
@@ -2325,9 +2325,9 @@ test_vwredsum_vs_i8m2_i16m1_m_tu_vl31(vbool4_t mask, vint16m1_t maskedoff, vint8
 **  ret
 */
 vint16m1_t 
-test_vwredsum_vs_i8m4_i16m1_m_tu(vbool2_t mask, vint16m1_t maskedoff, vint8m4_t op1, vint16m1_t op2, size_t vl)
+test_vwredsum_vs_i8m4_i16m1_tum(vbool2_t mask, vint16m1_t maskedoff, vint8m4_t op1, vint16m1_t op2, size_t vl)
 {
-  return vwredsum_vs_i8m4_i16m1_m_tu(mask, maskedoff, op1, op2, vl);
+  return vwredsum_vs_i8m4_i16m1_tum(mask, maskedoff, op1, op2, vl);
 }
 
 /*
@@ -2342,11 +2342,11 @@ test_vwredsum_vs_i8m4_i16m1_m_tu(vbool2_t mask, vint16m1_t maskedoff, vint8m4_t 
 vint16m1_t 
 test_vwredsum_vs_i8m4_i16m1_m_tu_vl31(vbool2_t mask, vint16m1_t maskedoff, vint8m4_t op1, vint16m1_t op2)
 {
-  return vwredsum_vs_i8m4_i16m1_m_tu(mask, maskedoff, op1, op2, 31);
+  return vwredsum_vs_i8m4_i16m1_tum(mask, maskedoff, op1, op2, 31);
 }
 
 /*
-** test_vwredsum_vs_i8m8_i16m1_m_tu:
+** test_vwredsum_vs_i8m8_i16m1_tum:
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e8,\s*m8,\s*tu,\s*m[au]
 **  ...
@@ -2355,9 +2355,9 @@ test_vwredsum_vs_i8m4_i16m1_m_tu_vl31(vbool2_t mask, vint16m1_t maskedoff, vint8
 **  ret
 */
 vint16m1_t 
-test_vwredsum_vs_i8m8_i16m1_m_tu(vbool1_t mask, vint16m1_t maskedoff, vint8m8_t op1, vint16m1_t op2, size_t vl)
+test_vwredsum_vs_i8m8_i16m1_tum(vbool1_t mask, vint16m1_t maskedoff, vint8m8_t op1, vint16m1_t op2, size_t vl)
 {
-  return vwredsum_vs_i8m8_i16m1_m_tu(mask, maskedoff, op1, op2, vl);
+  return vwredsum_vs_i8m8_i16m1_tum(mask, maskedoff, op1, op2, vl);
 }
 
 /*
@@ -2372,11 +2372,11 @@ test_vwredsum_vs_i8m8_i16m1_m_tu(vbool1_t mask, vint16m1_t maskedoff, vint8m8_t 
 vint16m1_t 
 test_vwredsum_vs_i8m8_i16m1_m_tu_vl31(vbool1_t mask, vint16m1_t maskedoff, vint8m8_t op1, vint16m1_t op2)
 {
-  return vwredsum_vs_i8m8_i16m1_m_tu(mask, maskedoff, op1, op2, 31);
+  return vwredsum_vs_i8m8_i16m1_tum(mask, maskedoff, op1, op2, 31);
 }
 
 /*
-** test_vwredsum_vs_i16mf4_i32m1_m_tu:
+** test_vwredsum_vs_i16mf4_i32m1_tum:
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e16,\s*mf4,\s*tu,\s*m[au]
 **  ...
@@ -2385,9 +2385,9 @@ test_vwredsum_vs_i8m8_i16m1_m_tu_vl31(vbool1_t mask, vint16m1_t maskedoff, vint8
 **  ret
 */
 vint32m1_t 
-test_vwredsum_vs_i16mf4_i32m1_m_tu(vbool64_t mask, vint32m1_t maskedoff, vint16mf4_t op1, vint32m1_t op2, size_t vl)
+test_vwredsum_vs_i16mf4_i32m1_tum(vbool64_t mask, vint32m1_t maskedoff, vint16mf4_t op1, vint32m1_t op2, size_t vl)
 {
-  return vwredsum_vs_i16mf4_i32m1_m_tu(mask, maskedoff, op1, op2, vl);
+  return vwredsum_vs_i16mf4_i32m1_tum(mask, maskedoff, op1, op2, vl);
 }
 
 /*
@@ -2402,11 +2402,11 @@ test_vwredsum_vs_i16mf4_i32m1_m_tu(vbool64_t mask, vint32m1_t maskedoff, vint16m
 vint32m1_t 
 test_vwredsum_vs_i16mf4_i32m1_m_tu_vl31(vbool64_t mask, vint32m1_t maskedoff, vint16mf4_t op1, vint32m1_t op2)
 {
-  return vwredsum_vs_i16mf4_i32m1_m_tu(mask, maskedoff, op1, op2, 31);
+  return vwredsum_vs_i16mf4_i32m1_tum(mask, maskedoff, op1, op2, 31);
 }
 
 /*
-** test_vwredsum_vs_i16mf2_i32m1_m_tu:
+** test_vwredsum_vs_i16mf2_i32m1_tum:
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e16,\s*mf2,\s*tu,\s*m[au]
 **  ...
@@ -2415,9 +2415,9 @@ test_vwredsum_vs_i16mf4_i32m1_m_tu_vl31(vbool64_t mask, vint32m1_t maskedoff, vi
 **  ret
 */
 vint32m1_t 
-test_vwredsum_vs_i16mf2_i32m1_m_tu(vbool32_t mask, vint32m1_t maskedoff, vint16mf2_t op1, vint32m1_t op2, size_t vl)
+test_vwredsum_vs_i16mf2_i32m1_tum(vbool32_t mask, vint32m1_t maskedoff, vint16mf2_t op1, vint32m1_t op2, size_t vl)
 {
-  return vwredsum_vs_i16mf2_i32m1_m_tu(mask, maskedoff, op1, op2, vl);
+  return vwredsum_vs_i16mf2_i32m1_tum(mask, maskedoff, op1, op2, vl);
 }
 
 /*
@@ -2432,11 +2432,11 @@ test_vwredsum_vs_i16mf2_i32m1_m_tu(vbool32_t mask, vint32m1_t maskedoff, vint16m
 vint32m1_t 
 test_vwredsum_vs_i16mf2_i32m1_m_tu_vl31(vbool32_t mask, vint32m1_t maskedoff, vint16mf2_t op1, vint32m1_t op2)
 {
-  return vwredsum_vs_i16mf2_i32m1_m_tu(mask, maskedoff, op1, op2, 31);
+  return vwredsum_vs_i16mf2_i32m1_tum(mask, maskedoff, op1, op2, 31);
 }
 
 /*
-** test_vwredsum_vs_i16m1_i32m1_m_tu:
+** test_vwredsum_vs_i16m1_i32m1_tum:
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e16,\s*m1,\s*tu,\s*m[au]
 **  ...
@@ -2445,9 +2445,9 @@ test_vwredsum_vs_i16mf2_i32m1_m_tu_vl31(vbool32_t mask, vint32m1_t maskedoff, vi
 **  ret
 */
 vint32m1_t 
-test_vwredsum_vs_i16m1_i32m1_m_tu(vbool16_t mask, vint32m1_t maskedoff, vint16m1_t op1, vint32m1_t op2, size_t vl)
+test_vwredsum_vs_i16m1_i32m1_tum(vbool16_t mask, vint32m1_t maskedoff, vint16m1_t op1, vint32m1_t op2, size_t vl)
 {
-  return vwredsum_vs_i16m1_i32m1_m_tu(mask, maskedoff, op1, op2, vl);
+  return vwredsum_vs_i16m1_i32m1_tum(mask, maskedoff, op1, op2, vl);
 }
 
 /*
@@ -2462,11 +2462,11 @@ test_vwredsum_vs_i16m1_i32m1_m_tu(vbool16_t mask, vint32m1_t maskedoff, vint16m1
 vint32m1_t 
 test_vwredsum_vs_i16m1_i32m1_m_tu_vl31(vbool16_t mask, vint32m1_t maskedoff, vint16m1_t op1, vint32m1_t op2)
 {
-  return vwredsum_vs_i16m1_i32m1_m_tu(mask, maskedoff, op1, op2, 31);
+  return vwredsum_vs_i16m1_i32m1_tum(mask, maskedoff, op1, op2, 31);
 }
 
 /*
-** test_vwredsum_vs_i16m2_i32m1_m_tu:
+** test_vwredsum_vs_i16m2_i32m1_tum:
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e16,\s*m2,\s*tu,\s*m[au]
 **  ...
@@ -2475,9 +2475,9 @@ test_vwredsum_vs_i16m1_i32m1_m_tu_vl31(vbool16_t mask, vint32m1_t maskedoff, vin
 **  ret
 */
 vint32m1_t 
-test_vwredsum_vs_i16m2_i32m1_m_tu(vbool8_t mask, vint32m1_t maskedoff, vint16m2_t op1, vint32m1_t op2, size_t vl)
+test_vwredsum_vs_i16m2_i32m1_tum(vbool8_t mask, vint32m1_t maskedoff, vint16m2_t op1, vint32m1_t op2, size_t vl)
 {
-  return vwredsum_vs_i16m2_i32m1_m_tu(mask, maskedoff, op1, op2, vl);
+  return vwredsum_vs_i16m2_i32m1_tum(mask, maskedoff, op1, op2, vl);
 }
 
 /*
@@ -2492,11 +2492,11 @@ test_vwredsum_vs_i16m2_i32m1_m_tu(vbool8_t mask, vint32m1_t maskedoff, vint16m2_
 vint32m1_t 
 test_vwredsum_vs_i16m2_i32m1_m_tu_vl31(vbool8_t mask, vint32m1_t maskedoff, vint16m2_t op1, vint32m1_t op2)
 {
-  return vwredsum_vs_i16m2_i32m1_m_tu(mask, maskedoff, op1, op2, 31);
+  return vwredsum_vs_i16m2_i32m1_tum(mask, maskedoff, op1, op2, 31);
 }
 
 /*
-** test_vwredsum_vs_i16m4_i32m1_m_tu:
+** test_vwredsum_vs_i16m4_i32m1_tum:
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e16,\s*m4,\s*tu,\s*m[au]
 **  ...
@@ -2505,9 +2505,9 @@ test_vwredsum_vs_i16m2_i32m1_m_tu_vl31(vbool8_t mask, vint32m1_t maskedoff, vint
 **  ret
 */
 vint32m1_t 
-test_vwredsum_vs_i16m4_i32m1_m_tu(vbool4_t mask, vint32m1_t maskedoff, vint16m4_t op1, vint32m1_t op2, size_t vl)
+test_vwredsum_vs_i16m4_i32m1_tum(vbool4_t mask, vint32m1_t maskedoff, vint16m4_t op1, vint32m1_t op2, size_t vl)
 {
-  return vwredsum_vs_i16m4_i32m1_m_tu(mask, maskedoff, op1, op2, vl);
+  return vwredsum_vs_i16m4_i32m1_tum(mask, maskedoff, op1, op2, vl);
 }
 
 /*
@@ -2522,11 +2522,11 @@ test_vwredsum_vs_i16m4_i32m1_m_tu(vbool4_t mask, vint32m1_t maskedoff, vint16m4_
 vint32m1_t 
 test_vwredsum_vs_i16m4_i32m1_m_tu_vl31(vbool4_t mask, vint32m1_t maskedoff, vint16m4_t op1, vint32m1_t op2)
 {
-  return vwredsum_vs_i16m4_i32m1_m_tu(mask, maskedoff, op1, op2, 31);
+  return vwredsum_vs_i16m4_i32m1_tum(mask, maskedoff, op1, op2, 31);
 }
 
 /*
-** test_vwredsum_vs_i16m8_i32m1_m_tu:
+** test_vwredsum_vs_i16m8_i32m1_tum:
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e16,\s*m8,\s*tu,\s*m[au]
 **  ...
@@ -2535,9 +2535,9 @@ test_vwredsum_vs_i16m4_i32m1_m_tu_vl31(vbool4_t mask, vint32m1_t maskedoff, vint
 **  ret
 */
 vint32m1_t 
-test_vwredsum_vs_i16m8_i32m1_m_tu(vbool2_t mask, vint32m1_t maskedoff, vint16m8_t op1, vint32m1_t op2, size_t vl)
+test_vwredsum_vs_i16m8_i32m1_tum(vbool2_t mask, vint32m1_t maskedoff, vint16m8_t op1, vint32m1_t op2, size_t vl)
 {
-  return vwredsum_vs_i16m8_i32m1_m_tu(mask, maskedoff, op1, op2, vl);
+  return vwredsum_vs_i16m8_i32m1_tum(mask, maskedoff, op1, op2, vl);
 }
 
 /*
@@ -2552,11 +2552,11 @@ test_vwredsum_vs_i16m8_i32m1_m_tu(vbool2_t mask, vint32m1_t maskedoff, vint16m8_
 vint32m1_t 
 test_vwredsum_vs_i16m8_i32m1_m_tu_vl31(vbool2_t mask, vint32m1_t maskedoff, vint16m8_t op1, vint32m1_t op2)
 {
-  return vwredsum_vs_i16m8_i32m1_m_tu(mask, maskedoff, op1, op2, 31);
+  return vwredsum_vs_i16m8_i32m1_tum(mask, maskedoff, op1, op2, 31);
 }
 
 /*
-** test_vwredsum_vs_i32mf2_i64m1_m_tu:
+** test_vwredsum_vs_i32mf2_i64m1_tum:
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e32,\s*mf2,\s*tu,\s*m[au]
 **  ...
@@ -2565,9 +2565,9 @@ test_vwredsum_vs_i16m8_i32m1_m_tu_vl31(vbool2_t mask, vint32m1_t maskedoff, vint
 **  ret
 */
 vint64m1_t 
-test_vwredsum_vs_i32mf2_i64m1_m_tu(vbool64_t mask, vint64m1_t maskedoff, vint32mf2_t op1, vint64m1_t op2, size_t vl)
+test_vwredsum_vs_i32mf2_i64m1_tum(vbool64_t mask, vint64m1_t maskedoff, vint32mf2_t op1, vint64m1_t op2, size_t vl)
 {
-  return vwredsum_vs_i32mf2_i64m1_m_tu(mask, maskedoff, op1, op2, vl);
+  return vwredsum_vs_i32mf2_i64m1_tum(mask, maskedoff, op1, op2, vl);
 }
 
 /*
@@ -2582,11 +2582,11 @@ test_vwredsum_vs_i32mf2_i64m1_m_tu(vbool64_t mask, vint64m1_t maskedoff, vint32m
 vint64m1_t 
 test_vwredsum_vs_i32mf2_i64m1_m_tu_vl31(vbool64_t mask, vint64m1_t maskedoff, vint32mf2_t op1, vint64m1_t op2)
 {
-  return vwredsum_vs_i32mf2_i64m1_m_tu(mask, maskedoff, op1, op2, 31);
+  return vwredsum_vs_i32mf2_i64m1_tum(mask, maskedoff, op1, op2, 31);
 }
 
 /*
-** test_vwredsum_vs_i32m1_i64m1_m_tu:
+** test_vwredsum_vs_i32m1_i64m1_tum:
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e32,\s*m1,\s*tu,\s*m[au]
 **  ...
@@ -2595,9 +2595,9 @@ test_vwredsum_vs_i32mf2_i64m1_m_tu_vl31(vbool64_t mask, vint64m1_t maskedoff, vi
 **  ret
 */
 vint64m1_t 
-test_vwredsum_vs_i32m1_i64m1_m_tu(vbool32_t mask, vint64m1_t maskedoff, vint32m1_t op1, vint64m1_t op2, size_t vl)
+test_vwredsum_vs_i32m1_i64m1_tum(vbool32_t mask, vint64m1_t maskedoff, vint32m1_t op1, vint64m1_t op2, size_t vl)
 {
-  return vwredsum_vs_i32m1_i64m1_m_tu(mask, maskedoff, op1, op2, vl);
+  return vwredsum_vs_i32m1_i64m1_tum(mask, maskedoff, op1, op2, vl);
 }
 
 /*
@@ -2612,11 +2612,11 @@ test_vwredsum_vs_i32m1_i64m1_m_tu(vbool32_t mask, vint64m1_t maskedoff, vint32m1
 vint64m1_t 
 test_vwredsum_vs_i32m1_i64m1_m_tu_vl31(vbool32_t mask, vint64m1_t maskedoff, vint32m1_t op1, vint64m1_t op2)
 {
-  return vwredsum_vs_i32m1_i64m1_m_tu(mask, maskedoff, op1, op2, 31);
+  return vwredsum_vs_i32m1_i64m1_tum(mask, maskedoff, op1, op2, 31);
 }
 
 /*
-** test_vwredsum_vs_i32m2_i64m1_m_tu:
+** test_vwredsum_vs_i32m2_i64m1_tum:
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e32,\s*m2,\s*tu,\s*m[au]
 **  ...
@@ -2625,9 +2625,9 @@ test_vwredsum_vs_i32m1_i64m1_m_tu_vl31(vbool32_t mask, vint64m1_t maskedoff, vin
 **  ret
 */
 vint64m1_t 
-test_vwredsum_vs_i32m2_i64m1_m_tu(vbool16_t mask, vint64m1_t maskedoff, vint32m2_t op1, vint64m1_t op2, size_t vl)
+test_vwredsum_vs_i32m2_i64m1_tum(vbool16_t mask, vint64m1_t maskedoff, vint32m2_t op1, vint64m1_t op2, size_t vl)
 {
-  return vwredsum_vs_i32m2_i64m1_m_tu(mask, maskedoff, op1, op2, vl);
+  return vwredsum_vs_i32m2_i64m1_tum(mask, maskedoff, op1, op2, vl);
 }
 
 /*
@@ -2642,11 +2642,11 @@ test_vwredsum_vs_i32m2_i64m1_m_tu(vbool16_t mask, vint64m1_t maskedoff, vint32m2
 vint64m1_t 
 test_vwredsum_vs_i32m2_i64m1_m_tu_vl31(vbool16_t mask, vint64m1_t maskedoff, vint32m2_t op1, vint64m1_t op2)
 {
-  return vwredsum_vs_i32m2_i64m1_m_tu(mask, maskedoff, op1, op2, 31);
+  return vwredsum_vs_i32m2_i64m1_tum(mask, maskedoff, op1, op2, 31);
 }
 
 /*
-** test_vwredsum_vs_i32m4_i64m1_m_tu:
+** test_vwredsum_vs_i32m4_i64m1_tum:
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e32,\s*m4,\s*tu,\s*m[au]
 **  ...
@@ -2655,9 +2655,9 @@ test_vwredsum_vs_i32m2_i64m1_m_tu_vl31(vbool16_t mask, vint64m1_t maskedoff, vin
 **  ret
 */
 vint64m1_t 
-test_vwredsum_vs_i32m4_i64m1_m_tu(vbool8_t mask, vint64m1_t maskedoff, vint32m4_t op1, vint64m1_t op2, size_t vl)
+test_vwredsum_vs_i32m4_i64m1_tum(vbool8_t mask, vint64m1_t maskedoff, vint32m4_t op1, vint64m1_t op2, size_t vl)
 {
-  return vwredsum_vs_i32m4_i64m1_m_tu(mask, maskedoff, op1, op2, vl);
+  return vwredsum_vs_i32m4_i64m1_tum(mask, maskedoff, op1, op2, vl);
 }
 
 /*
@@ -2672,11 +2672,11 @@ test_vwredsum_vs_i32m4_i64m1_m_tu(vbool8_t mask, vint64m1_t maskedoff, vint32m4_
 vint64m1_t 
 test_vwredsum_vs_i32m4_i64m1_m_tu_vl31(vbool8_t mask, vint64m1_t maskedoff, vint32m4_t op1, vint64m1_t op2)
 {
-  return vwredsum_vs_i32m4_i64m1_m_tu(mask, maskedoff, op1, op2, 31);
+  return vwredsum_vs_i32m4_i64m1_tum(mask, maskedoff, op1, op2, 31);
 }
 
 /*
-** test_vwredsum_vs_i32m8_i64m1_m_tu:
+** test_vwredsum_vs_i32m8_i64m1_tum:
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e32,\s*m8,\s*tu,\s*m[au]
 **  ...
@@ -2685,9 +2685,9 @@ test_vwredsum_vs_i32m4_i64m1_m_tu_vl31(vbool8_t mask, vint64m1_t maskedoff, vint
 **  ret
 */
 vint64m1_t 
-test_vwredsum_vs_i32m8_i64m1_m_tu(vbool4_t mask, vint64m1_t maskedoff, vint32m8_t op1, vint64m1_t op2, size_t vl)
+test_vwredsum_vs_i32m8_i64m1_tum(vbool4_t mask, vint64m1_t maskedoff, vint32m8_t op1, vint64m1_t op2, size_t vl)
 {
-  return vwredsum_vs_i32m8_i64m1_m_tu(mask, maskedoff, op1, op2, vl);
+  return vwredsum_vs_i32m8_i64m1_tum(mask, maskedoff, op1, op2, vl);
 }
 
 /*
@@ -2702,7 +2702,7 @@ test_vwredsum_vs_i32m8_i64m1_m_tu(vbool4_t mask, vint64m1_t maskedoff, vint32m8_
 vint64m1_t 
 test_vwredsum_vs_i32m8_i64m1_m_tu_vl31(vbool4_t mask, vint64m1_t maskedoff, vint32m8_t op1, vint64m1_t op2)
 {
-  return vwredsum_vs_i32m8_i64m1_m_tu(mask, maskedoff, op1, op2, 31);
+  return vwredsum_vs_i32m8_i64m1_tum(mask, maskedoff, op1, op2, 31);
 }
 
 /*
@@ -2717,7 +2717,7 @@ test_vwredsum_vs_i32m8_i64m1_m_tu_vl31(vbool4_t mask, vint64m1_t maskedoff, vint
 vint16m1_t 
 test_vwredsum_vs_i8mf8_i16m1_m_tu_vl32(vbool64_t mask, vint16m1_t maskedoff, vint8mf8_t op1, vint16m1_t op2)
 {
-  return vwredsum_vs_i8mf8_i16m1_m_tu(mask, maskedoff, op1, op2, 32);
+  return vwredsum_vs_i8mf8_i16m1_tum(mask, maskedoff, op1, op2, 32);
 }
 
 /*
@@ -2732,7 +2732,7 @@ test_vwredsum_vs_i8mf8_i16m1_m_tu_vl32(vbool64_t mask, vint16m1_t maskedoff, vin
 vint16m1_t 
 test_vwredsum_vs_i8mf4_i16m1_m_tu_vl32(vbool32_t mask, vint16m1_t maskedoff, vint8mf4_t op1, vint16m1_t op2)
 {
-  return vwredsum_vs_i8mf4_i16m1_m_tu(mask, maskedoff, op1, op2, 32);
+  return vwredsum_vs_i8mf4_i16m1_tum(mask, maskedoff, op1, op2, 32);
 }
 
 /*
@@ -2747,7 +2747,7 @@ test_vwredsum_vs_i8mf4_i16m1_m_tu_vl32(vbool32_t mask, vint16m1_t maskedoff, vin
 vint16m1_t 
 test_vwredsum_vs_i8mf2_i16m1_m_tu_vl32(vbool16_t mask, vint16m1_t maskedoff, vint8mf2_t op1, vint16m1_t op2)
 {
-  return vwredsum_vs_i8mf2_i16m1_m_tu(mask, maskedoff, op1, op2, 32);
+  return vwredsum_vs_i8mf2_i16m1_tum(mask, maskedoff, op1, op2, 32);
 }
 
 /*
@@ -2762,7 +2762,7 @@ test_vwredsum_vs_i8mf2_i16m1_m_tu_vl32(vbool16_t mask, vint16m1_t maskedoff, vin
 vint16m1_t 
 test_vwredsum_vs_i8m1_i16m1_m_tu_vl32(vbool8_t mask, vint16m1_t maskedoff, vint8m1_t op1, vint16m1_t op2)
 {
-  return vwredsum_vs_i8m1_i16m1_m_tu(mask, maskedoff, op1, op2, 32);
+  return vwredsum_vs_i8m1_i16m1_tum(mask, maskedoff, op1, op2, 32);
 }
 
 /*
@@ -2777,7 +2777,7 @@ test_vwredsum_vs_i8m1_i16m1_m_tu_vl32(vbool8_t mask, vint16m1_t maskedoff, vint8
 vint16m1_t 
 test_vwredsum_vs_i8m2_i16m1_m_tu_vl32(vbool4_t mask, vint16m1_t maskedoff, vint8m2_t op1, vint16m1_t op2)
 {
-  return vwredsum_vs_i8m2_i16m1_m_tu(mask, maskedoff, op1, op2, 32);
+  return vwredsum_vs_i8m2_i16m1_tum(mask, maskedoff, op1, op2, 32);
 }
 
 /*
@@ -2792,7 +2792,7 @@ test_vwredsum_vs_i8m2_i16m1_m_tu_vl32(vbool4_t mask, vint16m1_t maskedoff, vint8
 vint16m1_t 
 test_vwredsum_vs_i8m4_i16m1_m_tu_vl32(vbool2_t mask, vint16m1_t maskedoff, vint8m4_t op1, vint16m1_t op2)
 {
-  return vwredsum_vs_i8m4_i16m1_m_tu(mask, maskedoff, op1, op2, 32);
+  return vwredsum_vs_i8m4_i16m1_tum(mask, maskedoff, op1, op2, 32);
 }
 
 /*
@@ -2807,7 +2807,7 @@ test_vwredsum_vs_i8m4_i16m1_m_tu_vl32(vbool2_t mask, vint16m1_t maskedoff, vint8
 vint16m1_t 
 test_vwredsum_vs_i8m8_i16m1_m_tu_vl32(vbool1_t mask, vint16m1_t maskedoff, vint8m8_t op1, vint16m1_t op2)
 {
-  return vwredsum_vs_i8m8_i16m1_m_tu(mask, maskedoff, op1, op2, 32);
+  return vwredsum_vs_i8m8_i16m1_tum(mask, maskedoff, op1, op2, 32);
 }
 
 /*
@@ -2822,7 +2822,7 @@ test_vwredsum_vs_i8m8_i16m1_m_tu_vl32(vbool1_t mask, vint16m1_t maskedoff, vint8
 vint32m1_t 
 test_vwredsum_vs_i16mf4_i32m1_m_tu_vl32(vbool64_t mask, vint32m1_t maskedoff, vint16mf4_t op1, vint32m1_t op2)
 {
-  return vwredsum_vs_i16mf4_i32m1_m_tu(mask, maskedoff, op1, op2, 32);
+  return vwredsum_vs_i16mf4_i32m1_tum(mask, maskedoff, op1, op2, 32);
 }
 
 /*
@@ -2837,7 +2837,7 @@ test_vwredsum_vs_i16mf4_i32m1_m_tu_vl32(vbool64_t mask, vint32m1_t maskedoff, vi
 vint32m1_t 
 test_vwredsum_vs_i16mf2_i32m1_m_tu_vl32(vbool32_t mask, vint32m1_t maskedoff, vint16mf2_t op1, vint32m1_t op2)
 {
-  return vwredsum_vs_i16mf2_i32m1_m_tu(mask, maskedoff, op1, op2, 32);
+  return vwredsum_vs_i16mf2_i32m1_tum(mask, maskedoff, op1, op2, 32);
 }
 
 /*
@@ -2852,7 +2852,7 @@ test_vwredsum_vs_i16mf2_i32m1_m_tu_vl32(vbool32_t mask, vint32m1_t maskedoff, vi
 vint32m1_t 
 test_vwredsum_vs_i16m1_i32m1_m_tu_vl32(vbool16_t mask, vint32m1_t maskedoff, vint16m1_t op1, vint32m1_t op2)
 {
-  return vwredsum_vs_i16m1_i32m1_m_tu(mask, maskedoff, op1, op2, 32);
+  return vwredsum_vs_i16m1_i32m1_tum(mask, maskedoff, op1, op2, 32);
 }
 
 /*
@@ -2867,7 +2867,7 @@ test_vwredsum_vs_i16m1_i32m1_m_tu_vl32(vbool16_t mask, vint32m1_t maskedoff, vin
 vint32m1_t 
 test_vwredsum_vs_i16m2_i32m1_m_tu_vl32(vbool8_t mask, vint32m1_t maskedoff, vint16m2_t op1, vint32m1_t op2)
 {
-  return vwredsum_vs_i16m2_i32m1_m_tu(mask, maskedoff, op1, op2, 32);
+  return vwredsum_vs_i16m2_i32m1_tum(mask, maskedoff, op1, op2, 32);
 }
 
 /*
@@ -2882,7 +2882,7 @@ test_vwredsum_vs_i16m2_i32m1_m_tu_vl32(vbool8_t mask, vint32m1_t maskedoff, vint
 vint32m1_t 
 test_vwredsum_vs_i16m4_i32m1_m_tu_vl32(vbool4_t mask, vint32m1_t maskedoff, vint16m4_t op1, vint32m1_t op2)
 {
-  return vwredsum_vs_i16m4_i32m1_m_tu(mask, maskedoff, op1, op2, 32);
+  return vwredsum_vs_i16m4_i32m1_tum(mask, maskedoff, op1, op2, 32);
 }
 
 /*
@@ -2897,7 +2897,7 @@ test_vwredsum_vs_i16m4_i32m1_m_tu_vl32(vbool4_t mask, vint32m1_t maskedoff, vint
 vint32m1_t 
 test_vwredsum_vs_i16m8_i32m1_m_tu_vl32(vbool2_t mask, vint32m1_t maskedoff, vint16m8_t op1, vint32m1_t op2)
 {
-  return vwredsum_vs_i16m8_i32m1_m_tu(mask, maskedoff, op1, op2, 32);
+  return vwredsum_vs_i16m8_i32m1_tum(mask, maskedoff, op1, op2, 32);
 }
 
 /*
@@ -2912,7 +2912,7 @@ test_vwredsum_vs_i16m8_i32m1_m_tu_vl32(vbool2_t mask, vint32m1_t maskedoff, vint
 vint64m1_t 
 test_vwredsum_vs_i32mf2_i64m1_m_tu_vl32(vbool64_t mask, vint64m1_t maskedoff, vint32mf2_t op1, vint64m1_t op2)
 {
-  return vwredsum_vs_i32mf2_i64m1_m_tu(mask, maskedoff, op1, op2, 32);
+  return vwredsum_vs_i32mf2_i64m1_tum(mask, maskedoff, op1, op2, 32);
 }
 
 /*
@@ -2927,7 +2927,7 @@ test_vwredsum_vs_i32mf2_i64m1_m_tu_vl32(vbool64_t mask, vint64m1_t maskedoff, vi
 vint64m1_t 
 test_vwredsum_vs_i32m1_i64m1_m_tu_vl32(vbool32_t mask, vint64m1_t maskedoff, vint32m1_t op1, vint64m1_t op2)
 {
-  return vwredsum_vs_i32m1_i64m1_m_tu(mask, maskedoff, op1, op2, 32);
+  return vwredsum_vs_i32m1_i64m1_tum(mask, maskedoff, op1, op2, 32);
 }
 
 /*
@@ -2942,7 +2942,7 @@ test_vwredsum_vs_i32m1_i64m1_m_tu_vl32(vbool32_t mask, vint64m1_t maskedoff, vin
 vint64m1_t 
 test_vwredsum_vs_i32m2_i64m1_m_tu_vl32(vbool16_t mask, vint64m1_t maskedoff, vint32m2_t op1, vint64m1_t op2)
 {
-  return vwredsum_vs_i32m2_i64m1_m_tu(mask, maskedoff, op1, op2, 32);
+  return vwredsum_vs_i32m2_i64m1_tum(mask, maskedoff, op1, op2, 32);
 }
 
 /*
@@ -2957,7 +2957,7 @@ test_vwredsum_vs_i32m2_i64m1_m_tu_vl32(vbool16_t mask, vint64m1_t maskedoff, vin
 vint64m1_t 
 test_vwredsum_vs_i32m4_i64m1_m_tu_vl32(vbool8_t mask, vint64m1_t maskedoff, vint32m4_t op1, vint64m1_t op2)
 {
-  return vwredsum_vs_i32m4_i64m1_m_tu(mask, maskedoff, op1, op2, 32);
+  return vwredsum_vs_i32m4_i64m1_tum(mask, maskedoff, op1, op2, 32);
 }
 
 /*
@@ -2972,7 +2972,7 @@ test_vwredsum_vs_i32m4_i64m1_m_tu_vl32(vbool8_t mask, vint64m1_t maskedoff, vint
 vint64m1_t 
 test_vwredsum_vs_i32m8_i64m1_m_tu_vl32(vbool4_t mask, vint64m1_t maskedoff, vint32m8_t op1, vint64m1_t op2)
 {
-  return vwredsum_vs_i32m8_i64m1_m_tu(mask, maskedoff, op1, op2, 32);
+  return vwredsum_vs_i32m8_i64m1_tum(mask, maskedoff, op1, op2, 32);
 }
 
 /*
