@@ -1,5 +1,5 @@
 /* { dg-do compile } */
-/* { dg-options "-O -mriscv-vector-bits=256" } */
+/* { dg-additional-options "-O -mriscv-vector-bits=256" } */
 
 typedef unsigned char int8x4_t __attribute__((vector_size (4)));
 

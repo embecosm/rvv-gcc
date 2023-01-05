@@ -1,7 +1,8 @@
 /* { dg-do compile } */
-/* { dg-options "-O2 -mriscv-vector-bits=256  --save-temps" } */
+/* { dg-additional-options "-O2 -mriscv-vector-bits=256  --save-temps" } */
 
 #include <stdint.h>
+#include <riscv_vector.h>
 
 typedef int8_t vnx16qi __attribute__((vector_size (32)));
 typedef int16_t vnx8hi __attribute__((vector_size (32)));

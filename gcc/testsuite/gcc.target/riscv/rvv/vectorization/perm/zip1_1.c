@@ -1,5 +1,5 @@
 /* { dg-do compile } */
-/* { dg-options "-O -mriscv-vector-bits=256 " } */
+/* { dg-additional-options "-O -mriscv-vector-bits=256 " } */
 
 #ifndef BIAS
 #define BIAS 0
