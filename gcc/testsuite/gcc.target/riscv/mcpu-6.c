@@ -1,6 +1,7 @@
 /* { dg-do compile } */
 /* Verify -mtune has higher priority than -mcpu for pipeline model .  */
 /* { dg-options "-mcpu=sifive-u74 -mtune=rocket -fdump-rtl-sched2-details -march=rv32i -mabi=ilp32" } */
+/* { { dg-skip-if "no dump file" { *-*-* } { "*" } { "-O2" "-O3" "-Os" } } */
 /* { dg-final { scan-rtl-dump "simple_return\[ \]+:alu" "sched2" } } */
 
 int main()
