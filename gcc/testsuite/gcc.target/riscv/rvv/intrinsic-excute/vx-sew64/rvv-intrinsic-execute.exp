@@ -38,6 +38,9 @@ if { [check_effective_target_rv32] } {
   set gcc_march ""
 }
 
+# The default action for a test is 'compile'.  Save current default.
+set save-dg-do-what-default ${dg-do-what-default}
+
 # Initialize `dg'.
 dg-init
 
@@ -46,6 +49,9 @@ set CFLAGS "$DEFAULT_CFLAGS -std=c99 -march=$gcc_march -pedantic-errors -O3 -Wno
 set dg-do-what-default "run"
 dg-runtest [lsort [glob -nocomplain $srcdir/$subdir/*.c]] \
 	"" $CFLAGS
+
+# Clean up.
+set dg-do-what-default ${save-dg-do-what-default}
 
 # All done.
 dg-finish

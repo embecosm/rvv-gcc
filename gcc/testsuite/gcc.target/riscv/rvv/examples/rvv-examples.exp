@@ -38,6 +38,9 @@ if ![info exists DEFAULT_CFLAGS] then {
     set DEFAULT_CFLAGS " -ansi -pedantic-errors"
 }
 
+# The default action for a test is 'compile'.  Save current default.
+set save-dg-do-what-default ${dg-do-what-default}
+
 # Initialize `dg'.
 dg-init
 
@@ -48,5 +51,9 @@ foreach march $gcc_march_list {
     gcc-dg-runtest [lsort [glob -nocomplain $srcdir/$subdir/*.\[cS\]]] \
 		   $march $CFLAGS
 }
+
+# Clean up.
+set dg-do-what-default ${save-dg-do-what-default}
+
 # All done.
 dg-finish
