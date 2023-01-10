@@ -20,7 +20,7 @@
 # We don't need to test back-end code-gen in RV32 system for C++
 # Because it is already tested in C.
 # Exit immediately if this isn't a RISC-V target.
-if ![istarget riscv64*-*-*] then {
+if { ![check_effective_target_rv64] } then {
   return
 }
 
