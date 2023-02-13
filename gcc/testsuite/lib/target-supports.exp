@@ -11911,3 +11911,29 @@ main:
 	.byte 0
   } ""]
 }
+
+# RISC-V: Return a list of vector-enabled architectures to test.
+# Maybe should use an asm to force use of compressed insn for rv32gcv / rv64gcv?
+proc riscv_vector_arch_list { } {
+    set result {}
+    if { [check_effective_target_rv32] } {
+        if { [check_no_compiler_messages_nocache rv32gv_libs executable {
+              int main() { return 0; } } "-march=rv32gv"] } {
+            lappend result "-march=rv32gv"
+        }
+        if { [check_runtime rv32gcv_exec {
+              int main() { return 0; } } "-march=rv32gcv"] } {
+            lappend result "-march=rv32gcv"
+        }
+    } elseif { [check_effective_target_rv64] } { 
+        if { [check_no_compiler_messages_nocache rv64gv_libs executable {
+              int main() { return 0; } } "-march=rv64gv"] } {
+            lappend result "-march=rv64gv"
+        }
+        if { [check_runtime rv64gcv_exec {
+              int main() { return 0; } } "-march=rv64gcv"] } {
+            lappend result "-march=rv64gcv"
+        }
+    } 
+    return $result
+}
