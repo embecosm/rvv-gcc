@@ -4460,7 +4460,7 @@ test_vmsleu_vx_u32m8_b4_vl32(vuint32m8_t op1, uint32_t op2)
 }
 
 /*
-** test_vmsleu_vx_u64m1_b64: {target riscv64-*-*}
+** test_vmsleu_vx_u64m1_b64: {target { rv64 }}
 **   ...
 **   vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m1,\s*t[au],\s*m[au]
 **   ...
@@ -4474,7 +4474,7 @@ test_vmsleu_vx_u64m1_b64(vuint64m1_t op1, uint64_t op2, size_t vl)
 }
 
 /*
-** test_vmsleu_vx_u64m1_b64_vl31: {target riscv64-*-*}
+** test_vmsleu_vx_u64m1_b64_vl31: {target { rv64 }}
 **   ...
 **   vsetivli\s+zero,\s*31,\s*e64,\s*m1,\s*t[au],\s*m[au]
 **   ...
@@ -4488,7 +4488,7 @@ test_vmsleu_vx_u64m1_b64_vl31(vuint64m1_t op1, uint64_t op2)
 }
 
 /*
-** test_vmsleu_vx_u64m1_b64_vl32: {target riscv64-*-*}
+** test_vmsleu_vx_u64m1_b64_vl32: {target { rv64 }}
 **   ...
 **   vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m1,\s*t[au],\s*m[au]
 **   ...
@@ -4502,7 +4502,7 @@ test_vmsleu_vx_u64m1_b64_vl32(vuint64m1_t op1, uint64_t op2)
 }
 
 /*
-** test_vmsleu_vx_u64m2_b32: {target riscv64-*-*}
+** test_vmsleu_vx_u64m2_b32: {target { rv64 }}
 **   ...
 **   vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m2,\s*t[au],\s*m[au]
 **   ...
@@ -4516,7 +4516,7 @@ test_vmsleu_vx_u64m2_b32(vuint64m2_t op1, uint64_t op2, size_t vl)
 }
 
 /*
-** test_vmsleu_vx_u64m2_b32_vl31: {target riscv64-*-*}
+** test_vmsleu_vx_u64m2_b32_vl31: {target { rv64 }}
 **   ...
 **   vsetivli\s+zero,\s*31,\s*e64,\s*m2,\s*t[au],\s*m[au]
 **   ...
@@ -4530,7 +4530,7 @@ test_vmsleu_vx_u64m2_b32_vl31(vuint64m2_t op1, uint64_t op2)
 }
 
 /*
-** test_vmsleu_vx_u64m2_b32_vl32: {target riscv64-*-*}
+** test_vmsleu_vx_u64m2_b32_vl32: {target { rv64 }}
 **   ...
 **   vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m2,\s*t[au],\s*m[au]
 **   ...
@@ -4544,7 +4544,7 @@ test_vmsleu_vx_u64m2_b32_vl32(vuint64m2_t op1, uint64_t op2)
 }
 
 /*
-** test_vmsleu_vx_u64m4_b16: {target riscv64-*-*}
+** test_vmsleu_vx_u64m4_b16: {target { rv64 }}
 **   ...
 **   vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m4,\s*t[au],\s*m[au]
 **   ...
@@ -4558,7 +4558,7 @@ test_vmsleu_vx_u64m4_b16(vuint64m4_t op1, uint64_t op2, size_t vl)
 }
 
 /*
-** test_vmsleu_vx_u64m4_b16_vl31: {target riscv64-*-*}
+** test_vmsleu_vx_u64m4_b16_vl31: {target { rv64 }}
 **   ...
 **   vsetivli\s+zero,\s*31,\s*e64,\s*m4,\s*t[au],\s*m[au]
 **   ...
@@ -4572,7 +4572,7 @@ test_vmsleu_vx_u64m4_b16_vl31(vuint64m4_t op1, uint64_t op2)
 }
 
 /*
-** test_vmsleu_vx_u64m4_b16_vl32: {target riscv64-*-*}
+** test_vmsleu_vx_u64m4_b16_vl32: {target { rv64 }}
 **   ...
 **   vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m4,\s*t[au],\s*m[au]
 **   ...
@@ -4586,7 +4586,7 @@ test_vmsleu_vx_u64m4_b16_vl32(vuint64m4_t op1, uint64_t op2)
 }
 
 /*
-** test_vmsleu_vx_u64m8_b8: {target riscv64-*-*}
+** test_vmsleu_vx_u64m8_b8: {target { rv64 }}
 **   ...
 **   vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m8,\s*t[au],\s*m[au]
 **   ...
@@ -4600,7 +4600,7 @@ test_vmsleu_vx_u64m8_b8(vuint64m8_t op1, uint64_t op2, size_t vl)
 }
 
 /*
-** test_vmsleu_vx_u64m8_b8_vl31: {target riscv64-*-*}
+** test_vmsleu_vx_u64m8_b8_vl31: {target { rv64 }}
 **   ...
 **   vsetivli\s+zero,\s*31,\s*e64,\s*m8,\s*t[au],\s*m[au]
 **   ...
@@ -4614,7 +4614,7 @@ test_vmsleu_vx_u64m8_b8_vl31(vuint64m8_t op1, uint64_t op2)
 }
 
 /*
-** test_vmsleu_vx_u64m8_b8_vl32: {target riscv64-*-*}
+** test_vmsleu_vx_u64m8_b8_vl32: {target { rv64 }}
 **   ...
 **   vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m8,\s*t[au],\s*m[au]
 **   ...
@@ -5384,7 +5384,7 @@ test_vmsleu_vx_u32m8_b4_m_vl32(vbool4_t mask, vbool4_t maskedoff, vuint32m8_t op
 }
 
 /*
-** test_vmsleu_vx_u64m1_b64_m: {target riscv64-*-*}
+** test_vmsleu_vx_u64m1_b64_m: {target { rv64 }}
 **   ...
 **   vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m1,\s*t[au],\s*mu
 **   ...
@@ -5398,7 +5398,7 @@ test_vmsleu_vx_u64m1_b64_m(vbool64_t mask, vbool64_t maskedoff, vuint64m1_t op1,
 }
 
 /*
-** test_vmsleu_vx_u64m1_b64_m_vl31: {target riscv64-*-*}
+** test_vmsleu_vx_u64m1_b64_m_vl31: {target { rv64 }}
 **   ...
 **   vsetivli\s+zero,\s*31,\s*e64,\s*m1,\s*t[au],\s*mu
 **   ...
@@ -5412,7 +5412,7 @@ test_vmsleu_vx_u64m1_b64_m_vl31(vbool64_t mask, vbool64_t maskedoff, vuint64m1_t
 }
 
 /*
-** test_vmsleu_vx_u64m1_b64_m_vl32: {target riscv64-*-*}
+** test_vmsleu_vx_u64m1_b64_m_vl32: {target { rv64 }}
 **   ...
 **   vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m1,\s*t[au],\s*mu
 **   ...
@@ -5426,7 +5426,7 @@ test_vmsleu_vx_u64m1_b64_m_vl32(vbool64_t mask, vbool64_t maskedoff, vuint64m1_t
 }
 
 /*
-** test_vmsleu_vx_u64m2_b32_m: {target riscv64-*-*}
+** test_vmsleu_vx_u64m2_b32_m: {target { rv64 }}
 **   ...
 **   vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m2,\s*t[au],\s*mu
 **   ...
@@ -5440,7 +5440,7 @@ test_vmsleu_vx_u64m2_b32_m(vbool32_t mask, vbool32_t maskedoff, vuint64m2_t op1,
 }
 
 /*
-** test_vmsleu_vx_u64m2_b32_m_vl31: {target riscv64-*-*}
+** test_vmsleu_vx_u64m2_b32_m_vl31: {target { rv64 }}
 **   ...
 **   vsetivli\s+zero,\s*31,\s*e64,\s*m2,\s*t[au],\s*mu
 **   ...
@@ -5454,7 +5454,7 @@ test_vmsleu_vx_u64m2_b32_m_vl31(vbool32_t mask, vbool32_t maskedoff, vuint64m2_t
 }
 
 /*
-** test_vmsleu_vx_u64m2_b32_m_vl32: {target riscv64-*-*}
+** test_vmsleu_vx_u64m2_b32_m_vl32: {target { rv64 }}
 **   ...
 **   vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m2,\s*t[au],\s*mu
 **   ...
@@ -5468,7 +5468,7 @@ test_vmsleu_vx_u64m2_b32_m_vl32(vbool32_t mask, vbool32_t maskedoff, vuint64m2_t
 }
 
 /*
-** test_vmsleu_vx_u64m4_b16_m: {target riscv64-*-*}
+** test_vmsleu_vx_u64m4_b16_m: {target { rv64 }}
 **   ...
 **   vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m4,\s*t[au],\s*mu
 **   ...
@@ -5482,7 +5482,7 @@ test_vmsleu_vx_u64m4_b16_m(vbool16_t mask, vbool16_t maskedoff, vuint64m4_t op1,
 }
 
 /*
-** test_vmsleu_vx_u64m4_b16_m_vl31: {target riscv64-*-*}
+** test_vmsleu_vx_u64m4_b16_m_vl31: {target { rv64 }}
 **   ...
 **   vsetivli\s+zero,\s*31,\s*e64,\s*m4,\s*t[au],\s*mu
 **   ...
@@ -5496,7 +5496,7 @@ test_vmsleu_vx_u64m4_b16_m_vl31(vbool16_t mask, vbool16_t maskedoff, vuint64m4_t
 }
 
 /*
-** test_vmsleu_vx_u64m4_b16_m_vl32: {target riscv64-*-*}
+** test_vmsleu_vx_u64m4_b16_m_vl32: {target { rv64 }}
 **   ...
 **   vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m4,\s*t[au],\s*mu
 **   ...
@@ -5510,7 +5510,7 @@ test_vmsleu_vx_u64m4_b16_m_vl32(vbool16_t mask, vbool16_t maskedoff, vuint64m4_t
 }
 
 /*
-** test_vmsleu_vx_u64m8_b8_m: {target riscv64-*-*}
+** test_vmsleu_vx_u64m8_b8_m: {target { rv64 }}
 **   ...
 **   vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m8,\s*t[au],\s*mu
 **   ...
@@ -5524,7 +5524,7 @@ test_vmsleu_vx_u64m8_b8_m(vbool8_t mask, vbool8_t maskedoff, vuint64m8_t op1, ui
 }
 
 /*
-** test_vmsleu_vx_u64m8_b8_m_vl31: {target riscv64-*-*}
+** test_vmsleu_vx_u64m8_b8_m_vl31: {target { rv64 }}
 **   ...
 **   vsetivli\s+zero,\s*31,\s*e64,\s*m8,\s*t[au],\s*mu
 **   ...
@@ -5538,7 +5538,7 @@ test_vmsleu_vx_u64m8_b8_m_vl31(vbool8_t mask, vbool8_t maskedoff, vuint64m8_t op
 }
 
 /*
-** test_vmsleu_vx_u64m8_b8_m_vl32: {target riscv64-*-*}
+** test_vmsleu_vx_u64m8_b8_m_vl32: {target { rv64 }}
 **   ...
 **   vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m8,\s*t[au],\s*mu
 **   ...
@@ -6308,7 +6308,7 @@ test_vmsleu_vx_u32m8_b4_ma_vl32(vbool4_t mask, vbool4_t maskedoff, vuint32m8_t o
 }
 
 /*
-** test_vmsleu_vx_u64m1_b64_ma: {target riscv64-*-*}
+** test_vmsleu_vx_u64m1_b64_ma: {target { rv64 }}
 **   ...
 **   vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m1,\s*t[au],\s*ma
 **   ...
@@ -6322,7 +6322,7 @@ test_vmsleu_vx_u64m1_b64_ma(vbool64_t mask, vbool64_t maskedoff, vuint64m1_t op1
 }
 
 /*
-** test_vmsleu_vx_u64m1_b64_ma_vl31: {target riscv64-*-*}
+** test_vmsleu_vx_u64m1_b64_ma_vl31: {target { rv64 }}
 **   ...
 **   vsetivli\s+zero,\s*31,\s*e64,\s*m1,\s*t[au],\s*ma
 **   ...
@@ -6336,7 +6336,7 @@ test_vmsleu_vx_u64m1_b64_ma_vl31(vbool64_t mask, vbool64_t maskedoff, vuint64m1_
 }
 
 /*
-** test_vmsleu_vx_u64m1_b64_ma_vl32: {target riscv64-*-*}
+** test_vmsleu_vx_u64m1_b64_ma_vl32: {target { rv64 }}
 **   ...
 **   vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m1,\s*t[au],\s*ma
 **   ...
@@ -6350,7 +6350,7 @@ test_vmsleu_vx_u64m1_b64_ma_vl32(vbool64_t mask, vbool64_t maskedoff, vuint64m1_
 }
 
 /*
-** test_vmsleu_vx_u64m2_b32_ma: {target riscv64-*-*}
+** test_vmsleu_vx_u64m2_b32_ma: {target { rv64 }}
 **   ...
 **   vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m2,\s*t[au],\s*ma
 **   ...
@@ -6364,7 +6364,7 @@ test_vmsleu_vx_u64m2_b32_ma(vbool32_t mask, vbool32_t maskedoff, vuint64m2_t op1
 }
 
 /*
-** test_vmsleu_vx_u64m2_b32_ma_vl31: {target riscv64-*-*}
+** test_vmsleu_vx_u64m2_b32_ma_vl31: {target { rv64 }}
 **   ...
 **   vsetivli\s+zero,\s*31,\s*e64,\s*m2,\s*t[au],\s*ma
 **   ...
@@ -6378,7 +6378,7 @@ test_vmsleu_vx_u64m2_b32_ma_vl31(vbool32_t mask, vbool32_t maskedoff, vuint64m2_
 }
 
 /*
-** test_vmsleu_vx_u64m2_b32_ma_vl32: {target riscv64-*-*}
+** test_vmsleu_vx_u64m2_b32_ma_vl32: {target { rv64 }}
 **   ...
 **   vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m2,\s*t[au],\s*ma
 **   ...
@@ -6392,7 +6392,7 @@ test_vmsleu_vx_u64m2_b32_ma_vl32(vbool32_t mask, vbool32_t maskedoff, vuint64m2_
 }
 
 /*
-** test_vmsleu_vx_u64m4_b16_ma: {target riscv64-*-*}
+** test_vmsleu_vx_u64m4_b16_ma: {target { rv64 }}
 **   ...
 **   vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m4,\s*t[au],\s*ma
 **   ...
@@ -6406,7 +6406,7 @@ test_vmsleu_vx_u64m4_b16_ma(vbool16_t mask, vbool16_t maskedoff, vuint64m4_t op1
 }
 
 /*
-** test_vmsleu_vx_u64m4_b16_ma_vl31: {target riscv64-*-*}
+** test_vmsleu_vx_u64m4_b16_ma_vl31: {target { rv64 }}
 **   ...
 **   vsetivli\s+zero,\s*31,\s*e64,\s*m4,\s*t[au],\s*ma
 **   ...
@@ -6420,7 +6420,7 @@ test_vmsleu_vx_u64m4_b16_ma_vl31(vbool16_t mask, vbool16_t maskedoff, vuint64m4_
 }
 
 /*
-** test_vmsleu_vx_u64m4_b16_ma_vl32: {target riscv64-*-*}
+** test_vmsleu_vx_u64m4_b16_ma_vl32: {target { rv64 }}
 **   ...
 **   vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m4,\s*t[au],\s*ma
 **   ...
@@ -6434,7 +6434,7 @@ test_vmsleu_vx_u64m4_b16_ma_vl32(vbool16_t mask, vbool16_t maskedoff, vuint64m4_
 }
 
 /*
-** test_vmsleu_vx_u64m8_b8_ma: {target riscv64-*-*}
+** test_vmsleu_vx_u64m8_b8_ma: {target { rv64 }}
 **   ...
 **   vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m8,\s*t[au],\s*ma
 **   ...
@@ -6448,7 +6448,7 @@ test_vmsleu_vx_u64m8_b8_ma(vbool8_t mask, vbool8_t maskedoff, vuint64m8_t op1, u
 }
 
 /*
-** test_vmsleu_vx_u64m8_b8_ma_vl31: {target riscv64-*-*}
+** test_vmsleu_vx_u64m8_b8_ma_vl31: {target { rv64 }}
 **   ...
 **   vsetivli\s+zero,\s*31,\s*e64,\s*m8,\s*t[au],\s*ma
 **   ...
@@ -6462,7 +6462,7 @@ test_vmsleu_vx_u64m8_b8_ma_vl31(vbool8_t mask, vbool8_t maskedoff, vuint64m8_t o
 }
 
 /*
-** test_vmsleu_vx_u64m8_b8_ma_vl32: {target riscv64-*-*}
+** test_vmsleu_vx_u64m8_b8_ma_vl32: {target { rv64 }}
 **   ...
 **   vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m8,\s*t[au],\s*ma
 **   ...
@@ -7232,7 +7232,7 @@ test_vmsleu_vx_u32m8_b4_mu_vl32(vbool4_t mask, vbool4_t maskedoff, vuint32m8_t o
 }
 
 /*
-** test_vmsleu_vx_u64m1_b64_mu: {target riscv64-*-*}
+** test_vmsleu_vx_u64m1_b64_mu: {target { rv64 }}
 **   ...
 **   vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m1,\s*t[au],\s*mu
 **   ...
@@ -7246,7 +7246,7 @@ test_vmsleu_vx_u64m1_b64_mu(vbool64_t mask, vbool64_t maskedoff, vuint64m1_t op1
 }
 
 /*
-** test_vmsleu_vx_u64m1_b64_mu_vl31: {target riscv64-*-*}
+** test_vmsleu_vx_u64m1_b64_mu_vl31: {target { rv64 }}
 **   ...
 **   vsetivli\s+zero,\s*31,\s*e64,\s*m1,\s*t[au],\s*mu
 **   ...
@@ -7260,7 +7260,7 @@ test_vmsleu_vx_u64m1_b64_mu_vl31(vbool64_t mask, vbool64_t maskedoff, vuint64m1_
 }
 
 /*
-** test_vmsleu_vx_u64m1_b64_mu_vl32: {target riscv64-*-*}
+** test_vmsleu_vx_u64m1_b64_mu_vl32: {target { rv64 }}
 **   ...
 **   vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m1,\s*t[au],\s*mu
 **   ...
@@ -7274,7 +7274,7 @@ test_vmsleu_vx_u64m1_b64_mu_vl32(vbool64_t mask, vbool64_t maskedoff, vuint64m1_
 }
 
 /*
-** test_vmsleu_vx_u64m2_b32_mu: {target riscv64-*-*}
+** test_vmsleu_vx_u64m2_b32_mu: {target { rv64 }}
 **   ...
 **   vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m2,\s*t[au],\s*mu
 **   ...
@@ -7288,7 +7288,7 @@ test_vmsleu_vx_u64m2_b32_mu(vbool32_t mask, vbool32_t maskedoff, vuint64m2_t op1
 }
 
 /*
-** test_vmsleu_vx_u64m2_b32_mu_vl31: {target riscv64-*-*}
+** test_vmsleu_vx_u64m2_b32_mu_vl31: {target { rv64 }}
 **   ...
 **   vsetivli\s+zero,\s*31,\s*e64,\s*m2,\s*t[au],\s*mu
 **   ...
@@ -7302,7 +7302,7 @@ test_vmsleu_vx_u64m2_b32_mu_vl31(vbool32_t mask, vbool32_t maskedoff, vuint64m2_
 }
 
 /*
-** test_vmsleu_vx_u64m2_b32_mu_vl32: {target riscv64-*-*}
+** test_vmsleu_vx_u64m2_b32_mu_vl32: {target { rv64 }}
 **   ...
 **   vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m2,\s*t[au],\s*mu
 **   ...
@@ -7316,7 +7316,7 @@ test_vmsleu_vx_u64m2_b32_mu_vl32(vbool32_t mask, vbool32_t maskedoff, vuint64m2_
 }
 
 /*
-** test_vmsleu_vx_u64m4_b16_mu: {target riscv64-*-*}
+** test_vmsleu_vx_u64m4_b16_mu: {target { rv64 }}
 **   ...
 **   vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m4,\s*t[au],\s*mu
 **   ...
@@ -7330,7 +7330,7 @@ test_vmsleu_vx_u64m4_b16_mu(vbool16_t mask, vbool16_t maskedoff, vuint64m4_t op1
 }
 
 /*
-** test_vmsleu_vx_u64m4_b16_mu_vl31: {target riscv64-*-*}
+** test_vmsleu_vx_u64m4_b16_mu_vl31: {target { rv64 }}
 **   ...
 **   vsetivli\s+zero,\s*31,\s*e64,\s*m4,\s*t[au],\s*mu
 **   ...
@@ -7344,7 +7344,7 @@ test_vmsleu_vx_u64m4_b16_mu_vl31(vbool16_t mask, vbool16_t maskedoff, vuint64m4_
 }
 
 /*
-** test_vmsleu_vx_u64m4_b16_mu_vl32: {target riscv64-*-*}
+** test_vmsleu_vx_u64m4_b16_mu_vl32: {target { rv64 }}
 **   ...
 **   vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m4,\s*t[au],\s*mu
 **   ...
@@ -7358,7 +7358,7 @@ test_vmsleu_vx_u64m4_b16_mu_vl32(vbool16_t mask, vbool16_t maskedoff, vuint64m4_
 }
 
 /*
-** test_vmsleu_vx_u64m8_b8_mu: {target riscv64-*-*}
+** test_vmsleu_vx_u64m8_b8_mu: {target { rv64 }}
 **   ...
 **   vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m8,\s*t[au],\s*mu
 **   ...
@@ -7372,7 +7372,7 @@ test_vmsleu_vx_u64m8_b8_mu(vbool8_t mask, vbool8_t maskedoff, vuint64m8_t op1, u
 }
 
 /*
-** test_vmsleu_vx_u64m8_b8_mu_vl31: {target riscv64-*-*}
+** test_vmsleu_vx_u64m8_b8_mu_vl31: {target { rv64 }}
 **   ...
 **   vsetivli\s+zero,\s*31,\s*e64,\s*m8,\s*t[au],\s*mu
 **   ...
@@ -7386,7 +7386,7 @@ test_vmsleu_vx_u64m8_b8_mu_vl31(vbool8_t mask, vbool8_t maskedoff, vuint64m8_t o
 }
 
 /*
-** test_vmsleu_vx_u64m8_b8_mu_vl32: {target riscv64-*-*}
+** test_vmsleu_vx_u64m8_b8_mu_vl32: {target { rv64 }}
 **   ...
 **   vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m8,\s*t[au],\s*mu
 **   ...

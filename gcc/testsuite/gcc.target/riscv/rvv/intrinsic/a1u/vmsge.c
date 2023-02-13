@@ -2526,7 +2526,7 @@ test_vmsge_vx_i32m8_b4_vl31(vint32m8_t op1, int32_t op2)
 }
 
 /*
-** test_vmsge_vx_i64m1_b64:  { target riscv64-*-* }
+** test_vmsge_vx_i64m1_b64:  { target { rv64 } }
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m1,\s*t[au],\s*m[au]
 **  ...
@@ -2541,7 +2541,7 @@ test_vmsge_vx_i64m1_b64(vint64m1_t op1, int64_t op2, size_t vl)
 }
 
 /*
-** test_vmsge_vx_i64m1_b64_vl31:  { target riscv64-*-* }
+** test_vmsge_vx_i64m1_b64_vl31:  { target { rv64 } }
 **  ...
 **	vsetivli\s+zero,\s*31,\s*e64,\s*m1,\s*t[au],\s*m[au]
 **  ...
@@ -2556,7 +2556,7 @@ test_vmsge_vx_i64m1_b64_vl31(vint64m1_t op1, int64_t op2)
 }
 
 /*
-** test_vmsge_vx_i64m2_b32:  { target riscv64-*-* }
+** test_vmsge_vx_i64m2_b32:  { target { rv64 } }
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m2,\s*t[au],\s*m[au]
 **  ...
@@ -2571,7 +2571,7 @@ test_vmsge_vx_i64m2_b32(vint64m2_t op1, int64_t op2, size_t vl)
 }
 
 /*
-** test_vmsge_vx_i64m2_b32_vl31:  { target riscv64-*-* }
+** test_vmsge_vx_i64m2_b32_vl31:  { target { rv64 } }
 **  ...
 **	vsetivli\s+zero,\s*31,\s*e64,\s*m2,\s*t[au],\s*m[au]
 **  ...
@@ -2586,7 +2586,7 @@ test_vmsge_vx_i64m2_b32_vl31(vint64m2_t op1, int64_t op2)
 }
 
 /*
-** test_vmsge_vx_i64m4_b16:  { target riscv64-*-* }
+** test_vmsge_vx_i64m4_b16:  { target { rv64 } }
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m4,\s*t[au],\s*m[au]
 **  ...
@@ -2601,7 +2601,7 @@ test_vmsge_vx_i64m4_b16(vint64m4_t op1, int64_t op2, size_t vl)
 }
 
 /*
-** test_vmsge_vx_i64m4_b16_vl31:  { target riscv64-*-* }
+** test_vmsge_vx_i64m4_b16_vl31:  { target { rv64 } }
 **  ...
 **	vsetivli\s+zero,\s*31,\s*e64,\s*m4,\s*t[au],\s*m[au]
 **  ...
@@ -2616,7 +2616,7 @@ test_vmsge_vx_i64m4_b16_vl31(vint64m4_t op1, int64_t op2)
 }
 
 /*
-** test_vmsge_vx_i64m8_b8:  { target riscv64-*-* }
+** test_vmsge_vx_i64m8_b8:  { target { rv64 } }
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m8,\s*t[au],\s*m[au]
 **  ...
@@ -2631,7 +2631,7 @@ test_vmsge_vx_i64m8_b8(vint64m8_t op1, int64_t op2, size_t vl)
 }
 
 /*
-** test_vmsge_vx_i64m8_b8_vl31:  { target riscv64-*-* }
+** test_vmsge_vx_i64m8_b8_vl31:  { target { rv64 } }
 **  ...
 **	vsetivli\s+zero,\s*31,\s*e64,\s*m8,\s*t[au],\s*m[au]
 **  ...
@@ -3186,7 +3186,7 @@ test_vmsge_vx_i32m8_b4_m_vl31(vbool4_t mask, vbool4_t maskedoff, vint32m8_t op1,
 }
 
 /*
-** test_vmsge_vx_i64m1_b64_m:  { target riscv64-*-* }
+** test_vmsge_vx_i64m1_b64_m:  { target { rv64 } }
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m1,\s*t[au],\s*mu
 **  ...
@@ -3201,7 +3201,7 @@ test_vmsge_vx_i64m1_b64_m(vbool64_t mask, vbool64_t maskedoff, vint64m1_t op1, i
 }
 
 /*
-** test_vmsge_vx_i64m1_b64_m_vl31:  { target riscv64-*-* }
+** test_vmsge_vx_i64m1_b64_m_vl31:  { target { rv64 } }
 **  ...
 **	vsetivli\s+zero,\s*31,\s*e64,\s*m1,\s*t[au],\s*mu
 **  ...
@@ -3216,7 +3216,7 @@ test_vmsge_vx_i64m1_b64_m_vl31(vbool64_t mask, vbool64_t maskedoff, vint64m1_t o
 }
 
 /*
-** test_vmsge_vx_i64m2_b32_m:  { target riscv64-*-* }
+** test_vmsge_vx_i64m2_b32_m:  { target { rv64 } }
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m2,\s*t[au],\s*mu
 **  ...
@@ -3231,7 +3231,7 @@ test_vmsge_vx_i64m2_b32_m(vbool32_t mask, vbool32_t maskedoff, vint64m2_t op1, i
 }
 
 /*
-** test_vmsge_vx_i64m2_b32_m_vl31:  { target riscv64-*-* }
+** test_vmsge_vx_i64m2_b32_m_vl31:  { target { rv64 } }
 **  ...
 **	vsetivli\s+zero,\s*31,\s*e64,\s*m2,\s*t[au],\s*mu
 **  ...
@@ -3246,7 +3246,7 @@ test_vmsge_vx_i64m2_b32_m_vl31(vbool32_t mask, vbool32_t maskedoff, vint64m2_t o
 }
 
 /*
-** test_vmsge_vx_i64m4_b16_m:  { target riscv64-*-* }
+** test_vmsge_vx_i64m4_b16_m:  { target { rv64 } }
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m4,\s*t[au],\s*mu
 **  ...
@@ -3261,7 +3261,7 @@ test_vmsge_vx_i64m4_b16_m(vbool16_t mask, vbool16_t maskedoff, vint64m4_t op1, i
 }
 
 /*
-** test_vmsge_vx_i64m4_b16_m_vl31:  { target riscv64-*-* }
+** test_vmsge_vx_i64m4_b16_m_vl31:  { target { rv64 } }
 **  ...
 **	vsetivli\s+zero,\s*31,\s*e64,\s*m4,\s*t[au],\s*mu
 **  ...
@@ -3276,7 +3276,7 @@ test_vmsge_vx_i64m4_b16_m_vl31(vbool16_t mask, vbool16_t maskedoff, vint64m4_t o
 }
 
 /*
-** test_vmsge_vx_i64m8_b8_m:  { target riscv64-*-* }
+** test_vmsge_vx_i64m8_b8_m:  { target { rv64 } }
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m8,\s*t[au],\s*mu
 **  ...
@@ -3291,7 +3291,7 @@ test_vmsge_vx_i64m8_b8_m(vbool8_t mask, vbool8_t maskedoff, vint64m8_t op1, int6
 }
 
 /*
-** test_vmsge_vx_i64m8_b8_m_vl31:  { target riscv64-*-* }
+** test_vmsge_vx_i64m8_b8_m_vl31:  { target { rv64 } }
 **  ...
 **	vsetivli\s+zero,\s*31,\s*e64,\s*m8,\s*t[au],\s*mu
 **  ...
@@ -3576,7 +3576,7 @@ test_vmsge_vx_i32m8_b4_m_vl32(vbool4_t mask, vbool4_t maskedoff, vint32m8_t op1,
 }
 
 /*
-** test_vmsge_vx_i64m1_b64_m_vl32:  { target riscv64-*-* }
+** test_vmsge_vx_i64m1_b64_m_vl32:  { target { rv64 } }
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m1,\s*t[au],\s*mu
 **  ...
@@ -3591,7 +3591,7 @@ test_vmsge_vx_i64m1_b64_m_vl32(vbool64_t mask, vbool64_t maskedoff, vint64m1_t o
 }
 
 /*
-** test_vmsge_vx_i64m2_b32_m_vl32:  { target riscv64-*-* }
+** test_vmsge_vx_i64m2_b32_m_vl32:  { target { rv64 } }
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m2,\s*t[au],\s*mu
 **  ...
@@ -3606,7 +3606,7 @@ test_vmsge_vx_i64m2_b32_m_vl32(vbool32_t mask, vbool32_t maskedoff, vint64m2_t o
 }
 
 /*
-** test_vmsge_vx_i64m4_b16_m_vl32:  { target riscv64-*-* }
+** test_vmsge_vx_i64m4_b16_m_vl32:  { target { rv64 } }
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m4,\s*t[au],\s*mu
 **  ...
@@ -3621,7 +3621,7 @@ test_vmsge_vx_i64m4_b16_m_vl32(vbool16_t mask, vbool16_t maskedoff, vint64m4_t o
 }
 
 /*
-** test_vmsge_vx_i64m8_b8_m_vl32:  { target riscv64-*-* }
+** test_vmsge_vx_i64m8_b8_m_vl32:  { target { rv64 } }
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m8,\s*t[au],\s*mu
 **  ...
@@ -3906,7 +3906,7 @@ test_vmsge_vx_i32m8_b4_vl32(vint32m8_t op1, int32_t op2)
 }
 
 /*
-** test_vmsge_vx_i64m1_b64_vl32:  { target riscv64-*-* }
+** test_vmsge_vx_i64m1_b64_vl32:  { target { rv64 } }
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m1,\s*t[au],\s*m[au]
 **  ...
@@ -3921,7 +3921,7 @@ test_vmsge_vx_i64m1_b64_vl32(vint64m1_t op1, int64_t op2)
 }
 
 /*
-** test_vmsge_vx_i64m2_b32_vl32:  { target riscv64-*-* }
+** test_vmsge_vx_i64m2_b32_vl32:  { target { rv64 } }
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m2,\s*t[au],\s*m[au]
 **  ...
@@ -3936,7 +3936,7 @@ test_vmsge_vx_i64m2_b32_vl32(vint64m2_t op1, int64_t op2)
 }
 
 /*
-** test_vmsge_vx_i64m4_b16_vl32:  { target riscv64-*-* }
+** test_vmsge_vx_i64m4_b16_vl32:  { target { rv64 } }
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m4,\s*t[au],\s*m[au]
 **  ...
@@ -3951,7 +3951,7 @@ test_vmsge_vx_i64m4_b16_vl32(vint64m4_t op1, int64_t op2)
 }
 
 /*
-** test_vmsge_vx_i64m8_b8_vl32:  { target riscv64-*-* }
+** test_vmsge_vx_i64m8_b8_vl32:  { target { rv64 } }
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m8,\s*t[au],\s*m[au]
 **  ...

@@ -6486,7 +6486,7 @@ test_vsbc_vxm_i32m8_vl31(vint32m8_t op1, int32_t op2, vbool4_t op3)
 }
 
 /*
-** test_vsbc_vxm_i64m1:  { target riscv64-*-* }
+** test_vsbc_vxm_i64m1:  { target { rv64 } }
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m1,\s*t[au],\s*m[au]
 **  ...
@@ -6501,7 +6501,7 @@ test_vsbc_vxm_i64m1(vint64m1_t op1, int64_t op2, vbool64_t op3, size_t vl)
 }
 
 /*
-** test_vsbc_vxm_i64m1_vl31:  { target riscv64-*-* }
+** test_vsbc_vxm_i64m1_vl31:  { target { rv64 } }
 **  ...
 **	vsetivli\s+zero,\s*31,\s*e64,\s*m1,\s*t[au],\s*m[au]
 **  ...
@@ -6516,7 +6516,7 @@ test_vsbc_vxm_i64m1_vl31(vint64m1_t op1, int64_t op2, vbool64_t op3)
 }
 
 /*
-** test_vsbc_vxm_i64m2:  { target riscv64-*-* }
+** test_vsbc_vxm_i64m2:  { target { rv64 } }
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m2,\s*t[au],\s*m[au]
 **  ...
@@ -6531,7 +6531,7 @@ test_vsbc_vxm_i64m2(vint64m2_t op1, int64_t op2, vbool32_t op3, size_t vl)
 }
 
 /*
-** test_vsbc_vxm_i64m2_vl31:  { target riscv64-*-* }
+** test_vsbc_vxm_i64m2_vl31:  { target { rv64 } }
 **  ...
 **	vsetivli\s+zero,\s*31,\s*e64,\s*m2,\s*t[au],\s*m[au]
 **  ...
@@ -6546,7 +6546,7 @@ test_vsbc_vxm_i64m2_vl31(vint64m2_t op1, int64_t op2, vbool32_t op3)
 }
 
 /*
-** test_vsbc_vxm_i64m4:  { target riscv64-*-* }
+** test_vsbc_vxm_i64m4:  { target { rv64 } }
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m4,\s*t[au],\s*m[au]
 **  ...
@@ -6561,7 +6561,7 @@ test_vsbc_vxm_i64m4(vint64m4_t op1, int64_t op2, vbool16_t op3, size_t vl)
 }
 
 /*
-** test_vsbc_vxm_i64m4_vl31:  { target riscv64-*-* }
+** test_vsbc_vxm_i64m4_vl31:  { target { rv64 } }
 **  ...
 **	vsetivli\s+zero,\s*31,\s*e64,\s*m4,\s*t[au],\s*m[au]
 **  ...
@@ -6576,7 +6576,7 @@ test_vsbc_vxm_i64m4_vl31(vint64m4_t op1, int64_t op2, vbool16_t op3)
 }
 
 /*
-** test_vsbc_vxm_i64m8:  { target riscv64-*-* }
+** test_vsbc_vxm_i64m8:  { target { rv64 } }
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m8,\s*t[au],\s*m[au]
 **  ...
@@ -6591,7 +6591,7 @@ test_vsbc_vxm_i64m8(vint64m8_t op1, int64_t op2, vbool8_t op3, size_t vl)
 }
 
 /*
-** test_vsbc_vxm_i64m8_vl31:  { target riscv64-*-* }
+** test_vsbc_vxm_i64m8_vl31:  { target { rv64 } }
 **  ...
 **	vsetivli\s+zero,\s*31,\s*e64,\s*m8,\s*t[au],\s*m[au]
 **  ...
@@ -7146,7 +7146,7 @@ test_vsbc_vxm_i32m8_ta_vl31(vint32m8_t op1, int32_t op2, vbool4_t op3)
 }
 
 /*
-** test_vsbc_vxm_i64m1_ta:  { target riscv64-*-* }
+** test_vsbc_vxm_i64m1_ta:  { target { rv64 } }
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m1,\s*ta,\s*m[au]
 **  ...
@@ -7161,7 +7161,7 @@ test_vsbc_vxm_i64m1_ta(vint64m1_t op1, int64_t op2, vbool64_t op3, size_t vl)
 }
 
 /*
-** test_vsbc_vxm_i64m1_ta_vl31:  { target riscv64-*-* }
+** test_vsbc_vxm_i64m1_ta_vl31:  { target { rv64 } }
 **  ...
 **	vsetivli\s+zero,\s*31,\s*e64,\s*m1,\s*ta,\s*m[au]
 **  ...
@@ -7176,7 +7176,7 @@ test_vsbc_vxm_i64m1_ta_vl31(vint64m1_t op1, int64_t op2, vbool64_t op3)
 }
 
 /*
-** test_vsbc_vxm_i64m2_ta:  { target riscv64-*-* }
+** test_vsbc_vxm_i64m2_ta:  { target { rv64 } }
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m2,\s*ta,\s*m[au]
 **  ...
@@ -7191,7 +7191,7 @@ test_vsbc_vxm_i64m2_ta(vint64m2_t op1, int64_t op2, vbool32_t op3, size_t vl)
 }
 
 /*
-** test_vsbc_vxm_i64m2_ta_vl31:  { target riscv64-*-* }
+** test_vsbc_vxm_i64m2_ta_vl31:  { target { rv64 } }
 **  ...
 **	vsetivli\s+zero,\s*31,\s*e64,\s*m2,\s*ta,\s*m[au]
 **  ...
@@ -7206,7 +7206,7 @@ test_vsbc_vxm_i64m2_ta_vl31(vint64m2_t op1, int64_t op2, vbool32_t op3)
 }
 
 /*
-** test_vsbc_vxm_i64m4_ta:  { target riscv64-*-* }
+** test_vsbc_vxm_i64m4_ta:  { target { rv64 } }
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m4,\s*ta,\s*m[au]
 **  ...
@@ -7221,7 +7221,7 @@ test_vsbc_vxm_i64m4_ta(vint64m4_t op1, int64_t op2, vbool16_t op3, size_t vl)
 }
 
 /*
-** test_vsbc_vxm_i64m4_ta_vl31:  { target riscv64-*-* }
+** test_vsbc_vxm_i64m4_ta_vl31:  { target { rv64 } }
 **  ...
 **	vsetivli\s+zero,\s*31,\s*e64,\s*m4,\s*ta,\s*m[au]
 **  ...
@@ -7236,7 +7236,7 @@ test_vsbc_vxm_i64m4_ta_vl31(vint64m4_t op1, int64_t op2, vbool16_t op3)
 }
 
 /*
-** test_vsbc_vxm_i64m8_ta:  { target riscv64-*-* }
+** test_vsbc_vxm_i64m8_ta:  { target { rv64 } }
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m8,\s*ta,\s*m[au]
 **  ...
@@ -7251,7 +7251,7 @@ test_vsbc_vxm_i64m8_ta(vint64m8_t op1, int64_t op2, vbool8_t op3, size_t vl)
 }
 
 /*
-** test_vsbc_vxm_i64m8_ta_vl31:  { target riscv64-*-* }
+** test_vsbc_vxm_i64m8_ta_vl31:  { target { rv64 } }
 **  ...
 **	vsetivli\s+zero,\s*31,\s*e64,\s*m8,\s*ta,\s*m[au]
 **  ...
@@ -7806,7 +7806,7 @@ test_vsbc_vxm_i32m8_tu_vl31(vint32m8_t dest, vint32m8_t op1, int32_t op2, vbool4
 }
 
 /*
-** test_vsbc_vxm_i64m1_tu:  { target riscv64-*-* }
+** test_vsbc_vxm_i64m1_tu:  { target { rv64 } }
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m1,\s*tu,\s*m[au]
 **  ...
@@ -7821,7 +7821,7 @@ test_vsbc_vxm_i64m1_tu(vint64m1_t dest, vint64m1_t op1, int64_t op2, vbool64_t o
 }
 
 /*
-** test_vsbc_vxm_i64m1_tu_vl31:  { target riscv64-*-* }
+** test_vsbc_vxm_i64m1_tu_vl31:  { target { rv64 } }
 **  ...
 **	vsetivli\s+zero,\s*31,\s*e64,\s*m1,\s*tu,\s*m[au]
 **  ...
@@ -7836,7 +7836,7 @@ test_vsbc_vxm_i64m1_tu_vl31(vint64m1_t dest, vint64m1_t op1, int64_t op2, vbool6
 }
 
 /*
-** test_vsbc_vxm_i64m2_tu:  { target riscv64-*-* }
+** test_vsbc_vxm_i64m2_tu:  { target { rv64 } }
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m2,\s*tu,\s*m[au]
 **  ...
@@ -7851,7 +7851,7 @@ test_vsbc_vxm_i64m2_tu(vint64m2_t dest, vint64m2_t op1, int64_t op2, vbool32_t o
 }
 
 /*
-** test_vsbc_vxm_i64m2_tu_vl31:  { target riscv64-*-* }
+** test_vsbc_vxm_i64m2_tu_vl31:  { target { rv64 } }
 **  ...
 **	vsetivli\s+zero,\s*31,\s*e64,\s*m2,\s*tu,\s*m[au]
 **  ...
@@ -7866,7 +7866,7 @@ test_vsbc_vxm_i64m2_tu_vl31(vint64m2_t dest, vint64m2_t op1, int64_t op2, vbool3
 }
 
 /*
-** test_vsbc_vxm_i64m4_tu:  { target riscv64-*-* }
+** test_vsbc_vxm_i64m4_tu:  { target { rv64 } }
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m4,\s*tu,\s*m[au]
 **  ...
@@ -7881,7 +7881,7 @@ test_vsbc_vxm_i64m4_tu(vint64m4_t dest, vint64m4_t op1, int64_t op2, vbool16_t o
 }
 
 /*
-** test_vsbc_vxm_i64m4_tu_vl31:  { target riscv64-*-* }
+** test_vsbc_vxm_i64m4_tu_vl31:  { target { rv64 } }
 **  ...
 **	vsetivli\s+zero,\s*31,\s*e64,\s*m4,\s*tu,\s*m[au]
 **  ...
@@ -7896,7 +7896,7 @@ test_vsbc_vxm_i64m4_tu_vl31(vint64m4_t dest, vint64m4_t op1, int64_t op2, vbool1
 }
 
 /*
-** test_vsbc_vxm_i64m8_tu:  { target riscv64-*-* }
+** test_vsbc_vxm_i64m8_tu:  { target { rv64 } }
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m8,\s*tu,\s*m[au]
 **  ...
@@ -7911,7 +7911,7 @@ test_vsbc_vxm_i64m8_tu(vint64m8_t dest, vint64m8_t op1, int64_t op2, vbool8_t op
 }
 
 /*
-** test_vsbc_vxm_i64m8_tu_vl31:  { target riscv64-*-* }
+** test_vsbc_vxm_i64m8_tu_vl31:  { target { rv64 } }
 **  ...
 **	vsetivli\s+zero,\s*31,\s*e64,\s*m8,\s*tu,\s*m[au]
 **  ...
@@ -8196,7 +8196,7 @@ test_vsbc_vxm_i32m8_ta_vl32(vint32m8_t op1, int32_t op2, vbool4_t op3)
 }
 
 /*
-** test_vsbc_vxm_i64m1_ta_vl32:  { target riscv64-*-* }
+** test_vsbc_vxm_i64m1_ta_vl32:  { target { rv64 } }
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m1,\s*ta,\s*m[au]
 **  ...
@@ -8211,7 +8211,7 @@ test_vsbc_vxm_i64m1_ta_vl32(vint64m1_t op1, int64_t op2, vbool64_t op3)
 }
 
 /*
-** test_vsbc_vxm_i64m2_ta_vl32:  { target riscv64-*-* }
+** test_vsbc_vxm_i64m2_ta_vl32:  { target { rv64 } }
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m2,\s*ta,\s*m[au]
 **  ...
@@ -8226,7 +8226,7 @@ test_vsbc_vxm_i64m2_ta_vl32(vint64m2_t op1, int64_t op2, vbool32_t op3)
 }
 
 /*
-** test_vsbc_vxm_i64m4_ta_vl32:  { target riscv64-*-* }
+** test_vsbc_vxm_i64m4_ta_vl32:  { target { rv64 } }
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m4,\s*ta,\s*m[au]
 **  ...
@@ -8241,7 +8241,7 @@ test_vsbc_vxm_i64m4_ta_vl32(vint64m4_t op1, int64_t op2, vbool16_t op3)
 }
 
 /*
-** test_vsbc_vxm_i64m8_ta_vl32:  { target riscv64-*-* }
+** test_vsbc_vxm_i64m8_ta_vl32:  { target { rv64 } }
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m8,\s*ta,\s*m[au]
 **  ...
@@ -8526,7 +8526,7 @@ test_vsbc_vxm_i32m8_tu_vl32(vint32m8_t dest, vint32m8_t op1, int32_t op2, vbool4
 }
 
 /*
-** test_vsbc_vxm_i64m1_tu_vl32:  { target riscv64-*-* }
+** test_vsbc_vxm_i64m1_tu_vl32:  { target { rv64 } }
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m1,\s*tu,\s*m[au]
 **  ...
@@ -8541,7 +8541,7 @@ test_vsbc_vxm_i64m1_tu_vl32(vint64m1_t dest, vint64m1_t op1, int64_t op2, vbool6
 }
 
 /*
-** test_vsbc_vxm_i64m2_tu_vl32:  { target riscv64-*-* }
+** test_vsbc_vxm_i64m2_tu_vl32:  { target { rv64 } }
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m2,\s*tu,\s*m[au]
 **  ...
@@ -8556,7 +8556,7 @@ test_vsbc_vxm_i64m2_tu_vl32(vint64m2_t dest, vint64m2_t op1, int64_t op2, vbool3
 }
 
 /*
-** test_vsbc_vxm_i64m4_tu_vl32:  { target riscv64-*-* }
+** test_vsbc_vxm_i64m4_tu_vl32:  { target { rv64 } }
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m4,\s*tu,\s*m[au]
 **  ...
@@ -8571,7 +8571,7 @@ test_vsbc_vxm_i64m4_tu_vl32(vint64m4_t dest, vint64m4_t op1, int64_t op2, vbool1
 }
 
 /*
-** test_vsbc_vxm_i64m8_tu_vl32:  { target riscv64-*-* }
+** test_vsbc_vxm_i64m8_tu_vl32:  { target { rv64 } }
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m8,\s*tu,\s*m[au]
 **  ...
@@ -8856,7 +8856,7 @@ test_vsbc_vxm_i32m8_vl32(vint32m8_t op1, int32_t op2, vbool4_t op3)
 }
 
 /*
-** test_vsbc_vxm_i64m1_vl32:  { target riscv64-*-* }
+** test_vsbc_vxm_i64m1_vl32:  { target { rv64 } }
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m1,\s*t[au],\s*m[au]
 **  ...
@@ -8871,7 +8871,7 @@ test_vsbc_vxm_i64m1_vl32(vint64m1_t op1, int64_t op2, vbool64_t op3)
 }
 
 /*
-** test_vsbc_vxm_i64m2_vl32:  { target riscv64-*-* }
+** test_vsbc_vxm_i64m2_vl32:  { target { rv64 } }
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m2,\s*t[au],\s*m[au]
 **  ...
@@ -8886,7 +8886,7 @@ test_vsbc_vxm_i64m2_vl32(vint64m2_t op1, int64_t op2, vbool32_t op3)
 }
 
 /*
-** test_vsbc_vxm_i64m4_vl32:  { target riscv64-*-* }
+** test_vsbc_vxm_i64m4_vl32:  { target { rv64 } }
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m4,\s*t[au],\s*m[au]
 **  ...
@@ -8901,7 +8901,7 @@ test_vsbc_vxm_i64m4_vl32(vint64m4_t op1, int64_t op2, vbool16_t op3)
 }
 
 /*
-** test_vsbc_vxm_i64m8_vl32:  { target riscv64-*-* }
+** test_vsbc_vxm_i64m8_vl32:  { target { rv64 } }
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m8,\s*t[au],\s*m[au]
 **  ...
@@ -9456,7 +9456,7 @@ test_vsbc_vxm_u32m8_vl31(vuint32m8_t op1, uint32_t op2, vbool4_t op3)
 }
 
 /*
-** test_vsbc_vxm_u64m1:  { target riscv64-*-* }
+** test_vsbc_vxm_u64m1:  { target { rv64 } }
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m1,\s*t[au],\s*m[au]
 **  ...
@@ -9471,7 +9471,7 @@ test_vsbc_vxm_u64m1(vuint64m1_t op1, uint64_t op2, vbool64_t op3, size_t vl)
 }
 
 /*
-** test_vsbc_vxm_u64m1_vl31:  { target riscv64-*-* }
+** test_vsbc_vxm_u64m1_vl31:  { target { rv64 } }
 **  ...
 **	vsetivli\s+zero,\s*31,\s*e64,\s*m1,\s*t[au],\s*m[au]
 **  ...
@@ -9486,7 +9486,7 @@ test_vsbc_vxm_u64m1_vl31(vuint64m1_t op1, uint64_t op2, vbool64_t op3)
 }
 
 /*
-** test_vsbc_vxm_u64m2:  { target riscv64-*-* }
+** test_vsbc_vxm_u64m2:  { target { rv64 } }
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m2,\s*t[au],\s*m[au]
 **  ...
@@ -9501,7 +9501,7 @@ test_vsbc_vxm_u64m2(vuint64m2_t op1, uint64_t op2, vbool32_t op3, size_t vl)
 }
 
 /*
-** test_vsbc_vxm_u64m2_vl31:  { target riscv64-*-* }
+** test_vsbc_vxm_u64m2_vl31:  { target { rv64 } }
 **  ...
 **	vsetivli\s+zero,\s*31,\s*e64,\s*m2,\s*t[au],\s*m[au]
 **  ...
@@ -9516,7 +9516,7 @@ test_vsbc_vxm_u64m2_vl31(vuint64m2_t op1, uint64_t op2, vbool32_t op3)
 }
 
 /*
-** test_vsbc_vxm_u64m4:  { target riscv64-*-* }
+** test_vsbc_vxm_u64m4:  { target { rv64 } }
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m4,\s*t[au],\s*m[au]
 **  ...
@@ -9531,7 +9531,7 @@ test_vsbc_vxm_u64m4(vuint64m4_t op1, uint64_t op2, vbool16_t op3, size_t vl)
 }
 
 /*
-** test_vsbc_vxm_u64m4_vl31:  { target riscv64-*-* }
+** test_vsbc_vxm_u64m4_vl31:  { target { rv64 } }
 **  ...
 **	vsetivli\s+zero,\s*31,\s*e64,\s*m4,\s*t[au],\s*m[au]
 **  ...
@@ -9546,7 +9546,7 @@ test_vsbc_vxm_u64m4_vl31(vuint64m4_t op1, uint64_t op2, vbool16_t op3)
 }
 
 /*
-** test_vsbc_vxm_u64m8:  { target riscv64-*-* }
+** test_vsbc_vxm_u64m8:  { target { rv64 } }
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m8,\s*t[au],\s*m[au]
 **  ...
@@ -9561,7 +9561,7 @@ test_vsbc_vxm_u64m8(vuint64m8_t op1, uint64_t op2, vbool8_t op3, size_t vl)
 }
 
 /*
-** test_vsbc_vxm_u64m8_vl31:  { target riscv64-*-* }
+** test_vsbc_vxm_u64m8_vl31:  { target { rv64 } }
 **  ...
 **	vsetivli\s+zero,\s*31,\s*e64,\s*m8,\s*t[au],\s*m[au]
 **  ...
@@ -10116,7 +10116,7 @@ test_vsbc_vxm_u32m8_ta_vl31(vuint32m8_t op1, uint32_t op2, vbool4_t op3)
 }
 
 /*
-** test_vsbc_vxm_u64m1_ta:  { target riscv64-*-* }
+** test_vsbc_vxm_u64m1_ta:  { target { rv64 } }
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m1,\s*ta,\s*m[au]
 **  ...
@@ -10131,7 +10131,7 @@ test_vsbc_vxm_u64m1_ta(vuint64m1_t op1, uint64_t op2, vbool64_t op3, size_t vl)
 }
 
 /*
-** test_vsbc_vxm_u64m1_ta_vl31:  { target riscv64-*-* }
+** test_vsbc_vxm_u64m1_ta_vl31:  { target { rv64 } }
 **  ...
 **	vsetivli\s+zero,\s*31,\s*e64,\s*m1,\s*ta,\s*m[au]
 **  ...
@@ -10146,7 +10146,7 @@ test_vsbc_vxm_u64m1_ta_vl31(vuint64m1_t op1, uint64_t op2, vbool64_t op3)
 }
 
 /*
-** test_vsbc_vxm_u64m2_ta:  { target riscv64-*-* }
+** test_vsbc_vxm_u64m2_ta:  { target { rv64 } }
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m2,\s*ta,\s*m[au]
 **  ...
@@ -10161,7 +10161,7 @@ test_vsbc_vxm_u64m2_ta(vuint64m2_t op1, uint64_t op2, vbool32_t op3, size_t vl)
 }
 
 /*
-** test_vsbc_vxm_u64m2_ta_vl31:  { target riscv64-*-* }
+** test_vsbc_vxm_u64m2_ta_vl31:  { target { rv64 } }
 **  ...
 **	vsetivli\s+zero,\s*31,\s*e64,\s*m2,\s*ta,\s*m[au]
 **  ...
@@ -10176,7 +10176,7 @@ test_vsbc_vxm_u64m2_ta_vl31(vuint64m2_t op1, uint64_t op2, vbool32_t op3)
 }
 
 /*
-** test_vsbc_vxm_u64m4_ta:  { target riscv64-*-* }
+** test_vsbc_vxm_u64m4_ta:  { target { rv64 } }
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m4,\s*ta,\s*m[au]
 **  ...
@@ -10191,7 +10191,7 @@ test_vsbc_vxm_u64m4_ta(vuint64m4_t op1, uint64_t op2, vbool16_t op3, size_t vl)
 }
 
 /*
-** test_vsbc_vxm_u64m4_ta_vl31:  { target riscv64-*-* }
+** test_vsbc_vxm_u64m4_ta_vl31:  { target { rv64 } }
 **  ...
 **	vsetivli\s+zero,\s*31,\s*e64,\s*m4,\s*ta,\s*m[au]
 **  ...
@@ -10206,7 +10206,7 @@ test_vsbc_vxm_u64m4_ta_vl31(vuint64m4_t op1, uint64_t op2, vbool16_t op3)
 }
 
 /*
-** test_vsbc_vxm_u64m8_ta:  { target riscv64-*-* }
+** test_vsbc_vxm_u64m8_ta:  { target { rv64 } }
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m8,\s*ta,\s*m[au]
 **  ...
@@ -10221,7 +10221,7 @@ test_vsbc_vxm_u64m8_ta(vuint64m8_t op1, uint64_t op2, vbool8_t op3, size_t vl)
 }
 
 /*
-** test_vsbc_vxm_u64m8_ta_vl31:  { target riscv64-*-* }
+** test_vsbc_vxm_u64m8_ta_vl31:  { target { rv64 } }
 **  ...
 **	vsetivli\s+zero,\s*31,\s*e64,\s*m8,\s*ta,\s*m[au]
 **  ...
@@ -10776,7 +10776,7 @@ test_vsbc_vxm_u32m8_tu_vl31(vuint32m8_t dest, vuint32m8_t op1, uint32_t op2, vbo
 }
 
 /*
-** test_vsbc_vxm_u64m1_tu:  { target riscv64-*-* }
+** test_vsbc_vxm_u64m1_tu:  { target { rv64 } }
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m1,\s*tu,\s*m[au]
 **  ...
@@ -10791,7 +10791,7 @@ test_vsbc_vxm_u64m1_tu(vuint64m1_t dest, vuint64m1_t op1, uint64_t op2, vbool64_
 }
 
 /*
-** test_vsbc_vxm_u64m1_tu_vl31:  { target riscv64-*-* }
+** test_vsbc_vxm_u64m1_tu_vl31:  { target { rv64 } }
 **  ...
 **	vsetivli\s+zero,\s*31,\s*e64,\s*m1,\s*tu,\s*m[au]
 **  ...
@@ -10806,7 +10806,7 @@ test_vsbc_vxm_u64m1_tu_vl31(vuint64m1_t dest, vuint64m1_t op1, uint64_t op2, vbo
 }
 
 /*
-** test_vsbc_vxm_u64m2_tu:  { target riscv64-*-* }
+** test_vsbc_vxm_u64m2_tu:  { target { rv64 } }
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m2,\s*tu,\s*m[au]
 **  ...
@@ -10821,7 +10821,7 @@ test_vsbc_vxm_u64m2_tu(vuint64m2_t dest, vuint64m2_t op1, uint64_t op2, vbool32_
 }
 
 /*
-** test_vsbc_vxm_u64m2_tu_vl31:  { target riscv64-*-* }
+** test_vsbc_vxm_u64m2_tu_vl31:  { target { rv64 } }
 **  ...
 **	vsetivli\s+zero,\s*31,\s*e64,\s*m2,\s*tu,\s*m[au]
 **  ...
@@ -10836,7 +10836,7 @@ test_vsbc_vxm_u64m2_tu_vl31(vuint64m2_t dest, vuint64m2_t op1, uint64_t op2, vbo
 }
 
 /*
-** test_vsbc_vxm_u64m4_tu:  { target riscv64-*-* }
+** test_vsbc_vxm_u64m4_tu:  { target { rv64 } }
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m4,\s*tu,\s*m[au]
 **  ...
@@ -10851,7 +10851,7 @@ test_vsbc_vxm_u64m4_tu(vuint64m4_t dest, vuint64m4_t op1, uint64_t op2, vbool16_
 }
 
 /*
-** test_vsbc_vxm_u64m4_tu_vl31:  { target riscv64-*-* }
+** test_vsbc_vxm_u64m4_tu_vl31:  { target { rv64 } }
 **  ...
 **	vsetivli\s+zero,\s*31,\s*e64,\s*m4,\s*tu,\s*m[au]
 **  ...
@@ -10866,7 +10866,7 @@ test_vsbc_vxm_u64m4_tu_vl31(vuint64m4_t dest, vuint64m4_t op1, uint64_t op2, vbo
 }
 
 /*
-** test_vsbc_vxm_u64m8_tu:  { target riscv64-*-* }
+** test_vsbc_vxm_u64m8_tu:  { target { rv64 } }
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m8,\s*tu,\s*m[au]
 **  ...
@@ -10881,7 +10881,7 @@ test_vsbc_vxm_u64m8_tu(vuint64m8_t dest, vuint64m8_t op1, uint64_t op2, vbool8_t
 }
 
 /*
-** test_vsbc_vxm_u64m8_tu_vl31:  { target riscv64-*-* }
+** test_vsbc_vxm_u64m8_tu_vl31:  { target { rv64 } }
 **  ...
 **	vsetivli\s+zero,\s*31,\s*e64,\s*m8,\s*tu,\s*m[au]
 **  ...
@@ -11166,7 +11166,7 @@ test_vsbc_vxm_u32m8_ta_vl32(vuint32m8_t op1, uint32_t op2, vbool4_t op3)
 }
 
 /*
-** test_vsbc_vxm_u64m1_ta_vl32:  { target riscv64-*-* }
+** test_vsbc_vxm_u64m1_ta_vl32:  { target { rv64 } }
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m1,\s*ta,\s*m[au]
 **  ...
@@ -11181,7 +11181,7 @@ test_vsbc_vxm_u64m1_ta_vl32(vuint64m1_t op1, uint64_t op2, vbool64_t op3)
 }
 
 /*
-** test_vsbc_vxm_u64m2_ta_vl32:  { target riscv64-*-* }
+** test_vsbc_vxm_u64m2_ta_vl32:  { target { rv64 } }
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m2,\s*ta,\s*m[au]
 **  ...
@@ -11196,7 +11196,7 @@ test_vsbc_vxm_u64m2_ta_vl32(vuint64m2_t op1, uint64_t op2, vbool32_t op3)
 }
 
 /*
-** test_vsbc_vxm_u64m4_ta_vl32:  { target riscv64-*-* }
+** test_vsbc_vxm_u64m4_ta_vl32:  { target { rv64 } }
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m4,\s*ta,\s*m[au]
 **  ...
@@ -11211,7 +11211,7 @@ test_vsbc_vxm_u64m4_ta_vl32(vuint64m4_t op1, uint64_t op2, vbool16_t op3)
 }
 
 /*
-** test_vsbc_vxm_u64m8_ta_vl32:  { target riscv64-*-* }
+** test_vsbc_vxm_u64m8_ta_vl32:  { target { rv64 } }
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m8,\s*ta,\s*m[au]
 **  ...
@@ -11496,7 +11496,7 @@ test_vsbc_vxm_u32m8_tu_vl32(vuint32m8_t dest, vuint32m8_t op1, uint32_t op2, vbo
 }
 
 /*
-** test_vsbc_vxm_u64m1_tu_vl32:  { target riscv64-*-* }
+** test_vsbc_vxm_u64m1_tu_vl32:  { target { rv64 } }
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m1,\s*tu,\s*m[au]
 **  ...
@@ -11511,7 +11511,7 @@ test_vsbc_vxm_u64m1_tu_vl32(vuint64m1_t dest, vuint64m1_t op1, uint64_t op2, vbo
 }
 
 /*
-** test_vsbc_vxm_u64m2_tu_vl32:  { target riscv64-*-* }
+** test_vsbc_vxm_u64m2_tu_vl32:  { target { rv64 } }
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m2,\s*tu,\s*m[au]
 **  ...
@@ -11526,7 +11526,7 @@ test_vsbc_vxm_u64m2_tu_vl32(vuint64m2_t dest, vuint64m2_t op1, uint64_t op2, vbo
 }
 
 /*
-** test_vsbc_vxm_u64m4_tu_vl32:  { target riscv64-*-* }
+** test_vsbc_vxm_u64m4_tu_vl32:  { target { rv64 } }
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m4,\s*tu,\s*m[au]
 **  ...
@@ -11541,7 +11541,7 @@ test_vsbc_vxm_u64m4_tu_vl32(vuint64m4_t dest, vuint64m4_t op1, uint64_t op2, vbo
 }
 
 /*
-** test_vsbc_vxm_u64m8_tu_vl32:  { target riscv64-*-* }
+** test_vsbc_vxm_u64m8_tu_vl32:  { target { rv64 } }
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m8,\s*tu,\s*m[au]
 **  ...
@@ -11826,7 +11826,7 @@ test_vsbc_vxm_u32m8_vl32(vuint32m8_t op1, uint32_t op2, vbool4_t op3)
 }
 
 /*
-** test_vsbc_vxm_u64m1_vl32:  { target riscv64-*-* }
+** test_vsbc_vxm_u64m1_vl32:  { target { rv64 } }
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m1,\s*t[au],\s*m[au]
 **  ...
@@ -11841,7 +11841,7 @@ test_vsbc_vxm_u64m1_vl32(vuint64m1_t op1, uint64_t op2, vbool64_t op3)
 }
 
 /*
-** test_vsbc_vxm_u64m2_vl32:  { target riscv64-*-* }
+** test_vsbc_vxm_u64m2_vl32:  { target { rv64 } }
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m2,\s*t[au],\s*m[au]
 **  ...
@@ -11856,7 +11856,7 @@ test_vsbc_vxm_u64m2_vl32(vuint64m2_t op1, uint64_t op2, vbool32_t op3)
 }
 
 /*
-** test_vsbc_vxm_u64m4_vl32:  { target riscv64-*-* }
+** test_vsbc_vxm_u64m4_vl32:  { target { rv64 } }
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m4,\s*t[au],\s*m[au]
 **  ...
@@ -11871,7 +11871,7 @@ test_vsbc_vxm_u64m4_vl32(vuint64m4_t op1, uint64_t op2, vbool16_t op3)
 }
 
 /*
-** test_vsbc_vxm_u64m8_vl32:  { target riscv64-*-* }
+** test_vsbc_vxm_u64m8_vl32:  { target { rv64 } }
 **  ...
 **	vsetvli\s+zero,\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*e64,\s*m8,\s*t[au],\s*m[au]
 **  ...
