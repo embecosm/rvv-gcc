@@ -54,4 +54,5 @@ int main() {
   if (!compare_1d(golden, actual, N)) {
     abort();
   }
+  return 0;
 }
