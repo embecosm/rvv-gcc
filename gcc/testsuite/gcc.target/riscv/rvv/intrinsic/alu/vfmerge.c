@@ -342,7 +342,7 @@ test_vfmerge_vfm_f32m8_vl31(vbool4_t mask, vfloat32m8_t op1, float32_t op2)
 **  ...
 **	vfmerge\.vfm\s+(?:v[0-9]|v[1-2][0-9]|v3[0-1]),\s*(?:v[0-9]|v[1-2][0-9]|v3[0-1]),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m1_t 
 test_vfmerge_vfm_f64m1(vbool64_t mask, vfloat64m1_t op1, float64_t op2, size_t vl)
@@ -357,7 +357,7 @@ test_vfmerge_vfm_f64m1(vbool64_t mask, vfloat64m1_t op1, float64_t op2, size_t v
 **  ...
 **	vfmerge\.vfm\s+(?:v[0-9]|v[1-2][0-9]|v3[0-1]),\s*(?:v[0-9]|v[1-2][0-9]|v3[0-1]),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m1_t 
 test_vfmerge_vfm_f64m1_vl31(vbool64_t mask, vfloat64m1_t op1, float64_t op2)
@@ -372,7 +372,7 @@ test_vfmerge_vfm_f64m1_vl31(vbool64_t mask, vfloat64m1_t op1, float64_t op2)
 **  ...
 **	vfmerge\.vfm\s+(?:v[02468]|v[1-2][02468]|v30),\s*(?:v[02468]|v[1-2][02468]|v30),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m2_t 
 test_vfmerge_vfm_f64m2(vbool32_t mask, vfloat64m2_t op1, float64_t op2, size_t vl)
@@ -387,7 +387,7 @@ test_vfmerge_vfm_f64m2(vbool32_t mask, vfloat64m2_t op1, float64_t op2, size_t v
 **  ...
 **	vfmerge\.vfm\s+(?:v[02468]|v[1-2][02468]|v30),\s*(?:v[02468]|v[1-2][02468]|v30),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m2_t 
 test_vfmerge_vfm_f64m2_vl31(vbool32_t mask, vfloat64m2_t op1, float64_t op2)
@@ -402,7 +402,7 @@ test_vfmerge_vfm_f64m2_vl31(vbool32_t mask, vfloat64m2_t op1, float64_t op2)
 **  ...
 **	vfmerge\.vfm\s+(?:v[048]|v1[26]|v2[048]),\s*(?:v[048]|v1[26]|v2[048]),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m4_t 
 test_vfmerge_vfm_f64m4(vbool16_t mask, vfloat64m4_t op1, float64_t op2, size_t vl)
@@ -417,7 +417,7 @@ test_vfmerge_vfm_f64m4(vbool16_t mask, vfloat64m4_t op1, float64_t op2, size_t v
 **  ...
 **	vfmerge\.vfm\s+(?:v[048]|v1[26]|v2[048]),\s*(?:v[048]|v1[26]|v2[048]),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m4_t 
 test_vfmerge_vfm_f64m4_vl31(vbool16_t mask, vfloat64m4_t op1, float64_t op2)
@@ -432,7 +432,7 @@ test_vfmerge_vfm_f64m4_vl31(vbool16_t mask, vfloat64m4_t op1, float64_t op2)
 **  ...
 **	vfmerge\.vfm\s+(?:v[08]|v16|v24),\s*(?:v[08]|v16|v24),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m8_t 
 test_vfmerge_vfm_f64m8(vbool8_t mask, vfloat64m8_t op1, float64_t op2, size_t vl)
@@ -447,7 +447,7 @@ test_vfmerge_vfm_f64m8(vbool8_t mask, vfloat64m8_t op1, float64_t op2, size_t vl
 **  ...
 **	vfmerge\.vfm\s+(?:v[08]|v16|v24),\s*(?:v[08]|v16|v24),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m8_t 
 test_vfmerge_vfm_f64m8_vl31(vbool8_t mask, vfloat64m8_t op1, float64_t op2)
@@ -792,7 +792,7 @@ test_vfmerge_vfm_f32m8_ta_vl31(vbool4_t mask, vfloat32m8_t op1, float32_t op2)
 **  ...
 **	vfmerge\.vfm\s+(?:v[0-9]|v[1-2][0-9]|v3[0-1]),\s*(?:v[0-9]|v[1-2][0-9]|v3[0-1]),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m1_t 
 test_vfmerge_vfm_f64m1_ta(vbool64_t mask, vfloat64m1_t op1, float64_t op2, size_t vl)
@@ -807,7 +807,7 @@ test_vfmerge_vfm_f64m1_ta(vbool64_t mask, vfloat64m1_t op1, float64_t op2, size_
 **  ...
 **	vfmerge\.vfm\s+(?:v[0-9]|v[1-2][0-9]|v3[0-1]),\s*(?:v[0-9]|v[1-2][0-9]|v3[0-1]),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m1_t 
 test_vfmerge_vfm_f64m1_ta_vl31(vbool64_t mask, vfloat64m1_t op1, float64_t op2)
@@ -822,7 +822,7 @@ test_vfmerge_vfm_f64m1_ta_vl31(vbool64_t mask, vfloat64m1_t op1, float64_t op2)
 **  ...
 **	vfmerge\.vfm\s+(?:v[02468]|v[1-2][02468]|v30),\s*(?:v[02468]|v[1-2][02468]|v30),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m2_t 
 test_vfmerge_vfm_f64m2_ta(vbool32_t mask, vfloat64m2_t op1, float64_t op2, size_t vl)
@@ -837,7 +837,7 @@ test_vfmerge_vfm_f64m2_ta(vbool32_t mask, vfloat64m2_t op1, float64_t op2, size_
 **  ...
 **	vfmerge\.vfm\s+(?:v[02468]|v[1-2][02468]|v30),\s*(?:v[02468]|v[1-2][02468]|v30),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m2_t 
 test_vfmerge_vfm_f64m2_ta_vl31(vbool32_t mask, vfloat64m2_t op1, float64_t op2)
@@ -852,7 +852,7 @@ test_vfmerge_vfm_f64m2_ta_vl31(vbool32_t mask, vfloat64m2_t op1, float64_t op2)
 **  ...
 **	vfmerge\.vfm\s+(?:v[048]|v1[26]|v2[048]),\s*(?:v[048]|v1[26]|v2[048]),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m4_t 
 test_vfmerge_vfm_f64m4_ta(vbool16_t mask, vfloat64m4_t op1, float64_t op2, size_t vl)
@@ -867,7 +867,7 @@ test_vfmerge_vfm_f64m4_ta(vbool16_t mask, vfloat64m4_t op1, float64_t op2, size_
 **  ...
 **	vfmerge\.vfm\s+(?:v[048]|v1[26]|v2[048]),\s*(?:v[048]|v1[26]|v2[048]),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m4_t 
 test_vfmerge_vfm_f64m4_ta_vl31(vbool16_t mask, vfloat64m4_t op1, float64_t op2)
@@ -882,7 +882,7 @@ test_vfmerge_vfm_f64m4_ta_vl31(vbool16_t mask, vfloat64m4_t op1, float64_t op2)
 **  ...
 **	vfmerge\.vfm\s+(?:v[08]|v16|v24),\s*(?:v[08]|v16|v24),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m8_t 
 test_vfmerge_vfm_f64m8_ta(vbool8_t mask, vfloat64m8_t op1, float64_t op2, size_t vl)
@@ -897,7 +897,7 @@ test_vfmerge_vfm_f64m8_ta(vbool8_t mask, vfloat64m8_t op1, float64_t op2, size_t
 **  ...
 **	vfmerge\.vfm\s+(?:v[08]|v16|v24),\s*(?:v[08]|v16|v24),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m8_t 
 test_vfmerge_vfm_f64m8_ta_vl31(vbool8_t mask, vfloat64m8_t op1, float64_t op2)
@@ -1242,7 +1242,7 @@ test_vfmerge_vfm_f32m8_tu_vl31(vfloat32m8_t dest, vbool4_t mask, vfloat32m8_t op
 **  ...
 **	vfmerge\.vfm\s+(?:v[0-9]|v[1-2][0-9]|v3[0-1]),\s*(?:v[0-9]|v[1-2][0-9]|v3[0-1]),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m1_t 
 test_vfmerge_vfm_f64m1_tu(vfloat64m1_t dest, vbool64_t mask, vfloat64m1_t op1, float64_t op2, size_t vl)
@@ -1257,7 +1257,7 @@ test_vfmerge_vfm_f64m1_tu(vfloat64m1_t dest, vbool64_t mask, vfloat64m1_t op1, f
 **  ...
 **	vfmerge\.vfm\s+(?:v[0-9]|v[1-2][0-9]|v3[0-1]),\s*(?:v[0-9]|v[1-2][0-9]|v3[0-1]),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m1_t 
 test_vfmerge_vfm_f64m1_tu_vl31(vfloat64m1_t dest, vbool64_t mask, vfloat64m1_t op1, float64_t op2)
@@ -1272,7 +1272,7 @@ test_vfmerge_vfm_f64m1_tu_vl31(vfloat64m1_t dest, vbool64_t mask, vfloat64m1_t o
 **  ...
 **	vfmerge\.vfm\s+(?:v[02468]|v[1-2][02468]|v30),\s*(?:v[02468]|v[1-2][02468]|v30),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m2_t 
 test_vfmerge_vfm_f64m2_tu(vfloat64m2_t dest, vbool32_t mask, vfloat64m2_t op1, float64_t op2, size_t vl)
@@ -1287,7 +1287,7 @@ test_vfmerge_vfm_f64m2_tu(vfloat64m2_t dest, vbool32_t mask, vfloat64m2_t op1, f
 **  ...
 **	vfmerge\.vfm\s+(?:v[02468]|v[1-2][02468]|v30),\s*(?:v[02468]|v[1-2][02468]|v30),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m2_t 
 test_vfmerge_vfm_f64m2_tu_vl31(vfloat64m2_t dest, vbool32_t mask, vfloat64m2_t op1, float64_t op2)
@@ -1302,7 +1302,7 @@ test_vfmerge_vfm_f64m2_tu_vl31(vfloat64m2_t dest, vbool32_t mask, vfloat64m2_t o
 **  ...
 **	vfmerge\.vfm\s+(?:v[048]|v1[26]|v2[048]),\s*(?:v[048]|v1[26]|v2[048]),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m4_t 
 test_vfmerge_vfm_f64m4_tu(vfloat64m4_t dest, vbool16_t mask, vfloat64m4_t op1, float64_t op2, size_t vl)
@@ -1317,7 +1317,7 @@ test_vfmerge_vfm_f64m4_tu(vfloat64m4_t dest, vbool16_t mask, vfloat64m4_t op1, f
 **  ...
 **	vfmerge\.vfm\s+(?:v[048]|v1[26]|v2[048]),\s*(?:v[048]|v1[26]|v2[048]),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m4_t 
 test_vfmerge_vfm_f64m4_tu_vl31(vfloat64m4_t dest, vbool16_t mask, vfloat64m4_t op1, float64_t op2)
@@ -1332,7 +1332,7 @@ test_vfmerge_vfm_f64m4_tu_vl31(vfloat64m4_t dest, vbool16_t mask, vfloat64m4_t o
 **  ...
 **	vfmerge\.vfm\s+(?:v[08]|v16|v24),\s*(?:v[08]|v16|v24),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m8_t 
 test_vfmerge_vfm_f64m8_tu(vfloat64m8_t dest, vbool8_t mask, vfloat64m8_t op1, float64_t op2, size_t vl)
@@ -1347,7 +1347,7 @@ test_vfmerge_vfm_f64m8_tu(vfloat64m8_t dest, vbool8_t mask, vfloat64m8_t op1, fl
 **  ...
 **	vfmerge\.vfm\s+(?:v[08]|v16|v24),\s*(?:v[08]|v16|v24),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m8_t 
 test_vfmerge_vfm_f64m8_tu_vl31(vfloat64m8_t dest, vbool8_t mask, vfloat64m8_t op1, float64_t op2)
@@ -1527,7 +1527,7 @@ test_vfmerge_vfm_f32m8_ta_vl32(vbool4_t mask, vfloat32m8_t op1, float32_t op2)
 **  ...
 **	vfmerge\.vfm\s+(?:v[0-9]|v[1-2][0-9]|v3[0-1]),\s*(?:v[0-9]|v[1-2][0-9]|v3[0-1]),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m1_t 
 test_vfmerge_vfm_f64m1_ta_vl32(vbool64_t mask, vfloat64m1_t op1, float64_t op2)
@@ -1542,7 +1542,7 @@ test_vfmerge_vfm_f64m1_ta_vl32(vbool64_t mask, vfloat64m1_t op1, float64_t op2)
 **  ...
 **	vfmerge\.vfm\s+(?:v[02468]|v[1-2][02468]|v30),\s*(?:v[02468]|v[1-2][02468]|v30),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m2_t 
 test_vfmerge_vfm_f64m2_ta_vl32(vbool32_t mask, vfloat64m2_t op1, float64_t op2)
@@ -1557,7 +1557,7 @@ test_vfmerge_vfm_f64m2_ta_vl32(vbool32_t mask, vfloat64m2_t op1, float64_t op2)
 **  ...
 **	vfmerge\.vfm\s+(?:v[048]|v1[26]|v2[048]),\s*(?:v[048]|v1[26]|v2[048]),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m4_t 
 test_vfmerge_vfm_f64m4_ta_vl32(vbool16_t mask, vfloat64m4_t op1, float64_t op2)
@@ -1572,7 +1572,7 @@ test_vfmerge_vfm_f64m4_ta_vl32(vbool16_t mask, vfloat64m4_t op1, float64_t op2)
 **  ...
 **	vfmerge\.vfm\s+(?:v[08]|v16|v24),\s*(?:v[08]|v16|v24),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m8_t 
 test_vfmerge_vfm_f64m8_ta_vl32(vbool8_t mask, vfloat64m8_t op1, float64_t op2)
@@ -1752,7 +1752,7 @@ test_vfmerge_vfm_f32m8_tu_vl32(vfloat32m8_t dest, vbool4_t mask, vfloat32m8_t op
 **  ...
 **	vfmerge\.vfm\s+(?:v[0-9]|v[1-2][0-9]|v3[0-1]),\s*(?:v[0-9]|v[1-2][0-9]|v3[0-1]),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m1_t 
 test_vfmerge_vfm_f64m1_tu_vl32(vfloat64m1_t dest, vbool64_t mask, vfloat64m1_t op1, float64_t op2)
@@ -1767,7 +1767,7 @@ test_vfmerge_vfm_f64m1_tu_vl32(vfloat64m1_t dest, vbool64_t mask, vfloat64m1_t o
 **  ...
 **	vfmerge\.vfm\s+(?:v[02468]|v[1-2][02468]|v30),\s*(?:v[02468]|v[1-2][02468]|v30),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m2_t 
 test_vfmerge_vfm_f64m2_tu_vl32(vfloat64m2_t dest, vbool32_t mask, vfloat64m2_t op1, float64_t op2)
@@ -1782,7 +1782,7 @@ test_vfmerge_vfm_f64m2_tu_vl32(vfloat64m2_t dest, vbool32_t mask, vfloat64m2_t o
 **  ...
 **	vfmerge\.vfm\s+(?:v[048]|v1[26]|v2[048]),\s*(?:v[048]|v1[26]|v2[048]),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m4_t 
 test_vfmerge_vfm_f64m4_tu_vl32(vfloat64m4_t dest, vbool16_t mask, vfloat64m4_t op1, float64_t op2)
@@ -1797,7 +1797,7 @@ test_vfmerge_vfm_f64m4_tu_vl32(vfloat64m4_t dest, vbool16_t mask, vfloat64m4_t o
 **  ...
 **	vfmerge\.vfm\s+(?:v[08]|v16|v24),\s*(?:v[08]|v16|v24),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m8_t 
 test_vfmerge_vfm_f64m8_tu_vl32(vfloat64m8_t dest, vbool8_t mask, vfloat64m8_t op1, float64_t op2)
@@ -1977,7 +1977,7 @@ test_vfmerge_vfm_f32m8_vl32(vbool4_t mask, vfloat32m8_t op1, float32_t op2)
 **  ...
 **	vfmerge\.vfm\s+(?:v[0-9]|v[1-2][0-9]|v3[0-1]),\s*(?:v[0-9]|v[1-2][0-9]|v3[0-1]),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m1_t 
 test_vfmerge_vfm_f64m1_vl32(vbool64_t mask, vfloat64m1_t op1, float64_t op2)
@@ -1992,7 +1992,7 @@ test_vfmerge_vfm_f64m1_vl32(vbool64_t mask, vfloat64m1_t op1, float64_t op2)
 **  ...
 **	vfmerge\.vfm\s+(?:v[02468]|v[1-2][02468]|v30),\s*(?:v[02468]|v[1-2][02468]|v30),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m2_t 
 test_vfmerge_vfm_f64m2_vl32(vbool32_t mask, vfloat64m2_t op1, float64_t op2)
@@ -2007,7 +2007,7 @@ test_vfmerge_vfm_f64m2_vl32(vbool32_t mask, vfloat64m2_t op1, float64_t op2)
 **  ...
 **	vfmerge\.vfm\s+(?:v[048]|v1[26]|v2[048]),\s*(?:v[048]|v1[26]|v2[048]),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m4_t 
 test_vfmerge_vfm_f64m4_vl32(vbool16_t mask, vfloat64m4_t op1, float64_t op2)
@@ -2022,7 +2022,7 @@ test_vfmerge_vfm_f64m4_vl32(vbool16_t mask, vfloat64m4_t op1, float64_t op2)
 **  ...
 **	vfmerge\.vfm\s+(?:v[08]|v16|v24),\s*(?:v[08]|v16|v24),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m8_t 
 test_vfmerge_vfm_f64m8_vl32(vbool8_t mask, vfloat64m8_t op1, float64_t op2)

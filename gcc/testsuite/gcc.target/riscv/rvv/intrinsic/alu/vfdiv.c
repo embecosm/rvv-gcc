@@ -342,7 +342,7 @@ test_vfdiv_vf_f32m8_vl31(vfloat32m8_t op1, float32_t op2)
 **  ...
 **	vfdiv\.vf\s+(?:v[0-9]|v[1-2][0-9]|v3[0-1]),\s*(?:v[0-9]|v[1-2][0-9]|v3[0-1]),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7])
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m1_t 
 test_vfdiv_vf_f64m1(vfloat64m1_t op1, float64_t op2, size_t vl)
@@ -357,7 +357,7 @@ test_vfdiv_vf_f64m1(vfloat64m1_t op1, float64_t op2, size_t vl)
 **  ...
 **	vfdiv\.vf\s+(?:v[0-9]|v[1-2][0-9]|v3[0-1]),\s*(?:v[0-9]|v[1-2][0-9]|v3[0-1]),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7])
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m1_t 
 test_vfdiv_vf_f64m1_vl31(vfloat64m1_t op1, float64_t op2)
@@ -372,7 +372,7 @@ test_vfdiv_vf_f64m1_vl31(vfloat64m1_t op1, float64_t op2)
 **  ...
 **	vfdiv\.vf\s+(?:v[02468]|v[1-2][02468]|v30),\s*(?:v[02468]|v[1-2][02468]|v30),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7])
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m2_t 
 test_vfdiv_vf_f64m2(vfloat64m2_t op1, float64_t op2, size_t vl)
@@ -387,7 +387,7 @@ test_vfdiv_vf_f64m2(vfloat64m2_t op1, float64_t op2, size_t vl)
 **  ...
 **	vfdiv\.vf\s+(?:v[02468]|v[1-2][02468]|v30),\s*(?:v[02468]|v[1-2][02468]|v30),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7])
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m2_t 
 test_vfdiv_vf_f64m2_vl31(vfloat64m2_t op1, float64_t op2)
@@ -402,7 +402,7 @@ test_vfdiv_vf_f64m2_vl31(vfloat64m2_t op1, float64_t op2)
 **  ...
 **	vfdiv\.vf\s+(?:v[048]|v1[26]|v2[048]),\s*(?:v[048]|v1[26]|v2[048]),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7])
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m4_t 
 test_vfdiv_vf_f64m4(vfloat64m4_t op1, float64_t op2, size_t vl)
@@ -417,7 +417,7 @@ test_vfdiv_vf_f64m4(vfloat64m4_t op1, float64_t op2, size_t vl)
 **  ...
 **	vfdiv\.vf\s+(?:v[048]|v1[26]|v2[048]),\s*(?:v[048]|v1[26]|v2[048]),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7])
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m4_t 
 test_vfdiv_vf_f64m4_vl31(vfloat64m4_t op1, float64_t op2)
@@ -432,7 +432,7 @@ test_vfdiv_vf_f64m4_vl31(vfloat64m4_t op1, float64_t op2)
 **  ...
 **	vfdiv\.vf\s+(?:v[08]|v16|v24),\s*(?:v[08]|v16|v24),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7])
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m8_t 
 test_vfdiv_vf_f64m8(vfloat64m8_t op1, float64_t op2, size_t vl)
@@ -447,7 +447,7 @@ test_vfdiv_vf_f64m8(vfloat64m8_t op1, float64_t op2, size_t vl)
 **  ...
 **	vfdiv\.vf\s+(?:v[08]|v16|v24),\s*(?:v[08]|v16|v24),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7])
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m8_t 
 test_vfdiv_vf_f64m8_vl31(vfloat64m8_t op1, float64_t op2)
@@ -792,7 +792,7 @@ test_vfdiv_vf_f32m8_m_vl31(vbool4_t mask, vfloat32m8_t maskedoff, vfloat32m8_t o
 **  ...
 **	vfdiv\.vf\s+(?:v[0-9]|v[1-2][0-9]|v3[0-1]),\s*(?:v[0-9]|v[1-2][0-9]|v3[0-1]),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0\.t
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m1_t 
 test_vfdiv_vf_f64m1_m(vbool64_t mask, vfloat64m1_t maskedoff, vfloat64m1_t op1, float64_t op2, size_t vl)
@@ -807,7 +807,7 @@ test_vfdiv_vf_f64m1_m(vbool64_t mask, vfloat64m1_t maskedoff, vfloat64m1_t op1, 
 **  ...
 **	vfdiv\.vf\s+(?:v[0-9]|v[1-2][0-9]|v3[0-1]),\s*(?:v[0-9]|v[1-2][0-9]|v3[0-1]),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0\.t
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m1_t 
 test_vfdiv_vf_f64m1_m_vl31(vbool64_t mask, vfloat64m1_t maskedoff, vfloat64m1_t op1, float64_t op2)
@@ -822,7 +822,7 @@ test_vfdiv_vf_f64m1_m_vl31(vbool64_t mask, vfloat64m1_t maskedoff, vfloat64m1_t 
 **  ...
 **	vfdiv\.vf\s+(?:v[02468]|v[1-2][02468]|v30),\s*(?:v[02468]|v[1-2][02468]|v30),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0\.t
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m2_t 
 test_vfdiv_vf_f64m2_m(vbool32_t mask, vfloat64m2_t maskedoff, vfloat64m2_t op1, float64_t op2, size_t vl)
@@ -837,7 +837,7 @@ test_vfdiv_vf_f64m2_m(vbool32_t mask, vfloat64m2_t maskedoff, vfloat64m2_t op1, 
 **  ...
 **	vfdiv\.vf\s+(?:v[02468]|v[1-2][02468]|v30),\s*(?:v[02468]|v[1-2][02468]|v30),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0\.t
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m2_t 
 test_vfdiv_vf_f64m2_m_vl31(vbool32_t mask, vfloat64m2_t maskedoff, vfloat64m2_t op1, float64_t op2)
@@ -852,7 +852,7 @@ test_vfdiv_vf_f64m2_m_vl31(vbool32_t mask, vfloat64m2_t maskedoff, vfloat64m2_t 
 **  ...
 **	vfdiv\.vf\s+(?:v[048]|v1[26]|v2[048]),\s*(?:v[048]|v1[26]|v2[048]),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0\.t
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m4_t 
 test_vfdiv_vf_f64m4_m(vbool16_t mask, vfloat64m4_t maskedoff, vfloat64m4_t op1, float64_t op2, size_t vl)
@@ -867,7 +867,7 @@ test_vfdiv_vf_f64m4_m(vbool16_t mask, vfloat64m4_t maskedoff, vfloat64m4_t op1, 
 **  ...
 **	vfdiv\.vf\s+(?:v[048]|v1[26]|v2[048]),\s*(?:v[048]|v1[26]|v2[048]),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0\.t
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m4_t 
 test_vfdiv_vf_f64m4_m_vl31(vbool16_t mask, vfloat64m4_t maskedoff, vfloat64m4_t op1, float64_t op2)
@@ -882,7 +882,7 @@ test_vfdiv_vf_f64m4_m_vl31(vbool16_t mask, vfloat64m4_t maskedoff, vfloat64m4_t 
 **  ...
 **	vfdiv\.vf\s+(?:v[08]|v16|v24),\s*(?:v[08]|v16|v24),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0\.t
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m8_t 
 test_vfdiv_vf_f64m8_m(vbool8_t mask, vfloat64m8_t maskedoff, vfloat64m8_t op1, float64_t op2, size_t vl)
@@ -897,7 +897,7 @@ test_vfdiv_vf_f64m8_m(vbool8_t mask, vfloat64m8_t maskedoff, vfloat64m8_t op1, f
 **  ...
 **	vfdiv\.vf\s+(?:v[08]|v16|v24),\s*(?:v[08]|v16|v24),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0\.t
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m8_t 
 test_vfdiv_vf_f64m8_m_vl31(vbool8_t mask, vfloat64m8_t maskedoff, vfloat64m8_t op1, float64_t op2)
@@ -1077,7 +1077,7 @@ test_vfdiv_vf_f32m8_m_vl32(vbool4_t mask, vfloat32m8_t maskedoff, vfloat32m8_t o
 **  ...
 **	vfdiv\.vf\s+(?:v[0-9]|v[1-2][0-9]|v3[0-1]),\s*(?:v[0-9]|v[1-2][0-9]|v3[0-1]),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0\.t
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m1_t 
 test_vfdiv_vf_f64m1_m_vl32(vbool64_t mask, vfloat64m1_t maskedoff, vfloat64m1_t op1, float64_t op2)
@@ -1092,7 +1092,7 @@ test_vfdiv_vf_f64m1_m_vl32(vbool64_t mask, vfloat64m1_t maskedoff, vfloat64m1_t 
 **  ...
 **	vfdiv\.vf\s+(?:v[02468]|v[1-2][02468]|v30),\s*(?:v[02468]|v[1-2][02468]|v30),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0\.t
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m2_t 
 test_vfdiv_vf_f64m2_m_vl32(vbool32_t mask, vfloat64m2_t maskedoff, vfloat64m2_t op1, float64_t op2)
@@ -1107,7 +1107,7 @@ test_vfdiv_vf_f64m2_m_vl32(vbool32_t mask, vfloat64m2_t maskedoff, vfloat64m2_t 
 **  ...
 **	vfdiv\.vf\s+(?:v[048]|v1[26]|v2[048]),\s*(?:v[048]|v1[26]|v2[048]),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0\.t
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m4_t 
 test_vfdiv_vf_f64m4_m_vl32(vbool16_t mask, vfloat64m4_t maskedoff, vfloat64m4_t op1, float64_t op2)
@@ -1122,7 +1122,7 @@ test_vfdiv_vf_f64m4_m_vl32(vbool16_t mask, vfloat64m4_t maskedoff, vfloat64m4_t 
 **  ...
 **	vfdiv\.vf\s+(?:v[08]|v16|v24),\s*(?:v[08]|v16|v24),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0\.t
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m8_t 
 test_vfdiv_vf_f64m8_m_vl32(vbool8_t mask, vfloat64m8_t maskedoff, vfloat64m8_t op1, float64_t op2)
@@ -1467,7 +1467,7 @@ test_vfdiv_vf_f32m8_ta_vl31(vfloat32m8_t op1, float32_t op2)
 **  ...
 **	vfdiv\.vf\s+(?:v[0-9]|v[1-2][0-9]|v3[0-1]),\s*(?:v[0-9]|v[1-2][0-9]|v3[0-1]),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7])
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m1_t 
 test_vfdiv_vf_f64m1_ta(vfloat64m1_t op1, float64_t op2, size_t vl)
@@ -1482,7 +1482,7 @@ test_vfdiv_vf_f64m1_ta(vfloat64m1_t op1, float64_t op2, size_t vl)
 **  ...
 **	vfdiv\.vf\s+(?:v[0-9]|v[1-2][0-9]|v3[0-1]),\s*(?:v[0-9]|v[1-2][0-9]|v3[0-1]),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7])
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m1_t 
 test_vfdiv_vf_f64m1_ta_vl31(vfloat64m1_t op1, float64_t op2)
@@ -1497,7 +1497,7 @@ test_vfdiv_vf_f64m1_ta_vl31(vfloat64m1_t op1, float64_t op2)
 **  ...
 **	vfdiv\.vf\s+(?:v[02468]|v[1-2][02468]|v30),\s*(?:v[02468]|v[1-2][02468]|v30),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7])
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m2_t 
 test_vfdiv_vf_f64m2_ta(vfloat64m2_t op1, float64_t op2, size_t vl)
@@ -1512,7 +1512,7 @@ test_vfdiv_vf_f64m2_ta(vfloat64m2_t op1, float64_t op2, size_t vl)
 **  ...
 **	vfdiv\.vf\s+(?:v[02468]|v[1-2][02468]|v30),\s*(?:v[02468]|v[1-2][02468]|v30),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7])
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m2_t 
 test_vfdiv_vf_f64m2_ta_vl31(vfloat64m2_t op1, float64_t op2)
@@ -1527,7 +1527,7 @@ test_vfdiv_vf_f64m2_ta_vl31(vfloat64m2_t op1, float64_t op2)
 **  ...
 **	vfdiv\.vf\s+(?:v[048]|v1[26]|v2[048]),\s*(?:v[048]|v1[26]|v2[048]),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7])
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m4_t 
 test_vfdiv_vf_f64m4_ta(vfloat64m4_t op1, float64_t op2, size_t vl)
@@ -1542,7 +1542,7 @@ test_vfdiv_vf_f64m4_ta(vfloat64m4_t op1, float64_t op2, size_t vl)
 **  ...
 **	vfdiv\.vf\s+(?:v[048]|v1[26]|v2[048]),\s*(?:v[048]|v1[26]|v2[048]),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7])
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m4_t 
 test_vfdiv_vf_f64m4_ta_vl31(vfloat64m4_t op1, float64_t op2)
@@ -1557,7 +1557,7 @@ test_vfdiv_vf_f64m4_ta_vl31(vfloat64m4_t op1, float64_t op2)
 **  ...
 **	vfdiv\.vf\s+(?:v[08]|v16|v24),\s*(?:v[08]|v16|v24),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7])
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m8_t 
 test_vfdiv_vf_f64m8_ta(vfloat64m8_t op1, float64_t op2, size_t vl)
@@ -1572,7 +1572,7 @@ test_vfdiv_vf_f64m8_ta(vfloat64m8_t op1, float64_t op2, size_t vl)
 **  ...
 **	vfdiv\.vf\s+(?:v[08]|v16|v24),\s*(?:v[08]|v16|v24),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7])
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m8_t 
 test_vfdiv_vf_f64m8_ta_vl31(vfloat64m8_t op1, float64_t op2)
@@ -1917,7 +1917,7 @@ test_vfdiv_vf_f32m8_tu_vl31(vfloat32m8_t dest, vfloat32m8_t op1, float32_t op2)
 **  ...
 **	vfdiv\.vf\s+(?:v[0-9]|v[1-2][0-9]|v3[0-1]),\s*(?:v[0-9]|v[1-2][0-9]|v3[0-1]),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7])
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m1_t 
 test_vfdiv_vf_f64m1_tu(vfloat64m1_t dest, vfloat64m1_t op1, float64_t op2, size_t vl)
@@ -1932,7 +1932,7 @@ test_vfdiv_vf_f64m1_tu(vfloat64m1_t dest, vfloat64m1_t op1, float64_t op2, size_
 **  ...
 **	vfdiv\.vf\s+(?:v[0-9]|v[1-2][0-9]|v3[0-1]),\s*(?:v[0-9]|v[1-2][0-9]|v3[0-1]),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7])
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m1_t 
 test_vfdiv_vf_f64m1_tu_vl31(vfloat64m1_t dest, vfloat64m1_t op1, float64_t op2)
@@ -1947,7 +1947,7 @@ test_vfdiv_vf_f64m1_tu_vl31(vfloat64m1_t dest, vfloat64m1_t op1, float64_t op2)
 **  ...
 **	vfdiv\.vf\s+(?:v[02468]|v[1-2][02468]|v30),\s*(?:v[02468]|v[1-2][02468]|v30),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7])
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m2_t 
 test_vfdiv_vf_f64m2_tu(vfloat64m2_t dest, vfloat64m2_t op1, float64_t op2, size_t vl)
@@ -1962,7 +1962,7 @@ test_vfdiv_vf_f64m2_tu(vfloat64m2_t dest, vfloat64m2_t op1, float64_t op2, size_
 **  ...
 **	vfdiv\.vf\s+(?:v[02468]|v[1-2][02468]|v30),\s*(?:v[02468]|v[1-2][02468]|v30),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7])
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m2_t 
 test_vfdiv_vf_f64m2_tu_vl31(vfloat64m2_t dest, vfloat64m2_t op1, float64_t op2)
@@ -1977,7 +1977,7 @@ test_vfdiv_vf_f64m2_tu_vl31(vfloat64m2_t dest, vfloat64m2_t op1, float64_t op2)
 **  ...
 **	vfdiv\.vf\s+(?:v[048]|v1[26]|v2[048]),\s*(?:v[048]|v1[26]|v2[048]),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7])
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m4_t 
 test_vfdiv_vf_f64m4_tu(vfloat64m4_t dest, vfloat64m4_t op1, float64_t op2, size_t vl)
@@ -1992,7 +1992,7 @@ test_vfdiv_vf_f64m4_tu(vfloat64m4_t dest, vfloat64m4_t op1, float64_t op2, size_
 **  ...
 **	vfdiv\.vf\s+(?:v[048]|v1[26]|v2[048]),\s*(?:v[048]|v1[26]|v2[048]),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7])
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m4_t 
 test_vfdiv_vf_f64m4_tu_vl31(vfloat64m4_t dest, vfloat64m4_t op1, float64_t op2)
@@ -2007,7 +2007,7 @@ test_vfdiv_vf_f64m4_tu_vl31(vfloat64m4_t dest, vfloat64m4_t op1, float64_t op2)
 **  ...
 **	vfdiv\.vf\s+(?:v[08]|v16|v24),\s*(?:v[08]|v16|v24),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7])
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m8_t 
 test_vfdiv_vf_f64m8_tu(vfloat64m8_t dest, vfloat64m8_t op1, float64_t op2, size_t vl)
@@ -2022,7 +2022,7 @@ test_vfdiv_vf_f64m8_tu(vfloat64m8_t dest, vfloat64m8_t op1, float64_t op2, size_
 **  ...
 **	vfdiv\.vf\s+(?:v[08]|v16|v24),\s*(?:v[08]|v16|v24),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7])
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m8_t 
 test_vfdiv_vf_f64m8_tu_vl31(vfloat64m8_t dest, vfloat64m8_t op1, float64_t op2)
@@ -2367,7 +2367,7 @@ test_vfdiv_vf_f32m8_tama_vl31(vbool4_t mask, vfloat32m8_t maskedoff, vfloat32m8_
 **  ...
 **	vfdiv\.vf\s+(?:v[0-9]|v[1-2][0-9]|v3[0-1]),\s*(?:v[0-9]|v[1-2][0-9]|v3[0-1]),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0\.t
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m1_t 
 test_vfdiv_vf_f64m1_tama(vbool64_t mask, vfloat64m1_t maskedoff, vfloat64m1_t op1, float64_t op2, size_t vl)
@@ -2382,7 +2382,7 @@ test_vfdiv_vf_f64m1_tama(vbool64_t mask, vfloat64m1_t maskedoff, vfloat64m1_t op
 **  ...
 **	vfdiv\.vf\s+(?:v[0-9]|v[1-2][0-9]|v3[0-1]),\s*(?:v[0-9]|v[1-2][0-9]|v3[0-1]),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0\.t
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m1_t 
 test_vfdiv_vf_f64m1_tama_vl31(vbool64_t mask, vfloat64m1_t maskedoff, vfloat64m1_t op1, float64_t op2)
@@ -2397,7 +2397,7 @@ test_vfdiv_vf_f64m1_tama_vl31(vbool64_t mask, vfloat64m1_t maskedoff, vfloat64m1
 **  ...
 **	vfdiv\.vf\s+(?:v[02468]|v[1-2][02468]|v30),\s*(?:v[02468]|v[1-2][02468]|v30),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0\.t
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m2_t 
 test_vfdiv_vf_f64m2_tama(vbool32_t mask, vfloat64m2_t maskedoff, vfloat64m2_t op1, float64_t op2, size_t vl)
@@ -2412,7 +2412,7 @@ test_vfdiv_vf_f64m2_tama(vbool32_t mask, vfloat64m2_t maskedoff, vfloat64m2_t op
 **  ...
 **	vfdiv\.vf\s+(?:v[02468]|v[1-2][02468]|v30),\s*(?:v[02468]|v[1-2][02468]|v30),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0\.t
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m2_t 
 test_vfdiv_vf_f64m2_tama_vl31(vbool32_t mask, vfloat64m2_t maskedoff, vfloat64m2_t op1, float64_t op2)
@@ -2427,7 +2427,7 @@ test_vfdiv_vf_f64m2_tama_vl31(vbool32_t mask, vfloat64m2_t maskedoff, vfloat64m2
 **  ...
 **	vfdiv\.vf\s+(?:v[048]|v1[26]|v2[048]),\s*(?:v[048]|v1[26]|v2[048]),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0\.t
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m4_t 
 test_vfdiv_vf_f64m4_tama(vbool16_t mask, vfloat64m4_t maskedoff, vfloat64m4_t op1, float64_t op2, size_t vl)
@@ -2442,7 +2442,7 @@ test_vfdiv_vf_f64m4_tama(vbool16_t mask, vfloat64m4_t maskedoff, vfloat64m4_t op
 **  ...
 **	vfdiv\.vf\s+(?:v[048]|v1[26]|v2[048]),\s*(?:v[048]|v1[26]|v2[048]),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0\.t
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m4_t 
 test_vfdiv_vf_f64m4_tama_vl31(vbool16_t mask, vfloat64m4_t maskedoff, vfloat64m4_t op1, float64_t op2)
@@ -2457,7 +2457,7 @@ test_vfdiv_vf_f64m4_tama_vl31(vbool16_t mask, vfloat64m4_t maskedoff, vfloat64m4
 **  ...
 **	vfdiv\.vf\s+(?:v[08]|v16|v24),\s*(?:v[08]|v16|v24),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0\.t
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m8_t 
 test_vfdiv_vf_f64m8_tama(vbool8_t mask, vfloat64m8_t maskedoff, vfloat64m8_t op1, float64_t op2, size_t vl)
@@ -2472,7 +2472,7 @@ test_vfdiv_vf_f64m8_tama(vbool8_t mask, vfloat64m8_t maskedoff, vfloat64m8_t op1
 **  ...
 **	vfdiv\.vf\s+(?:v[08]|v16|v24),\s*(?:v[08]|v16|v24),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0\.t
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m8_t 
 test_vfdiv_vf_f64m8_tama_vl31(vbool8_t mask, vfloat64m8_t maskedoff, vfloat64m8_t op1, float64_t op2)
@@ -2817,7 +2817,7 @@ test_vfdiv_vf_f32m8_tamu_vl31(vbool4_t mask, vfloat32m8_t maskedoff, vfloat32m8_
 **  ...
 **	vfdiv\.vf\s+(?:v[0-9]|v[1-2][0-9]|v3[0-1]),\s*(?:v[0-9]|v[1-2][0-9]|v3[0-1]),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0\.t
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m1_t 
 test_vfdiv_vf_f64m1_tamu(vbool64_t mask, vfloat64m1_t maskedoff, vfloat64m1_t op1, float64_t op2, size_t vl)
@@ -2832,7 +2832,7 @@ test_vfdiv_vf_f64m1_tamu(vbool64_t mask, vfloat64m1_t maskedoff, vfloat64m1_t op
 **  ...
 **	vfdiv\.vf\s+(?:v[0-9]|v[1-2][0-9]|v3[0-1]),\s*(?:v[0-9]|v[1-2][0-9]|v3[0-1]),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0\.t
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m1_t 
 test_vfdiv_vf_f64m1_tamu_vl31(vbool64_t mask, vfloat64m1_t maskedoff, vfloat64m1_t op1, float64_t op2)
@@ -2847,7 +2847,7 @@ test_vfdiv_vf_f64m1_tamu_vl31(vbool64_t mask, vfloat64m1_t maskedoff, vfloat64m1
 **  ...
 **	vfdiv\.vf\s+(?:v[02468]|v[1-2][02468]|v30),\s*(?:v[02468]|v[1-2][02468]|v30),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0\.t
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m2_t 
 test_vfdiv_vf_f64m2_tamu(vbool32_t mask, vfloat64m2_t maskedoff, vfloat64m2_t op1, float64_t op2, size_t vl)
@@ -2862,7 +2862,7 @@ test_vfdiv_vf_f64m2_tamu(vbool32_t mask, vfloat64m2_t maskedoff, vfloat64m2_t op
 **  ...
 **	vfdiv\.vf\s+(?:v[02468]|v[1-2][02468]|v30),\s*(?:v[02468]|v[1-2][02468]|v30),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0\.t
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m2_t 
 test_vfdiv_vf_f64m2_tamu_vl31(vbool32_t mask, vfloat64m2_t maskedoff, vfloat64m2_t op1, float64_t op2)
@@ -2877,7 +2877,7 @@ test_vfdiv_vf_f64m2_tamu_vl31(vbool32_t mask, vfloat64m2_t maskedoff, vfloat64m2
 **  ...
 **	vfdiv\.vf\s+(?:v[048]|v1[26]|v2[048]),\s*(?:v[048]|v1[26]|v2[048]),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0\.t
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m4_t 
 test_vfdiv_vf_f64m4_tamu(vbool16_t mask, vfloat64m4_t maskedoff, vfloat64m4_t op1, float64_t op2, size_t vl)
@@ -2892,7 +2892,7 @@ test_vfdiv_vf_f64m4_tamu(vbool16_t mask, vfloat64m4_t maskedoff, vfloat64m4_t op
 **  ...
 **	vfdiv\.vf\s+(?:v[048]|v1[26]|v2[048]),\s*(?:v[048]|v1[26]|v2[048]),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0\.t
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m4_t 
 test_vfdiv_vf_f64m4_tamu_vl31(vbool16_t mask, vfloat64m4_t maskedoff, vfloat64m4_t op1, float64_t op2)
@@ -2907,7 +2907,7 @@ test_vfdiv_vf_f64m4_tamu_vl31(vbool16_t mask, vfloat64m4_t maskedoff, vfloat64m4
 **  ...
 **	vfdiv\.vf\s+(?:v[08]|v16|v24),\s*(?:v[08]|v16|v24),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0\.t
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m8_t 
 test_vfdiv_vf_f64m8_tamu(vbool8_t mask, vfloat64m8_t maskedoff, vfloat64m8_t op1, float64_t op2, size_t vl)
@@ -2922,7 +2922,7 @@ test_vfdiv_vf_f64m8_tamu(vbool8_t mask, vfloat64m8_t maskedoff, vfloat64m8_t op1
 **  ...
 **	vfdiv\.vf\s+(?:v[08]|v16|v24),\s*(?:v[08]|v16|v24),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0\.t
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m8_t 
 test_vfdiv_vf_f64m8_tamu_vl31(vbool8_t mask, vfloat64m8_t maskedoff, vfloat64m8_t op1, float64_t op2)
@@ -3267,7 +3267,7 @@ test_vfdiv_vf_f32m8_tuma_vl31(vbool4_t mask, vfloat32m8_t maskedoff, vfloat32m8_
 **  ...
 **	vfdiv\.vf\s+(?:v[0-9]|v[1-2][0-9]|v3[0-1]),\s*(?:v[0-9]|v[1-2][0-9]|v3[0-1]),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0\.t
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m1_t 
 test_vfdiv_vf_f64m1_tuma(vbool64_t mask, vfloat64m1_t maskedoff, vfloat64m1_t op1, float64_t op2, size_t vl)
@@ -3282,7 +3282,7 @@ test_vfdiv_vf_f64m1_tuma(vbool64_t mask, vfloat64m1_t maskedoff, vfloat64m1_t op
 **  ...
 **	vfdiv\.vf\s+(?:v[0-9]|v[1-2][0-9]|v3[0-1]),\s*(?:v[0-9]|v[1-2][0-9]|v3[0-1]),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0\.t
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m1_t 
 test_vfdiv_vf_f64m1_tuma_vl31(vbool64_t mask, vfloat64m1_t maskedoff, vfloat64m1_t op1, float64_t op2)
@@ -3297,7 +3297,7 @@ test_vfdiv_vf_f64m1_tuma_vl31(vbool64_t mask, vfloat64m1_t maskedoff, vfloat64m1
 **  ...
 **	vfdiv\.vf\s+(?:v[02468]|v[1-2][02468]|v30),\s*(?:v[02468]|v[1-2][02468]|v30),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0\.t
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m2_t 
 test_vfdiv_vf_f64m2_tuma(vbool32_t mask, vfloat64m2_t maskedoff, vfloat64m2_t op1, float64_t op2, size_t vl)
@@ -3312,7 +3312,7 @@ test_vfdiv_vf_f64m2_tuma(vbool32_t mask, vfloat64m2_t maskedoff, vfloat64m2_t op
 **  ...
 **	vfdiv\.vf\s+(?:v[02468]|v[1-2][02468]|v30),\s*(?:v[02468]|v[1-2][02468]|v30),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0\.t
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m2_t 
 test_vfdiv_vf_f64m2_tuma_vl31(vbool32_t mask, vfloat64m2_t maskedoff, vfloat64m2_t op1, float64_t op2)
@@ -3327,7 +3327,7 @@ test_vfdiv_vf_f64m2_tuma_vl31(vbool32_t mask, vfloat64m2_t maskedoff, vfloat64m2
 **  ...
 **	vfdiv\.vf\s+(?:v[048]|v1[26]|v2[048]),\s*(?:v[048]|v1[26]|v2[048]),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0\.t
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m4_t 
 test_vfdiv_vf_f64m4_tuma(vbool16_t mask, vfloat64m4_t maskedoff, vfloat64m4_t op1, float64_t op2, size_t vl)
@@ -3342,7 +3342,7 @@ test_vfdiv_vf_f64m4_tuma(vbool16_t mask, vfloat64m4_t maskedoff, vfloat64m4_t op
 **  ...
 **	vfdiv\.vf\s+(?:v[048]|v1[26]|v2[048]),\s*(?:v[048]|v1[26]|v2[048]),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0\.t
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m4_t 
 test_vfdiv_vf_f64m4_tuma_vl31(vbool16_t mask, vfloat64m4_t maskedoff, vfloat64m4_t op1, float64_t op2)
@@ -3357,7 +3357,7 @@ test_vfdiv_vf_f64m4_tuma_vl31(vbool16_t mask, vfloat64m4_t maskedoff, vfloat64m4
 **  ...
 **	vfdiv\.vf\s+(?:v[08]|v16|v24),\s*(?:v[08]|v16|v24),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0\.t
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m8_t 
 test_vfdiv_vf_f64m8_tuma(vbool8_t mask, vfloat64m8_t maskedoff, vfloat64m8_t op1, float64_t op2, size_t vl)
@@ -3372,7 +3372,7 @@ test_vfdiv_vf_f64m8_tuma(vbool8_t mask, vfloat64m8_t maskedoff, vfloat64m8_t op1
 **  ...
 **	vfdiv\.vf\s+(?:v[08]|v16|v24),\s*(?:v[08]|v16|v24),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0\.t
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m8_t 
 test_vfdiv_vf_f64m8_tuma_vl31(vbool8_t mask, vfloat64m8_t maskedoff, vfloat64m8_t op1, float64_t op2)
@@ -3717,7 +3717,7 @@ test_vfdiv_vf_f32m8_tumu_vl31(vbool4_t mask, vfloat32m8_t maskedoff, vfloat32m8_
 **  ...
 **	vfdiv\.vf\s+(?:v[0-9]|v[1-2][0-9]|v3[0-1]),\s*(?:v[0-9]|v[1-2][0-9]|v3[0-1]),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0\.t
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m1_t 
 test_vfdiv_vf_f64m1_tumu(vbool64_t mask, vfloat64m1_t maskedoff, vfloat64m1_t op1, float64_t op2, size_t vl)
@@ -3732,7 +3732,7 @@ test_vfdiv_vf_f64m1_tumu(vbool64_t mask, vfloat64m1_t maskedoff, vfloat64m1_t op
 **  ...
 **	vfdiv\.vf\s+(?:v[0-9]|v[1-2][0-9]|v3[0-1]),\s*(?:v[0-9]|v[1-2][0-9]|v3[0-1]),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0\.t
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m1_t 
 test_vfdiv_vf_f64m1_tumu_vl31(vbool64_t mask, vfloat64m1_t maskedoff, vfloat64m1_t op1, float64_t op2)
@@ -3747,7 +3747,7 @@ test_vfdiv_vf_f64m1_tumu_vl31(vbool64_t mask, vfloat64m1_t maskedoff, vfloat64m1
 **  ...
 **	vfdiv\.vf\s+(?:v[02468]|v[1-2][02468]|v30),\s*(?:v[02468]|v[1-2][02468]|v30),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0\.t
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m2_t 
 test_vfdiv_vf_f64m2_tumu(vbool32_t mask, vfloat64m2_t maskedoff, vfloat64m2_t op1, float64_t op2, size_t vl)
@@ -3762,7 +3762,7 @@ test_vfdiv_vf_f64m2_tumu(vbool32_t mask, vfloat64m2_t maskedoff, vfloat64m2_t op
 **  ...
 **	vfdiv\.vf\s+(?:v[02468]|v[1-2][02468]|v30),\s*(?:v[02468]|v[1-2][02468]|v30),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0\.t
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m2_t 
 test_vfdiv_vf_f64m2_tumu_vl31(vbool32_t mask, vfloat64m2_t maskedoff, vfloat64m2_t op1, float64_t op2)
@@ -3777,7 +3777,7 @@ test_vfdiv_vf_f64m2_tumu_vl31(vbool32_t mask, vfloat64m2_t maskedoff, vfloat64m2
 **  ...
 **	vfdiv\.vf\s+(?:v[048]|v1[26]|v2[048]),\s*(?:v[048]|v1[26]|v2[048]),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0\.t
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m4_t 
 test_vfdiv_vf_f64m4_tumu(vbool16_t mask, vfloat64m4_t maskedoff, vfloat64m4_t op1, float64_t op2, size_t vl)
@@ -3792,7 +3792,7 @@ test_vfdiv_vf_f64m4_tumu(vbool16_t mask, vfloat64m4_t maskedoff, vfloat64m4_t op
 **  ...
 **	vfdiv\.vf\s+(?:v[048]|v1[26]|v2[048]),\s*(?:v[048]|v1[26]|v2[048]),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0\.t
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m4_t 
 test_vfdiv_vf_f64m4_tumu_vl31(vbool16_t mask, vfloat64m4_t maskedoff, vfloat64m4_t op1, float64_t op2)
@@ -3807,7 +3807,7 @@ test_vfdiv_vf_f64m4_tumu_vl31(vbool16_t mask, vfloat64m4_t maskedoff, vfloat64m4
 **  ...
 **	vfdiv\.vf\s+(?:v[08]|v16|v24),\s*(?:v[08]|v16|v24),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0\.t
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m8_t 
 test_vfdiv_vf_f64m8_tumu(vbool8_t mask, vfloat64m8_t maskedoff, vfloat64m8_t op1, float64_t op2, size_t vl)
@@ -3822,7 +3822,7 @@ test_vfdiv_vf_f64m8_tumu(vbool8_t mask, vfloat64m8_t maskedoff, vfloat64m8_t op1
 **  ...
 **	vfdiv\.vf\s+(?:v[08]|v16|v24),\s*(?:v[08]|v16|v24),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0\.t
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m8_t 
 test_vfdiv_vf_f64m8_tumu_vl31(vbool8_t mask, vfloat64m8_t maskedoff, vfloat64m8_t op1, float64_t op2)
@@ -4002,7 +4002,7 @@ test_vfdiv_vf_f32m8_tama_vl32(vbool4_t mask, vfloat32m8_t maskedoff, vfloat32m8_
 **  ...
 **	vfdiv\.vf\s+(?:v[0-9]|v[1-2][0-9]|v3[0-1]),\s*(?:v[0-9]|v[1-2][0-9]|v3[0-1]),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0\.t
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m1_t 
 test_vfdiv_vf_f64m1_tama_vl32(vbool64_t mask, vfloat64m1_t maskedoff, vfloat64m1_t op1, float64_t op2)
@@ -4017,7 +4017,7 @@ test_vfdiv_vf_f64m1_tama_vl32(vbool64_t mask, vfloat64m1_t maskedoff, vfloat64m1
 **  ...
 **	vfdiv\.vf\s+(?:v[02468]|v[1-2][02468]|v30),\s*(?:v[02468]|v[1-2][02468]|v30),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0\.t
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m2_t 
 test_vfdiv_vf_f64m2_tama_vl32(vbool32_t mask, vfloat64m2_t maskedoff, vfloat64m2_t op1, float64_t op2)
@@ -4032,7 +4032,7 @@ test_vfdiv_vf_f64m2_tama_vl32(vbool32_t mask, vfloat64m2_t maskedoff, vfloat64m2
 **  ...
 **	vfdiv\.vf\s+(?:v[048]|v1[26]|v2[048]),\s*(?:v[048]|v1[26]|v2[048]),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0\.t
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m4_t 
 test_vfdiv_vf_f64m4_tama_vl32(vbool16_t mask, vfloat64m4_t maskedoff, vfloat64m4_t op1, float64_t op2)
@@ -4047,7 +4047,7 @@ test_vfdiv_vf_f64m4_tama_vl32(vbool16_t mask, vfloat64m4_t maskedoff, vfloat64m4
 **  ...
 **	vfdiv\.vf\s+(?:v[08]|v16|v24),\s*(?:v[08]|v16|v24),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0\.t
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m8_t 
 test_vfdiv_vf_f64m8_tama_vl32(vbool8_t mask, vfloat64m8_t maskedoff, vfloat64m8_t op1, float64_t op2)
@@ -4227,7 +4227,7 @@ test_vfdiv_vf_f32m8_tamu_vl32(vbool4_t mask, vfloat32m8_t maskedoff, vfloat32m8_
 **  ...
 **	vfdiv\.vf\s+(?:v[0-9]|v[1-2][0-9]|v3[0-1]),\s*(?:v[0-9]|v[1-2][0-9]|v3[0-1]),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0\.t
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m1_t 
 test_vfdiv_vf_f64m1_tamu_vl32(vbool64_t mask, vfloat64m1_t maskedoff, vfloat64m1_t op1, float64_t op2)
@@ -4242,7 +4242,7 @@ test_vfdiv_vf_f64m1_tamu_vl32(vbool64_t mask, vfloat64m1_t maskedoff, vfloat64m1
 **  ...
 **	vfdiv\.vf\s+(?:v[02468]|v[1-2][02468]|v30),\s*(?:v[02468]|v[1-2][02468]|v30),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0\.t
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m2_t 
 test_vfdiv_vf_f64m2_tamu_vl32(vbool32_t mask, vfloat64m2_t maskedoff, vfloat64m2_t op1, float64_t op2)
@@ -4257,7 +4257,7 @@ test_vfdiv_vf_f64m2_tamu_vl32(vbool32_t mask, vfloat64m2_t maskedoff, vfloat64m2
 **  ...
 **	vfdiv\.vf\s+(?:v[048]|v1[26]|v2[048]),\s*(?:v[048]|v1[26]|v2[048]),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0\.t
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m4_t 
 test_vfdiv_vf_f64m4_tamu_vl32(vbool16_t mask, vfloat64m4_t maskedoff, vfloat64m4_t op1, float64_t op2)
@@ -4272,7 +4272,7 @@ test_vfdiv_vf_f64m4_tamu_vl32(vbool16_t mask, vfloat64m4_t maskedoff, vfloat64m4
 **  ...
 **	vfdiv\.vf\s+(?:v[08]|v16|v24),\s*(?:v[08]|v16|v24),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0\.t
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m8_t 
 test_vfdiv_vf_f64m8_tamu_vl32(vbool8_t mask, vfloat64m8_t maskedoff, vfloat64m8_t op1, float64_t op2)
@@ -4452,7 +4452,7 @@ test_vfdiv_vf_f32m8_tuma_vl32(vbool4_t mask, vfloat32m8_t maskedoff, vfloat32m8_
 **  ...
 **	vfdiv\.vf\s+(?:v[0-9]|v[1-2][0-9]|v3[0-1]),\s*(?:v[0-9]|v[1-2][0-9]|v3[0-1]),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0\.t
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m1_t 
 test_vfdiv_vf_f64m1_tuma_vl32(vbool64_t mask, vfloat64m1_t maskedoff, vfloat64m1_t op1, float64_t op2)
@@ -4467,7 +4467,7 @@ test_vfdiv_vf_f64m1_tuma_vl32(vbool64_t mask, vfloat64m1_t maskedoff, vfloat64m1
 **  ...
 **	vfdiv\.vf\s+(?:v[02468]|v[1-2][02468]|v30),\s*(?:v[02468]|v[1-2][02468]|v30),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0\.t
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m2_t 
 test_vfdiv_vf_f64m2_tuma_vl32(vbool32_t mask, vfloat64m2_t maskedoff, vfloat64m2_t op1, float64_t op2)
@@ -4482,7 +4482,7 @@ test_vfdiv_vf_f64m2_tuma_vl32(vbool32_t mask, vfloat64m2_t maskedoff, vfloat64m2
 **  ...
 **	vfdiv\.vf\s+(?:v[048]|v1[26]|v2[048]),\s*(?:v[048]|v1[26]|v2[048]),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0\.t
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m4_t 
 test_vfdiv_vf_f64m4_tuma_vl32(vbool16_t mask, vfloat64m4_t maskedoff, vfloat64m4_t op1, float64_t op2)
@@ -4497,7 +4497,7 @@ test_vfdiv_vf_f64m4_tuma_vl32(vbool16_t mask, vfloat64m4_t maskedoff, vfloat64m4
 **  ...
 **	vfdiv\.vf\s+(?:v[08]|v16|v24),\s*(?:v[08]|v16|v24),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0\.t
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m8_t 
 test_vfdiv_vf_f64m8_tuma_vl32(vbool8_t mask, vfloat64m8_t maskedoff, vfloat64m8_t op1, float64_t op2)
@@ -4677,7 +4677,7 @@ test_vfdiv_vf_f32m8_tumu_vl32(vbool4_t mask, vfloat32m8_t maskedoff, vfloat32m8_
 **  ...
 **	vfdiv\.vf\s+(?:v[0-9]|v[1-2][0-9]|v3[0-1]),\s*(?:v[0-9]|v[1-2][0-9]|v3[0-1]),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0\.t
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m1_t 
 test_vfdiv_vf_f64m1_tumu_vl32(vbool64_t mask, vfloat64m1_t maskedoff, vfloat64m1_t op1, float64_t op2)
@@ -4692,7 +4692,7 @@ test_vfdiv_vf_f64m1_tumu_vl32(vbool64_t mask, vfloat64m1_t maskedoff, vfloat64m1
 **  ...
 **	vfdiv\.vf\s+(?:v[02468]|v[1-2][02468]|v30),\s*(?:v[02468]|v[1-2][02468]|v30),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0\.t
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m2_t 
 test_vfdiv_vf_f64m2_tumu_vl32(vbool32_t mask, vfloat64m2_t maskedoff, vfloat64m2_t op1, float64_t op2)
@@ -4707,7 +4707,7 @@ test_vfdiv_vf_f64m2_tumu_vl32(vbool32_t mask, vfloat64m2_t maskedoff, vfloat64m2
 **  ...
 **	vfdiv\.vf\s+(?:v[048]|v1[26]|v2[048]),\s*(?:v[048]|v1[26]|v2[048]),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0\.t
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m4_t 
 test_vfdiv_vf_f64m4_tumu_vl32(vbool16_t mask, vfloat64m4_t maskedoff, vfloat64m4_t op1, float64_t op2)
@@ -4722,7 +4722,7 @@ test_vfdiv_vf_f64m4_tumu_vl32(vbool16_t mask, vfloat64m4_t maskedoff, vfloat64m4
 **  ...
 **	vfdiv\.vf\s+(?:v[08]|v16|v24),\s*(?:v[08]|v16|v24),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*v0\.t
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m8_t 
 test_vfdiv_vf_f64m8_tumu_vl32(vbool8_t mask, vfloat64m8_t maskedoff, vfloat64m8_t op1, float64_t op2)
@@ -4902,7 +4902,7 @@ test_vfdiv_vf_f32m8_ta_vl32(vfloat32m8_t op1, float32_t op2)
 **  ...
 **	vfdiv\.vf\s+(?:v[0-9]|v[1-2][0-9]|v3[0-1]),\s*(?:v[0-9]|v[1-2][0-9]|v3[0-1]),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7])
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m1_t 
 test_vfdiv_vf_f64m1_ta_vl32(vfloat64m1_t op1, float64_t op2)
@@ -4917,7 +4917,7 @@ test_vfdiv_vf_f64m1_ta_vl32(vfloat64m1_t op1, float64_t op2)
 **  ...
 **	vfdiv\.vf\s+(?:v[02468]|v[1-2][02468]|v30),\s*(?:v[02468]|v[1-2][02468]|v30),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7])
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m2_t 
 test_vfdiv_vf_f64m2_ta_vl32(vfloat64m2_t op1, float64_t op2)
@@ -4932,7 +4932,7 @@ test_vfdiv_vf_f64m2_ta_vl32(vfloat64m2_t op1, float64_t op2)
 **  ...
 **	vfdiv\.vf\s+(?:v[048]|v1[26]|v2[048]),\s*(?:v[048]|v1[26]|v2[048]),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7])
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m4_t 
 test_vfdiv_vf_f64m4_ta_vl32(vfloat64m4_t op1, float64_t op2)
@@ -4947,7 +4947,7 @@ test_vfdiv_vf_f64m4_ta_vl32(vfloat64m4_t op1, float64_t op2)
 **  ...
 **	vfdiv\.vf\s+(?:v[08]|v16|v24),\s*(?:v[08]|v16|v24),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7])
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m8_t 
 test_vfdiv_vf_f64m8_ta_vl32(vfloat64m8_t op1, float64_t op2)
@@ -5127,7 +5127,7 @@ test_vfdiv_vf_f32m8_tu_vl32(vfloat32m8_t dest, vfloat32m8_t op1, float32_t op2)
 **  ...
 **	vfdiv\.vf\s+(?:v[0-9]|v[1-2][0-9]|v3[0-1]),\s*(?:v[0-9]|v[1-2][0-9]|v3[0-1]),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7])
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m1_t 
 test_vfdiv_vf_f64m1_tu_vl32(vfloat64m1_t dest, vfloat64m1_t op1, float64_t op2)
@@ -5142,7 +5142,7 @@ test_vfdiv_vf_f64m1_tu_vl32(vfloat64m1_t dest, vfloat64m1_t op1, float64_t op2)
 **  ...
 **	vfdiv\.vf\s+(?:v[02468]|v[1-2][02468]|v30),\s*(?:v[02468]|v[1-2][02468]|v30),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7])
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m2_t 
 test_vfdiv_vf_f64m2_tu_vl32(vfloat64m2_t dest, vfloat64m2_t op1, float64_t op2)
@@ -5157,7 +5157,7 @@ test_vfdiv_vf_f64m2_tu_vl32(vfloat64m2_t dest, vfloat64m2_t op1, float64_t op2)
 **  ...
 **	vfdiv\.vf\s+(?:v[048]|v1[26]|v2[048]),\s*(?:v[048]|v1[26]|v2[048]),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7])
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m4_t 
 test_vfdiv_vf_f64m4_tu_vl32(vfloat64m4_t dest, vfloat64m4_t op1, float64_t op2)
@@ -5172,7 +5172,7 @@ test_vfdiv_vf_f64m4_tu_vl32(vfloat64m4_t dest, vfloat64m4_t op1, float64_t op2)
 **  ...
 **	vfdiv\.vf\s+(?:v[08]|v16|v24),\s*(?:v[08]|v16|v24),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7])
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m8_t 
 test_vfdiv_vf_f64m8_tu_vl32(vfloat64m8_t dest, vfloat64m8_t op1, float64_t op2)
@@ -5352,7 +5352,7 @@ test_vfdiv_vf_f32m8_vl32(vfloat32m8_t op1, float32_t op2)
 **  ...
 **	vfdiv\.vf\s+(?:v[0-9]|v[1-2][0-9]|v3[0-1]),\s*(?:v[0-9]|v[1-2][0-9]|v3[0-1]),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7])
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m1_t 
 test_vfdiv_vf_f64m1_vl32(vfloat64m1_t op1, float64_t op2)
@@ -5367,7 +5367,7 @@ test_vfdiv_vf_f64m1_vl32(vfloat64m1_t op1, float64_t op2)
 **  ...
 **	vfdiv\.vf\s+(?:v[02468]|v[1-2][02468]|v30),\s*(?:v[02468]|v[1-2][02468]|v30),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7])
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m2_t 
 test_vfdiv_vf_f64m2_vl32(vfloat64m2_t op1, float64_t op2)
@@ -5382,7 +5382,7 @@ test_vfdiv_vf_f64m2_vl32(vfloat64m2_t op1, float64_t op2)
 **  ...
 **	vfdiv\.vf\s+(?:v[048]|v1[26]|v2[048]),\s*(?:v[048]|v1[26]|v2[048]),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7])
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m4_t 
 test_vfdiv_vf_f64m4_vl32(vfloat64m4_t op1, float64_t op2)
@@ -5397,7 +5397,7 @@ test_vfdiv_vf_f64m4_vl32(vfloat64m4_t op1, float64_t op2)
 **  ...
 **	vfdiv\.vf\s+(?:v[08]|v16|v24),\s*(?:v[08]|v16|v24),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7])
 **  ...
-**  ret
+**  (?:ret|jr\s+ra)
 */
 vfloat64m8_t 
 test_vfdiv_vf_f64m8_vl32(vfloat64m8_t op1, float64_t op2)
