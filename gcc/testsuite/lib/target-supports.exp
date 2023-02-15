@@ -1722,6 +1722,18 @@ proc check_effective_target_rv64 { } {
     }]
 }
 
+# Return 1 if the target abi is __riscv_float_abi_soft, 0 otherwise.
+# Cache the result.
+
+proc check_effective_target_rv_float_abi_soft { } {
+    # Check that we are compiling for RV64 by checking the xlen size.
+    return [check_no_compiler_messages riscv_riscv_float_abi_soft assembly {
+       #ifndef __riscv_float_abi_soft
+       #error "Not __riscv_float_abi_soft"
+       #endif
+    }]
+}
+
 # Return 1 if the target OS supports running SSE executables, 0
 # otherwise.  Cache the result.
 

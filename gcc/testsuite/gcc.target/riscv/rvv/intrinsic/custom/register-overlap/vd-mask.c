@@ -549,9 +549,16 @@ test_vfadd_vv (vfloat16m1_t v1, vfloat16m1_t v2, size_t vl)
 }
 
 /*
-** test_vfadd_vf:
+** test_vfadd_vf: { target { ! rv_float_abi_soft } }
 **  ...
 **  vfadd.vf\tv[^0][0-9]*,v[0-9]+,fa0,v0.t
+**  ...
+**  ret
+*/
+/*
+** test_vfadd_vf: { target { rv_float_abi_soft} }
+**  ...
+**  vfadd.vf\tv[^0][0-9]*,v[0-9]+,fa[0-9]+,v0.t
 **  ...
 **  ret
 */
