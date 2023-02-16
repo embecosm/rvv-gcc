@@ -6,9 +6,15 @@
 
 /****************** vf ****************/
 /*
-** test_vmfne_vf_overlap0:
+** test_vmfne_vf_overlap0: { target { ! rv_float_abi_soft} }
 **  ...
 **  vmfne.vf\tv0,v8,fa0
+**  ret
+*/
+/*
+** test_vmfne_vf_overlap0: { target { rv_float_abi_soft} }
+**  ...
+**  vmfne.vf\tv0,v8,fa[0-9]+
 **  ret
 */
 vbool16_t
@@ -18,9 +24,15 @@ test_vmfne_vf_overlap0 (vfloat16m1_t v, float16_t x, size_t vl)
 }
 
 /*
-** test_vmfne_vf_overlap1:
+** test_vmfne_vf_overlap1: { target { ! rv_float_abi_soft} }
 **  ...
 **  vmfne.vf\tv0,v8,fa0
+**  ret
+*/
+/*
+** test_vmfne_vf_overlap1: { target { rv_float_abi_soft} }
+**  ...
+**  vmfne.vf\tv0,v8,fa[0-9]+
 **  ret
 */
 vbool4_t
@@ -30,9 +42,16 @@ test_vmfne_vf_overlap1 (vfloat16m4_t v, float16_t x, size_t vl)
 }
 
 /*
-** test_vmfne_vf_overlap2:
+** test_vmfne_vf_overlap2: { target { ! rv_float_abi_soft} }
 **  ...
 **  vmfne.vf\tv8,v8,fa0
+**  ...
+**  ret
+*/
+/*
+** test_vmfne_vf_overlap2: { target { rv_float_abi_soft} }
+**  ...
+**  vmfne.vf\tv8,v8,fa[0-9]+
 **  ...
 **  ret
 */
@@ -49,9 +68,15 @@ test_vmfne_vf_overlap2 (vfloat16m4_t v, float16_t x, size_t vl)
 }
 
 /*
-** test_vmfne_vf_ma_overlap1:
+** test_vmfne_vf_ma_overlap1: { target { ! rv_float_abi_soft} }
 **  ...
 **  vmfne.vf\tv0,v8,fa0,v0.t
+**  ret
+*/
+/*
+** test_vmfne_vf_ma_overlap1: { target { rv_float_abi_soft} }
+**  ...
+**  vmfne.vf\tv0,v8,fa[0-9]+,v0.t
 **  ret
 */
 vbool4_t
@@ -61,9 +86,16 @@ test_vmfne_vf_ma_overlap1 (vbool4_t m, vfloat16m4_t v, float16_t x, size_t vl)
 }
 
 /*
-** test_vmfne_vf_ma_overlap2:
+** test_vmfne_vf_ma_overlap2: { target { ! rv_float_abi_soft} }
 **  ...
 **  vmfne.vf\tv8,v8,fa0,v0.t
+**  ...
+**  ret
+*/
+/*
+** test_vmfne_vf_ma_overlap2: { target { rv_float_abi_soft} }
+**  ...
+**  vmfne.vf\tv8,v8,fa[0-9]+,v0.t
 **  ...
 **  ret
 */
@@ -80,9 +112,15 @@ test_vmfne_vf_ma_overlap2 (vbool4_t m, vfloat16m4_t v, float16_t x, size_t vl)
 }
 
 /*
-** test_vmfne_vf_mu_overlap1:
+** test_vmfne_vf_mu_overlap1: { target { ! rv_float_abi_soft} }
 **  ...
 **  vmfne.vf\tv0,v8,fa0,v0.t
+**  ret
+*/
+/*
+** test_vmfne_vf_mu_overlap1: { target { rv_float_abi_soft} }
+**  ...
+**  vmfne.vf\tv0,v8,fa[0-9]+,v0.t
 **  ret
 */
 vbool4_t

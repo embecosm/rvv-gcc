@@ -573,9 +573,16 @@ test_vfadd_vf (vfloat16m1_t v, float16_t x, size_t vl)
 }
 
 /*
-** test_vfrsub_vf:
+** test_vfrsub_vf: { target { ! rv_float_abi_soft} }
 **  ...
 **  vfrsub.vf\tv[^0][0-9]*,v[0-9]+,fa0,v0.t
+**  ...
+**  ret
+*/
+/*
+** test_vfrsub_vf: { target { rv_float_abi_soft} }
+**  ...
+**  vfrsub.vf\tv[^0][0-9]*,v[0-9]+,fa[0-9]+,v0.t
 **  ...
 **  ret
 */
@@ -641,9 +648,16 @@ test_vfsgnj_vv (vfloat16m1_t v1, vfloat16m1_t v2, size_t vl)
 }
 
 /*
-** test_vfsgnj_vf:
+** test_vfsgnj_vf: { target { ! rv_float_abi_soft} }
 **  ...
 **  vfsgnj.vf\tv[^0][0-9]*,v[0-9]+,fa0,v0.t
+**  ...
+**  ret
+*/
+/*
+** test_vfsgnj_vf: { target { rv_float_abi_soft} }
+**  ...
+**  vfsgnj.vf\tv[^0][0-9]*,v[0-9]+,fa[0-9]+,v0.t
 **  ...
 **  ret
 */
@@ -811,9 +825,16 @@ test_vslide1down_vx (vint16m1_t v, int16_t x, size_t vl)
 }
 
 /*
-** test_vfslide1down_vf:
+** test_vfslide1down_vf: { target { ! rv_float_abi_soft} }
 **  ...
 **  vfslide1down.vf\tv[^0][0-9]*,v[0-9]+,fa0,v0.t
+**  ...
+**  ret
+*/
+/*
+** test_vfslide1down_vf: { target { rv_float_abi_soft} }
+**  ...
+**  vfslide1down.vf\tv[^0][0-9]*,v[0-9]+,fa[0-9]+,v0.t
 **  ...
 **  ret
 */

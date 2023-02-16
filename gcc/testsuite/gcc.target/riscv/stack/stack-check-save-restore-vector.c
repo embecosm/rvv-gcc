@@ -9,7 +9,7 @@ void fn2 (float a1, float a2, float a3, float a4,
 void fn3 (char*);
 
 /*
-** stack_save_restore_2: { target { { any-opts "-march=rv32gcv" } && { { any-opts "-O1" "-O2" "-O3" "-Os" } && { no-opts "-flto" } } } }
+** stack_save_restore_2: { target { { { any-opts "-march=rv32gcv" } && { ! rv_float_abi_soft} } && { { any-opts "-O1" "-O2" "-O3" "-Os" } && { no-opts "-flto" } } } }
 **	call	t0,__riscv_save_0
 **	addi	sp,sp,-32
 **	fs(w|d)	fs0,24\(sp\)
@@ -27,6 +27,38 @@ void fn3 (char*);
 **	fl(w|d)	fs0,24\(sp\)
 **	addi	sp,sp,32
 **	tail	__riscv_restore_0
+*/
+/*
+** stack_save_restore_2: { target { { { any-opts "-march=rv32gcv" } && { rv_float_abi_soft} } && { { any-opts "-O1" } && { no-opts "-flto" } } } }
+**	call	t0,__riscv_save_2
+**	li	t0,8192
+**	addi	t0,t0,-192
+**	sub	sp,sp,t0
+**	csrr	t0,vlenb
+**	sub	sp,sp,t0
+**	...
+**	csrr	t0,vlenb
+**	add	sp,sp,t0
+**	li	t0,8192
+**	addi	t0,t0,-192
+**	add	sp,sp,t0
+**	tail	__riscv_restore_2
+*/
+/*
+** stack_save_restore_2: { target { { { any-opts "-march=rv32gcv" } && { rv_float_abi_soft} } && { { any-opts "-O2" "-O3" "-Os" } && { no-opts "-flto" } } } }
+**	call	t0,__riscv_save_1
+**	li	t0,8192
+**	addi	t0,t0,-192
+**	sub	sp,sp,t0
+**	csrr	t0,vlenb
+**	sub	sp,sp,t0
+**	...
+**	csrr	t0,vlenb
+**	add	sp,sp,t0
+**	li	t0,8192
+**	addi	t0,t0,-192
+**	add	sp,sp,t0
+**	tail	__riscv_restore_1
 */
 int stack_save_restore_2 (float a1, float a2, float a3, float a4,
                       float a5, float a6, float a7, float a8,
