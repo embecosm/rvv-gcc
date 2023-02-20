@@ -42,5 +42,5 @@
 
 TEST_ALL (TEST_LOOP)
 
-/* { dg-final { scan-tree-dump-times "\.WHILE_LEN" 0 "optimized" {target riscv32-*-*} } } */
-/* { dg-final { scan-tree-dump-times "\.WHILE_LEN" 0 "optimized" {target riscv64-*-*} } } */
+/* { dg-final { scan-tree-dump-times "\.WHILE_LEN" 0 "optimized" {target { rv32 }} } } */
+/* { dg-final { scan-tree-dump-times "\.WHILE_LEN" 0 "optimized" {target { rv64 }} } } */

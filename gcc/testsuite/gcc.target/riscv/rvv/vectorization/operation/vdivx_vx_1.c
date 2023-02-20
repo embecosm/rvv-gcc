@@ -39,8 +39,8 @@
 TEST_ALL (TEST_LOOP)
 
 /* { dg-final { scan-tree-dump-times "\.WHILE_LEN" 65 "optimized" } } */
-/* { dg-final { scan-assembler-times "\tvdiv\.vx" 32 {target riscv64-*-*} } } */
-/* { dg-final { scan-assembler-times "\tvdivu\.vx" 34 {target riscv64-*-*} } } */
-/* { dg-final { scan-assembler-times "\tvdiv\.vx" 24 {target riscv32-*-*} } } */
-/* { dg-final { scan-assembler-times "\tvdivu\.vx" 26 {target riscv32-*-*} } } */
+/* { dg-final { scan-assembler-times "\tvdiv\.vx" 32 {target { rv64 }} } } */
+/* { dg-final { scan-assembler-times "\tvdivu\.vx" 34 {target { rv64 }} } } */
+/* { dg-final { scan-assembler-times "\tvdiv\.vx" 24 {target { rv32 }} } } */
+/* { dg-final { scan-assembler-times "\tvdivu\.vx" 26 {target { rv32 }} } } */
 /* { dg-final { scan-assembler-times "\tvfdiv\.vf" 24 } } */

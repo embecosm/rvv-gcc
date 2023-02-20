@@ -38,7 +38,7 @@
 
 TEST_ALL (TEST_LOOP)
 
-/* { dg-final { scan-assembler-times "\tvmadd\.vx" 74 {target riscv64-*-*} } } */
-/* { dg-final { scan-assembler-times "\tvmadd\.vx" 56 {target riscv32-*-*} } } */
-/* { dg-final { scan-assembler-times "\tvmadd\.vv" 20 {target riscv32-*-*} } } */
+/* { dg-final { scan-assembler-times "\tvmadd\.vx" 74 {target { rv64 }} } } */
+/* { dg-final { scan-assembler-times "\tvmadd\.vx" 56 {target { rv32 }} } } */
+/* { dg-final { scan-assembler-times "\tvmadd\.vv" 20 {target { rv32 }} } } */
 /* { dg-final { scan-assembler-times "\tvfmadd\.vf" 27 } } */

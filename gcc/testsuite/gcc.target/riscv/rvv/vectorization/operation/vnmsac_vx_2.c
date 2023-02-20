@@ -44,6 +44,6 @@
 
 TEST_ALL (TEST_LOOP)
 
-/* { dg-final { scan-assembler-times "\tvnmsac\.vx" 24 {target riscv64-*-*} } } */
-/* { dg-final { scan-assembler-times "\tvnmsac\.vx" 22 {target riscv32-*-*} } } */
+/* { dg-final { scan-assembler-times "\tvnmsac\.vx" 24 {target { rv64 }} } } */
+/* { dg-final { scan-assembler-times "\tvnmsac\.vx" 22 {target { rv32 }} } } */
 /* { dg-final { scan-assembler-times "\tvfnmsac\.vf" 27 } } */

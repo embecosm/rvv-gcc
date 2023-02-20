@@ -28,7 +28,7 @@ do_it_cpy_128 (char * in, char * out)
   __builtin_memcpy (out, in, 128);
 }
 
-/* { dg-final { scan-assembler-times {\tvle8.v} 3 {target riscv64-*-*} } } */
-/* { dg-final { scan-assembler-times {\tvse8.v} 3 {target riscv64-*-*} } } */
-/* { dg-final { scan-assembler-times {\tvle8.v} 4 {target riscv32-*-*} } } */
-/* { dg-final { scan-assembler-times {\tvse8.v} 4 {target riscv32-*-*} } } */
+/* { dg-final { scan-assembler-times {\tvle8.v} 3 {target { rv64 }} } } */
+/* { dg-final { scan-assembler-times {\tvse8.v} 3 {target { rv64 }} } } */
+/* { dg-final { scan-assembler-times {\tvle8.v} 4 {target { rv32 }} } } */
+/* { dg-final { scan-assembler-times {\tvse8.v} 4 {target { rv32 }} } } */

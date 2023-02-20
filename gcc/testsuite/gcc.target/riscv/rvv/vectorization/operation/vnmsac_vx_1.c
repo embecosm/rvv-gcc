@@ -45,7 +45,7 @@
 TEST_ALL (TEST_LOOP)
 
 /* { dg-final { scan-tree-dump-times "\.WHILE_LEN" 62 "optimized" } } */
-/* { dg-final { scan-assembler-times "\tvnmsac\.vx" 76 {target riscv64-*-*} } } */
-/* { dg-final { scan-assembler-not "\tvnmsac\.vv" {target riscv64-*-*} } } */
-/* { dg-final { scan-assembler-times "\tvnmsac\.vx" 58 {target riscv32-*-*} } } */
+/* { dg-final { scan-assembler-times "\tvnmsac\.vx" 76 {target { rv64 }} } } */
+/* { dg-final { scan-assembler-not "\tvnmsac\.vv" {target { rv64 }} } } */
+/* { dg-final { scan-assembler-times "\tvnmsac\.vx" 58 {target { rv32 }} } } */
 /* { dg-final { scan-assembler-times "\tvfnmsac\.vf" 27 } } */

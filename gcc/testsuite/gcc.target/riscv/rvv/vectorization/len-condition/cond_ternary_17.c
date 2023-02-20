@@ -29,6 +29,6 @@
 
 TEST_ALL (TEST_LOOP)
 
-/* { dg-final { scan-assembler-times {\tvnmsub\.vx\s+(?:v[0-9]|v[1-2][0-9]|v3[0-1]),\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*(?:v[0-9]|v[1-2][0-9]|v3[0-1]),\s*v0\.t} 8 {target riscv64-*-*} } } */
-/* { dg-final { scan-assembler-times {\tvnmsub\.vx\s+(?:v[0-9]|v[1-2][0-9]|v3[0-1]),\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*(?:v[0-9]|v[1-2][0-9]|v3[0-1]),\s*v0\.t} 6 {target riscv32-*-*} } } */
+/* { dg-final { scan-assembler-times {\tvnmsub\.vx\s+(?:v[0-9]|v[1-2][0-9]|v3[0-1]),\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*(?:v[0-9]|v[1-2][0-9]|v3[0-1]),\s*v0\.t} 8 {target { rv64 }} } } */
+/* { dg-final { scan-assembler-times {\tvnmsub\.vx\s+(?:v[0-9]|v[1-2][0-9]|v3[0-1]),\s*(?:ra|[sgtf]p|t[0-6]|s[0-9]|s10|s11|a[0-7]),\s*(?:v[0-9]|v[1-2][0-9]|v3[0-1]),\s*v0\.t} 6 {target { rv32 }} } } */
 /* { dg-final { scan-assembler-times {\tvfnmsub\.vf\s+(?:v[0-9]|v[1-2][0-9]|v3[0-1]),\s*(?:ft[0-9]|ft1[01]|fs[0-9]|fs1[01]|fa[0-7]),\s*(?:v[0-9]|v[1-2][0-9]|v3[0-1]),\s*v0\.t} 3 } } */

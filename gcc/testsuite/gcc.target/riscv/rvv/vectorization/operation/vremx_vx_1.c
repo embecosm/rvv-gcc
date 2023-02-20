@@ -36,5 +36,5 @@
 TEST_ALL (TEST_LOOP)
 
 /* { dg-final { scan-tree-dump-times "\.WHILE_LEN" 47 "optimized" } } */
-/* { dg-final { scan-assembler-times "\tvremu{0,1}\.vx" 66 {target riscv64-*-*} } } */
-/* { dg-final { scan-assembler-times "\tvremu{0,1}\.vx" 50 {target riscv32-*-*} } } */
+/* { dg-final { scan-assembler-times "\tvremu{0,1}\.vx" 66 {target { rv64 }} } } */
+/* { dg-final { scan-assembler-times "\tvremu{0,1}\.vx" 50 {target { rv32 }} } } */

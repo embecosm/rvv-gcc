@@ -42,18 +42,18 @@
 
 TEST_ALL (TEST_LOOP)
 
-/* { dg-final { scan-assembler-times "\tvmsgt\.vx" 33 {target riscv32-*-*} } } */
+/* { dg-final { scan-assembler-times "\tvmsgt\.vx" 33 {target { rv32 }} } } */
 
 
-/* { dg-final { scan-assembler-times "\tvfmerge\.vfm" 33 {target riscv32-*-*} } } */
-/* { dg-final { scan-assembler-times "\tvmsgtu\.vx" 33 {target riscv32-*-*} } } */
-/* { dg-final { scan-assembler-times "\tvmsgt\.vv" 11 {target riscv32-*-*} } } */
-/* { dg-final { scan-assembler-times "\tvmsgtu\.vv" 11 {target riscv32-*-*} } } */
-/* { dg-final { scan-assembler-times "\tvmfgt\.vf" 33 {target riscv32-*-*} } } */
-/* { dg-final { scan-tree-dump-times "\.WHILE_LEN" 121 "optimized" {target riscv32-*-*} } } */
-/* { dg-final { scan-assembler-times "\tvmsgt\.vx" 44 {target riscv64-*-*} } } */
+/* { dg-final { scan-assembler-times "\tvfmerge\.vfm" 33 {target { rv32 }} } } */
+/* { dg-final { scan-assembler-times "\tvmsgtu\.vx" 33 {target { rv32 }} } } */
+/* { dg-final { scan-assembler-times "\tvmsgt\.vv" 11 {target { rv32 }} } } */
+/* { dg-final { scan-assembler-times "\tvmsgtu\.vv" 11 {target { rv32 }} } } */
+/* { dg-final { scan-assembler-times "\tvmfgt\.vf" 33 {target { rv32 }} } } */
+/* { dg-final { scan-tree-dump-times "\.WHILE_LEN" 121 "optimized" {target { rv32 }} } } */
+/* { dg-final { scan-assembler-times "\tvmsgt\.vx" 44 {target { rv64 }} } } */
 
-/* { dg-final { scan-assembler-times "\tvfmerge\.vfm" 33 {target riscv64-*-*} } } */
-/* { dg-final { scan-assembler-times "\tvmsgtu\.vx" 44 {target riscv64-*-*} } } */
-/* { dg-final { scan-assembler-times "\tvmfgt\.vf" 33 {target riscv64-*-*} } } */
-/* { dg-final { scan-tree-dump-times "\.WHILE_LEN" 121 "optimized" {target riscv64-*-*} } } */
+/* { dg-final { scan-assembler-times "\tvfmerge\.vfm" 33 {target { rv64 }} } } */
+/* { dg-final { scan-assembler-times "\tvmsgtu\.vx" 44 {target { rv64 }} } } */
+/* { dg-final { scan-assembler-times "\tvmfgt\.vf" 33 {target { rv64 }} } } */
+/* { dg-final { scan-tree-dump-times "\.WHILE_LEN" 121 "optimized" {target { rv64 }} } } */

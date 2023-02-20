@@ -20,9 +20,9 @@ mod_##TYPE (TYPE *dst, TYPE *src, int count)	\
 
 TEST_ALL (DEF_LOOP)
 
-/* { dg-final { scan-assembler-times {\tvmulh\.vx} 2 {target riscv64-*-*} } } */
-/* { dg-final { scan-assembler-times {\tvmulhu\.vx} 2 {target riscv64-*-*} } } */
-/* { dg-final { scan-assembler-times {\tvmulh\.vx} 1 {target riscv32-*-*} } } */
-/* { dg-final { scan-assembler-times {\tvmulhu\.vx} 1 {target riscv32-*-*} } } */
-/* { dg-final { scan-assembler-times {\tvmulh\.vv} 1 {target riscv32-*-*} } } */
-/* { dg-final { scan-assembler-times {\tvmulhu\.vv} 1 {target riscv32-*-*} } } */
+/* { dg-final { scan-assembler-times {\tvmulh\.vx} 2 {target { rv64 }} } } */
+/* { dg-final { scan-assembler-times {\tvmulhu\.vx} 2 {target { rv64 }} } } */
+/* { dg-final { scan-assembler-times {\tvmulh\.vx} 1 {target { rv32 }} } } */
+/* { dg-final { scan-assembler-times {\tvmulhu\.vx} 1 {target { rv32 }} } } */
+/* { dg-final { scan-assembler-times {\tvmulh\.vv} 1 {target { rv32 }} } } */
+/* { dg-final { scan-assembler-times {\tvmulhu\.vv} 1 {target { rv32 }} } } */

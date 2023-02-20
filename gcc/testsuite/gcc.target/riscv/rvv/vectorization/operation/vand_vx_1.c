@@ -36,5 +36,5 @@
 TEST_ALL (TEST_LOOP)
 
 /* { dg-final { scan-tree-dump-times "\.WHILE_LEN" 44 "optimized" } } */
-/* { dg-final { scan-assembler-times "\tvand\.vx" 68 {target riscv64-*-*} } } */
-/* { dg-final { scan-assembler-times "\tvand\.vx" 52 {target riscv32-*-*} } } */
+/* { dg-final { scan-assembler-times "\tvand\.vx" 68 {target { rv64 }} } } */
+/* { dg-final { scan-assembler-times "\tvand\.vx" 52 {target { rv32 }} } } */
