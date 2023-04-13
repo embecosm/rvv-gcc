@@ -1854,7 +1854,7 @@ proc add_options_for_riscv_v { flags } {
 	# If there are multiple -march flags, we have to adjust all of them.
 	# ??? Is there a way to make the match specific to a full list element?
 	#     as it is, we might match something inside a string.
-	return [regsub -all -- {-march=[[:alnum:]]*} $flags &v ]
+	return [regsub -all -- {(-march=rv[[:digit:]]*[a-rt-uwy]*)v*} $flags \\1v ]
     }
     if { [check_effective_target_riscv_v] } {
 	return "$flags"
@@ -1867,7 +1867,8 @@ proc add_options_for_riscv_zfh { flags } {
 	# If there are multiple -march flags, we have to adjust all of them.
 	# ??? Is there a way to make the match specific to a full list element?
 	#     as it is, we might match something inside a string.
-	return [regsub -all -- {-march=[[:alnum:]_.]*} $flags &_zfh ]
+	set flags [regsub -all -- {-march=[[:alnum:]_.]*} $flags &_zfh ]
+	return [regsub -all -- {(-march=[[:alnum:]_.]*_zfh[[:alnum:]_.]*)_zfh} $flags \\1 ]
     }
     if { [check_effective_target_riscv_zfh] } {
 	return "$flags"

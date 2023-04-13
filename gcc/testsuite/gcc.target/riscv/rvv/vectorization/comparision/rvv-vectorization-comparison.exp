@@ -30,7 +30,7 @@ dg-init
 # Main loop.
 set files [glob -nocomplain $srcdir/$subdir/*.\[cS\]]
 
-dg-runtest [lsort $files] "" $CFLAGS
+dg-runtest [lsort $files] "" ""
 
 # All done.
 dg-finish
