@@ -30,14 +30,6 @@ if ![info exists DEFAULT_CFLAGS] then {
     set DEFAULT_CFLAGS " -ansi -pedantic-errors"
 }
 
-if { [check_effective_target_rv32] } {
-  set gcc_march "rv32gcv_zfh"
-} elseif { [check_effective_target_rv64] } {
-  set gcc_march "rv64gcv_zfh"
-} else {
-  set gcc_march ""
-}
-
 torture-init
 set-torture-options [list "" "-mriscv-vector-bits=512"]
 gcc-dg-runtest [lsort [glob -nocomplain $srcdir/$subdir/*.c]] \

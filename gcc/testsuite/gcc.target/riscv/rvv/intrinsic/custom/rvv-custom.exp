@@ -30,19 +30,11 @@ if ![info exists DEFAULT_CFLAGS] then {
     set DEFAULT_CFLAGS "-pedantic-errors -ansi"
 }
 
-if { [check_effective_target_rv32] } {
-  set gcc_march "rv32gcv_zfh"
-} elseif { [check_effective_target_rv64] } {
-  set gcc_march "rv64gcv_zfh"
-} else {
-  set gcc_march ""
-}
-
 # Initialize `dg'.
 dg-init
 
 # Main loop.
-set CFLAGS "$DEFAULT_CFLAGS -march=$gcc_march -std=gnu11"
+set CFLAGS "$DEFAULT_CFLAGS -std=gnu11"
 dg-runtest [lsort [glob -nocomplain $srcdir/$subdir/*.c]] \
 	"" $CFLAGS
 dg-runtest [lsort [glob -nocomplain $srcdir/$subdir/register-overlap/*.c]] \
