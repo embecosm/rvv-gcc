@@ -1,5 +1,7 @@
 /* { dg-do compile } */
 /* { dg-additional-options "-O2 -mriscv-vector-bits=256  --save-temps" } */
+/* { dg-add-options riscv_d } */
+/* { dg-add-options riscv_v } */
 
 #include <stdint.h>
 

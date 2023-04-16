@@ -1,5 +1,6 @@
 /* { dg-do compile } */
 /* { dg-additional-options "-O -mriscv-vector-bits=256 " } */
+/* { dg-add-options riscv_v } */
 
 typedef int vnx4si __attribute__((vector_size (32)));
 

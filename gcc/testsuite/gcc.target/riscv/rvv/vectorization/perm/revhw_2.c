@@ -1,5 +1,7 @@
 /* { dg-do compile } */
 /* { dg-additional-options "-O -mriscv-vector-bits=2048  --save-temps" } */
+/* { dg-add-options riscv_v } */
+/* { dg-add-options riscv_zfh } */
 
 typedef unsigned char v128qi __attribute__((vector_size(128)));
 typedef unsigned char v64qi __attribute__((vector_size(64)));

@@ -1,5 +1,6 @@
 /* { dg-do compile } */
 /* { dg-additional-options "-mriscv-vector-bits=256 " } */
+/* { dg-add-options riscv_v } */
 
 #include <riscv_vector.h>
 

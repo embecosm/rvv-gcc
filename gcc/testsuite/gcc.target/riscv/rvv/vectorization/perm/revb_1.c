@@ -1,5 +1,6 @@
 /* { dg-do compile } */
 /* { dg-additional-options "-O -mriscv-vector-bits=256  --save-temps" } */
+/* { dg-add-options riscv_v } */
 
 typedef __INT8_TYPE__ vnx16qi __attribute__((vector_size (32)));
 

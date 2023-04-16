@@ -1,5 +1,6 @@
 /* { dg-do compile } */
 /* { dg-additional-options "-mriscv-vector-bits=256  -flax-vector-conversions" } */
+/* { dg-add-options riscv_v } */
 
 #include <riscv_vector.h>
 
