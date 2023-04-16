@@ -1,6 +1,10 @@
 /* { dg-do run } */
 /* { dg-additional-options "-O2 -ftree-vectorize -ffast-math" } */
-/* { dg-skip-if "test vectorization using rvv" { *-*-* } { "*" } { "-march=rv*gc*v*zfh*" } } */
+/* { dg-require-effective-target riscv_d } */
+/* { dg-require-effective-target riscv_v_ok } */
+/* { dg-require-effective-target riscv_zfh_ok } */
+/* { dg-add-options riscv_v } */
+/* { dg-add-options riscv_zfh } */
 
 
 #include "cond_vx_6_same_type_3.c"
