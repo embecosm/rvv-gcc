@@ -1,5 +1,5 @@
 /* { dg-do compile } */
-/* { dg-skip-if "test vector intrinsic" { *-*-* } { "*" } { "-march=rv*v*" } } */
+/* { dg-add-options riscv_v } */
 /* { dg-additional-options "-mriscv-vector-bits=512 -O3" } */
 #include <riscv_vector.h>
 

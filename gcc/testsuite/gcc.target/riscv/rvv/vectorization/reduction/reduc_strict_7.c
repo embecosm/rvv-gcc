@@ -1,6 +1,8 @@
 /* { dg-do compile } */
 /* { dg-additional-options "-O2 -ftree-vectorize -fdump-tree-vect-details" } */
-/* { dg-skip-if "test vectorization using rvv" { *-*-* } { "*" } { "-march=rv*gc*v*zfh*" } } */
+/* { dg-require-effective-target riscv_d } */
+/* { dg-add-options riscv_v } */
+/* { dg-add-options riscv_zfh } */
 
 /* Strict FP reductions shouldn't be used for the outer loop, only the
    inner loop.  */

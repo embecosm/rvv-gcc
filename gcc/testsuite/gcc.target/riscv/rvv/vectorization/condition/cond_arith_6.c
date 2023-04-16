@@ -1,6 +1,8 @@
 /* { dg-do compile } */
 /* { dg-additional-options "-mriscv-vector-bits=128 -O2 -ftree-vectorize" } */
-/* { dg-skip-if "test vectorization using rvv" { *-*-* } { "*" } { "-march=rv*gc*v*zfh*" } } */
+/* { dg-require-effective-target riscv_d } */
+/* { dg-add-options riscv_v } */
+/* { dg-add-options riscv_zfh } */
 
 void
 f (float *x)

@@ -1,6 +1,7 @@
 /* { dg-do compile } */
 /* { dg-additional-options "-mriscv-vector-bits=128 -O2 -ftree-vectorize -fno-schedule-insns -fno-schedule-insns2" } */
-/* { dg-skip-if "test vectorization using rvv" { *-*-* } { "*" } { "-march=rv*v*zfh*" } } */
+/* { dg-add-options riscv_v } */
+/* { dg-add-options riscv_zfh } */
 
 
 #include <stddef.h>

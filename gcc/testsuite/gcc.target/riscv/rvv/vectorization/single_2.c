@@ -1,6 +1,7 @@
 /* { dg-do compile } */
 /* { dg-additional-options "-O2 -ftree-vectorize -fopenmp-simd -mriscv-vector-bits=65536 -fno-tree-loop-distribute-patterns" } */
-/* { dg-skip-if "test vectorization using rvv" { *-*-* } { "*" } { "-march=rv*v*zfh*" } } */
+/* { dg-add-options riscv_v } */
+/* { dg-add-options riscv_zfh } */
 
 #define N 8192
 #include "single_1.c"

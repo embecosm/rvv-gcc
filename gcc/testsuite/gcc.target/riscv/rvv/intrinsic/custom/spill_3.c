@@ -1,6 +1,6 @@
 /* { dg-do compile } */
 /* { dg-additional-options "-O3" } */
-/* { dg-skip-if "test vector intrinsic" { *-*-* } { "*" } { "-march=rv*v*" } } */
+/* { dg-add-options riscv_v } */
 /* { dg-final { check-function-bodies "**" "" } } */
 
 #include <stddef.h>

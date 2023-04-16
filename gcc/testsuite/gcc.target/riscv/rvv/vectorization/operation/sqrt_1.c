@@ -1,6 +1,7 @@
 /* { dg-do compile } */
 /* { dg-additional-options "-Ofast -ffast-math" } */
-/* { dg-skip-if "test vectorization using rvv" { *-*-* } { "*" } { "-march=rv*v*zfh*" } } */
+/* { dg-add-options riscv_v } */
+/* { dg-add-options riscv_zfh } */
 
 #define DEF_LOOP(TYPE, FN)		\
   void __attribute__ ((noinline, noclone))					\

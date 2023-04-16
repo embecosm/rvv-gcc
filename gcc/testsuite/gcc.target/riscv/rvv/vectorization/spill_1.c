@@ -1,6 +1,7 @@
 /* { dg-do compile } */
 /* { dg-additional-options "-O3" } */
-/* { dg-skip-if "test vectorization using rvv" { *-*-* } { "*" } { "-march=rv*v*zfh*" } } */
+/* { dg-add-options riscv_v } */
+/* { dg-add-options riscv_zfh } */
 
 #include <stddef.h>
 #include <riscv_vector.h>

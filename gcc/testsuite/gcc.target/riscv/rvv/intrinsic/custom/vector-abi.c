@@ -1,5 +1,6 @@
 /* { dg-do compile } */
 /* { dg-additional-options "-O3" } */
+/* { dg-add-options riscv_v } */
 
 #include <stddef.h>
 #include <riscv_vector.h>

@@ -1,6 +1,8 @@
 /* { dg-do compile } */
 /* { dg-additional-options "-O2 -ftree-vectorize -mriscv-vector-bits=2048 --save-temps" } */
-/* { dg-skip-if "test vectorization using rvv" { *-*-* } { "*" } { "-march=rv*gc*v*zfh*" } } */
+/* { dg-require-effective-target riscv_d } */
+/* { dg-add-options riscv_v } */
+/* { dg-add-options riscv_zfh } */
 
 typedef unsigned char v128qi __attribute__((vector_size(128)));
 typedef unsigned char v64qi __attribute__((vector_size(64)));

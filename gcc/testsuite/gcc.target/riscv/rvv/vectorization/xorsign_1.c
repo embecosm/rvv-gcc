@@ -1,6 +1,7 @@
 /* { dg-do compile } */
 /* { dg-additional-options "-mriscv-vector-bits=128 -O2 -ftree-vectorize -ffast-math -fdump-tree-vect-details --save-temps" } */
-/* { dg-skip-if "test vectorization using rvv" { *-*-* } { "*" } { "-march=rv*v*zfh*" } } */
+/* { dg-add-options riscv_v } */
+/* { dg-add-options riscv_zfh } */
 
 void
 xorsign_half (_Float16 * restrict a, _Float16 * restrict b,
