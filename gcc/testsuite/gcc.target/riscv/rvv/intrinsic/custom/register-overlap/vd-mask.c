@@ -1,6 +1,7 @@
 /* { dg-do compile } */
 /* { dg-additional-options "-O3" } */
 /* { dg-add-options riscv_v } */
+/* { dg-add-options riscv_zfh } */
 /* { dg-final { check-function-bodies "**" "" } } */
 
 #include <riscv_vector.h>
