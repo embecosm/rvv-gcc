@@ -1849,6 +1849,19 @@ proc riscv_get_arch { } {
     return "$gcc_march"
 }
 
+proc add_options_for_riscv_d { flags } {
+    if { [lsearch $flags -march=*] >= 0 } {
+	# If there are multiple -march flags, we have to adjust all of them.
+	# ??? Is there a way to make the match specific to a full list element?
+	#     as it is, we might match something inside a string.
+	return [regsub -all -- {(-march=rv[[:digit:]]*[a-ce-rt-wy]*)d*} $flags \\1d ]
+    }
+    if { [check_effective_target_riscv_d] } {
+	return "$flags"
+    }
+    return "$flags -march=[regsub {[[:alnum:]]*} [riscv_get_arch] &d]"
+}
+
 proc add_options_for_riscv_v { flags } {
     if { [lsearch $flags -march=*] >= 0 } {
 	# If there are multiple -march flags, we have to adjust all of them.
