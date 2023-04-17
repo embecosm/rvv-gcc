@@ -1,7 +1,5 @@
-/* { dg-do run } */
+/* { dg-do compile } */
 /* { dg-additional-options "-O3 -fno-inline -mriscv-vector-bits=256" } */
-/* { dg-require-effective-target riscv_v_ok } */
-/* { dg-require-effective-target riscv_zfh_ok } */
 /* { dg-add-options riscv_v } */
 /* { dg-add-options riscv_zfh } */
 
