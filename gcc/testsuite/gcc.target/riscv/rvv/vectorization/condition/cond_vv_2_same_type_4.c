@@ -45,7 +45,7 @@
 TEST_ALL (TEST_LOOP)
 
 /* { dg-final { scan-assembler-times "\tvmseq\.vv" 88 {target { rv32 }} } } */
-/* { dg-final { scan-assembler-times "\tvmerge\.vxm" 110 {target { rv32 }} } } */
+/* { dg-final { scan-assembler-times "\tvmerge\.vxm" 88 {target { rv32 }} } } */
 /* { dg-final { scan-assembler-times "\tvmerge\.vvm" 22 {target { rv32 }} } } */
 /* { dg-final { scan-assembler-times "\tvfmerge\.vfm" 33 {target { rv32 }} } } */
 /* { dg-final { scan-assembler-times "\tvmfeq\.vv" 33 {target { rv32 }} } } */
