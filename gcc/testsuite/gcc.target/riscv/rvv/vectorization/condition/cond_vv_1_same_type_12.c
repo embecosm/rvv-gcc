@@ -46,7 +46,8 @@ TEST_ALL (TEST_LOOP)
 
 /* { dg-final { scan-assembler-times "\tvmsgt\.vv" 44 {target { rv32 }} } } */
 /* { dg-final { scan-assembler-times "\tvmsle\.vv" 44 {target { rv32 }} } } */
-/* { dg-final { scan-assembler-times "\tvmerge\.vvm" 121 {target { rv32 }} } } */
+/* { dg-final { scan-assembler-not "\tvmerge\.vvm" {target { rv32 }} } } */
+/* { dg-final { scan-assembler-times {\tvle(?:8|16|32|64)\.v\s+v[0-9]*\,\([at][0-9]*\),\s*v0\.t} 242 {target { rv32 }} } } */
 /* { dg-final { scan-assembler-times "\tvmsgtu\.vv" 44 {target { rv32 }} } } */
 /* { dg-final { scan-assembler-times "\tvmsleu\.vv" 44 {target { rv32 }} } } */
 /* { dg-final { scan-assembler-times "\tvmfgt\.vv" 33 {target { rv32 }} } } */
@@ -54,7 +55,8 @@ TEST_ALL (TEST_LOOP)
 /* { dg-final { scan-tree-dump-times "\.WHILE_LEN" 121 "optimized" {target { rv32 }} } } */
 /* { dg-final { scan-assembler-times "\tvmsgt\.vv" 44 {target { rv64 }} } } */
 /* { dg-final { scan-assembler-times "\tvmsle\.vv" 44 {target { rv64 }} } } */
-/* { dg-final { scan-assembler-times "\tvmerge\.vvm" 121 {target { rv64 }} } } */
+/* { dg-final { scan-assembler-not "\tvmerge\.vvm" {target { rv64 }} } } */
+/* { dg-final { scan-assembler-times {\tvle(?:8|16|32|64)\.v\s+v[0-9]*\,\([at][0-9]*\),\s*v0\.t} 242 {target { rv64 }} } } */
 /* { dg-final { scan-assembler-times "\tvmsgtu\.vv" 44 {target { rv64 }} } } */
 /* { dg-final { scan-assembler-times "\tvmsleu\.vv" 44 {target { rv64 }} } } */
 /* { dg-final { scan-assembler-times "\tvmfgt\.vv" 33 {target { rv64 }} } } */
