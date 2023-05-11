@@ -44,12 +44,12 @@
 
 TEST_ALL (TEST_LOOP)
 
-/* { dg-final { scan-assembler-times "\tvmsle\.vx" 33 {target { rv32 }} } } */
-/* { dg-final { scan-assembler-times "\tvmsgt\.vx" 33 {target { rv32 }} } } */
+/* { dg-final { scan-assembler-times "\tvmsle\.vx" 44 {target { rv32 }} } } */
+/* { dg-final { scan-assembler-times "\tvmsgt\.vx" 44 {target { rv32 }} } } */
 /* { dg-final { scan-assembler-not "\tvmerge\.vvm" {target { rv32 }} } } */
 /* { dg-final { scan-assembler-times {\tvle(?:8|16|32|64)\.v\s+v[0-9]*\,\([at][0-9]*\),\s*v0\.t} 242 {target { rv32 }} } } */
-/* { dg-final { scan-assembler-times "\tvmsleu\.vx" 33 {target { rv32 }} } } */
-/* { dg-final { scan-assembler-times "\tvmsgtu\.vx" 33 {target { rv32 }} } } */
+/* { dg-final { scan-assembler-times "\tvmsleu\.vx" 44 {target { rv32 }} } } */
+/* { dg-final { scan-assembler-times "\tvmsgtu\.vx" 44 {target { rv32 }} } } */
 /* { dg-final { scan-assembler-times "\tvmfle\.vf" 33 {target { rv32 }} } } */
 /* { dg-final { scan-assembler-times "\tvmfgt\.vf" 33 {target { rv32 }} } } */
 /* { dg-final { scan-tree-dump-times "\.WHILE_LEN" 121 "optimized" {target { rv32 }} } } */
