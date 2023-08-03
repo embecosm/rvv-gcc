@@ -49,6 +49,7 @@
 #include "tm-constrs.h"
 #include "rtx-vector-builder.h"
 #include "targhooks.h"
+#include "predict.h"
 
 using namespace riscv_vector;
 
@@ -2268,6 +2269,191 @@ expand_tuple_move (rtx *ops)
 	    }
 	}
     }
+}
+
+/* Used by cpymemsi in riscv.md .  */
+
+bool
+expand_block_move (rtx dest_in, rtx src_in, rtx length_in)
+{
+  /*
+    memcpy:
+	mv a3, a0                       # Copy destination
+    loop:
+	vsetvli t0, a2, e8, m8, ta, ma  # Vectors of 8b
+	vle8.v v0, (a1)                 # Load bytes
+	add a1, a1, t0                  # Bump pointer
+	sub a2, a2, t0                  # Decrement count
+	vse8.v v0, (a3)                 # Store bytes
+	add a3, a3, t0                  # Bump pointer
+	bnez a2, loop                   # Any more?
+	ret                             # Return
+  */
+  if (!TARGET_VECTOR)
+    return false;
+  HOST_WIDE_INT potential_ew
+    = (MIN (MIN (MEM_ALIGN (src_in), MEM_ALIGN (dest_in)), BITS_PER_WORD)
+       / BITS_PER_UNIT);
+  machine_mode vmode = VOIDmode;
+  bool need_loop = true;
+  bool size_p = optimize_function_for_size_p (cfun);
+  rtx src, dst;
+  rtx end = gen_reg_rtx (Pmode);
+  rtx vec;
+  rtx length_rtx = length_in;
+
+  if (CONST_INT_P (length_in))
+    {
+      HOST_WIDE_INT length = INTVAL (length_in);
+
+    /* By using LMUL=8, we can copy as many bytes in one go as there
+       are bits in a vector register.  If the entire block thus fits,
+       we don't need a loop.  */
+    if (length <= TARGET_MIN_VLEN)
+      {
+	need_loop = false;
+
+	/* If a single scalar load / store pair can do the job, leave it
+	   to the scalar code to do that.  */
+
+	if (pow2p_hwi (length) && length <= potential_ew)
+	  return false;
+      }
+
+      /* Find the vector mode to use.  Using the largest possible element
+	 size is likely to give smaller constants, and thus potentially
+	 reducing code size.  However, if we need a loop, we need to update
+	 the pointers, and that is more complicated with a larger element
+	 size, unless we use an immediate, which prevents us from dynamically
+	 using the largets transfer size that the hart supports.  And then,
+	 unless we know the *exact* vector size of the hart, we'd need
+	 multiple vsetvli / branch statements, so it's not even a size win.
+	 If, in the future, we find an RISCV-V implementation that is slower
+	 for small element widths, we might allow larger element widths for
+	 loops too.  */
+      if (need_loop)
+	potential_ew = 1;
+      for (; potential_ew; potential_ew >>= 1)
+	{
+	  scalar_int_mode elem_mode;
+	  unsigned HOST_WIDE_INT bits = potential_ew * BITS_PER_UNIT;
+	  unsigned HOST_WIDE_INT per_iter;
+	  HOST_WIDE_INT nunits;
+
+	  if (need_loop)
+	    per_iter = TARGET_MIN_VLEN;
+	  else
+	    per_iter = length;
+	  nunits = per_iter / potential_ew;
+
+	  /* Unless we get an implementation that's slow for small element
+	     size / non-word-aligned accesses, we assume that the hardware
+	     handles this well, and we don't want to complicate the code
+	     with shifting word contents around or handling extra bytes at
+	     the start and/or end.  So we want the total transfer size and
+	     alignemnt to fit with the element size.  */
+	  if (length % potential_ew != 0
+	      || !int_mode_for_size (bits, 0).exists (&elem_mode))
+	    continue;
+	  /* Find the mode to use for the copy inside the loop - or the
+	     sole copy, if there is no loop.  */
+	  if (!need_loop)
+	    {
+	      /* Try if we have an exact mode for the copy.  */
+	      if (get_vector_mode (elem_mode, nunits).exists (&vmode))
+		break;
+	      /* We might have an odd transfer size.  Try to round it up to
+		 a power of two to get a valid vector mode for a clobber.  */
+	      for (nunits = 1ULL << ceil_log2 (nunits);
+		   nunits <= TARGET_MIN_VLEN;
+		   nunits <<= 1)
+		if (get_vector_mode (elem_mode, nunits).exists (&vmode))
+		  break;
+
+	      if (vmode != VOIDmode)
+		break;
+	    }
+
+	  // The VNx*?I modes have a factor of riscv_vector_chunks for nunits.
+	  if (get_vector_mode (elem_mode,
+			       TARGET_MIN_VLEN / potential_ew
+			       * riscv_vector_chunks).exists (&vmode))
+	    break;
+
+	  /* We may get here if we tried an element size that's larger than
+	     the hardware supports, but we should at least find a suitable
+	     byte vector mode.  */
+	  gcc_assert (potential_ew > 1);
+	}
+      if (potential_ew > 1)
+	length_rtx = GEN_INT (length / potential_ew);
+    }
+  else
+    {
+      vmode = (get_vector_mode (QImode, TARGET_MIN_VLEN * riscv_vector_chunks)
+	       .require ());
+    }
+
+  /* A memcpy libcall in the worst case takes 3 instructions to prepare the
+     arguments + 1 for the call.  When RVV should take 7 instructions and
+     we're optimizing for size a libcall may be preferable.  */
+  if (size_p && need_loop)
+    return false;
+
+  /* If we don't need a loop and have a suitable mode to describe the size,
+     just do a load / store pair and leave it up to the later lazy code
+     motion pass to insert the appropriate vsetvli.  */
+  if (!need_loop && known_eq (GET_MODE_SIZE (vmode), INTVAL (length_in)))
+    {
+      vec = gen_reg_rtx (vmode);
+      src = change_address (src_in, vmode, NULL);
+      dst = change_address (dest_in, vmode, NULL);
+      emit_move_insn (vec, src);
+      emit_move_insn (dst, vec);
+      return true;
+    }
+
+  if (CONST_POLY_INT_P (length_rtx))
+    {
+      if (GET_MODE (length_rtx) != Pmode)
+	{
+	  poly_int64 value = rtx_to_poly_int64 (length_rtx);
+	  emit_insn (gen_rtx_SET (end,
+				  gen_int_mode (poly_int64 (value.coeffs[0],
+							    value.coeffs[1]),
+						Pmode)));
+	}
+      else
+	emit_insn (gen_rtx_SET (end, length_rtx));
+    }
+  else
+    {
+      if (GET_MODE (length_rtx) != Pmode)
+	riscv_emit_move (end, gen_lowpart (Pmode, length_rtx));
+      else
+	riscv_emit_move (end, length_rtx);
+    }
+
+  /* Move the address into scratch registers.  */
+  dst = copy_addr_to_reg (XEXP (dest_in, 0));
+  src = copy_addr_to_reg (XEXP (src_in, 0));
+
+  /* Since we haven't implemented VLA handling in general, we emit
+     opaque patterns that output the appropriate instructions.  */
+  if (!need_loop)
+    emit_insn (gen_cpymem_straight (Pmode, vmode, dst, src, end));
+  /* The *_fast pattern needs 13 instructions instead of 7, and
+     considering that this code is usually memory-constrainted, limit this
+     to -O3.  ??? It would make sense to differentiate here between in-order
+     and OOO microarchitectures.  */
+  else if (!size_p && optimize >= 3)
+    emit_insn (gen_cpymem_loop_fast (Pmode, vmode, dst, src, end));
+  else
+    emit_insn (gen_cpymem_loop (Pmode, vmode, dst, src, end));
+
+  /* A nop to attach notes to.  */
+  emit_insn (gen_nop ());
+  return true;
 }
 
 /* Return the vectorization machine mode for RVV according to LMUL.  */

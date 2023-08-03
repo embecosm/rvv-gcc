@@ -1219,6 +1219,97 @@
   [(set_attr "type" "vmov,vlde,vste")
    (set_attr "mode" "<VT:MODE>")])
 
+;; The (use (and (match_dup 1) (const_int 127))) is here to prevent the
+;; optimizers from changing cpymem_loop_* into this.
+(define_insn "@cpymem_straight<P:mode><V_WHOLE:mode>"
+  [(set (mem:BLK (match_operand:P 0 "register_operand" "r,r"))
+	(mem:BLK (match_operand:P 1 "register_operand" "r,r")))
+	(use (and (match_dup 1) (const_int 127)))
+   (use (match_operand:P 2 "reg_or_int_operand" "r,K"))
+   (clobber (match_scratch:V_WHOLE 3 "=&vr,&vr"))
+   (clobber (reg:SI VL_REGNUM))
+   (clobber (reg:SI VTYPE_REGNUM))]
+  "TARGET_VECTOR"
+  "@vsetvli zero,%2,e<sew>,m8,ta,ma\;vle<sew>.v %3,(%1)\;vse<sew>.v %3,(%0)
+   vsetivli zero,%2,e<sew>,m8,ta,ma\;vle<sew>.v %3,(%1)\;vse<sew>.v %3,(%0)"
+)
+
+(define_insn "@cpymem_loop<P:mode><V_WHOLE:mode>"
+  [(set (mem:BLK (match_operand:P 0 "register_operand" "+r"))
+	(mem:BLK (match_operand:P 1 "register_operand" "+r")))
+   (use (match_operand:P 2 "register_operand" "+r"))
+   (clobber (match_scratch:V_WHOLE 3 "=&vr"))
+   (clobber (match_scratch:P 4 "=&r"))
+   (clobber (match_dup 0))
+   (clobber (match_dup 1))
+   (clobber (match_dup 2))
+   (clobber (reg:SI VL_REGNUM))
+   (clobber (reg:SI VTYPE_REGNUM))]
+  "TARGET_VECTOR"
+{ output_asm_insn ("\n0:\t" "vsetvli %4,%2,e<sew>,m8,ta,ma\;"
+		   "vle<sew>.v %3,(%1)\;"
+		   "sub %2,%2,%4", operands);
+  if (<sew> != 8)
+    {
+      rtx xop[2];
+      xop[0] = operands[4];
+      xop[1] = GEN_INT (exact_log2 (<sew>/8));
+      output_asm_insn ("slli %0,%0,%1", xop);
+    }
+  output_asm_insn ("add %1,%1,%4\;"
+		   "vse<sew>.v %3,(%0)\;"
+		   "add %0,%0,%4\;"
+		   "bnez %2,0b", operands);
+  return "";
+})
+
+;; This pattern (at bltu) assumes pointers can be treated as unsigned,
+;; i.e.  objects can't straddle 0xffffffffffffffff / 0x0000000000000000 .
+(define_insn "@cpymem_loop_fast<P:mode><V_WHOLE:mode>"
+  [(set (mem:BLK (match_operand:P 0 "register_operand" "+r"))
+	(mem:BLK (match_operand:P 1 "register_operand" "+r")))
+   (use (match_operand:P 2 "register_operand" "+r"))
+   (clobber (match_scratch:V_WHOLE 3 "=&vr"))
+   (clobber (match_scratch:P 4 "=&r"))
+   (clobber (match_scratch:P 5 "=&r"))
+   (clobber (match_scratch:P 6 "=&r"))
+   (clobber (match_dup 0))
+   (clobber (match_dup 1))
+   (clobber (match_dup 2))
+   (clobber (reg:SI VL_REGNUM))
+   (clobber (reg:SI VTYPE_REGNUM))]
+  "TARGET_VECTOR"
+{
+  output_asm_insn ("vsetvli %4,%2,e<sew>,m8,ta,ma\;"
+		   "beq %4,%2,1f\;"
+		   "add %5,%0,%2\;"
+		   "sub %6,%5,%4", operands);
+  if (<sew> != 8)
+    {
+      rtx xop[2];
+      xop[0] = operands[4];
+      xop[1] = GEN_INT (exact_log2 (<sew>/8));
+      output_asm_insn ("slli %0,%0,%1", xop);
+    }
+  output_asm_insn ("\n0:\t" "vle<sew>.v %3,(%1)\;"
+		   "add %1,%1,%4\;"
+		   "vse<sew>.v %3,(%0)\;"
+		   "add %0,%0,%4\;"
+		   "bltu %0,%6,0b\;"
+		   "sub %5,%5,%0", operands);
+  if (<sew> != 8)
+    {
+      rtx xop[2];
+      xop[0] = operands[4];
+      xop[1] = GEN_INT (exact_log2 (<sew>/8));
+      output_asm_insn ("srli %0,%0,%1", xop);
+    }
+  output_asm_insn ("vsetvli %4,%5,e<sew>,m8,ta,ma\n"
+	    "1:\t" "vle<sew>.v %3,(%1)\;"
+		   "vse<sew>.v %3,(%0)", operands);
+  return "";
+})
+
 ;; -----------------------------------------------------------------
 ;; ---- Duplicate Operations
 ;; -----------------------------------------------------------------
