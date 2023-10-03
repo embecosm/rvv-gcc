@@ -77,4 +77,5 @@ RISCV_CORE("thead-c906",      "rv64imafdc_xtheadba_xtheadbb_xtheadbs_xtheadcmo_"
 			      "xtheadcondmov_xtheadfmemidx_xtheadmac_"
 			      "xtheadmemidx_xtheadmempair_xtheadsync",
 			      "thead-c906")
+RISCV_CORE("cv32e40p",        "rv32imc",    "pulp")
 #undef RISCV_CORE

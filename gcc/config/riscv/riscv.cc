@@ -9793,6 +9793,12 @@ riscv_preferred_else_value (unsigned ifn, tree vectype, unsigned int nops,
 #undef TARGET_EXPAND_BUILTIN
 #define TARGET_EXPAND_BUILTIN riscv_expand_builtin
 
+#undef TARGET_CAN_USE_DOLOOP_P
+#define TARGET_CAN_USE_DOLOOP_P riscv_can_use_doloop_p
+
+#undef TARGET_INVALID_WITHIN_DOLOOP
+#define TARGET_INVALID_WITHIN_DOLOOP riscv_invalid_within_doloop
+
 #undef TARGET_HARD_REGNO_NREGS
 #define TARGET_HARD_REGNO_NREGS riscv_hard_regno_nregs
 #undef TARGET_HARD_REGNO_MODE_OK

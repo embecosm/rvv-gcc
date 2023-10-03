@@ -577,6 +577,14 @@ extern const char*
 th_mempair_output_move (rtx[4], bool, machine_mode, RTX_CODE);
 #endif
 
+/* Routines implemented in cv.cc.  */
+extern bool riscv_can_use_doloop_p (const widest_int &, const widest_int &,
+				    unsigned int, bool);
+extern const char *riscv_invalid_within_doloop (const rtx_insn *insn);
+extern bool hwloop_setupi_p (rtx insn, rtx start_ref, rtx end_ref);
+extern void add_label_op_ref (rtx_insn *insn, rtx label);
+
+
 extern bool riscv_use_divmod_expander (void);
 void riscv_init_cumulative_args (CUMULATIVE_ARGS *, tree, rtx, tree, int);
 

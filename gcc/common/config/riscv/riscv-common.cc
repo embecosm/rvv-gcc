@@ -152,6 +152,11 @@ static const riscv_implied_info_t riscv_implied_info[] =
   {"ssstateen", "zicsr"},
   {"sstc", "zicsr"},
 
+  /* PULP, https://docs.openhwgroup.org/projects/cv32e40p-user-manual/en/latest/instruction_set_extensions.html */
+  {"xcv", "xcvmem"},
+  {"xcv", "xcvhwlp"},
+  /* Five more sub-extensions implied by xcv, waiting for someone to implement them.  */
+
   {NULL, NULL}
 };
 
@@ -324,6 +329,11 @@ static const struct riscv_ext_version riscv_ext_version_table[] =
   {"xtheadsync", ISA_SPEC_CLASS_NONE, 1, 0},
 
   {"xventanacondops", ISA_SPEC_CLASS_NONE, 1, 0},
+
+  {"xcv",         ISA_SPEC_CLASS_NONE, 1, 0},
+  {"xcvmem",      ISA_SPEC_CLASS_NONE, 1, 0},
+  {"xcvhwlp",     ISA_SPEC_CLASS_NONE, 1, 0},
+//{"xcvbitmanip",
 
   /* Terminate the list.  */
   {NULL, ISA_SPEC_CLASS_NONE, 0, 0}
@@ -1494,6 +1504,11 @@ static const riscv_ext_flag_table_t riscv_ext_flag_table[] =
   {"xtheadsync",    &gcc_options::x_riscv_xthead_subext, MASK_XTHEADSYNC},
 
   {"xventanacondops", &gcc_options::x_riscv_xventana_subext, MASK_XVENTANACONDOPS},
+
+  {"xcv",         &gcc_options::x_riscv_xcv_subext, MASK_XCV},
+  {"xcvmem",      &gcc_options::x_riscv_xcv_subext, MASK_XCV},
+  {"xcvhwlp",     &gcc_options::x_riscv_xcv_subext, MASK_XCVHWLP},
+//{"xcvbitmanip", &gcc_options::x_riscv_xcv_subext, MASK_XCVBITMANIP},
 
   {NULL, NULL, 0}
 };

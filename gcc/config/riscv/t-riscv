@@ -114,6 +114,12 @@ thead.o: $(srcdir)/config/riscv/thead.cc \
 	$(COMPILE) $<
 	$(POSTCOMPILE)
 
+cv.o: $(srcdir)/config/riscv/cv.cc \
+  $(CONFIG_H) $(SYSTEM_H) coretypes.h $(TARGET_H) backend.h $(RTL_H) \
+  memmodel.h $(EMIT_RTL_H) poly-int.h output.h
+	$(COMPILE) $<
+	$(POSTCOMPILE)
+
 PASSES_EXTRA += $(srcdir)/config/riscv/riscv-passes.def
 
 $(common_out_file): $(srcdir)/config/riscv/riscv-cores.def \
