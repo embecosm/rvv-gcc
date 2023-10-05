@@ -15,7 +15,12 @@
    (use (match_operand:SI 3 "" "xcvl0e,xcvl1e"))
    (use (match_operand:SI 4 "" "X,X"))]
   "TARGET_XCVHWLP"
-  "%4:"
+{
+  output_asm_insn ("%4:", operands);
+  if (TARGET_RVC)
+    asm_fprintf (asm_out_file, ".option rvc\n");
+  return "";
+}
   [(set_attr "type" "branch")
    (set_attr "length" "0")]
 )
@@ -117,6 +122,9 @@
 {
   unsigned loopnum = REGNO (operands[0]) - LPSTART0_REGNUM;
   operands[0] = GEN_INT (loopnum);
+  if (TARGET_RVC)
+    asm_fprintf (asm_out_file, ".balign 4\n"
+			       ".option norvc\n");
   if ((which_alternative & 1) == 0)
     return "cv.setupi %0, %5, %3";
   else
