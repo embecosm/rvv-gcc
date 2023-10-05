@@ -1,6 +1,5 @@
 ;; ??? The manual is unclear what the hardware loops actually do.
 ;; We are just guessing here.
-;; FIXME: add padding between inner and outer loop if necessary.
 (define_insn "doloop_end_i"
   [(set (pc)
 	(if_then_else
@@ -16,6 +15,18 @@
    (use (match_operand:SI 4 "" "X,X"))]
   "TARGET_XCVHWLP"
 {
+  unsigned n_nops = 3;
+  for (rtx_insn * curr = PREV_INSN (current_output_insn);
+       curr && n_nops && !LABEL_P (curr);
+       curr = PREV_INSN (curr))
+    if (active_insn_p (curr))
+      {
+	n_nops--;
+	if (recog_memoized (curr) == CODE_FOR_doloop_end_i)
+	  break;
+      }
+  while (n_nops--)
+    asm_fprintf (asm_out_file, "\tnop\n");
   output_asm_insn ("%4:", operands);
   if (TARGET_RVC)
     asm_fprintf (asm_out_file, ".option rvc\n");
