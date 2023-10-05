@@ -13,7 +13,7 @@
 		 (const_int -1)))
    (use (match_operand:SI 2 "" "xcvl0s,xcvl1s"))
    (use (match_operand:SI 3 "" "xcvl0e,xcvl1e"))
-   (use (match_operand:SI 4 "" "n,n"))]
+   (use (match_operand:SI 4 "" "X,X"))]
   "TARGET_XCVHWLP"
   "%4:"
   [(set_attr "type" "branch")
@@ -186,7 +186,7 @@
   [(set_attr "move_type" "move")])
 
 (define_insn "*cv_count"
-  [(set (match_operand:SI 0 "register_operand" "=xcvl0c,xcvl1c,xcvl0c,xcvl1c")
+  [(set (match_operand:SI 0 "lpcount_reg_op" "=xcvl0c,xcvl1c,xcvl0c,xcvl1c")
 	(match_operand:SI 1 "register_operand" "i,i,r,r"))]
   "TARGET_XCV"
 {

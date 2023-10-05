@@ -1,6 +1,7 @@
 #include "config.h"
 #include "system.h"
 #include "coretypes.h"
+#include "backend.h"
 #include "target.h"
 #include "rtl.h"
 #include "insn-config.h"
@@ -10,12 +11,16 @@
 #include "emit-rtl.h"
 #include "tm_p.h"
 #include "tree-pass.h"
+#include "df.h"
 
 /* Creating doloop_begin patterns fully formed with a named pattern
    reusults in the labels they use to refer to the loop start being
    removed from the insn list during loop_done pass, so instead we
    put the doloop_end insn in the place of the label, and patch this
-   up after the loop_don pass.  */
+   up after the loop_done pass.
+   Also, while being at that, replace the pseudo reg used for the
+   counter in doloop_begin / doloop_end by the appropriate hard register,
+   since lra doesn't find the right solution.  */
 
 namespace {
 
@@ -64,13 +69,32 @@ pass_riscv_doloop_begin::execute (function *)
       if (!NONJUMP_INSN_P (insn)
 	  || recog_memoized (insn) != CODE_FOR_doloop_begin_i)
 	continue;
-      rtx *loc = &SET_SRC (XVECEXP (PATTERN (insn), 0, 0));
-      rtx pat = PATTERN (XEXP (XVECEXP (*loc, 0, 0), 0));
+      rtx *lref_loc = &SET_SRC (XVECEXP (PATTERN (insn), 0, 0));
+      rtx_insn *end_insn
+	= as_a <rtx_insn *> (XEXP (XVECEXP (*lref_loc, 0, 0), 0));
+      rtx pat = PATTERN (end_insn);
       rtx start_label_ref = XEXP (SET_SRC (XVECEXP (pat, 0, 0)), 1);
       start_label_ref
 	= gen_rtx_LABEL_REF (SImode, label_ref_label (start_label_ref));
-      *loc = start_label_ref;
+      *lref_loc = start_label_ref;
       add_label_op_ref (insn, start_label_ref);
+      rtx *reg_loc0 = &SET_DEST (XVECEXP (PATTERN (insn), 0, 2));
+      rtx *reg_loc1 = &XEXP (XEXP (SET_SRC (XVECEXP (pat, 0, 0)), 0), 0);
+      rtx *reg_loc2 = &XEXP (SET_SRC (XVECEXP (pat, 0, 1)), 0);
+      rtx *reg_loc3 = &SET_DEST (XVECEXP (pat, 0, 1));
+      gcc_assert (rtx_equal_p (*reg_loc0, *reg_loc1));
+      gcc_assert (rtx_equal_p (*reg_loc0, *reg_loc2));
+      gcc_assert (rtx_equal_p (*reg_loc0, *reg_loc3));
+      rtx start_reg = SET_DEST (XVECEXP (PATTERN (insn), 0, 0));
+      rtx hreg = gen_rtx_REG (SImode,
+			      LPCOUNT0_REGNUM
+			      + REGNO (start_reg) - LPSTART0_REGNUM);
+      *reg_loc0 = hreg;
+      *reg_loc1 = hreg;
+      *reg_loc2 = hreg;
+      *reg_loc3 = hreg;
+      df_insn_rescan (insn);
+      df_insn_rescan (end_insn);
     }
 
   return 0;

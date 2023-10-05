@@ -616,6 +616,6 @@
   (and (match_code "reg")
        (match_test "REGNO (op) == LPEND0_REGNUM || REGNO (op) == LPEND1_REGNUM")))
 
-;;(define_predicate "lpcount_reg_operand"
-;;  (and (match_code "reg")
-;;       (match_test "REGNO (op) == LPCOUNT0_REGNUM || REGNO (op) == LPCOUNT1_REGNUM")))
+(define_predicate "lpcount_reg_op"
+  (and (match_code "reg")
+       (match_test "REGNO (op) == LPCOUNT0_REGNUM || REGNO (op) == LPCOUNT1_REGNUM")))
