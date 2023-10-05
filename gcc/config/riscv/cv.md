@@ -15,7 +15,10 @@
    (use (match_operand:SI 3 "" "xcvl0e,xcvl1e"))
    (use (match_operand:SI 4 "" "n,n"))]
   "TARGET_XCVHWLP"
-  "%4:")
+  "%4:"
+  [(set_attr "type" "branch")
+   (set_attr "length" "0")]
+)
 
 (define_expand "doloop_end"
   [(match_operand:SI 0 "nonimmediate_operand" "")
@@ -104,12 +107,12 @@
 ; Or should we always allocate a scatch when using a loop count immediate, and
 ; leave the final decision to the assembler (or even linker with relaxation)?
 (define_insn_and_split "doloop_begin_i"
-  [(set (match_operand:SI 0 "" "=xcvl0s,xcvl1s,xcvl0s,xcvl1s")
+  [(set (match_operand:SI 0 "lpstart_reg_op" "=xcvl0s,xcvl1s,xcvl0s,xcvl1s")
 	(match_operand:SI 1))
-   (set (match_operand:SI 2 "" "=xcvl0s,xcvl1s,xcvl0e,xcvl1e")
+   (set (match_operand:SI 2 "lpend_reg_op" "=xcvl0s,xcvl1s,xcvl0e,xcvl1e")
 	(match_operand:SI 3))
    (set (match_operand:SI 4 "register_operand" "=xcvl0s,xcvl1s,xcvl0c,xcvl1c")
-	(match_operand:SI 5 "nonmemory_operand" "xcvu12,r,xcvu12,r"))]
+	(match_operand:SI 5 "nonmemory_operand" "xcvu12,xcvu12,r,r"))]
   "TARGET_XCVHWLP"
 {
   unsigned loopnum = REGNO (operands[0]) - LPSTART0_REGNUM;
@@ -119,11 +122,14 @@
   else
     return "cv.setup %0, %5, %3";
 }
-  "&& !hwloop_setupi_p (insn, operands[1], operands[3])"
-  ; FIXME: need to make sure we can output these insns.
+  "&& GET_CODE (operands[1]) == LABEL_REF
+   && !hwloop_setupi_p (insn, operands[1], operands[3])"
   [(set (match_dup 0) (match_dup 1))
    (set (match_dup 2) (match_dup 3))
    (set (match_dup 4) (match_dup 5))]
+  ""
+  [(set_attr "move_type" "move")
+   (set_attr "length" "4")]
 )
 
 (define_expand "doloop_begin"
@@ -132,14 +138,59 @@
   "TARGET_XCVHWLP"
 {
   rtx pat = PATTERN (operands[1]);
-  rtx start_label_ref = XEXP (SET_SRC (XVECEXP (pat, 0, 0)), 1);
+  /* ??? cleanup_cfg, called from pass_rtl_loop_done::execute, deletes
+     loop latches without updating LABEL_REFS in non-jump instructions
+     even when marked with marked with REG_LABEL_OPEREND notes.  */
+#if 0
+  rtx start_label_ref
+    = XEXP (SET_SRC (XVECEXP (pat, 0, 0)), 1);
+#else
+  rtx lst = gen_rtx_INSN_LIST (VOIDmode, operands[1], NULL_RTX);
+  rtx start_label_ref
+    = gen_rtx_UNSPEC (SImode, gen_rtvec (1, lst), UNSPEC_LOOPBUG);
+#endif
   rtx start_reg = XEXP (XVECEXP (pat, 0, 2), 0);
   rtx end_reg = XEXP (XVECEXP (pat, 0, 3), 0);
   rtx end_label_ref = XEXP (XVECEXP (pat, 0, 4), 0);
   rtx_insn *insn = emit_insn (gen_doloop_begin_i (start_reg, start_label_ref,
 						  end_reg, end_label_ref,
 						  operands[0], operands[0]));
-  add_label_op_ref (insn, start_label_ref);
+  //add_label_op_ref (insn, start_label_ref);
   add_label_op_ref (insn, end_label_ref);
   DONE;
 })
+
+;; Although cv.start / cv.end / cv.count could be seen as move instructions
+;; and therefore belonging to movsi_internal, that is problematic because
+;; using them outside loopsetup contexts might confuse the HW loop logic
+;; of the processor.  We might model this with UNSPEC_VOLATILEs, but
+;; that'd likely get too much into the way of optimizations.
+(define_insn "*cv_start"
+  [(set (match_operand:SI 0 "lpstart_reg_op" "=xcvl0s,xcvl1s,xcvl0s,xcvl1s")
+	(match_operand:SI 1 "register_operand" "i,i,r,r"))]
+  "TARGET_XCV"
+{
+  operands[0] = GEN_INT (REGNO (operands[0]) == LPSTART0_REGNUM ? 0 : 1);
+  return REG_P (operands[1]) ? "cv.start %0,%1" : "cv.starti %0, %1";
+}
+  [(set_attr "move_type" "move")])
+
+(define_insn "*cv_end"
+  [(set (match_operand:SI 0 "lpend_reg_op" "=xcvl0e,xcvl1e,xcvl0e,xcvl1e")
+	(match_operand:SI 1 "register_operand" "i,i,r,r"))]
+  "TARGET_XCV"
+{
+  operands[0] = GEN_INT (REGNO (operands[0]) == LPEND0_REGNUM ? 0 : 1);
+  return REG_P (operands[1]) ? "cv.end %0,%1" : "cv.endi %0, %1";
+}
+  [(set_attr "move_type" "move")])
+
+(define_insn "*cv_count"
+  [(set (match_operand:SI 0 "register_operand" "=xcvl0c,xcvl1c,xcvl0c,xcvl1c")
+	(match_operand:SI 1 "register_operand" "i,i,r,r"))]
+  "TARGET_XCV"
+{
+  operands[0] = GEN_INT (REGNO (operands[0]) == LPCOUNT0_REGNUM ? 0 : 1);
+  return REG_P (operands[1]) ? "cv.count %0,%1" : "cv.counti %0, %1";
+}
+  [(set_attr "move_type" "move")])

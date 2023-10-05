@@ -1506,7 +1506,7 @@ static const riscv_ext_flag_table_t riscv_ext_flag_table[] =
   {"xventanacondops", &gcc_options::x_riscv_xventana_subext, MASK_XVENTANACONDOPS},
 
   {"xcv",         &gcc_options::x_riscv_xcv_subext, MASK_XCV},
-  {"xcvmem",      &gcc_options::x_riscv_xcv_subext, MASK_XCV},
+  {"xcvmem",      &gcc_options::x_riscv_xcv_subext, MASK_XCVMEM},
   {"xcvhwlp",     &gcc_options::x_riscv_xcv_subext, MASK_XCVHWLP},
 //{"xcvbitmanip", &gcc_options::x_riscv_xcv_subext, MASK_XCVBITMANIP},
 

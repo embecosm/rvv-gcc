@@ -5,6 +5,84 @@
 #include "rtl.h"
 #include "insn-config.h"
 #include "recog.h"
+#include "function.h"
+#include "memmodel.h"
+#include "emit-rtl.h"
+#include "tm_p.h"
+#include "tree-pass.h"
+
+/* Creating doloop_begin patterns fully formed with a named pattern
+   reusults in the labels they use to refer to the loop start being
+   removed from the insn list during loop_done pass, so instead we
+   put the doloop_end insn in the place of the label, and patch this
+   up after the loop_don pass.  */
+
+namespace {
+
+const pass_data pass_data_riscv_doloop_begin =
+{
+  RTL_PASS, /* type */
+  "riscv_doloop_begin", /* name */
+  OPTGROUP_LOOP, /* optinfo_flags */
+  TV_LOOP_DOLOOP, /* tv_id */
+  0, /* properties_required */
+  0, /* properties_provided */
+  0, /* properties_destroyed */
+  0, /* todo_flags_start */
+  0, /* todo_flags_finish */
+};
+
+class pass_riscv_doloop_begin : public rtl_opt_pass
+{
+public:
+  pass_riscv_doloop_begin (gcc::context *ctxt)
+    : rtl_opt_pass (pass_data_riscv_doloop_begin, ctxt)
+  {}
+
+  /* opt_pass methods: */
+  virtual bool gate (function *)
+    {
+      return TARGET_XCVHWLP
+	&& flag_branch_on_count_reg && optimize > 0;
+    }
+  virtual unsigned int execute (function *);
+
+private:
+  typedef int_hash <HOST_WIDE_INT, 0> regno_hash;
+  typedef hash_map <regno_hash, int> regno_map;
+
+  regno_map * analyze (basic_block bb);
+  void transform (regno_map *m, basic_block bb);
+  bool get_si_mem_base_reg (rtx mem, rtx *addr, bool *extend);
+}; // class pass_riscv_doloop_begin
+
+unsigned int
+pass_riscv_doloop_begin::execute (function *)
+{
+  for (rtx_insn *insn = get_insns (); insn; insn = NEXT_INSN (insn))
+    {
+      if (!NONJUMP_INSN_P (insn)
+	  || recog_memoized (insn) != CODE_FOR_doloop_begin_i)
+	continue;
+      rtx *loc = &SET_SRC (XVECEXP (PATTERN (insn), 0, 0));
+      rtx pat = PATTERN (XEXP (XVECEXP (*loc, 0, 0), 0));
+      rtx start_label_ref = XEXP (SET_SRC (XVECEXP (pat, 0, 0)), 1);
+      start_label_ref
+	= gen_rtx_LABEL_REF (SImode, label_ref_label (start_label_ref));
+      *loc = start_label_ref;
+      add_label_op_ref (insn, start_label_ref);
+    }
+
+  return 0;
+}
+
+} // anon namespace
+
+rtl_opt_pass *
+make_pass_riscv_doloop_begin (gcc::context *ctxt)
+{
+  return new pass_riscv_doloop_begin (ctxt);
+}
 
 /* We'd like to check that there's no flow control inside the loop
    except for nested HW loops and the final branch back to the loop latch.
@@ -58,10 +136,16 @@ hwloop_setupi_p (rtx md_insn, rtx start_ref, rtx end_ref)
     return false;
 
   /* Loops with >= 2K instructions can't be setup with cv.setupi .  */
-  for (unsigned count = 0; insn != end; insn = NEXT_INSN (insn))
+  for (unsigned count = 0; ; insn = NEXT_INSN (insn))
     {
       if (!active_insn_p (insn))
 	continue;
+      if (recog_memoized (insn) == CODE_FOR_doloop_end_i)
+	{
+	  rtx label_use = XVECEXP (PATTERN (insn), 0, 4);
+	  if (label_ref_label (XEXP (label_use, 0)) == end)
+	    break;
+	}
       if (++count > 2047)
 	return false;
     }

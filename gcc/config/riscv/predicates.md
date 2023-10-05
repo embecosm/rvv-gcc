@@ -607,3 +607,15 @@
   (and (match_code "const_int")
        (ior (match_operand 0 "not_uimm_extra_bit_operand")
 	    (match_operand 0 "const_nottwobits_not_arith_operand"))))
+
+(define_predicate "lpstart_reg_op"
+  (and (match_code "reg")
+       (match_test "REGNO (op) == LPSTART0_REGNUM || REGNO (op) == LPSTART1_REGNUM")))
+
+(define_predicate "lpend_reg_op"
+  (and (match_code "reg")
+       (match_test "REGNO (op) == LPEND0_REGNUM || REGNO (op) == LPEND1_REGNUM")))
+
+;;(define_predicate "lpcount_reg_operand"
+;;  (and (match_code "reg")
+;;       (match_test "REGNO (op) == LPCOUNT0_REGNUM || REGNO (op) == LPCOUNT1_REGNUM")))
