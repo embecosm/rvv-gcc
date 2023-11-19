@@ -52,7 +52,7 @@
 			  vmalu,vmpop,vmffs,vmsfs,vmiota,vmidx,vimovvx,vimovxv,vfmovvf,vfmovfv,\
 			  vslideup,vslidedown,vislide1up,vislide1down,vfslide1up,vfslide1down,\
 			  vgather,vcompress,vlsegde,vssegte,vlsegds,vssegts,vlsegdux,vlsegdox,\
-			  vssegtux,vssegtox,vlsegdff")
+			  vssegtux,vssegtox,vlsegdff,vsfunc")
 	 (const_string "true")]
 	(const_string "false")))
 
@@ -6195,6 +6195,48 @@
   "vf<insn>.vv\t%0,%3,%4%p1"
   [(set_attr "type" "<float_insn_type>")
    (set_attr "mode" "<MODE>")])
+
+(define_int_iterator SINCOS
+        [UNSPEC_SIN
+         UNSPEC_COS])
+
+(define_int_attr sincos
+        [(UNSPEC_SIN "sin")
+         (UNSPEC_COS "cos")])
+
+(define_expand "<sincos><mode>2"
+  [(set (match_operand:V_VLS_M1_M2_DF 0 "general_operand")
+	(unspec:V_VLS_M1_M2_DF
+	  [(match_operand:V_VLS_M1_M2_DF 1 "general_operand")] SINCOS))]
+  "TARGET_VECTOR && flag_unsafe_math_optimizations"
+{
+  rtx arg = gen_rtx_REG (<MODE>mode, V2_REGNUM);
+  emit_move_insn (arg, operands[1]);
+  emit_insn (gen_<sincos><mode>2_i ());
+  emit_move_insn (operands[0], arg);
+  DONE;
+})
+
+(define_insn "<sincos><mode>2_i"
+  [(set (reg:V_VLS_M1_M2_DF V2_REGNUM)
+	(unspec:V_VLS_M1_M2_DF [(reg:V_VLS_M1_M2_DF V2_REGNUM)] SINCOS))
+   (clobber (reg:V_VLS_M1_M2_DF V0_REGNUM))
+   (clobber (reg:V_VLS_M1_M2_DF V4_REGNUM))
+   (clobber (reg:V_VLS_M1_M2_DF V6_REGNUM))
+   (clobber (reg:DF F0_REGNUM))
+   (clobber (reg:DF F1_REGNUM))
+   (clobber (reg:DF F2_REGNUM))
+   (clobber (reg:DF F3_REGNUM))
+   (clobber (reg:DF F4_REGNUM))
+   (clobber (reg:DF F5_REGNUM))
+   (clobber (reg:DI A0_REGNUM))
+   (clobber (reg:DI A1_REGNUM))
+   (clobber (reg:DI A2_REGNUM))]
+  "TARGET_VECTOR && flag_unsafe_math_optimizations"
+  "jal __riscv_vect_<sincos>"
+  [(set_attr "type" "vsfunc")]
+)
+
 
 (define_insn "@pred_<ieee_fmaxmin_op><mode>"
   [(set (match_operand:V_VLSF 0 "register_operand"           "=vd, vd, vr, vr")

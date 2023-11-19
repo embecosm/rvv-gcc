@@ -68,6 +68,8 @@
   UNSPEC_FMAX
   UNSPEC_FMINM
   UNSPEC_FMAXM
+  UNSPEC_SIN
+  UNSPEC_COS
 
   ;; Stack tie
   UNSPEC_TIE
@@ -139,6 +141,7 @@
    (S1_REGNUM			9)
    (A0_REGNUM			10)
    (A1_REGNUM			11)
+   (A2_REGNUM			12)
    (S2_REGNUM			18)
    (S3_REGNUM			19)
    (S4_REGNUM			20)
@@ -153,10 +156,20 @@
    (NORMAL_RETURN		0)
    (SIBCALL_RETURN		1)
    (EXCEPTION_RETURN		2)
+   (F0_REGNUM			32)
+   (F1_REGNUM			33)
+   (F2_REGNUM			34)
+   (F3_REGNUM			35)
+   (F4_REGNUM			36)
+   (F5_REGNUM			37)
    (VL_REGNUM			66)
    (VTYPE_REGNUM		67)
    (VXRM_REGNUM			68)
    (FRM_REGNUM			69)
+   (V0_REGNUM			96)
+   (V2_REGNUM			98)
+   (V4_REGNUM			100)
+   (V6_REGNUM			102)
 ])
 
 (include "predicates.md")
@@ -447,7 +460,7 @@
    vired,viwred,vfredu,vfredo,vfwredu,vfwredo,
    vmalu,vmpop,vmffs,vmsfs,vmiota,vmidx,vimovvx,vimovxv,vfmovvf,vfmovfv,
    vslideup,vslidedown,vislide1up,vislide1down,vfslide1up,vfslide1down,
-   vgather,vcompress,vmov,vector"
+   vgather,vcompress,vmov,vector,vsfunc"
   (cond [(eq_attr "got" "load") (const_string "load")
 
 	 ;; If a doubleword move uses these expensive instructions,
