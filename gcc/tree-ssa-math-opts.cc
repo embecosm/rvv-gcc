@@ -1288,6 +1288,11 @@ execute_cse_sincos_1 (tree name)
       tree t = mathfn_built_in_type (gimple_call_combined_fn (use_stmt));
       if (!type)
 	{
+	  if (!t)
+	    {
+	      gcc_assert (VECTOR_TYPE_P (TREE_TYPE (name)));
+	      return false;
+	    }
 	  type = t;
 	  t = TREE_TYPE (name);
 	}
